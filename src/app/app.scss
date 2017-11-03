@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +12,261 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@media screen and (min-width: 320px) {
+    html {
+        font-size: 10px
+    }
+}
+
+@media screen and (min-width: 321px) and (max-width:480px) {
+    html {
+        font-size: 12px
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width:640px) {
+    html {
+        font-size: 14px
+    }
+}
+
+@media screen and (min-width: 641px) {
+    html {
+        font-size: 16px
+    }
+}
+
+.ion-ios-workHome:before {
+    content: '';
+    width: 28px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/work++_active.png');
+    background-size: 100% 100%;
+}
+
+.ion-ios-workHome-outline:before {
+    content: '';
+    width: 28px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/work++.png');
+    background-size: 100% 100%;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    .ion-md-workHome:before {
+        content: '';
+        width: 28px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/work++_active.png');
+        background-size: 100% 100%;
+    }
+}
+
+.tabs-md .tab-button[aria-selected=false] {
+    .ion-md-workHome:before {
+        content: '';
+        width: 28px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/work++.png');
+        background-size: 100% 100%;
+    }
+}
+
+// contact
+.ion-ios-workContact:before {
+    content: '';
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/contact_active.png');
+    background-size: 100% 100%;
+}
+
+.ion-ios-workContact-outline::before {
+    content: '';
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/contact.png');
+    background-size: 100% 100%;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    .ion-md-workContact:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/contact_active.png');
+        background-size: 100% 100%;
+    }
+}
+
+.tabs-md .tab-button[aria-selected=false] {
+    .ion-md-workContact:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/contact.png');
+        background-size: 100% 100%;
+    }
+}
+
+// community
+.ion-ios-workCommunity:before {
+    content: '';
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/community_active.png');
+    background-size: 100% 100%;
+}
+
+.ion-ios-workCommunity-outline::before {
+    content: '';
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/community.png');
+    background-size: 100% 100%;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    .ion-md-workCommunity:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/community_active.png');
+        background-size: 100% 100%;
+    }
+}
+
+.tabs-md .tab-button[aria-selected=false] {
+    .ion-md-workCommunity:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/community.png');
+        background-size: 100% 100%;
+    }
+}
+
+// usercenter
+.ion-ios-workUserCenter:before {
+    content: '';
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/usercenter_active.png');
+    background-size: 100% 100%;
+}
+
+.ion-ios-workUserCenter-outline::before {
+    content: '';
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/usercenter.png');
+    background-size: 100% 100%;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    .ion-md-workUserCenter:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/usercenter_active.png');
+        background-size: 100% 100%;
+    }
+}
+
+.tabs-md .tab-button[aria-selected=false] {
+    .ion-md-workUserCenter:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/usercenter.png');
+        background-size: 100% 100%;
+    }
+}
+
+#tab-t0-2 {
+    overflow: visible!important;
+}
+
+ion-app {
+    font-size: 1rem!important;
+}
+
+.ion-ios-workDesk,
+.ion-ios-workDesk-outline,
+.tabs-md .tab-button-icon {
+    overflow: visible!important;
+}
+
+.ion-ios-workDesk:before {
+    content: '';
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/work_desk.png');
+    background-size: 100% 100%;
+    margin-top: -19px
+}
+
+.ion-ios-workDesk-outline::before {
+    content: '';
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    background: no-repeat url('../assets/imgs/tabs/work_desk.png');
+    background-size: 100% 100%;
+    margin-top: -19px
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    .ion-md-workDesk:before {
+        content: '';
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/work_desk.png');
+        background-size: 100% 100%;
+        margin-top: -19px
+    }
+}
+
+.tabs-md .tab-button[aria-selected=false] {
+    .ion-md-workDesk:before {
+        content: '';
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        background: no-repeat url('../assets/imgs/tabs/work_desk.png');
+        background-size: 100% 100%;
+        margin-top: -19px
+    }
+}
+
+// toolbar
+.toolbar-background-ios,
+.toolbar-background-md {
+    background-color: #16233a;
+}
+
+.toolbar-title-ios {
+    font-size: 1.6rem;
+}
+
+.toolbar-title-md {
+    text-align: center
+}

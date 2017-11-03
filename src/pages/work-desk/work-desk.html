@@ -1,0 +1,127 @@
+<!--
+  Generated template for the WorkDeskPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>杭州越团信息技术有限公司</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-slides class="work_desk_slide" pager='true'>
+        <ion-slide>
+            <img src="assets/imgs/work-desk/banner.png" alt="">
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/imgs/work-desk/banner.png" alt="">
+        </ion-slide>
+    </ion-slides>
+    <div class="work_desk_function">
+        <div class="funtion">
+            <img src="assets/imgs/work-desk/paper.png" alt="">
+            <p>写日报</p>
+        </div>
+        <div class="funtion">
+            <img src="assets/imgs/work-desk/shenpi.png" alt="">
+            <p>审批</p>
+        </div>
+        <div class="funtion">
+            <img src="assets/imgs/work-desk/kaoqin.png" alt="">
+            <p>考勤</p>
+        </div>
+    </div>
+    <div class="blank"></div>
+    <div class="work_desk_mywork work">
+        <div class="title">我的工作</div>
+        <ion-grid no-padding text-center>
+            <ion-row>
+                <ion-col align-self-center>
+                    <div class="num red">5</div>
+                    <p class="intr">超期的事</p>
+                </ion-col>
+                <ion-col>
+                    <div class="num blue">5</div>
+                    <p class="intr">今天的事</p>
+                </ion-col>
+                <ion-col>
+                    <div class="num normal">5</div>
+                    <p class="intr">最近一周</p>
+                </ion-col>
+                <ion-col>
+                    <div class="num normal">5</div>
+                    <p class="intr">远期安排</p>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3>
+                    <div class="num">5</div>
+                    <p class="intr">项目</p>
+                </ion-col>
+                <ion-col col-3>
+                    <div class="num">5</div>
+                    <p class="intr">计划</p>
+                </ion-col>
+                <ion-col col-3>
+                    <div class="num">5</div>
+                    <p class="intr">会议</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div class="blank"></div>
+    <div class="work work_desk_myStart">
+        <div class="title">我发起的</div>
+        <ion-grid no-padding text-center>
+            <ion-row>
+                <ion-col>
+                    <img src="assets/imgs/work-desk/shenhe.png" alt="">
+                </ion-col>
+                <ion-col>
+                    <div class="num orange">15</div>
+                    <p class="intr">要我审核</p>
+                </ion-col>
+                <ion-col>
+                    <img src="assets/imgs/work-desk/going.png" alt="">
+                </ion-col>
+                <ion-col>
+                    <div class="num green">35</div>
+                    <p class="intr">进行中的</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div class="blank"></div>
+    <div class="work work_desk_termwork work_desk_myStart">
+        <div class="title">团队工作</div>
+        <ion-grid no-padding text-center>
+            <ion-row>
+                <ion-col>
+                    <round-range [width]=50 process=50 color='#3aad1d'></round-range>
+                </ion-col>
+                <ion-col>
+                    <div class="termwork_num">
+                        <span class="active green">27</span>
+                        <span class="num_small">/30</span>
+                    </div>
+                    <p class="intr">在岗人员</p>
+                </ion-col>
+                <ion-col>
+                    <round-range [width]=50 process=90 color='#29b4ff'></round-range>
+                </ion-col>
+                <ion-col>
+                    <div class="termwork_num">
+                        <span class="active blue">18</span>
+                        <span class="num_small">/30</span>
+                    </div>
+                    <p class="intr">今日日报</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
