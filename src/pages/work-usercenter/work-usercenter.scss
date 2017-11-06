@@ -1,3 +1,49 @@
 page-work-usercenter {
-
+    .toolbar-background,
+    ion-navbar,
+    ion-header {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    .header-md::after,
+    .toolbar-background-ios {
+        background-image: none;
+        border-bottom: none!important;
+    }
+    .work-usercenter-header {
+        background-color: #172339;
+        height: 12.5rem;
+        margin-bottom: .833333rem;
+        .header_img {
+            width: 6.666667rem;
+            height: 6.666667rem;
+            margin-top: 1.833333rem;
+        }
+        .header_title {
+            color: #ffffff;
+            font-size: 1.25em;
+            margin-top: .833333rem;
+        }
+    }
+    .term {
+        background: url(../assets/imgs/work-usercenter/term.png)no-repeat center center;
+        background-size: 1.75rem 1.75rem;
+    }
+    .password {
+        background: url(../assets/imgs/work-usercenter/password.png)no-repeat center center;
+        background-size: 1.75rem 1.75rem;
+    }
+    .version {
+        background: url(../assets/imgs/work-usercenter/version.png)no-repeat center center;
+        background-size: 1.75rem 1.75rem;
+    }
+    .logout {
+        margin: 2.5rem 1.25rem;
+        .button {
+            background-color: #fff;
+            color: #333;
+            font-size: 1.166667em;
+            height: 4.166667rem
+        }
+    }
 }

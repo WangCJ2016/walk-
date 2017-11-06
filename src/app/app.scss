@@ -36,6 +36,12 @@
     }
 }
 
+.content-ios,
+.content-android {
+    color: #333
+}
+
+// tab
 .ion-ios-workHome:before {
     content: '';
     width: 28px;
@@ -205,6 +211,7 @@
 
 ion-app {
     font-size: 1rem!important;
+    color: #333;
 }
 
 .ion-ios-workDesk,
@@ -269,4 +276,32 @@ ion-app {
 
 .toolbar-title-md {
     text-align: center
+}
+
+.bar-button-default-ios,
+.bar-button-default.bar-button-ios-default,
+.bar-button-clear-ios-default {
+    color: #fff
+}
+
+// list item
+.list-ios>.item-block:first-child {
+    border-top: none
+}
+
+.list-ios>.item-block:last-child {
+    border-bottom: none
+}
+
+.item-ios {
+    color: #333;
+}
+
+.list-ios .item-block .item-inner {
+    border-bottom: 1px solid #f5f5f5;
+}
+
+// content
+.content {
+    background-color: #f5f5f5;
 }

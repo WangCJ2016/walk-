@@ -1,0 +1,68 @@
+page-attence {
+    .attence_time,
+    .attence_address {
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.083333em;
+        background-color: #fff;
+        img {
+            margin-left: 1.25rem;
+        }
+        span:nth-child(2) {
+            margin-left: .833333rem;
+            margin-right: .833333rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .today {
+            width: 1.416667rem;
+        }
+        .loc {
+            width: 1rem
+        }
+    }
+    .attence_address {
+        border-bottom: 1px solid #f5f5f5;
+    }
+    .beizhu {
+        height: 4.166667rem;
+        display: flex;
+        padding: 0 1.25rem;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        span {
+            color: #ccc;
+            font-size: 1.166667em
+        }
+        .icon_camera {
+            display: block;
+            width: 2.916667rem;
+            height: 2.916667rem;
+            background: url('../assets/imgs/attence/icon_camera.png')no-repeat;
+            background-size: 100% 100%;
+        }
+    }
+    .attendec_button {
+        width: 11.666667rem;
+        height: 11.666667rem;
+        border-radius: 50%;
+        background-color: #29b4ff;
+        color: #fff;
+        font-size: 1.583333em;
+        margin: 7.5rem auto 1rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .time {
+            font-size: 1.833333rem
+        }
+    }
+    .check {
+        text-align: center;
+        color: #999;
+        font-size: 1.166667em;
+    }
+}

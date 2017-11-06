@@ -36,7 +36,8 @@ import { TabsPage } from '../pages/tabs/tabs';
         WorkDeskPage,
         WorkContactPage,
         WorkUsercenterPage,
-        TabsPage
+        TabsPage,
+        ComponentsModule
     ]
 })
 

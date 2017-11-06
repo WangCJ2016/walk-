@@ -1,0 +1,26 @@
+<!-- Generated template for the DatePickerComponent component -->
+<div class='work_date_picker' text-center>
+    <div class="datemonth">
+        <span class="pre"></span>
+        <div class="month">2017-06</div>
+        <span class="next"></span>
+    </div>
+    <ul class="week">
+        <li>日</li>
+        <li>一</li>
+        <li>二</li>
+        <li>三</li>
+        <li>四</li>
+        <li>五</li>
+        <li>六</li>
+    </ul>
+    <ion-slides>
+        <ion-slide *ngFor="let week of fenzuArray">
+            <ul class="week day">
+                <li *ngFor="let day of week;">
+                    <div>{{day!==0?day:''}}</div>
+                </li>
+            </ul>
+        </ion-slide>
+    </ion-slides>
+</div>

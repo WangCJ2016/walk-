@@ -14,7 +14,7 @@
 
 
 <ion-content>
-    <ion-slides class="work_desk_slide" pager='true'>
+    <ion-slides #slide class="work_desk_slide" pager='true'>
         <ion-slide>
             <img src="assets/imgs/work-desk/banner.png" alt="">
         </ion-slide>
@@ -31,7 +31,7 @@
             <img src="assets/imgs/work-desk/shenpi.png" alt="">
             <p>审批</p>
         </div>
-        <div class="funtion">
+        <div class="funtion" (click)='goPage("AttencePage")'>
             <img src="assets/imgs/work-desk/kaoqin.png" alt="">
             <p>考勤</p>
         </div>

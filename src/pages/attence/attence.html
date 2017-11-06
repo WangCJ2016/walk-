@@ -1,0 +1,39 @@
+<!--
+  Generated template for the AttencePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>考勤</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <div class="attence_time">
+        <img class="today" src="assets/imgs/attence/iocn_today.png" alt="">
+        <span>2015-06-18</span>
+        <span>星期三</span>
+    </div>
+    <div class="attence_address">
+        <img class="loc" src="assets/imgs/attence/icon_loc.png" alt="">
+        <span>当前位置</span>
+        <span>杭州西湖区花蒋璐428号久良科技</span>
+    </div>
+    <div class="map" style="height:200px"></div>
+    <div class="beizhu">
+        <span>备注</span>
+        <i class="icon_camera"></i>
+    </div>
+    <div class="attendec_button">
+        <span></span>
+        <span>签到</span>
+        <span class="time">{{date|date:"HH:mm:ss"}}</span>
+        <span></span>
+    </div>
+    <p class="check" (click)='goRecord()'>查看考勤记录</p>
+</ion-content>

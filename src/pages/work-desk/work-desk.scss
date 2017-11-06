@@ -1,4 +1,7 @@
 page-work-desk {
+    .content {
+        background-color: #fff;
+    }
     .work_desk_slide {
         height: 9.583333rem;
         .slide-zoom,
@@ -7,16 +10,15 @@ page-work-desk {
             height: 100%;
         }
     }
-    .swiper-pagination {
-        .swiper-pagination-bullet {
-            width: .666667rem;
-            height: .166667rem;
-            border-radius: .083333rem;
-            background-color: #999;
-        }
-        .swiper-pagination-bullet-active {
-            background-color: #fff;
-        }
+    .custom-pagination.swiper-pagination-bullet {
+        width: .666667rem;
+        height: .166667rem;
+        border-radius: .083333rem;
+        background-color: #999;
+        display: inline-block
+    }
+    .custom-pagination.swiper-pagination-bullet-active {
+        background-color: #fff;
     }
     .work_desk_function {
         height: 7.5rem;
