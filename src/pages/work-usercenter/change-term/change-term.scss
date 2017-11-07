@@ -1,0 +1,23 @@
+page-change-term {
+    ion-item {
+        position: relative;
+        img {
+            width: 3.333333rem!important;
+            height: 3.333333rem!important;
+            border-radius: 3px!important;
+        }
+        .moren {
+            width: 4rem;
+            height: 4rem;
+            background-color: #ed594a;
+            color: #fff;
+            position: absolute;
+            line-height: 6rem;
+            transform: rotate(45deg);
+            text-align: center;
+            top: -2rem;
+            right: -2rem;
+            font-size: .833333em
+        }
+    }
+}

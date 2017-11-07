@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the AttenceRecordePage page.
+ * Generated class for the ShenpiPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,19 +10,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-attence-recorde',
-  templateUrl: 'attence-recorde.html',
+  selector: 'page-shenpi',
+  templateUrl: 'shenpi.html',
 })
-export class AttenceRecordePage {
-
+export class ShenpiPage {
+  shenpiType: string
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.shenpiType = 'wodeshenpi'
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AttenceRecordePage');
+    
   }
-  selectDay(day: string) {
-    console.log(day)
+  goDetail() {
+    this.navCtrl.push('ShenpiDetailPage')
   }
-
 }

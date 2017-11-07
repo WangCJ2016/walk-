@@ -1,0 +1,17 @@
+page-my-account {
+    .name_item {
+        margin-top: .833333rem;
+        height: 4.166667rem;
+        display: flex;
+        padding: 0 1.25rem;
+        justify-content: space-between;
+        background-color: #fff;
+        align-items: center;
+        font-size: 1.25rem
+    }
+    p {
+        font-size: .916667em;
+        color: #ccc;
+        margin-left: 1.25rem
+    }
+}

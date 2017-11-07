@@ -1,0 +1,153 @@
+page-shenpi-detail {
+    .inputcase {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        align-items: center;
+        height: 3.75rem;
+        background-color: #e6e6e6;
+        width: 100%;
+        .icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 0 .833333rem;
+        }
+        .yuyin {
+            margin-left: 1.25rem;
+        }
+        .face {
+            margin-right: 0;
+        }
+        .more {
+            margin-right: 1.25rem;
+        }
+        .input {
+            flex: 1;
+            input {
+                width: 100%;
+                border-radius: 2px;
+                height: 2.916667rem;
+                border: none;
+                outline: none;
+                font-size: 1.25em
+            }
+        }
+    }
+    .detail {
+        margin-bottom: 4.166667rem;
+        .kim {
+            font-size: 1.166667rem
+        }
+        ion-label {
+            color: #999;
+        }
+        ion-item {
+            height: 3.75rem;
+            min-height: 3.75rem;
+            &.noborder {
+                .item-inner {
+                    border-bottom: none
+                }
+            }
+            .document {
+                width: 2.083333rem
+            }
+            .download {
+                width: 1.666667rem
+            }
+            .name {
+                font-size: .916667em;
+                color: #666
+            }
+            &.people {
+                .input-wrapper {
+                    flex: none;
+                    .bg {
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        border-radius: 50%;
+                        display: inline-block;
+                        color: #fff;
+                        font-size: .916667em;
+                        text-align: center;
+                        line-height: 2.5rem
+                    }
+                    .blue {
+                        background-color: #29b4ff
+                    }
+                    .brown {
+                        background-color: #5f70a7
+                    }
+                }
+            }
+            &.time {
+                ion-label {
+                    flex: none
+                }
+                ion-label:not(:first-child) {
+                    color: #333;
+                    margin-left: 1.666667rem
+                }
+            }
+        }
+    }
+    .flowline {
+        background-color: #fff;
+        border-left: 1px dashed #f5f5f5;
+        margin-left: 1.25rem;
+        .item_flow {
+            display: flex;
+            padding-left: 3.333333rem;
+            height: 2.916667rem;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            &.disagree {
+                color: #ccc!important;
+            }
+            span {
+                font-size: 1.166667em
+            }
+            .time {
+                color: #999;
+                font-size: .916667em;
+            }
+            .flow_name {
+                position: absolute;
+                width: 2.916667rem;
+                height: 2.916667rem;
+                text-align: center;
+                line-height: 2.916667rem;
+                background-color: #ffb914;
+                left: -16px;
+                border-radius: 50%;
+                color: #fff;
+            }
+        }
+        .item_flow+.item_flow {
+            margin-top: 1.666667rem;
+        }
+    }
+    .footer_shenpi {
+        width: 100%;
+        height: 3.333333rem;
+        background-color: #29b4ff;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        .footer_item {
+            width: 25%;
+            text-align: center;
+            color: #fff;
+            font-size: .333333em;
+            height: 2.5rem;
+            line-height: 2.5rem;
+        }
+        .footer_item+.footer_item {
+            border-left: 1px solid #ccc;
+        }
+    }
+}

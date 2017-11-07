@@ -1,37 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Slides } from 'ionic-angular';
 import getDaysInMonth from 'date-fns/get_days_in_month'
 import startOfMonth from 'date-fns/start_of_month'
-import subMonths from 'date-fns/sub_months'
-import getISOYear from 'date-fns/get_iso_year'
-import getMonth from 'date-fns/get_month'
 import getDay from 'date-fns/get_day'
 import lastDayOfMonth from 'date-fns/last_day_of_month'
-/**
- * Generated class for the DatePickerComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
+import getYear from 'date-fns/get_year'
+import getMonth from 'date-fns/get_month'
+import getDate from 'date-fns/get_date'
+
 @Component({
   selector: 'date-picker',
   templateUrl: 'date-picker.html'
 })
 export class DatePickerComponent {
-
+  @ViewChild(Slides) slides: Slides;
+  @Output() dateEmit = new EventEmitter<string>()
+  activeIndex:number = -1
+  selectDay:number
+  selectMonth: number
+  selectYear: number
   fenzuArray = [];
+  
 
   constructor() {
-    this.initalMonth()
+    this.selectYear = getYear(new Date())
+    this.selectMonth = getMonth(new Date()) + 1
+    this.selectDay = getDate(new Date())
+    this.initalMonth(this.selectYear +'-'+ (this.selectMonth))
   }
-  initalMonth(){    
-      const num = getDaysInMonth(new Date()) // 当前月的天数
-      const firstDay = startOfMonth(new Date())
+  
+  initalMonth(year_month){  
+     console.log(year_month)  
+      const num = getDaysInMonth(year_month) // 当前月的天数
+      const firstDay = startOfMonth(year_month)
       const firstDayofWeek = getDay(firstDay)
-      const lastDay = lastDayOfMonth(new Date())
+      const lastDay = lastDayOfMonth(year_month)
       const lastDayofWeek = getDay(lastDay)
       let preO = []
       let next0 = []
       let month = []
+      this.fenzuArray = [];
       for(let i = 0;i<firstDayofWeek;i++){
         preO.push(0)
       }
@@ -46,7 +54,37 @@ export class DatePickerComponent {
       for(let i=0;i<monthArray.length;i+=7){
         this.fenzuArray.push(monthArray.slice(i,i+7))
       }
-      console.log(this.fenzuArray)
   }
-
+  dayChoose(index: number,day:number) {
+    this.activeIndex = index
+    this.selectDay = day
+    this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
+  }
+  pre() {
+    if(this.selectMonth-1<=0){
+      this.selectMonth = 12
+      this.selectYear--
+    }else{
+      this.selectMonth--
+    }
+    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    this.initalMonth(this.selectYear+'-'+gaozaoMonth)
+    this.slides.slideTo(0,0)
+  }
+  next() {
+    const nowYear = getYear(new Date())
+    const nowMonth = getMonth(new Date())+1
+    if(this.selectYear===nowYear&&this.selectMonth+1>nowMonth){
+      return
+    }
+    if(this.selectMonth+1>12){
+      this.selectMonth=1
+      this.selectYear++
+    }else{
+      this.selectMonth++
+    }
+    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    this.initalMonth(this.selectYear+'-'+gaozaoMonth)
+    this.slides.slideTo(0,0)
+  }
 }

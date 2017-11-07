@@ -21,5 +21,7 @@ export class WorkUsercenterPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad WorkUsercenterPage');
   }
-
+  goPage(page: string) {
+    this.navCtrl.push(page)
+  }
 }

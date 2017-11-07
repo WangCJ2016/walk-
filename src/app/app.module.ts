@@ -17,7 +17,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     IonicModule.forRoot(MyApp,{
       backButtonText: '',
       iconMode: 'ios',
-      tabsHideOnSubPages: 'true' 
+      backButtonIcon:'arrow-back',
+      tabsHideOnSubPages: 'true',
+      mode: 'ios' 
     })
   ],
   bootstrap: [IonicApp],

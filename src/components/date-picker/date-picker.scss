@@ -39,15 +39,16 @@ date-picker {
         }
     }
     .week.day li div {
-        color: #333!important;
+        color: #333;
         font-size: 15px;
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;
         line-height: 2.5rem;
         margin: 8px auto;
-        &.active {
-            background-color: #29b4ff;
-        }
+    }
+    .day li.active>div {
+        background-color: #29b4ff;
+        color: #fff;
     }
 }

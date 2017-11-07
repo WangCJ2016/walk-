@@ -1,3 +1,31 @@
 page-attence-recorde {
-
+    .attence_detail {
+        margin-top: .833333rem;
+        .attence_time {
+            position: relative;
+            padding-left: 2.5rem;
+            border-left: 1px solid #f5f5f5;
+            .time {
+                font-size: 1.166667em;
+            }
+            .address {
+                margin-top: .833333rem;
+                padding-left: 1.5rem;
+                background: url('../assets/imgs/attence/icon_loc.png')no-repeat left center;
+                background-size: 1rem 1rem;
+            }
+            .face {
+                margin-top: .833333rem;
+                width: 5rem;
+                height: 5rem;
+            }
+            .icon_time {
+                position: absolute;
+                width: 1.166667rem;
+                height: 1.166667rem;
+                left: -7px;
+                top: -7px;
+            }
+        }
+    }
 }

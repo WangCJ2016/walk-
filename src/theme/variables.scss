@@ -21,7 +21,7 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-$colors: ( primary: #29b4ff, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, dark: #222, twitter: ( base: #55acee, contrast: red));
+$colors: ( primary: #29b4ff, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, kim:#ffb914, dark: #222, twitter: ( base: #55acee, contrast: red));
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -55,6 +55,7 @@ $toolbar-ios-height: 50px;
 $toolbar-md-height: 50px;
 $toolbar-ios-title-text-color: #fff;
 $toolbar-md-title-text-color: #fff;
+$toolbar-ios-button-font-size: 1.583333em;
 // item
 $item-ios-body-text-font-size: 1.166667em;
 $item-ios-paragraph-font-size: 1.083333em;
@@ -62,5 +63,21 @@ $item-ios-paragraph-text-color: #999;
 $item-md-body-text-font-size: 1.166667em;
 $item-md-paragraph-text-color: #999;
 $item-md-font-size:1.083333em;
+$item-ios-padding-right: 15px;
+$item-ios-padding-left: 15px;
+// label
+$label-ios-text-color: #999;
 // content
 $content-ios-outer-background: #f5f5f5;
+// segment
+$segment-button-ios-background-color-activated: #fff;
+$segment-button-ios-text-color:#fff;
+$segment-button-ios-toolbar-button-height: 2.5rem;
+$segment-button-ios-border-width: 0.5px;
+$segment-button-md-text-color-activated: #16233a;
+// sheetaction
+$action-sheet-ios-border-radius: 3px;
+$action-sheet-ios-button-min-height: 4.166667rem;
+$action-sheet-ios-button-text-color: #29b4ff;
+$action-sheet-ios-button-font-size: 1.25em;
+$action-sheet-ios-border-color: #f5f5f5;

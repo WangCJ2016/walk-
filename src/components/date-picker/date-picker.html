@@ -1,9 +1,9 @@
 <!-- Generated template for the DatePickerComponent component -->
 <div class='work_date_picker' text-center>
     <div class="datemonth">
-        <span class="pre"></span>
-        <div class="month">2017-06</div>
-        <span class="next"></span>
+        <span class="pre" (click)='pre()'></span>
+        <div class="month">{{selectYear}}-{{selectMonth}}</div>
+        <span class="next" (click)='next()'></span>
     </div>
     <ul class="week">
         <li>日</li>
@@ -17,8 +17,9 @@
     <ion-slides>
         <ion-slide *ngFor="let week of fenzuArray">
             <ul class="week day">
-                <li *ngFor="let day of week;">
-                    <div>{{day!==0?day:''}}</div>
+                <li *ngFor="let day of week;let i=index" (click)="dayChoose(i,day)" [class.active]='i==activeIndex&&day==selectDay
+'>
+                    <div *ngIf="day">{{day}}</div>
                 </li>
             </ul>
         </ion-slide>

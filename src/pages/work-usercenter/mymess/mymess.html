@@ -1,0 +1,41 @@
+<!--
+  Generated template for the MymessPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>我的信息</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <button ion-item (click)='presentActionSheet()'>
+        <ion-label>头像</ion-label>
+        <ion-avatar item-end>
+            <img src="assets/imgs/work-usercenter/head.png">
+        </ion-avatar>
+    </button>
+        <button ion-item (click)='goPage("ChangeNamePage")'>
+        <ion-label>姓名</ion-label>
+        <span  item-end>张三</span>
+    </button>
+        <button ion-item (click)='goPage("MyAccountPage")'>
+        <ion-label>账号</ion-label>
+        <span item-end>12222345666</span>
+    </button>
+        <button ion-item (click)='goPage("MySexPage")'>
+        <ion-label>性别</ion-label>
+        <span item-end>男</span>
+    </button>
+        <button ion-item>
+        <ion-label>所在地</ion-label>
+        <span item-end>浙江杭州</span>
+    </button>
+    </ion-list>
+</ion-content>
