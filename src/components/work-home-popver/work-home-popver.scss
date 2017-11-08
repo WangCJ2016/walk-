@@ -1,0 +1,33 @@
+work-home-popver {
+    .work_home_po {
+        width: 11.5rem;
+        height: 4.166667rem;
+        background-color: #16233a;
+        border-radius: .333333rem;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.333333em;
+        position: relative;
+        &:before {
+            content: '';
+            width: .833333rem;
+            height: .833333rem;
+            position: absolute;
+            transform: rotate(-deg);
+            transform-origin: 50% 50%;
+            top: -.416667rem;
+            background-color: #16233a
+        }
+    }
+}
+
+.work_home_popover {
+    .popover-arrow {
+        top: 4.25rem!important
+    }
+    .popover-content {
+        top: 5rem!important
+    }
+}

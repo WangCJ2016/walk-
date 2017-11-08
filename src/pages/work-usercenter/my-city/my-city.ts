@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { CityPickerProvider } from '../../../providers/city-picker/city-picker'
 /**
  * Generated class for the MyCityPage page.
  *
@@ -14,12 +14,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'my-city.html',
 })
 export class MyCityPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  cityData
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public cityPickerSev: CityPickerProvider,) {
+                this.setCityPickerData()
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyCityPage');
   }
-
+  setCityPickerData(){
+    this.cityPickerSev.getCitiesData()
+      .then( data => {
+        this.cityData = data
+        console.log(data)
+      });
+  }
+  cityChange(e){
+    console.log(e)
+  }
 }

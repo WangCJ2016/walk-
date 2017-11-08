@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { WorkHomePopverComponent} from '../../components/work-home-popver/work-home-popver'
 /**
  * Generated class for the WorkHomePage page.
  *
@@ -15,11 +15,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class WorkHomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public popoverCtrl: PopoverController,
+              ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WorkHomePage');
   }
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(WorkHomePopverComponent,{},{
+      cssClass:'work_home_popover'});
+    popover.present({
+      ev: myEvent
+    });
+  }
+  
 
 }

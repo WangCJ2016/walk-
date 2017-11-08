@@ -1,3 +1,23 @@
 page-work-home {
-
+    .item_top {
+        background-color: transparent
+    }
+    .item_end {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end
+    }
+    .badge {
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #fff;
+        background-color: red;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 1.25rem;
+        margin-right: .833333rem;
+        font-size: 12px
+    }
 }

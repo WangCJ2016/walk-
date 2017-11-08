@@ -1,0 +1,59 @@
+page-contact-detail {
+    .top_section {
+        background-color: #16233a;
+        .blank {
+            width: 100%;
+            height: 2.333333rem;
+        }
+    }
+    .name_img {
+        width: 6.666667rem;
+        height: 6.666667rem;
+        border-radius: 50%;
+        margin: 0 auto 1.25rem;
+        text-align: center;
+        color: #fff;
+        line-height: 6.666667rem;
+        font-size: 1.333333em;
+    }
+    .name {
+        font-size: 1.75em;
+        color: #fff;
+        text-align: center;
+    }
+    .actions {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 2.083333rem;
+        >div {
+            text-align: center;
+            .img_bg {
+                width: 2.5rem;
+                height: 2.5rem;
+                display: inline-block
+            }
+            .dymanic {
+                background: url(../assets/imgs/work-contact/dymanic.png)no-repeat;
+                background-size: contain
+            }
+            .call {
+                background: url(../assets/imgs/work-contact/call.png)no-repeat;
+                background-size: contain
+            }
+            .email {
+                background: url(../assets/imgs/work-contact/email.png)no-repeat center center;
+                background-size: contain
+            }
+            p {
+                font-size: 1.25em;
+                color: #fff;
+                margin-top: 1.25rem 0 1.666667rem;
+            }
+        }
+    }
+    ion-item-group {
+        .item .label {
+            color: #999!important
+        }
+    }
+}

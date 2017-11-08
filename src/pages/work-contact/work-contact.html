@@ -6,13 +6,20 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>work-contact</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>通讯录</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+    <ion-item-group *ngFor="let contact of contactArray">
+        <ion-item-divider color="light">{{contact.letter}}</ion-item-divider>
+        <ion-item (click)='goPage("ContactDetailPage")' *ngFor='let contactItem of contact.data'>
+            <ion-avatar item-start>
+                <div class="avatar" [style.backgroundColor]='getColor()'>{{contactItem.slice(-2)}}</div>
+            </ion-avatar>
+            <ion-label>{{contactItem}}</ion-label>
+        </ion-item>
+    </ion-item-group>
 </ion-content>
