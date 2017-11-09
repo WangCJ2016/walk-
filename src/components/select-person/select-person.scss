@@ -1,0 +1,17 @@
+select-person {
+    .type_title {
+        height: 4.166667rem;
+        font-size: 1.25em;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        border-bottom: .55px solid $border_color;
+        ion-icon {
+            color: #ccc;
+            margin-right: 1.25rem
+        }
+    }
+    ion-list {
+        margin: 0!important
+    }
+}

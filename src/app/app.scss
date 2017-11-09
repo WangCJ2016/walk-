@@ -338,9 +338,13 @@ ion-app {
     margin: 0
 }
 
+.item-datetime .label {
+    color: #333
+}
+
 // divider
 .item-divider .label {
-    font-size: 1.25em;
+    font-size: 1.166667rem;
     color: #999
 }
 
@@ -370,4 +374,15 @@ ion-app {
 // button
 .button-full-ios {
     border-radius: .333333rem
+}
+
+// work_home_popover
+.work_home_popover,
+.create_work_po {
+    .popover-arrow {
+        top: 4.25rem!important
+    }
+    .popover-content {
+        top: 5rem!important
+    }
 }

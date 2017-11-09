@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the DailyPage page.
+ * Generated class for the CreatePlanYPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,18 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-daily',
-  templateUrl: 'daily.html',
+  selector: 'page-create-plan-y',
+  templateUrl: 'create-plan-y.html',
 })
-export class DailyPage {
+export class CreatePlanYPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DailyPage');
+    console.log('ionViewDidLoad CreatePlanYPage');
   }
-  goPage(page: string) {
-    this.navCtrl.push(page)
-  }
+
 }

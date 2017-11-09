@@ -1,0 +1,56 @@
+<!--
+  Generated template for the ChangeAttencePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>考勤状态设置</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <section class="attence_type" padding>
+        <h4 class="attence_title">类型</h4>
+        <div class="attence_check">
+            <div class="attenc_item {{item.class}}" *ngFor="let item of attence_types; let i=index" (click)='choseType(i)' [class.checked]='i===check_index'>
+                <i></i>
+                <span>{{item.title}}</span>
+            </div>
+        </div>
+    </section>
+    <section class="attence_type" padding>
+        <h4 class="attence_title">描述</h4>
+        <ion-textarea>
+        </ion-textarea>
+    </section>
+    <ion-list>
+        <ion-item>
+            <ion-label item-start>起始时间</ion-label>
+            <ion-datetime item-content cancelText='取消' doneText='完成' displayFormat="YYYY/DD/MM" [(ngModel)]="myDate"></ion-datetime>
+            <img class="icon_date" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+        </ion-item>
+        <ion-item>
+            <ion-label>天数(天)</ion-label>
+            <div item-end class="changeNumofDay">
+                <span class="click_action">
+                  <ion-icon name="remove"></ion-icon>
+                </span>
+                <span class="numofday">0.5</span>
+                <span class="click_action"><ion-icon name="add"></ion-icon></span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>截止时间</ion-label>
+            <ion-datetime cancelText='取消' doneText='完成' item-content displayFormat="YYYY/DD/MM" [(ngModel)]="myDate"></ion-datetime>
+            <img class="icon_date" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+        </ion-item>
+    </ion-list>
+    <div class="submit_btn" padding>
+        <button ion-button full>提交</button>
+    </div>
+</ion-content>

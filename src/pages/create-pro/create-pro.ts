@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the DailyPage page.
+ * Generated class for the CreateProPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,18 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-daily',
-  templateUrl: 'daily.html',
+  selector: 'page-create-pro',
+  templateUrl: 'create-pro.html',
 })
-export class DailyPage {
+export class CreateProPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DailyPage');
+    console.log('ionViewDidLoad CreateProPage');
   }
-  goPage(page: string) {
-    this.navCtrl.push(page)
-  }
+
 }

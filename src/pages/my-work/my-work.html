@@ -1,0 +1,51 @@
+<!--
+  Generated template for the MyWorkPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>我的工作</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="presentPopover($event)">
+                <ion-icon name="add"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <section class="work_fix_top">
+        <div class="type" *ngFor="let onefix of fixArray; let i=index" [class.checked]='i===typeIndex' (click)='fixClick(i)'>
+            <span>{{onefix.type}}:{{onefix.items[0].name}}</span>
+            <ion-icon name="arrow-down"></ion-icon>
+            <div class="type_item">
+                <ion-list>
+                    <ion-item *ngFor="let item of onefix.items" [class.checkedItem]='item.id === itemIndex' (click)='itemClick(item.id,$event)'>
+                        <ion-label>{{item.name}}</ion-label>
+                        <ion-input value='({{item.num}})'></ion-input>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    </section>
+    <section class="sec_content">
+        <ion-list>
+            <ion-item>
+                <ion-avatar item-start>
+                    <img src="assets/imgs/work-desk/shiwu.png" alt="">
+                </ion-avatar>
+                <h4>如果下面目中的任务如果下面目中的任务</h4>
+                <p><span>发起人:张三</span>&nbsp;<span>进度:80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
+                <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
+            </ion-item>
+        </ion-list>
+    </section>
+    <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
+        <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
+    </div>
+</ion-content>

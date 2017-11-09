@@ -1,0 +1,95 @@
+page-change-attence {
+    .attence_type {
+        margin-top: .833333rem;
+        background-color: #fff;
+        border-bottom: 1px solid $border_color;
+        .attence_title {
+            font-size: 1.333333em;
+            font-weight: normal;
+        }
+        .attence_check {
+            .attenc_item {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center
+            }
+            display: flex;
+            i {
+                display: inline-block;
+                width: 1.25rem;
+                height: 1.25rem;
+                background-color: #dbdbdb;
+            }
+            span {
+                font-size: 1.166667em;
+                margin-left: .583333rem
+            }
+            .checked.thing {
+                i {
+                    background-color: #3a87ea
+                }
+            }
+            .checked.sick {
+                i {
+                    background-color: #29b9eb
+                }
+            }
+            .checked.holiday {
+                i {
+                    background-color: #967adc
+                }
+            }
+            .checked.work {
+                i {
+                    background-color: #7bca25
+                }
+            }
+            .checked.normal {
+                i {
+                    background-color: #ffa72b
+                }
+            }
+        }
+    }
+    .attence_type+.attence_type {
+        margin: 0
+    }
+    ion-list {
+        margin-top: .833333rem!important;
+        .item-block {
+            min-height: 4.166667rem
+        }
+        .icon_date {
+            width: 1.5rem;
+        }
+    }
+    .changeNumofDay {
+        width: 9.166667rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        .click_action {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            text-align: center;
+            line-height: 2.5rem;
+            color: #ccc;
+            font-size: 1.666667em
+        }
+        .numofday {
+            color: #333;
+            flex: 1;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            font-size: 1.166667em;
+            line-height: 2.5rem
+        }
+    }
+    .submit_btn {
+        margin-top: 12.5rem
+    }
+}
