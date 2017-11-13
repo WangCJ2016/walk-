@@ -4,28 +4,32 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
 
-    <ion-navbar *navbar>
-        <ion-title>login</ion-title>
+    <ion-navbar>
+        <ion-title></ion-title>
     </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
 <ion-content>
+    <ion-header>
+        <ion-navbar>
+        </ion-navbar>
+    </ion-header>
     <section class="login_bg">
         <img src="assets/imgs/login/login_bg.png" alt="">
     </section>
     <section class="login_form">
-        <form action="">
+        <form #f="ngForm" (ngSubmit)='onSubmit(f, $event)'>
             <div class="login_item">
                 <label>登录</label>
-                <input type="text">
+                <input user-mobile type="text" placeholder='请填写正确的手机号' required [(ngModel)]='phoneNum' name='phoneNum'>
             </div>
             <div class="login_item">
                 <label>密码</label>
-                <input type="text">
+                <input user-password type="password" placeholder='请填写6-16位的密码' required [(ngModel)]='password' name='password'>
             </div>
             <button ion-button round full class="login_btn">立即登录</button>
         </form>

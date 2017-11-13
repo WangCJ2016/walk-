@@ -1,0 +1,81 @@
+<!--
+  Generated template for the TermDailyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>团队日报</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <date-picker></date-picker>
+    <section class="term_daily_graph" padding>
+        <round-range width='90' raduis='10'></round-range>
+        <div class="graph_type">
+            <div><span class="type_color ccc"></span><span>未上交</span><span class="num">3</span></div>
+            <div><span class="type_color blue"></span><span>一已上交</span><span class="num">27</span></div>
+        </div>
+    </section>
+    <section class="daily_people">
+        <div class="daily_list_title">
+            未交
+        </div>
+        <ion-list>
+            <ion-item>
+                <ion-avatar item-start>
+                    <avatar name='王琪琪'></avatar>
+                </ion-avatar>
+                <h4>王琪琪</h4>
+                <button item-end ion-button disabled='true'>评阅</button>
+            </ion-item>
+            <ion-item>
+                <ion-avatar item-start>
+                    <avatar name='虚荣城'></avatar>
+                </ion-avatar>
+                <h4>虚荣城</h4>
+                <button item-end ion-button disabled='true'>评阅</button>
+            </ion-item>
+            <ion-item>
+                <ion-avatar item-start>
+                    <avatar name='方霞'></avatar>
+                </ion-avatar>
+                <h4>方霞</h4>
+                <button item-end ion-button disabled='true'>评阅</button>
+            </ion-item>
+        </ion-list>
+    </section>
+    <section class="daily_people">
+        <div class="daily_list_title">
+            已交
+        </div>
+        <ion-list>
+            <ion-item>
+                <ion-avatar item-start>
+                    <avatar name='王琪琪'></avatar>
+                </ion-avatar>
+                <h4>王琪琪</h4>
+                <button item-end ion-button>已评阅</button>
+            </ion-item>
+            <ion-item>
+                <ion-avatar item-start>
+                    <avatar name='虚荣城'></avatar>
+                </ion-avatar>
+                <h4>虚荣城</h4>
+                <button item-end ion-button>已评阅</button>
+            </ion-item>
+            <ion-item>
+                <ion-avatar item-start>
+                    <avatar name='方霞'></avatar>
+                </ion-avatar>
+                <h4>方霞</h4>
+                <button item-end ion-button>已评阅</button>
+            </ion-item>
+        </ion-list>
+    </section>
+</ion-content>

@@ -1,0 +1,47 @@
+page-term-daily {
+    .term_daily_graph {
+        background-color: #fff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .graph_type {
+            >div:last-child {
+                margin-top: 1.666667rem;
+                display: flex;
+                align-items: center
+            }
+            .type_color {
+                display: inline-block;
+                width: 1.25rem;
+                height: 1.25rem;
+                border-radius: 2px;
+            }
+            .ccc {
+                background-color: #ccc;
+            }
+            .blue {
+                background-color: #29b4ff;
+            }
+            span {
+                font-size: 1.166667em;
+                margin-left: 1.25rem;
+            }
+            .num {
+                font-size: 1.583333em
+            }
+        }
+    }
+    .daily_people {
+        margin-top: 1.25rem
+    }
+    .daily_list_title {
+        line-height: 3.333333rem;
+        border-bottom: .55px solid $border_color;
+        background-color: #fff;
+        font-size: 1.166667em;
+        text-indent: 1.25rem
+    }
+    avatar div {
+        margin: 0
+    }
+}

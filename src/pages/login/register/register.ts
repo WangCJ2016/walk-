@@ -8,7 +8,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  name:'register',
+  segment: 'register'
+})
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',

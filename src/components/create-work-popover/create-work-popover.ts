@@ -1,5 +1,5 @@
 import { Component,Output } from '@angular/core';
-import { IonicPage, NavController, NavParams,PopoverController } from 'ionic-angular';
+import { App, IonicPage, ViewController } from 'ionic-angular';
 /**
  * Generated class for the CreateWorkPopoverComponent component.
  *
@@ -12,10 +12,12 @@ import { IonicPage, NavController, NavParams,PopoverController } from 'ionic-ang
 })
 export class CreateWorkPopoverComponent {
   
-  constructor(public navCtrl: NavController) {
+  constructor(public viewCtrl: ViewController,
+    public appCtrl: App) {
     
   }
   goPage(page: string) {
-    this.navCtrl.push(page)
+    this.viewCtrl.dismiss();
+    this.appCtrl.getRootNav().push(page);
   }
 }

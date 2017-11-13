@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular'
 import { ComponentsModule } from '../components/components.module'
 import { CityPickerModule } from  "ionic2-city-picker"
+import { DirectivesModule } from '../directives/directives.module'
+import {RouterModule, Routes} from '@angular/router';
 
 import { WorkHomePage } from '../pages/work-home/work-home'
 import { WorkCommunityPage } from '../pages/work-community/work-community'
@@ -22,7 +24,9 @@ import { TabsPage } from '../pages/tabs/tabs';
     imports: [
         IonicModule,
         CityPickerModule,
-        ComponentsModule
+        ComponentsModule,
+        DirectivesModule,
+        RouterModule.forRoot([])
     ],
     entryComponents: [
         WorkHomePage,
@@ -40,7 +44,9 @@ import { TabsPage } from '../pages/tabs/tabs';
         WorkUsercenterPage,
         TabsPage,
         ComponentsModule,
-        CityPickerModule
+        CityPickerModule,
+        DirectivesModule,
+        RouterModule
     ]
 })
 

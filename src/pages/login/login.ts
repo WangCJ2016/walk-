@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Store } from '@ngrx/store'
+import * as fromRoot from '../../reducer'
+import * as authActions from '../../actions/auth.action'
 /**
  * Generated class for the LoginPage page.
  *
@@ -8,20 +10,54 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  name: 'login',
+  segment: 'login'
+})
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  phoneNum: number
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private toastCtrl: ToastController,
+              private store$: Store<fromRoot.State>) {
+                
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    this.store$.select(state => state.auth).subscribe(v => console.log(v))
   }
   goPage(page: string) {
     this.navCtrl.push(page)
+  }
+  onSubmit(f,ev: Event) {
+    ev.preventDefault()
+    console.log(f.controls.password.errors)
+    if(f.controls.phoneNum.errors !== null) {
+      let toast = this.toastCtrl.create({
+        message: f.controls.phoneNum.errors.msg,
+        duration: 2000,
+        position: 'middle',
+        dismissOnPageChange: true
+      })
+      toast.present()
+      return
+    }else if(f.controls.password.errors !== null){
+      let toast = this.toastCtrl.create({
+        message: f.controls.password.errors.msg,
+        duration: 2000,
+        position: 'middle',
+        dismissOnPageChange: true
+      })
+      toast.present()
+      return
+    }
+    this.store$.dispatch(new authActions.LoginAction({
+      phoneNum: f.value.phoneNum,
+      password: f.value.password
+    }))
   }
 }

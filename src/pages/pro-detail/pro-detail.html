@@ -1,0 +1,78 @@
+<!--
+  Generated template for the ProDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>项目详情</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]='segment'>
+            <ion-segment-button value="dymanic">
+                动态
+            </ion-segment-button>
+            <ion-segment-button value="shiwu">
+                事务
+            </ion-segment-button>
+            <ion-segment-button value="progress">
+                进度&控制
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <div [ngSwitch]='segment'>
+        <div *ngSwitchCase='"dymanic"'>
+            <div class="period_title" padding (click)='proid_show = !proid_show'>
+                <span>第一阶段(5人)</span>
+                <ion-icon class="arrow" [style.transform]="proid_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+            </div>
+            <ion-list *ngIf="proid_show">
+                <ion-item>
+                    <ion-label>全部成员(15人)</ion-label>
+                    <ion-badge color='danger' item-end>65</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>第一阶段(15人)</ion-label>
+                    <ion-badge color='danger' item-end>65</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>第二阶段(15人)</ion-label>
+                    <ion-badge color='danger' item-end>65</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>第三阶段(15人)</ion-label>
+                    <ion-badge color='danger' item-end>65</ion-badge>
+                </ion-item>
+            </ion-list>
+        </div>
+        <div class="shiwu" *ngSwitchCase='"shiwu"'>
+            <fix-top [fixArray]='fixArray'></fix-top>
+            <!-- <section class="content">
+                <div class="pro_item" padding>
+                    <h4>1.如果项目中的任务，只想让任务参与者能够看到</h4>
+
+                </div>
+            </section> -->
+            <ion-list>
+                <ion-item>
+                    <h4>1.如果项目中的任务，只想让任务参与者能够看到</h4>
+                    <p><span>主办人：张三</span>&nbsp;<span>第一阶段</span>&nbsp;<span>进度80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
+                </ion-item>
+                <ion-item>
+                    <h4>1.需求分析</h4>
+                    <p><span>主办人：张三</span>&nbsp;<span>第一阶段</span>&nbsp;<span>进度80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
+                </ion-item>
+                <ion-item>
+                    <h4>1.界面设计</h4>
+                    <p><span>主办人：张三</span>&nbsp;<span>第一阶段</span>&nbsp;<span>进度80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>

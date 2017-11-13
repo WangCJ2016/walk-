@@ -1,0 +1,15 @@
+<!-- Generated template for the FixTopComponent component -->
+<section class="work_fix_top">
+    <div class="type" *ngFor="let onefix of fixArray; let i=index" [class.checked]='i===typeIndex' (click)='fixClick(i)'>
+        <span>{{onefix.type}}:{{onefix.items[0].name}}</span>
+        <ion-icon name="arrow-down"></ion-icon>
+        <div class="type_item">
+            <ion-list>
+                <ion-item *ngFor="let item of onefix.items" [class.checkedItem]='item.id === itemIndex' (click)='itemClick(item.id,$event)'>
+                    <ion-label>{{item.name}}</ion-label>
+                    <p class="num" item-content>{{item.num?'('+item.num+')':""}}</p>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+</section>

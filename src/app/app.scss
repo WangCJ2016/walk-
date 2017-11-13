@@ -289,6 +289,10 @@ ion-app {
 }
 
 // list item
+ion-list {
+    margin: 0!important
+}
+
 .list-ios>.item-block:first-child {
     border-top: none
 }
@@ -306,7 +310,22 @@ ion-app {
 }
 
 .item-block {
-    min-height: 5rem
+    min-height: 4.166667rem;
+    h4,
+    p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 100%;
+    }
+    .danger {
+        color: #ff2b2b
+    }
+}
+
+.label {
+    flex: none;
+    width: 100%;
 }
 
 .item-input.item-block {
@@ -385,4 +404,53 @@ ion-app {
     .popover-content {
         top: 5rem!important
     }
+}
+
+// 创建通用样式
+.create_add {
+    width: 1.75rem
+}
+
+.create_textarea {
+    textarea {
+        margin: 0 1.25rem!important;
+        height: 8.333333rem;
+        line-height: 1.666667rem
+    }
+}
+
+.changeNumofDay {
+    width: 9.166667rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    .click_action {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        text-align: center;
+        line-height: 2.5rem;
+        color: #ccc;
+        font-size: 1.666667em
+    }
+    .numofday {
+        color: #333;
+        flex: 1;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        font-size: 1.166667em;
+        line-height: 2.5rem
+    }
+}
+
+// toast
+.toast-message {
+    text-align: center
+}
+
+.toast-wrapper {
+    left: 50%!important;
+    transform: translateX(-50%)!important;
 }

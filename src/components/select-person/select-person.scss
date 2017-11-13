@@ -11,7 +11,10 @@ select-person {
             margin-right: 1.25rem
         }
     }
+    .arrow {
+        transition: transform 0.5s
+    }
     ion-list {
-        margin: 0!important
+        margin: 0!important;
     }
 }

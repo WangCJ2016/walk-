@@ -1,4 +1,11 @@
 page-login {
+    .toolbar-background-ios,
+    .toolbar-background-md {
+        background-color: transparent
+    }
+    .header .toolbar:last-child .toolbar-background {
+        border: none
+    }
     .login_bg {
         width: 100%;
         height: 38vh;
@@ -15,6 +22,7 @@ page-login {
             border-radius: 1.833333rem;
             display: flex;
             align-items: center;
+            font-size: 1.166667em;
             label {
                 font-size: 1.25em;
                 margin-left: 1.666667rem;

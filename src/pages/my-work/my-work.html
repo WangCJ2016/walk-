@@ -19,20 +19,7 @@
 
 
 <ion-content>
-    <section class="work_fix_top">
-        <div class="type" *ngFor="let onefix of fixArray; let i=index" [class.checked]='i===typeIndex' (click)='fixClick(i)'>
-            <span>{{onefix.type}}:{{onefix.items[0].name}}</span>
-            <ion-icon name="arrow-down"></ion-icon>
-            <div class="type_item">
-                <ion-list>
-                    <ion-item *ngFor="let item of onefix.items" [class.checkedItem]='item.id === itemIndex' (click)='itemClick(item.id,$event)'>
-                        <ion-label>{{item.name}}</ion-label>
-                        <ion-input value='({{item.num}})'></ion-input>
-                    </ion-item>
-                </ion-list>
-            </div>
-        </div>
-    </section>
+    <fix-top [fixArray]='fixArray'></fix-top>
     <section class="sec_content">
         <ion-list>
             <ion-item>

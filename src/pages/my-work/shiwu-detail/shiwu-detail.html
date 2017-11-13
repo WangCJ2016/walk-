@@ -1,0 +1,130 @@
+<!--
+  Generated template for the ShiwuDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>详情</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]='segment'>
+            <ion-segment-button value="dymanic">
+                动态
+            </ion-segment-button>
+            <ion-segment-button value="detail">
+                事务详情
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <div [ngSwitch]='segment'>
+        <div *ngSwitchCase='"dymanic"'></div>
+        <div *ngSwitchCase='"detail"'>
+            <ion-list>
+                <ion-item>
+                    <p item-start>名称</p>
+                    <span>写公司规章制度</span>
+                    <span class="status_btn" item-end>进行中</span>
+                </ion-item>
+                <ion-item>
+                    <p item-start>描述</p>
+                    <p></p>
+                </ion-item>
+                <ion-item>
+                    <p item-start>附件</p>
+                    <p></p>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <img class="add" item-end src="assets/imgs/work-desk/icon_document.png" alt="">
+                    </ion-label>
+                    <div item-content>
+                        <p>初步文档</p>
+                        <ion-label>2015-06-01 15:05:07</ion-label>
+                    </div>
+                    <img class="add" item-end src="assets/imgs/work-desk/download.png" alt="">
+                </ion-item>
+                <ion-item>
+                    <ion-label item-start>发起人</ion-label>
+                    <avatar item-content name='冰冰'></avatar>
+                    <p item-content>冰冰</p>
+                </ion-item>
+                <ion-item>
+                    <ion-label item-start>主办人</ion-label>
+                    <avatar item-content name='冰冰'></avatar>
+                    <p item-content>冰冰</p>
+                </ion-item>
+                <ion-item>
+                    <ion-label>起始时间</ion-label>
+                    <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+                    <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+                </ion-item>
+                <ion-item>
+                    <ion-label>截止时间</ion-label>
+                    <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+                    <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+                </ion-item>
+                <ion-item style="margin-top: 10px">
+                    <ion-label>
+                        成果&检查项
+                    </ion-label>
+                    <img item-end class="add" src="assets/imgs/work-desk/add.png" alt="">
+                </ion-item>
+                <ion-item-sliding>
+                    <ion-item>
+                        <ion-label>
+                            <img class="add" item-end src="assets/imgs/work-desk/icon_document.png" alt="">
+                        </ion-label>
+                        <div item-content>
+                            <p>初步文档</p>
+                            <ion-label>2015-06-01 15:05:07</ion-label>
+                        </div>
+                        <img class="add" item-end src="assets/imgs/work-desk/download.png" alt="">
+                    </ion-item>
+                    <ion-item-options>
+                        <button ion-button color="danger" (click)="archive()">删除</button>
+                    </ion-item-options>
+                </ion-item-sliding>
+                <ion-item-sliding>
+                    <ion-item>
+                        <ion-label>
+                            <img class="add" item-end src="assets/imgs/work-desk/icon_document.png" alt="">
+                        </ion-label>
+                        <div item-content>
+                            <p>初步文档</p>
+                            <ion-label>2015-06-01 15:05:07</ion-label>
+                        </div>
+                        <img class="add" item-end src="assets/imgs/work-desk/download.png" alt="">
+                    </ion-item>
+                    <ion-item-options>
+                        <button ion-button color="danger" (click)="archive()">删除</button>
+                    </ion-item-options>
+                </ion-item-sliding>
+                <ion-item style="margin-top: 10px">
+                    <ion-label>
+                        子事务
+                    </ion-label>
+                    <img item-end class="add" src="assets/imgs/work-desk/add.png" alt="">
+                </ion-item>
+                <ion-item-sliding>
+                    <ion-item style="border:none">
+                        <ion-label>
+                            <span>需求分析</span>
+                            <p class=""><span>小芳</span> <span>剩余7天</span> <span>已完成90%</span></p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item-options>
+                        <button ion-button color="danger" (click)="archive()">删除</button>
+                    </ion-item-options>
+                </ion-item-sliding>
+            </ion-list>
+            <button ion-button full>提交审核</button>
+        </div>
+    </div>
+</ion-content>

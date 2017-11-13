@@ -1,0 +1,68 @@
+<!-- Generated template for the SelectModalComponent component -->
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">返回</button>
+        </ion-buttons>
+        <ion-title>审批类型</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <div class="type_title" padding (click)='showList("shangji_show")'>
+        <ion-icon class="arrow" [style.transform]="shangji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+        <span>假勤类</span>
+    </div>
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                事假
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                病假
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                休假
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                外勤
+            </ion-label>
+        </ion-item>
+    </ion-list>
+    <div class="type_title" padding (click)='showList("pingji_show")'>
+        <ion-icon class="arrow" [style.transform]="pingji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+        <span>借款类</span>
+    </div>
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                备用金
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                借款
+            </ion-label>
+        </ion-item>
+    </ion-list>
+    <div class="type_title" padding (click)='showList("xiaji_show")'>
+        <ion-icon class="arrow" [style.transform]="xiaji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+        <span>报销类</span>
+    </div>
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                报销
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

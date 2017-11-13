@@ -4,10 +4,15 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { SharedModule } from './shared.modules'
 import { HttpModule } from '@angular/http';
+import { AppStoreModule } from '../reducer'
+import {  AppEffectsModule } from '../effects'
+import deepLinks from './deepLinks'
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CityPickerProvider } from '../providers/city-picker/city-picker';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -16,6 +21,8 @@ import { CityPickerProvider } from '../providers/city-picker/city-picker';
   imports: [
     HttpModule,
     SharedModule,
+    AppStoreModule,
+    AppEffectsModule,
     BrowserModule,
     IonicModule.forRoot(MyApp,{
       backButtonText: '',
@@ -33,7 +40,8 @@ import { CityPickerProvider } from '../providers/city-picker/city-picker';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CityPickerProvider
+    CityPickerProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}

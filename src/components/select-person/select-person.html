@@ -11,11 +11,11 @@
 
 
 <ion-content>
-    <div class="type_title" padding>
-        <ion-icon name="arrow-forward"></ion-icon>
+    <div class="type_title" padding (click)='showList("shangji_show")'>
+        <ion-icon class="arrow" [style.transform]="shangji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
         <span>上级</span>
     </div>
-    <ion-list>
+    <ion-list *ngIf='shangji_show'>
         <ion-item>
             <ion-avatar item-start>
                 <avatar name='冰冰'></avatar>
@@ -24,11 +24,11 @@
             <p>销售总监</p>
         </ion-item>
     </ion-list>
-    <div class="type_title" padding>
-        <ion-icon name="arrow-forward"></ion-icon>
+    <div class="type_title" padding (click)='showList("pingji_show")'>
+        <ion-icon class="arrow" [style.transform]="pingji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
         <span>平级</span>
     </div>
-    <ion-list>
+    <ion-list *ngIf='pingji_show'>
         <ion-item>
             <ion-avatar item-start>
                 <avatar name='冰冰'></avatar>
@@ -37,11 +37,11 @@
             <p>销售总监</p>
         </ion-item>
     </ion-list>
-    <div class="type_title" padding>
-        <ion-icon name="arrow-forward"></ion-icon>
+    <div class="type_title" padding (click)='showList("xiaji_show")'>
+        <ion-icon class="arrow" [style.transform]="xiaji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
         <span>下级</span>
     </div>
-    <ion-list>
+    <ion-list *ngIf='xiaji_show'>
         <ion-item>
             <ion-avatar item-start>
                 <avatar name='冰冰'></avatar>

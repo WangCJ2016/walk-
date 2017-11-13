@@ -1,0 +1,67 @@
+<!--
+  Generated template for the CreateMeetingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>创建会议</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label>名称</ion-label>
+            <ion-input placeholder='请填写名称(必填)'></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>描述</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-textarea class="create_textarea"></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-label>附件</ion-label>
+            <p></p>
+            <img class="create_add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='getfujian()'>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <img class="create_add" item-end src="assets/imgs/work-desk/icon_document.png" alt="">
+            </ion-label>
+            <ion-input value='初步文档'></ion-input>
+            <img class="create_add" item-end src="assets/imgs/work-desk/icon_del.png" alt="">
+        </ion-item>
+        <ion-item style="margin-top: 10px">
+            <ion-label item-start>发起人</ion-label>
+            <avatar item-content name='冰冰'></avatar>
+            <p item-content>冰冰</p>
+            <img class="create_add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
+        </ion-item>
+        <ion-item>
+            <ion-label item-start>主讲人</ion-label>
+            <avatar item-content name='冰冰'></avatar>
+            <p item-content>冰冰</p>
+            <img class="create_add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
+        </ion-item>
+        <ion-item>
+            <ion-label item-start>参会人</ion-label>
+            <avatar item-content name='冰冰'></avatar>
+            <p item-content>冰冰</p>
+            <img class="create_add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
+        </ion-item>
+        <ion-item style="margin-top: 10px">
+            <ion-label>会议时间</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+            <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+        </ion-item>
+    </ion-list>
+    <div padding>
+        <button ion-button full (click)='goPage("ShiwuDetailPage")'>提交</button>
+    </div>
+</ion-content>

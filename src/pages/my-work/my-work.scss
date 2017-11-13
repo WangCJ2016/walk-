@@ -3,44 +3,6 @@ page-my-work {
         position: fixed;
         z-index: 9;
         top: 4.166667rem;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 3.333333rem;
-        .item-input.item-block {
-            min-height: 3.333333rem;
-            font-size: 14px;
-            color: #666!important;
-        }
-        .type {
-            flex: 1;
-            padding: 1.25rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.166667em;
-            background-color: #fff;
-            border-bottom: 1px solid $border_color;
-            ion-icon {
-                margin-left: .833333rem
-            }
-        }
-        .type_item {
-            position: absolute;
-            z-index: -1;
-            width: 100%;
-            top: 3.416667rem;
-            left: 0;
-            transform: translateY(-150%);
-            // transition: transform .5s linear;
-        }
-        .checked .type_item {
-            animation: translateY .5s linear forwards
-        }
-        .checkedItem {
-            background-color: #f0f0f0;
-        }
     }
     .sec_content {
         margin-top: 3.416667rem;
@@ -72,4 +34,8 @@ page-my-work {
             }
         }
     }
+}
+
+.platform-ios .work_fix_top {
+    top: 5.833333rem
 }

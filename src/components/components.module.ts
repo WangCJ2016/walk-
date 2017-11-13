@@ -9,6 +9,8 @@ import { WorkHomePopverComponent } from './work-home-popver/work-home-popver';
 import { CreateWorkPopoverComponent } from './create-work-popover/create-work-popover';
 import { SelectPersonComponent } from './select-person/select-person';
 import { AvatarComponent } from './avatar/avatar';
+import { SelectModalComponent } from './select-modal/select-modal';
+import { FixTopComponent } from './fix-top/fix-top';
 
 @NgModule({
 	declarations: [RoundRangeComponent,
@@ -19,9 +21,11 @@ import { AvatarComponent } from './avatar/avatar';
     CreateWorkPopoverComponent,
     SelectPersonComponent,
     AvatarComponent,
+    SelectModalComponent,
+    FixTopComponent,
     ],
     imports: [IonicModule],
-    entryComponents:[WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent],
+    entryComponents:[WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
 	exports: [RoundRangeComponent,
     BlankComponent,
     DatePickerComponent,
@@ -30,6 +34,8 @@ import { AvatarComponent } from './avatar/avatar';
     CreateWorkPopoverComponent,
     SelectPersonComponent,
     AvatarComponent,
+    SelectModalComponent,
+    FixTopComponent,
     ]
 })
 export class ComponentsModule {}

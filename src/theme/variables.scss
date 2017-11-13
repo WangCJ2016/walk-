@@ -21,7 +21,7 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-$colors: ( primary: #29b4ff, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, kim:#ffb914, dark: #222, twitter: ( base: #55acee, contrast: red));
+$colors: ( primary: #29b4ff, secondary: #3aad1d, danger: #f53d3d, light: #f4f4f4, bingjia:#29b9eb, shijia:#3a87ea, kim:#ffb914, dark: #222, twitter: ( base: #55acee, contrast: red));
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -91,4 +91,7 @@ $button-ios-font-size: 1.25em;
 $popover-ios-width: auto;
 $popover-ios-border-radius: .333333rem;
 $popover-ios-arrow-background:#16233a;
-$popover-ios-background:#16233a
+$popover-ios-background:#16233a;
+// badge
+$badge-font-size: 1rem;
+// toast
