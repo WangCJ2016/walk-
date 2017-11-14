@@ -1,5 +1,5 @@
-import { Component,Output } from '@angular/core';
-import { App, IonicPage, ViewController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { App, ViewController } from 'ionic-angular';
 /**
  * Generated class for the CreateWorkPopoverComponent component.
  *

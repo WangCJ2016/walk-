@@ -2,4 +2,13 @@ page-register {
     ion-list {
         margin-top: .833333rem!important
     }
+    .input{
+        border: none;
+        outline: none;
+        line-height: 2.5rem;
+        color: #333;
+    }
+    input::-webkit-input-placeholder{
+        color: #ccc
+    }
 }

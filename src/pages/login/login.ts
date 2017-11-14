@@ -10,10 +10,7 @@ import * as authActions from '../../actions/auth.action'
  * Ionic pages and navigation.
  */
 
-@IonicPage({
-  name: 'login',
-  segment: 'login'
-})
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

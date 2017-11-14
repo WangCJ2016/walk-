@@ -6,26 +6,34 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>用户注册</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>用户注册</ion-title>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
+  <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
     <ion-list>
-        <ion-item>
-            <ion-label>手机号</ion-label>
-            <ion-input placeholder='请输入手机号' type="number"></ion-input>
-            <get-vercode item-end></get-vercode>
-        </ion-item>
-        <ion-item>
-            <ion-label>验证码</ion-label>
-            <ion-input placeholder='请输入验证码' type="number"></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label fixed>手机号</ion-label>
+        <div item-content>
+          <input class='input' placeholder='请输入手机号' type="number" formControlName='phoneNum' name="phoneNum"/>
+        </div>
+        <div item-end>
+          <get-vercode [disabled]='phoneNumValid' (btnClick)='getVercode($event)'></get-vercode>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>验证码</ion-label>
+        <div item-content>
+          <input class='input' placeholder='请输入验证码' type="number"formControlName='verCode' />
+        </div>
+      </ion-item>
     </ion-list>
     <div padding>
-        <button full ion-button (click)='next()'>下一步</button>
+      <button full ion-button type="submit" [disabled]='!form.valid'>下一步</button>
     </div>
+  </form>
 </ion-content>

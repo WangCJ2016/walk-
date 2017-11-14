@@ -1,5 +1,5 @@
 import { Directive, forwardRef } from '@angular/core';
-import { NG_VALIDATORS, Validator, AbstractControl } from '@angular/forms'
+import { NG_VALIDATORS, AbstractControl } from '@angular/forms'
 /**
  * Generated class for the UserPasswordDirective directive.
  *

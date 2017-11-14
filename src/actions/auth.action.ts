@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Auth} from '../domain';
+import {Auth, Err, User} from '../domain';
 
 export const ActionTypes = {
   LOGIN: type('[Auth] Login'),
@@ -9,7 +9,10 @@ export const ActionTypes = {
   REGISTER: type('[Auth] Register'),
   REGISTER_SUCCESS: type('[Auth] Register Success'),
   REGISTER_FAIL: type('[Auth] Register Fail'),
-  LOGOUT: type('[Auth] Logout')
+  LOGOUT: type('[Auth] Logout'),
+  PASSWORD_VERCOD: type('[Auth] Password_vercode'),
+  PASSWORD_VERCOD_SUCCESS: type('[Auth] Password_vercode_success'),
+  PASSWORD_VERCOD_FAIL: type('[Auth] Password_vercode_fail')
 }
 
 export class LoginAction implements Action {
@@ -22,21 +25,21 @@ export class LoginAction implements Action {
 export class LoginSuccessAction implements Action {
   type = ActionTypes.LOGIN_SUCCESS;
 
-  constructor(public payload: any) {
+  constructor(public payload: Auth) {
   }
 }
 
 export class LoginFailAction implements Action {
   type = ActionTypes.LOGIN_FAIL;
 
-  constructor(public payload: Auth) {
+  constructor(public payload: Err) {
   }
 }
 
 export class RegisterAction implements Action {
   type = ActionTypes.REGISTER;
 
-  constructor(public payload: Auth) {
+  constructor(public payload: {phoneNum: string, verCode: string}) {
   }
 }
 
@@ -50,7 +53,7 @@ export class RegisterSuccessAction implements Action {
 export class RegisterFailAction implements Action {
   type = ActionTypes.REGISTER_FAIL;
 
-  constructor(public payload: Auth) {
+  constructor(public payload: Err) {
   }
 }
 
@@ -60,7 +63,26 @@ export class LogoutAction implements Action {
   constructor(public payload: Auth) {
   }
 }
+export class PasswordVercodeAction implements Action {
+  type = ActionTypes.PASSWORD_VERCOD;
 
+  constructor(public payload: { phoneNum: string, verCode: string }) {
+  }
+}
+
+export class PasswordVercodeSuccessAction implements Action {
+  type = ActionTypes.PASSWORD_VERCOD_SUCCESS;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export class PasswordVercodeFailAction implements Action {
+  type = ActionTypes.PASSWORD_VERCOD_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
 export type Actions
   = LoginAction
   | LoginSuccessAction

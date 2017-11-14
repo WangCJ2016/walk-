@@ -6,7 +6,7 @@ import { SharedModule } from './shared.modules'
 import { HttpModule } from '@angular/http';
 import { AppStoreModule } from '../reducer'
 import {  AppEffectsModule } from '../effects'
-import deepLinks from './deepLinks'
+import { ProvidersModule } from '../providers'
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,6 +23,7 @@ import { AuthProvider } from '../providers/auth/auth';
     SharedModule,
     AppStoreModule,
     AppEffectsModule,
+    ProvidersModule.forRoot(),
     BrowserModule,
     IonicModule.forRoot(MyApp,{
       backButtonText: '',
