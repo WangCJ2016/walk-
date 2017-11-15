@@ -32,7 +32,6 @@ export class LoginPage {
   }
   onSubmit(f,ev: Event) {
     ev.preventDefault()
-    console.log(f.controls.password.errors)
     if(f.controls.phoneNum.errors !== null) {
       let toast = this.toastCtrl.create({
         message: f.controls.phoneNum.errors.msg,

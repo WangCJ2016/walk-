@@ -14,11 +14,27 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CityPickerProvider } from '../providers/city-picker/city-picker';
 import { AuthProvider } from '../providers/auth/auth';
 
+import { WorkHomePageModule } from '../pages/work-home/work-home.module'
+import { WorkCommunityPageModule } from '../pages/work-community/work-community.module'
+import { WorkDeskPageModule } from '../pages/work-desk/work-desk.module'
+import { WorkContactPageModule } from '../pages/work-contact/work-contact.module'
+import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercenter.module'
+
 @NgModule({
   declarations: [
     MyApp,
+    // WorkUsercenterPage,
+    // WorkHomePage,
+    // WorkCommunityPage,
+    // WorkDeskPage,
+    // WorkContactPage,
   ],
   imports: [
+    WorkHomePageModule,
+    WorkCommunityPageModule,
+    WorkDeskPageModule,
+    WorkContactPageModule,
+    WorkUsercenterPageModule,
     HttpModule,
     SharedModule,
     AppStoreModule,

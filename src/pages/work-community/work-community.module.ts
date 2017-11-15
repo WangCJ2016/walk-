@@ -9,5 +9,8 @@ import { WorkCommunityPage } from './work-community';
   imports: [
     IonicPageModule.forChild(WorkCommunityPage),
   ],
+  entryComponents: [
+    WorkCommunityPage
+  ]
 })
 export class WorkCommunityPageModule {}

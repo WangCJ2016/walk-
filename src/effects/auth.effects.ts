@@ -45,7 +45,7 @@ export class AuthEffects {
    
     // forget password
     @Effect() 
-    forgetPassword$: Observable<Action> = this.actions$
+    forgetPasswordgetvercode$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.PASSWORD_VERCOD)
     .map(toPayload)
     .switchMap((val: {phoneNum: string, verCode: string}) => {
@@ -59,7 +59,44 @@ export class AuthEffects {
         path: '/login',
         timestamp: new Date()
     })))
+    
+    @Effect()
+    forgetPassword$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.FORGET_PASSWORD)
+    .map(toPayload)
+    .switchMap(val => Observable.of(1))
+    .map(v => new actions.ForgetPasswordSuccessAction(true))
+    .catch(err => of(new actions.ForgetPasswordFailAction({
+        status: 501,
+        message: err.message,
+        exception: err.stack,
+        path: '/login',
+        timestamp: new Date()
+    })))
+    @Effect()
+    forgetAndHome$: Observable<Action> = this.actions$
+      .ofType(actions.ActionTypes.FORGET_PASSWORD_SUCCESS)
+      .map(() => this.appCtrl.getRootNav().push('WorkUsercenterPage'))
+    
+      // 修改密码
+      @Effect()
+      changePassword$: Observable<Action> = this.actions$
+      .ofType(actions.ActionTypes.CHANGE_PASSWORD)
+      .map(toPayload)
+      .switchMap(val => Observable.of(1))
+      .map(v => new actions.ChangePasswordSuccessAction(true))
+      .catch(err => of(new actions.ChangePasswordFailAction({
+          status: 501,
+          message: err.message,
+          exception: err.stack,
+          path: '/login',
+          timestamp: new Date()
+      })))
 
+      @Effect()
+      changeAndHome$: Observable<Action> = this.actions$
+        .ofType(actions.ActionTypes.CHANGE_PASSWORD_SUCCESS)
+        .map(() => this.appCtrl.getRootNav().push('WorkUsercenterPage'))
     constructor(
         private actions$: Actions,
         public appCtrl: App,

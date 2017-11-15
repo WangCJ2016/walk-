@@ -12,7 +12,13 @@ export const ActionTypes = {
   LOGOUT: type('[Auth] Logout'),
   PASSWORD_VERCOD: type('[Auth] Password_vercode'),
   PASSWORD_VERCOD_SUCCESS: type('[Auth] Password_vercode_success'),
-  PASSWORD_VERCOD_FAIL: type('[Auth] Password_vercode_fail')
+  PASSWORD_VERCOD_FAIL: type('[Auth] Password_vercode_fail'),
+  FORGET_PASSWORD: type('[Auth] Forget_password'),
+  FORGET_PASSWORD_SUCCESS: type('[Auth] Forget_password_success'),
+  FORGET_PASSWORD_FAIL: type('[Auth] Forget_password_fail'),
+  CHANGE_PASSWORD: type('[Auth] Change_password'),
+  CHANGE_PASSWORD_SUCCESS: type('[Auth] Change_password_success'),
+  CHANGE_PASSWORD_FAIL: type('[Auth] Change_password_fail')
 }
 
 export class LoginAction implements Action {
@@ -83,6 +89,49 @@ export class PasswordVercodeFailAction implements Action {
   constructor(public payload: Err) {
   }
 }
+// 找回密码
+export class ForgetPasswordAction implements Action {
+  type = ActionTypes.FORGET_PASSWORD;
+
+  constructor(public payload: { phoneNum: string, newPassword: string }) {
+  }
+}
+
+export class ForgetPasswordSuccessAction implements Action {
+  type = ActionTypes.FORGET_PASSWORD_SUCCESS;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export class ForgetPasswordFailAction implements Action {
+  type = ActionTypes.FORGET_PASSWORD_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
+export class ChangePasswordAction implements Action {
+  type = ActionTypes.CHANGE_PASSWORD;
+
+  constructor(public payload: { oldpassword: string, newpassword: string }) {
+  }
+}
+
+export class ChangePasswordSuccessAction implements Action {
+  type = ActionTypes.CHANGE_PASSWORD_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class ChangePasswordFailAction implements Action {
+  type = ActionTypes.CHANGE_PASSWORD_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
 export type Actions
   = LoginAction
   | LoginSuccessAction
@@ -90,4 +139,13 @@ export type Actions
   | RegisterAction
   | RegisterSuccessAction
   | RegisterFailAction
-  | LogoutAction;
+  | LogoutAction
+  | PasswordVercodeAction
+  | PasswordVercodeSuccessAction
+  | PasswordVercodeFailAction
+  | ForgetPasswordAction
+  | ForgetPasswordSuccessAction
+  | ForgetPasswordFailAction
+  | ChangePasswordAction
+  | ChangePasswordSuccessAction
+  | ChangePasswordFailAction

@@ -5,20 +5,11 @@ import { CityPickerModule } from  "ionic2-city-picker"
 import { DirectivesModule } from '../directives/directives.module'
 
 
-import { WorkHomePage } from '../pages/work-home/work-home'
-import { WorkCommunityPage } from '../pages/work-community/work-community'
-import { WorkDeskPage } from '../pages/work-desk/work-desk'
-import { WorkContactPage } from '../pages/work-contact/work-contact'
-import { WorkUsercenterPage } from '../pages/work-usercenter/work-usercenter'
+
 import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
     declarations: [
-        WorkHomePage,
-        WorkCommunityPage,
-        WorkDeskPage,
-        WorkContactPage,
-        WorkUsercenterPage,
         TabsPage
     ],
     imports: [
@@ -28,19 +19,9 @@ import { TabsPage } from '../pages/tabs/tabs';
         DirectivesModule,
     ],
     entryComponents: [
-        WorkHomePage,
-        WorkCommunityPage,
-        WorkDeskPage,
-        WorkContactPage,
-        WorkUsercenterPage,
         TabsPage
     ],
     exports: [
-        WorkHomePage,
-        WorkCommunityPage,
-        WorkDeskPage,
-        WorkContactPage,
-        WorkUsercenterPage,
         TabsPage,
         ComponentsModule,
         CityPickerModule,

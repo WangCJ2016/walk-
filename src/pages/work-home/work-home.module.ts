@@ -8,5 +8,8 @@ import { WorkHomePage } from './work-home';
   imports: [
     IonicPageModule.forChild(WorkHomePage),
   ],
+  entryComponents:[
+    WorkHomePage
+  ]
 })
 export class WorkHomePageModule {}

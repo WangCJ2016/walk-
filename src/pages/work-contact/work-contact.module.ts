@@ -9,5 +9,8 @@ import { WorkContactPage } from './work-contact';
   imports: [
     IonicPageModule.forChild(WorkContactPage),
   ],
+  entryComponents: [
+    WorkContactPage
+  ]
 })
 export class WorkContactPageModule {}

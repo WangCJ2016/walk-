@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms'
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 
 import { Store } from '@ngrx/store'
@@ -20,37 +20,58 @@ import { AuthProvider } from '../../../providers/auth/auth'
   templateUrl: 'forget-password.html',
 })
 export class ForgetPasswordPage {
-  step='one'
-  st: string
+  step = 'one'
   phoneNum: number
-  phoneNumValid: boolean =  true
+  phoneNumValid: boolean = true
+  verCodeValid: boolean = true
   form: FormGroup
+  form2: FormGroup
   _sub: Subscription
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private service: AuthProvider,
+    private toastCtrl: ToastController,
     private store$: Store<fromRoot.State>) {
 
     this.form = this.fb.group({
-      phoneNum: ['', Validators.compose([Validators.required,Validators.pattern(/^[1][3,4,5,7,8][0-9]{9}$/)])],
-      verCode: ['', Validators.required]
+      verCodeGroup: this.fb.group({
+        phoneNum: ['', Validators.compose([Validators.required, Validators.pattern(/^[1][3,4,5,7,8][0-9]{9}$/)])],
+        verCode: ['', Validators.required],
+      }),
+      newPassword: ['', Validators.required],
     })
-   this.form.get('phoneNum').statusChanges.subscribe(v => this.phoneNumValid = v === 'INVALID'?true:false )
-    this._sub = this.service.getStep().subscribe(v => this.step=v)
+    this._sub = this.service.getStep().subscribe(v => this.step = v)
   }
   ngOnDestroy() {
     this._sub.unsubscribe()
   }
-  
-  getVercode() {}
-  
-  onSubmit({value, valid}, ev: Event) {
+
+  getVercode() { }
+
+  next({ value, valid }, ev: Event) {
     ev.preventDefault()
-    this.form.reset()
     this.store$.dispatch(new actions.PasswordVercodeAction({
       phoneNum: value.phoneNum,
       verCode: value.verCode
     }))
+  }
+  form2submit(f, ev: Event) {
+    if (!f.valid) {
+      const toast = this.toastCtrl.create({
+        message: '请输入一致的密码',
+        duration: 2000,
+        position: 'middle'
+      })
+      toast.present()
+    } else {
+      this.store$.dispatch(
+        new actions.ForgetPasswordAction({
+          phoneNum: this.form.get('verCodeGroup').get('phoneNum').value,
+          newPassword: this.form.get('newPassword').value
+        })
+      )
+      this.form.reset()
+    }
   }
 }

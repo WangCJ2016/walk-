@@ -13,9 +13,8 @@ import { Auth} from '../../domain'
 */
 @Injectable()
 export class AuthProvider {
-  step: string = 'one'
   step1 = new BehaviorSubject<string>('one')
-  st: string = '111'
+  
   constructor(public http: Http) {
     
   }
@@ -30,12 +29,8 @@ export class AuthProvider {
   getStep() {
     return this.step1.asObservable().startWith('')
   }
-  getStep1() {
-    return this.st
-  }
+ 
   setStep() {
-    this.st = '222'
-    this.step = 'two'
     return this.step1.next('two')
   }
 }

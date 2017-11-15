@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { WorkUsercenterPage } from './work-usercenter';
+import { WorkUsercenterPage } from './work-usercenter'
 
 @NgModule({
   declarations: [
@@ -9,5 +9,8 @@ import { WorkUsercenterPage } from './work-usercenter';
   imports: [
     IonicPageModule.forChild(WorkUsercenterPage),
   ],
+  entryComponents: [
+    WorkUsercenterPage
+  ]
 })
 export class WorkUsercenterPageModule {}
