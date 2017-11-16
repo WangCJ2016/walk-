@@ -8,6 +8,11 @@
 
     <ion-navbar>
         <ion-title>所在地</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)='submit()'>
+                完成
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
@@ -16,19 +21,14 @@
 <ion-content>
     <ion-list>
         <ion-item>
-            <ion-label>
+            <ion-label fixed>
                 当前:
             </ion-label>
-            <ion-input readonly='true' value='杭州'></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>省市区选择器</ion-label>
+            <!-- <ion-input readonly='true' value={{cityName}}></ion-input> -->
             <city-picker item-content [cancelText]="'取消'" [doneText]="'完成'" [separator]="'-'" [citiesData]="cityData" [(ngModel)]="cityName" (ionChange)="cityChange($event)">
-
+                {{cityName}}
             </city-picker>
         </ion-item>
-        <p>地区编码： {{code}}
-        </p>
     </ion-list>
 
 

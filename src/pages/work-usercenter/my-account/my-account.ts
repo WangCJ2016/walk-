@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+
+import { Observable } from 'rxjs/Observable'
 /**
  * Generated class for the MyAccountPage page.
  *
@@ -14,12 +16,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'my-account.html',
 })
 export class MyAccountPage {
-
+  auth: Observable<any>
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MyAccountPage');
+    this.auth = this.navParams.data
   }
 
 }

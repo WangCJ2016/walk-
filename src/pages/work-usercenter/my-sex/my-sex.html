@@ -9,7 +9,7 @@
     <ion-navbar>
         <ion-title>性别</ion-title>
         <ion-buttons end>
-            <button ion-button class="complete">
+            <button ion-button class="complete" (click)='submit()'>
               完成
             </button>
         </ion-buttons>
@@ -19,15 +19,15 @@
 
 
 <ion-content>
-    <ion-list radio-group>
+    <ion-list radio-group [(ngModel)]="sex" >
         <ion-item>
             <ion-label>男</ion-label>
-            <ion-radio value="man"></ion-radio>
+            <ion-radio value="male"></ion-radio>
         </ion-item>
 
         <ion-item>
             <ion-label>女</ion-label>
-            <ion-radio value="women"></ion-radio>
+            <ion-radio value="female"></ion-radio>
         </ion-item>
     </ion-list>
 </ion-content>

@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable'
+
+import { Store } from '@ngrx/store'
+import * as fromRoot from '../../reducer'
+
 
 /**
  * Generated class for the WorkUsercenterPage page.
@@ -14,12 +19,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'work-usercenter.html',
 })
 export class WorkUsercenterPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  authImage: Observable<string>
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private store$: Store<fromRoot.State>) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WorkUsercenterPage');
+  ionViewDidEnter(){
+    this.authImage = this.store$.select(state => state.auth.auth.image)
   }
   goPage(page: string) {
     this.navCtrl.push(page)

@@ -13,7 +13,7 @@
 </ion-header>
 <ion-content style="background-color:#f1f1f1">
     <div class="work-usercenter-header" text-center>
-        <img src="assets/imgs/work-usercenter/head.png" (click)='goPage("MymessPage")' alt="" class="header_img">
+        <img [src]="(authImage | async)" (click)='goPage("MymessPage")' alt="" class="header_img">
         <p class="header_title" (click)='goPage("LoginPage")'>登录/注册</p>
     </div>
     <ion-list>

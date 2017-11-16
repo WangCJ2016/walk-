@@ -23,19 +23,19 @@
     </button>
         <button ion-item (click)='goPage("ChangeNamePage")'>
         <ion-label>姓名</ion-label>
-        <span  item-end>张三</span>
+        <span  item-end>{{(auth$ | async)?.name}}</span>
     </button>
-        <button ion-item (click)='goPage("MyAccountPage")'>
+        <button ion-item  (click)='goPage("MyAccountPage",auth$)'>
         <ion-label>账号</ion-label>
-        <span item-end>12222345666</span>
+        <span item-end>{{(auth$ | async)?.account}}</span>
     </button>
         <button ion-item (click)='goPage("MySexPage")'>
         <ion-label>性别</ion-label>
-        <span item-end>男</span>
+        <span item-end>{{(auth$ | async)?.sex}}</span>
     </button>
         <button ion-item (click)='goPage("MyCityPage")'>
         <ion-label>所在地</ion-label>
-        <span item-end>浙江杭州</span>
+        <span item-end>{{(auth$ | async)?.address}}</span>
     </button>
     </ion-list>
 </ion-content>

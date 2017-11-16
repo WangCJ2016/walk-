@@ -9,7 +9,7 @@
     <ion-navbar>
         <ion-title>姓名</ion-title>
         <ion-buttons end>
-            <button ion-button class="complete">
+            <button ion-button class="complete" (click)='submit()'>
               完成
             </button>
         </ion-buttons>
@@ -17,13 +17,9 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content >
     <div class="name_item">
-        <span>张三</span>
-        <ion-icon item-end name="ios-close-circle" class="close"></ion-icon>
-    </div>
-    <div class="name_item">
-        <ion-input placeholder="请输入您的姓名"></ion-input>
-        <ion-icon item-end name="ios-close-circle" class="close"></ion-icon>
+        <ion-input item-start placeholder="请输入您的姓名" [(ngModel)]='name' value="{{(name$ | async)}}" ></ion-input>
+        <ion-icon item-end name="ios-close-circle" class="close" (click)='clear()'></ion-icon>
     </div>
 </ion-content>

@@ -16,7 +16,7 @@
 <ion-content>
     <div class="name_item">
         <span>账号</span>
-        <span>1244543543646</span>
+        <span>{{(auth | async)?.account}}</span>
     </div>
     <p>注：账号不可修改</p>
 </ion-content>

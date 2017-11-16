@@ -27,9 +27,9 @@ export function reducer(state = initialState, action: any ): State {
     imports: [
         SharedModule,
         StoreModule.provideStore(reducer),
-        StoreDevtoolsModule.instrumentOnlyWithExtension({
-          maxAge: 5
-        })
+        // StoreDevtoolsModule.instrumentOnlyWithExtension({
+        //   maxAge: 5
+        // })
     ]
 })
 export class AppStoreModule {}

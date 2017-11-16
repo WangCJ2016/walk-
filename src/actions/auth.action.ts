@@ -18,7 +18,10 @@ export const ActionTypes = {
   FORGET_PASSWORD_FAIL: type('[Auth] Forget_password_fail'),
   CHANGE_PASSWORD: type('[Auth] Change_password'),
   CHANGE_PASSWORD_SUCCESS: type('[Auth] Change_password_success'),
-  CHANGE_PASSWORD_FAIL: type('[Auth] Change_password_fail')
+  CHANGE_PASSWORD_FAIL: type('[Auth] Change_password_fail'),
+  CHANGE: type('[Auth] Change'),
+  CHANGE_SUCCESS: type('[Auth] Change_success'),
+  CHANGE_FAIL: type('[Auth] Change_fail'),
 }
 
 export class LoginAction implements Action {
@@ -110,7 +113,7 @@ export class ForgetPasswordFailAction implements Action {
   constructor(public payload: Err) {
   }
 }
-
+// 修改密码
 export class ChangePasswordAction implements Action {
   type = ActionTypes.CHANGE_PASSWORD;
 
@@ -132,20 +135,48 @@ export class ChangePasswordFailAction implements Action {
   }
 }
 
-export type Actions
-  = LoginAction
-  | LoginSuccessAction
-  | LoginFailAction
-  | RegisterAction
-  | RegisterSuccessAction
-  | RegisterFailAction
-  | LogoutAction
-  | PasswordVercodeAction
-  | PasswordVercodeSuccessAction
-  | PasswordVercodeFailAction
-  | ForgetPasswordAction
-  | ForgetPasswordSuccessAction
-  | ForgetPasswordFailAction
-  | ChangePasswordAction
-  | ChangePasswordSuccessAction
-  | ChangePasswordFailAction
+
+// 修改auth项
+export class ChangeAction implements Action {
+  type = ActionTypes.CHANGE;
+
+  constructor(public payload: { [key:string]: string}) {
+  }
+}
+
+export class ChangeSuccessAction implements Action {
+  type = ActionTypes.CHANGE_SUCCESS;
+
+  constructor(public payload: { [key:string]: string}) {
+  }
+}
+
+export class ChangeFailAction implements Action {
+  type = ActionTypes.CHANGE_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+// export type Actions
+  // = LoginAction
+  // | LoginSuccessAction
+  // | LoginFailAction
+  // | RegisterAction
+  // | RegisterSuccessAction
+  // | RegisterFailAction
+  // | LogoutAction
+  // | PasswordVercodeAction
+  // | PasswordVercodeSuccessAction
+  // | PasswordVercodeFailAction
+  // | ForgetPasswordAction
+  // | ForgetPasswordSuccessAction
+  // | ForgetPasswordFailAction
+  // | ChangePasswordAction
+  // | ChangePasswordSuccessAction
+  // | ChangePasswordFailAction
+  // | ChangeHeadImageAction
+  // | ChangeHeadImageSuccessAction
+  // | ChangeHeadImageFailAction
+  // | ChangeNameAction
+  // | ChangeNameSuccessAction
+  // | ChangeNameFailAction

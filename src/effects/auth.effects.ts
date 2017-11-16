@@ -97,6 +97,26 @@ export class AuthEffects {
       changeAndHome$: Observable<Action> = this.actions$
         .ofType(actions.ActionTypes.CHANGE_PASSWORD_SUCCESS)
         .map(() => this.appCtrl.getRootNav().push('WorkUsercenterPage'))
+   
+    
+    // 修改auth项
+    @Effect()
+    change$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.CHANGE)
+    .map(toPayload)
+    //.switchMap(val => Observable.of(1))
+    .map(v => new actions.ChangeSuccessAction(v))
+    .catch(err => of(new actions.ChangeFailAction({
+        status: 501,
+        message: err.message,
+        exception: err.stack,
+        path: '/login',
+        timestamp: new Date()
+    })))
+    @Effect()
+    ChangeAndHome$: Observable<Action> = this.actions$
+      .ofType(actions.ActionTypes.CHANGE_SUCCESS)
+      .map(() => this.appCtrl.getRootNav().push('MymessPage'))
     constructor(
         private actions$: Actions,
         public appCtrl: App,

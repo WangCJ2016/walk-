@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms'
+import { FormGroup, FormBuilder, Validators} from '@angular/forms'
 
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
