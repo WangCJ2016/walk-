@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'
 
+
 /**
  * Generated class for the MymessPage page.
  *
@@ -46,11 +47,14 @@ export class MymessPage {
               destinationType: this.camera.DestinationType.FILE_URI,
               sourceType: this.camera.PictureSourceType.CAMERA,
               quality: 40,
+              allowEdit: true,
               targetWidth: 400, //照片宽度
               targetHeight: 400
             }
             this.camera.getPicture(options).then((imageData) => {
               this.store$.dispatch(new actions.ChangeAction({image: imageData.replace(/^file:\/\//, '')}))
+              actionSheet.dismiss()
+              return false
              }, (err) => {
               // Handle error
              });
@@ -67,6 +71,7 @@ export class MymessPage {
             }
             this.imagePicker.getPictures(options).then((result) => {
                   this.store$.dispatch(new actions.ChangeAction({image: result[0].replace(/^file:\/\//, '')}))
+                  return false
             }, (err) => { });
           }
         },
@@ -74,14 +79,13 @@ export class MymessPage {
           text: '取消',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         }
       ]
     })
     actionSheet.present();
-  }
-  goPage(page: string, params) {
+ }
+ goPage(page: string, params) {
     this.navCtrl.push(page,params)
   }
 }

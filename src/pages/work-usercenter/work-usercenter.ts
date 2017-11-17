@@ -23,6 +23,7 @@ export class WorkUsercenterPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private store$: Store<fromRoot.State>) {
+      this.authImage = this.store$.select(state => state.auth.auth.image)
   }
   ionViewDidEnter(){
     this.authImage = this.store$.select(state => state.auth.auth.image)

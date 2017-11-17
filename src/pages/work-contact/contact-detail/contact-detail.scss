@@ -6,15 +6,9 @@ page-contact-detail {
             height: 2.333333rem;
         }
     }
-    .name_img {
-        width: 6.666667rem;
-        height: 6.666667rem;
-        border-radius: 50%;
-        margin: 0 auto 1.25rem;
-        text-align: center;
-        color: #fff;
-        line-height: 6.666667rem;
-        font-size: 1.333333em;
+    avatar>div{
+        margin: 0 auto;
+        font-size: 1.75em;
     }
     .name {
         font-size: 1.75em;
@@ -44,10 +38,13 @@ page-contact-detail {
                 background: url(../assets/imgs/work-contact/email.png)no-repeat center center;
                 background-size: contain
             }
-            p {
+            a {
+                display: block;
+                text-decoration: none;
                 font-size: 1.25em;
                 color: #fff;
                 margin-top: 1.25rem 0 1.666667rem;
+                margin: 15px 0;
             }
         }
     }

@@ -1,11 +1,5 @@
 page-work-contact {
-    .avatar {
-        width: 3.333333rem;
-        height: 3.333333rem;
-        background-color: #000000;
-        color: #fff;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 3.333333rem
+    avatar >div{
+        margin: 0
     }
 }

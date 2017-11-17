@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import  { getColor } from '../../../utils' 
+
+import { contact } from '../../../domain'
 /**
  * Generated class for the ContactDetailPage page.
  *
@@ -14,13 +15,14 @@ import  { getColor } from '../../../utils'
   templateUrl: 'contact-detail.html',
 })
 export class ContactDetailPage {
-  bg_color: string
+  contact: contact
+  width: string = '80px'
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.bg_color = getColor()
+    this.contact = this.navParams.data.contact
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactDetailPage');
+    
   }
 
 }

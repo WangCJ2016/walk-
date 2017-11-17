@@ -16,21 +16,21 @@
 <ion-content>
     <section class="top_section">
         <div class="blank"></div>
-        <div class="name_img" [style.backgroundColor]='bg_color'>冰冰</div>
-        <h3 class="name">李冰冰</h3>
+        <avatar name={{contact.name}} [width]='width'></avatar>
+        <h3 class="name">{{contact.name}}</h3>
         <div class="actions">
             <div>
                 <div class="img_bg dymanic"></div>
-                <p>发动态
-                    <p>
+                <a>发动态
+                </a>
             </div>
             <div>
                 <div class="img_bg call"></div>
-                <p>打电话</p>
+                <a href="tel:18868877305">打电话</a>
             </div>
             <div>
                 <div class="img_bg email"></div>
-                <p>发短信</p>
+                <a href="sms:18868877305">发短信</a>
             </div>
         </div>
     </section>
@@ -43,7 +43,7 @@
             </ion-item>
             <ion-item>
                 <ion-label>手机号码</ion-label>
-                <ion-input value='18868877305' readonly='true'></ion-input>
+                <ion-input value={{contact.phoneNum}} readonly='true'></ion-input>
             </ion-item>
         </ion-item-group>
     </section>

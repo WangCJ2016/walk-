@@ -15,6 +15,8 @@ export class AvatarComponent {
   @Input() name: string = 'name'
   style: any
   constructor() {
+  }
+  ngOnChanges() {
     this.style = {
       width: this.width,
       height: this.width,
@@ -22,5 +24,4 @@ export class AvatarComponent {
       lineHeight: this.width
     }
   }
-
 }

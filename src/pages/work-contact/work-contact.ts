@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { pySegSort, getColor } from '../../utils'
+import { pySegSort } from '../../utils'
+
+import { Store } from '@ngrx/store'
+import * as fromRoot from '../../reducer'
+import { contact } from '../../domain'
 /**
  * Generated class for the WorkContactPage page.
  *
@@ -9,7 +13,7 @@ import { pySegSort, getColor } from '../../utils'
  */
 interface contactItem{
   letter: string,
-  data: Array<string>
+  data: Array<contact>
 }
 @IonicPage()
 @Component({
@@ -17,19 +21,20 @@ interface contactItem{
   templateUrl: 'work-contact.html',
 })
 export class WorkContactPage {
-  nameArray: Array<string> = ['李冰冰','王冰冰','赵冰冰']
+  nameArray: Array<any> 
   contactArray: Array<contactItem>
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.contactArray = pySegSort(this.nameArray)
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private store$: Store<fromRoot.State>
+  ) {
+    this.store$.select(store => store.contacts.contacts).subscribe(v => this.nameArray = v)
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WorkContactPage');
+    this.contactArray = pySegSort(this.nameArray)
   }
-  goPage(page: string) {
-    this.navCtrl.push(page)
+  goPage(page: string, param) {
+    this.navCtrl.push(page,{contact: param})
   }
-  getColor(): string {
-    return getColor()
-  }
+ 
 }

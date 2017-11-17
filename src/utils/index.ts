@@ -1,17 +1,23 @@
-export function pySegSort(arr) {
+import { contact } from '../domain'
+interface data {
+    letter: string,
+    data: Array<contact>
+}
+export function pySegSort(arr1) {
     var letters = "*abcdefghjklmnopqrstwxyz".split('');
     var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
-    var segs = [];
+    let segs: Array<data> = []
     var curr;
+    console.log(arr1)
     letters.forEach(function(item,i){
         curr = {letter: item, data:[]};
-        arr.forEach(function(item2){
-            if((!zh[i-1] || zh[i-1].localeCompare(item2,'zh') <= 0) && item2.localeCompare(zh[i],'zh') == -1) {
+        arr1.forEach(function(item2){
+            if((!zh[i-1] || zh[i-1].localeCompare(item2.name,'zh') <= 0) && item2.name.localeCompare(zh[i],'zh') == -1) {
                 curr.data.push(item2);
             }
         });
         if(curr.data.length) {
-            segs.push(curr);
+            segs.push(curr)
             curr.data.sort(function(a,b){
                 return a.localeCompare(b,'zh');
             });
@@ -26,3 +32,5 @@ export function getColor():string{
     return colorArray[num]
     
   }
+
+  export * from './type.util'

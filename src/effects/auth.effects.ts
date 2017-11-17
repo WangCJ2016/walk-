@@ -7,6 +7,7 @@ import {of} from 'rxjs/observable/of';
 
 import { AuthProvider} from '../providers'
 import * as actions from '../actions/auth.action'
+import { retry } from 'rxjs/operator/retry';
 
 @Injectable()
 export class AuthEffects {
@@ -116,7 +117,18 @@ export class AuthEffects {
     @Effect()
     ChangeAndHome$: Observable<Action> = this.actions$
       .ofType(actions.ActionTypes.CHANGE_SUCCESS)
-      .map(() => this.appCtrl.getRootNav().push('MymessPage'))
+      .map(_ =>{
+         this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1].pop()
+         return new actions.ChangeFailAction({
+            status: 501,
+            message: 'err.message',
+            exception: 'err.stack',
+            path: '/login',
+            timestamp: new Date()
+        })
+        } 
+        )
+   //.do(() => console.log(this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1]))
     constructor(
         private actions$: Actions,
         public appCtrl: App,

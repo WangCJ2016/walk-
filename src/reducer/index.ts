@@ -3,19 +3,24 @@ import { StoreModule, combineReducers, ActionReducer } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SharedModule} from '../app/shared.modules'
 import * as fromAuth from './auth.reducer';
+import * as fromContacts from './contact.reducer'
+import { from } from 'rxjs/observable/from';
 
 
 
 export interface State {
-         auth: fromAuth.State
+         auth: fromAuth.State,
+         contacts: fromContacts.State
 };
 
 const initialState: State = {
-        auth: fromAuth.initialState
+        auth: fromAuth.initialState,
+        contacts: fromContacts.initialState
 };
 
 const reducers = {
-    auth: fromAuth.reducer
+    auth: fromAuth.reducer,
+    contacts: fromContacts.reducer
 }
 const productionReducers: ActionReducer<State> = combineReducers(reducers)
 // const developmentReducers: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers)

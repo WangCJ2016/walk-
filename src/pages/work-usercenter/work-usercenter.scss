@@ -1,11 +1,4 @@
 page-work-usercenter {
-    .toolbar-background,
-    ion-navbar,
-    ion-header {
-        background: transparent !important;
-        background-color: transparent !important;
-    }
-    .header-md::after,
     .toolbar-background-ios {
         background-image: none;
         border-bottom: none!important;
@@ -17,7 +10,6 @@ page-work-usercenter {
         .header_img {
             width: 6.666667rem;
             height: 6.666667rem;
-            margin-top: 1.833333rem;
             border-radius: 50%;
         }
         .header_title {
