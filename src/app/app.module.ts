@@ -13,6 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker'
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { CityPickerProvider } from '../providers/city-picker/city-picker';
 import { AuthProvider } from '../providers/auth/auth';
@@ -57,6 +58,7 @@ import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercent
     MyApp,
   ],
   providers: [
+    Geolocation,
     ImagePicker,
     Camera,
     StatusBar,

@@ -7,7 +7,7 @@ import {of} from 'rxjs/observable/of';
 
 import { AuthProvider} from '../providers'
 import * as actions from '../actions/auth.action'
-import { retry } from 'rxjs/operator/retry';
+
 
 @Injectable()
 export class AuthEffects {

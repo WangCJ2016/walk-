@@ -44,6 +44,32 @@ page-attence {
             background-size: 100% 100%;
         }
     }
+    .pics{
+        background-color: #fff;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        .pic{
+            padding: .416667rem 0;
+            position: relative;
+        }
+        img{
+            width: 4.166667rem;
+            height: 4.166667rem;
+            margin-left: .833333rem;
+
+        }
+        ion-badge{
+            position: absolute;
+            width: 1.083333rem;
+            height: 1.083333rem;
+            padding: .833333rem;
+            padding: 0;
+            right: 0;
+            top: 0;
+            transform: translate(50%,-50%)
+        }
+    }
     .attendec_button {
         width: 11.666667rem;
         height: 11.666667rem;

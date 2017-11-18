@@ -12,6 +12,7 @@ import { AvatarComponent } from './avatar/avatar';
 import { SelectModalComponent } from './select-modal/select-modal';
 import { FixTopComponent } from './fix-top/fix-top';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password';
+import { MapComponent } from './map/map';
 
 @NgModule({
 	declarations: [RoundRangeComponent,
@@ -25,6 +26,7 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password';
     SelectModalComponent,
     FixTopComponent,
     ConfirmPasswordComponent,
+    MapComponent,
     ],
     imports: [IonicModule],
     entryComponents:[WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
@@ -39,6 +41,7 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password';
     SelectModalComponent,
     FixTopComponent,
     ConfirmPasswordComponent,
+    MapComponent,
     ]
 })
 export class ComponentsModule {}

@@ -1,4 +1,5 @@
 import { contact } from '../domain'
+import { retry } from 'rxjs/operator/retry';
 interface data {
     letter: string,
     data: Array<contact>
@@ -25,7 +26,7 @@ export function pySegSort(arr1) {
     });
     return segs;
 }
-
+// 获取随机颜色
 export function getColor():string{
     const colorArray= ['#5ed14f','#36b3a4','#4da9eb','#5e97f6','#5c6bc0','#9a7ddd','#bd84cd','#b38979','#ffa200','#f2525e']
     const num = Math.floor(Math.random()*10)
@@ -33,4 +34,30 @@ export function getColor():string{
     
   }
 
+// 获取星期几
+export function getWeekDay(num:number): string {
+    switch(num) {
+        case 0:{
+            return '星期天'
+        }
+        case 1:{
+            return '星期一'
+        }
+        case 2:{
+            return '星期二'
+        }
+        case 3:{
+            return '星期三'
+        }
+        case 4:{
+            return '星期四'
+        }
+        case 5:{
+            return '星期五'
+        }
+        case 6:{
+            return '星期六'
+        }
+    }
+}
   export * from './type.util'

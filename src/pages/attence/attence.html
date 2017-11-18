@@ -16,18 +16,28 @@
 <ion-content>
     <div class="attence_time">
         <img class="today" src="assets/imgs/attence/iocn_today.png" alt="">
-        <span>2015-06-18</span>
-        <span>星期三</span>
+        <span>{{date|date:"y-M-d"}}</span>
+        <span>{{weekDay}}</span>
     </div>
     <div class="attence_address">
         <img class="loc" src="assets/imgs/attence/icon_loc.png" alt="">
         <span>当前位置</span>
         <span>杭州西湖区花蒋璐428号久良科技</span>
     </div>
-    <div class="map" style="height:200px"></div>
+    <div class="map" #map_container style="height:200px">
+        <map></map>
+    </div>
     <div class="beizhu">
         <span>备注</span>
-        <i class="icon_camera"></i>
+        <i class="icon_camera" (click)='takePhotos()'></i>
+    </div>
+    <div class="pics">
+        <div class="pic" *ngFor="let pic of pics;let i=index">
+                <img [src]="pic" alt="" >
+                <ion-badge color='danger' (click)='delPic(index)'  item-end>
+                        <ion-icon name="close"></ion-icon>
+                </ion-badge>
+        </div>
     </div>
     <div class="attendec_button">
         <span></span>
