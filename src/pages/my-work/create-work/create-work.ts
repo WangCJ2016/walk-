@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ActionSheetController,ModalController } from 'ionic-angular';
 import { SelectPersonComponent } from '../../../components/select-person/select-person'
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { ImagePicker } from '@ionic-native/image-picker';
+
+import { FileModalComponent } from '../../../components/file-modal/file-modal'
 /**
  * Generated class for the CreateWorkPage page.
  *
@@ -15,7 +20,13 @@ import { SelectPersonComponent } from '../../../components/select-person/select-
 })
 export class CreateWorkPage {
 
-  constructor(public modalCtrl: ModalController,public navCtrl: NavController, public navParams: NavParams, private actionSheetCtrl: ActionSheetController) {
+  constructor(public modalCtrl: ModalController,
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private actionSheetCtrl: ActionSheetController,
+    private file: File,
+    private transfer: FileTransfer,
+    private imagePicker: ImagePicker) {
   }
 
   ionViewDidLoad() {
@@ -24,6 +35,7 @@ export class CreateWorkPage {
   
   getfujian() {  
     let actionSheet = this.actionSheetCtrl.create({
+      title: ' ',
       buttons: [
         {
           text: '拍摄',
@@ -32,7 +44,7 @@ export class CreateWorkPage {
           }
         },
         {
-          text: '照片',
+          text: '拍照',
           handler: () => {
             console.log('Archive clicked');
           }
@@ -40,8 +52,23 @@ export class CreateWorkPage {
         {
           text: '手机文件',
           handler: () => {
-            console.log('Archive clicked');
-          }
+            // const fileTransfer: FileTransferObject = this.transfer.create();
+            // const options = {}
+            // this.imagePicker.getPictures(options).then((results) => {
+            //   const fileTransfer: FileTransferObject = this.transfer.create();
+            //   for (var i = 0; i < results.length; i++) {
+            //       console.log('Image URI: ' + results[i]);
+            //       const url = this.file.dataDirectory+'work++/';
+            //       fileTransfer.download(results[i], url)
+            //       .then((entry) => {
+            //         console.log('download complete: ' + entry.toURL());
+            //       }, (error) => {
+            //         console.log(error)
+            //       });
+            //   }
+            // }, (err) => { });
+           
+          },
         },
         {
           text: '取消',
@@ -61,4 +88,5 @@ export class CreateWorkPage {
   goPage(page: string) {
     this.navCtrl.push(page)
   }
+  
 }

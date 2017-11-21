@@ -22,10 +22,10 @@
     <div class="attence_address">
         <img class="loc" src="assets/imgs/attence/icon_loc.png" alt="">
         <span>当前位置</span>
-        <span>杭州西湖区花蒋璐428号久良科技</span>
+        <span class="address">{{address}}</span>
     </div>
     <div class="map" #map_container style="height:200px">
-        <map></map>
+        <map (address)='getAdress($event)'></map>
     </div>
     <div class="beizhu">
         <span>备注</span>
@@ -39,9 +39,9 @@
                 </ion-badge>
         </div>
     </div>
-    <div class="attendec_button">
+    <div class="attendec_button" (click)='signinorup()'>
         <span></span>
-        <span>签到</span>
+        <span>{{attenceTitle}}</span>
         <span class="time">{{date|date:"HH:mm:ss"}}</span>
         <span></span>
     </div>

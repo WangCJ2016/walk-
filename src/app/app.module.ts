@@ -14,6 +14,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker'
 import { Geolocation } from '@ionic-native/geolocation';
+import { Keyboard } from '@ionic-native/keyboard';
+import { File } from '@ionic-native/file';
+import { FileTransfer} from '@ionic-native/file-transfer';
 
 import { CityPickerProvider } from '../providers/city-picker/city-picker';
 import { AuthProvider } from '../providers/auth/auth';
@@ -58,6 +61,9 @@ import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercent
     MyApp,
   ],
   providers: [
+    FileTransfer,
+    File,
+    Keyboard,
     Geolocation,
     ImagePicker,
     Camera,

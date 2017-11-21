@@ -26,16 +26,16 @@
         <ion-item>
             <ion-label>附件</ion-label>
             <p></p>
-            <img class="add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='getfujian()'>
+            <img class="add"  item-end src="assets/imgs/work-desk/add.png" alt="" (click)='addDoc()'>
         </ion-item>
         <ion-item>
             <ion-label>
-                <img class="add" item-end src="assets/imgs/work-desk/icon_document.png" alt="">
+                <img class="add"  item-end src="assets/imgs/work-desk/icon_document.png" alt="">
             </ion-label>
             <ion-input value='初步文档'></ion-input>
-            <img class="add" item-end src="assets/imgs/work-desk/icon_del.png" alt="">
+            <img class="add"  item-end src="assets/imgs/work-desk/icon_del.png" alt="">
         </ion-item>
-        <ion-item style="margin-top: 10px">
+        <ion-item style="margin-top: 10px" >
             <ion-label item-start>发起人</ion-label>
             <avatar item-content name='冰冰'></avatar>
             <p item-content>冰冰</p>
@@ -60,5 +60,8 @@
     </ion-list>
     <div class="submit_btn" padding>
         <button ion-button full (click)='goPage("ShiwuDetailPage")'>提交</button>
+    </div>
+    <div class="submit_btn" padding>
+        <button ion-button full (click)='getfujian()'>提交</button>
     </div>
 </ion-content>

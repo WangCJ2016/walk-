@@ -1,0 +1,25 @@
+<!-- Generated template for the FooterInputComponent component -->
+<div class="footer_input" #inputcase>
+  <div class="inputcase" >
+    <img class="yuyin icon" src="assets/imgs/attence/sound.png" alt="">
+    <div class="input">
+      <ion-input type="text" #input (ionFocus)='inputFocus()'></ion-input>
+    </div>
+    <img class="face icon" src="assets/imgs/attence/icon_face.png" alt="">
+    <img class="more icon" src="assets/imgs/attence/more.png" (click)='moreClick()' alt="">
+  </div>
+  <div class="more_input" #more *ngIf='moreShow'>
+    <figure>
+      <img src="assets/imgs/work-desk/camera.png" alt="">
+      <figcaption>相机</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/imgs/work-desk/takephoto.png" alt="">
+      <figcaption>拍摄</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/imgs/work-desk/loc.png" alt="">
+      <figcaption>当前位置</figcaption>
+    </figure>
+  </div>
+</div>

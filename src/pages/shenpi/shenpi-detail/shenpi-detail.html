@@ -26,14 +26,7 @@
 <ion-content>
     <div [ngSwitch]=[(shenpiType)]>
         <div class="dynamic" *ngSwitchCase="'dynamic'">
-            <div class="inputcase">
-                <img class="yuyin icon" src="assets/imgs/attence/sound.png" alt="">
-                <div class="input">
-                    <input type="text">
-                </div>
-                <img class="face icon" src="assets/imgs/attence/icon_face.png" alt="">
-                <img class="more icon" src="assets/imgs/attence/more.png" alt="">
-            </div>
+            <footer-input></footer-input>       
         </div>
         <div class="detail" *ngSwitchCase="'detail'">
             <ion-list>

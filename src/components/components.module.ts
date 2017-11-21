@@ -13,6 +13,8 @@ import { SelectModalComponent } from './select-modal/select-modal';
 import { FixTopComponent } from './fix-top/fix-top';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password';
 import { MapComponent } from './map/map';
+import { FooterInputComponent } from './footer-input/footer-input';
+import { FileModalComponent } from './file-modal/file-modal';
 
 @NgModule({
 	declarations: [RoundRangeComponent,
@@ -27,6 +29,8 @@ import { MapComponent } from './map/map';
     FixTopComponent,
     ConfirmPasswordComponent,
     MapComponent,
+    FooterInputComponent,
+    FileModalComponent,
     ],
     imports: [IonicModule],
     entryComponents:[WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
@@ -42,6 +46,8 @@ import { MapComponent } from './map/map';
     FixTopComponent,
     ConfirmPasswordComponent,
     MapComponent,
+    FooterInputComponent,
+    FileModalComponent,
     ]
 })
 export class ComponentsModule {}
