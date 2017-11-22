@@ -1,0 +1,20 @@
+fujian-formcontrol {
+    .form_item{
+        background-color: #fff;
+        height: 4.166667rem;
+        display: flex;
+        padding: 0 1.25rem;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.166667em;
+        p{
+            flex: 1;
+            margin-left: .833333rem
+        }
+        .pic{
+            width: 3.333333rem;
+            height: 3.333333rem;
+            margin-left: .833333rem;
+        }
+    }
+}

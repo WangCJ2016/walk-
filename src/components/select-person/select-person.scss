@@ -17,4 +17,7 @@ select-person {
     ion-list {
         margin: 0!important;
     }
+    .list-ios > .item-block:last-child{
+        border-bottom: 0.55px solid $border_color;
+    }
 }

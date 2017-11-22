@@ -1,0 +1,19 @@
+<!-- Generated template for the FujianFormcontrolComponent component -->
+
+  <div class="form_item">
+      <label for="">附件</label>
+      <img class="add" (click)='getfujian()' src="assets/imgs/work-desk/add.png" alt="">
+  </div>
+  <div class="form_item"  *ngFor="let doc of selectData.selectDoc; let i=index">
+    <img class="add" src="assets/imgs/work-desk/icon_document.png" alt="">
+    <p>{{doc.name}}</p>
+    <img class="add" src="assets/imgs/work-desk/icon_del.png" (click)='del("doc",i)' alt="">
+  </div>
+  <div class="form_item" *ngFor="let pic of selectData.selectCamera; let i=index">
+      <img class="pic"  src={{pic._url}} alt="">
+      <img class="add" src="assets/imgs/work-desk/icon_del.png" (click)='del("camera",i)' alt="">
+  </div>
+  <div class="form_item" *ngFor="let pic of selectData.selectImages; let i=index">
+      <img class="pic" src={{pic._url}} alt="">
+      <img class="add" src="assets/imgs/work-desk/icon_del.png" (click)='del("image",i)' alt="">
+  </div>

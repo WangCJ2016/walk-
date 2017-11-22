@@ -15,6 +15,9 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password';
 import { MapComponent } from './map/map';
 import { FooterInputComponent } from './footer-input/footer-input';
 import { FileModalComponent } from './file-modal/file-modal';
+import { FujianFormcontrolComponent } from './fujian-formcontrol/fujian-formcontrol';
+import { InitalmemberFormcontrolComponent } from './initalmember-formcontrol/initalmember-formcontrol';
+
 
 @NgModule({
 	declarations: [RoundRangeComponent,
@@ -31,9 +34,11 @@ import { FileModalComponent } from './file-modal/file-modal';
     MapComponent,
     FooterInputComponent,
     FileModalComponent,
+    FujianFormcontrolComponent,
+    InitalmemberFormcontrolComponent,
     ],
     imports: [IonicModule],
-    entryComponents:[WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
+    entryComponents:[FileModalComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
 	exports: [RoundRangeComponent,
     BlankComponent,
     DatePickerComponent,
@@ -48,6 +53,8 @@ import { FileModalComponent } from './file-modal/file-modal';
     MapComponent,
     FooterInputComponent,
     FileModalComponent,
+    FujianFormcontrolComponent,
+    InitalmemberFormcontrolComponent,
     ]
 })
 export class ComponentsModule {}

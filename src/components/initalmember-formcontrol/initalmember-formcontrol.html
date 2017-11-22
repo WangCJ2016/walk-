@@ -1,0 +1,9 @@
+<!-- Generated template for the InitalmemberFormcontrolComponent component -->
+<div class="member_formcontrol">
+  <span>{{title}}</span>
+  <div *ngIf='person.name'>
+    <avatar name={{person.name}} ></avatar>
+    <p >{{person.name}}</p>
+  </div>
+  <img class="add" src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
+</div>

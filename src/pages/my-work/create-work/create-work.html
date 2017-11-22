@@ -6,62 +6,41 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>创建事务</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>创建事务</ion-title>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
+  <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
     <ion-list>
-        <ion-item>
-            <ion-label>名称</ion-label>
-            <ion-input placeholder='请填写名称(必填)'></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>描述</ion-label>
-            <ion-textarea></ion-textarea>
-        </ion-item>
-        <ion-item>
-            <ion-label>附件</ion-label>
-            <p></p>
-            <img class="add"  item-end src="assets/imgs/work-desk/add.png" alt="" (click)='addDoc()'>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                <img class="add"  item-end src="assets/imgs/work-desk/icon_document.png" alt="">
-            </ion-label>
-            <ion-input value='初步文档'></ion-input>
-            <img class="add"  item-end src="assets/imgs/work-desk/icon_del.png" alt="">
-        </ion-item>
-        <ion-item style="margin-top: 10px" >
-            <ion-label item-start>发起人</ion-label>
-            <avatar item-content name='冰冰'></avatar>
-            <p item-content>冰冰</p>
-            <img class="add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
-        </ion-item>
-        <ion-item>
-            <ion-label item-start>主办人</ion-label>
-            <avatar item-content name='冰冰'></avatar>
-            <p item-content>冰冰</p>
-            <img class="add" item-end src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
-        </ion-item>
-        <ion-item style="margin-top: 10px">
-            <ion-label>起始时间</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-            <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-        </ion-item>
-        <ion-item>
-            <ion-label>截止时间</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-            <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-        </ion-item>
+      <ion-item>
+        <ion-label>名称</ion-label>
+        <ion-input formControlName='fullName' name='fullName'  placeholder='请填写名称(必填)'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>描述</ion-label>
+        <ion-textarea ></ion-textarea>
+      </ion-item>
+      <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
+      <initalmember-formcontrol formControlName='faqiren' style="margin-top:10px"></initalmember-formcontrol>
+      <initalmember-formcontrol formControlName='zhubanren' title='主办人'></initalmember-formcontrol>
+      
+      <ion-item style="margin-top: 10px">
+        <ion-label>起始时间</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="myDate" ></ion-datetime>
+        <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+      </ion-item>
+      <ion-item>
+        <ion-label>截止时间</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="myDate" ></ion-datetime>
+        <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+      </ion-item>
     </ion-list>
     <div class="submit_btn" padding>
-        <button ion-button full (click)='goPage("ShiwuDetailPage")'>提交</button>
+      <button ion-button full (click)='goPage("ShiwuDetailPage")'>提交</button>
     </div>
-    <div class="submit_btn" padding>
-        <button ion-button full (click)='getfujian()'>提交</button>
-    </div>
+  </form>
 </ion-content>

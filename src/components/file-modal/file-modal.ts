@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { File } from '@ionic-native/file';
+import { ViewController } from 'ionic-angular'
 /**
  * Generated class for the FileModalComponent component.
  *
@@ -11,12 +12,20 @@ import { Component } from '@angular/core';
   templateUrl: 'file-modal.html'
 })
 export class FileModalComponent {
-
-  text: string;
-
-  constructor() {
-    console.log('Hello FileModalComponent Component');
-    this.text = 'Hello World';
+  files: Array<any>
+  selectFile
+  constructor(private file: File,
+    private viewCtrl: ViewController
+    ) {
+    this.file.listDir(this.file.dataDirectory, '')
+    .then(res => {
+      this.files = res
+    })
   }
-
+  submit() {
+    this.viewCtrl.dismiss(this.files[this.selectFile])
+  }
+  dismiss() {
+    this.viewCtrl.dismiss()
+  }
 }

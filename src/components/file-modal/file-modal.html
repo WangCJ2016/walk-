@@ -1,25 +1,23 @@
 <ion-header>
   
       <ion-navbar>
-          <ion-buttons start>
+          <ion-title>我的文件</ion-title>
+          <ion-buttons end>
               <button ion-button (click)="dismiss()">取消</button>
           </ion-buttons>
-          <ion-title>我的文件</ion-title>
       </ion-navbar>
   
   </ion-header>
 
   
   <ion-content>
-     <ion-list radio-group>
-      <ion-item>
-        <ion-label>Go</ion-label>
-        <ion-radio checked="true" value="go"></ion-radio>
-      </ion-item>
-    
-      <ion-item>
-        <ion-label>Rust</ion-label>
-        <ion-radio value="rust"></ion-radio>
+     <ion-list radio-group [(ngModel)]='selectFile'>
+      <ion-item *ngFor="let file of files; let i=index">
+        <ion-label>{{file.name}}</ion-label>
+        <ion-radio value={{i}}></ion-radio>
       </ion-item>
      </ion-list>
   </ion-content>
+  <ion-footer>
+    <button ion-button full (click)='submit()' style="margin: 0; border-radius: 0">确认</button>
+  </ion-footer>

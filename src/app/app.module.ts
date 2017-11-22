@@ -30,11 +30,6 @@ import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercent
 @NgModule({
   declarations: [
     MyApp,
-    // WorkUsercenterPage,
-    // WorkHomePage,
-    // WorkCommunityPage,
-    // WorkDeskPage,
-    // WorkContactPage,
   ],
   imports: [
     WorkHomePageModule,
