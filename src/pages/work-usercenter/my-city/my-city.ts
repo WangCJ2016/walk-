@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CityPickerProvider } from '../../../providers/city-picker/city-picker'
 
-import { Observable } from 'rxjs/Observable'
-import { Auth } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'

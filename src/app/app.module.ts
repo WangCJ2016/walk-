@@ -26,6 +26,7 @@ import { WorkCommunityPageModule } from '../pages/work-community/work-community.
 import { WorkDeskPageModule } from '../pages/work-desk/work-desk.module'
 import { WorkContactPageModule } from '../pages/work-contact/work-contact.module'
 import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercenter.module'
+import { ToastSitutionProvider } from '../providers/toast-sitution/toast-sitution';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercent
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CityPickerProvider,
-    AuthProvider
+    AuthProvider,
+    ToastSitutionProvider
   ]
 })
 export class AppModule {}

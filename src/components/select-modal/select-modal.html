@@ -12,54 +12,54 @@
 
 
 <ion-content>
-    <div class="type_title" padding (click)='showList("shangji_show")'>
-        <ion-icon class="arrow" [style.transform]="shangji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+    <div class="type_title" padding (click)='showList("jiaqin_show")'>
+        <ion-icon class="arrow" [style.transform]="jiaqin_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
         <span>假勤类</span>
     </div>
-    <ion-list>
-        <ion-item>
+    <ion-list *ngIf='jiaqin_show'>
+        <ion-item (click)='selecttype("事假")'>
             <ion-label>
                 事假
             </ion-label>
         </ion-item>
-        <ion-item>
+        <ion-item (click)='selecttype("病假")'>
             <ion-label>
                 病假
             </ion-label>
         </ion-item>
-        <ion-item>
+        <ion-item (click)='selecttype("休假")'>
             <ion-label>
                 休假
             </ion-label>
         </ion-item>
-        <ion-item>
+        <ion-item (click)='selecttype("外勤")'>
             <ion-label>
                 外勤
             </ion-label>
         </ion-item>
     </ion-list>
-    <div class="type_title" padding (click)='showList("pingji_show")'>
-        <ion-icon class="arrow" [style.transform]="pingji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+    <div class="type_title" padding (click)='showList("jiekuan_show")'>
+        <ion-icon class="arrow" [style.transform]="jiekuan_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
         <span>借款类</span>
     </div>
-    <ion-list>
-        <ion-item>
+    <ion-list *ngIf='jiekuan_show'>
+        <ion-item (click)='selecttype("备用金")'>
             <ion-label>
                 备用金
             </ion-label>
         </ion-item>
-        <ion-item>
+        <ion-item (click)='selecttype("借款")'>
             <ion-label>
                 借款
             </ion-label>
         </ion-item>
     </ion-list>
-    <div class="type_title" padding (click)='showList("xiaji_show")'>
-        <ion-icon class="arrow" [style.transform]="xiaji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+    <div class="type_title" padding (click)='showList("baoxiao_show")'>
+        <ion-icon class="arrow" [style.transform]="baoxiao_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
         <span>报销类</span>
     </div>
-    <ion-list>
-        <ion-item>
+    <ion-list *ngIf='baoxiao_show'>
+        <ion-item (click)='selecttype("报销")'>
             <ion-label>
                 报销
             </ion-label>

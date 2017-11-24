@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Observable } from 'rxjs/Observable'
-import { Auth } from '../../../domain'
+
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'

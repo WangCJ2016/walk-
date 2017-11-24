@@ -11,14 +11,19 @@ import { ViewController } from 'ionic-angular'
   templateUrl: 'select-modal.html'
 })
 export class SelectModalComponent {
-  shangji_show: boolean = true
-  pingji_show: boolean = true
-  xiaji_show: boolean = true
+  jiaqin_show: boolean = true
+  jiekuan_show: boolean = true
+  baoxiao_show: boolean = true
+  type: string
   constructor(private viewCtrl: ViewController) {
 
   }
   showList(type: string) {
     this[type] = ! this[type]
+  }
+  selecttype(type) {
+    this.type = type
+    this.viewCtrl.dismiss(this.type);
   }
   dismiss() {
     this.viewCtrl.dismiss();

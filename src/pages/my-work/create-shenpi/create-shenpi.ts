@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
-import { SelectModalComponent } from '../../../components/select-modal/select-modal'
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+import { FormGroup, FormBuilder } from '@angular/forms'
+import { ToastSitutionProvider  } from '../../../providers/toast-sitution/toast-sitution'
 /**
  * Generated class for the CreateShenpiPage page.
  *
@@ -14,15 +16,32 @@ import { SelectModalComponent } from '../../../components/select-modal/select-mo
   templateUrl: 'create-shenpi.html',
 })
 export class CreateShenpiPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,private modalCtrl: ModalController) {
+  form: FormGroup
+  
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private fb: FormBuilder,
+    private toastProvider: ToastSitutionProvider
+  ) {
+    this.form = this.fb.group({
+      fullName: [''],
+      desc: [''],
+      fujian: [{
+        selectDoc: [],
+        selectCamera: [],
+        selectImages: []
+      }],
+      day: ['0.5'],
+      startTime: [''],
+      endTime: [''],
+      money: [''],
+      shenheren: [''],
+      chaosongren: ['']
+    })
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateShenpiPage');
-  }
-  presentModal() {
-    let modal = this.modalCtrl.create(SelectModalComponent)
-    modal.present()
+  
+  onSubmit(f, ev: Event) {
+    console.log(f.value)
+    this.navCtrl.push('ShiwuDetailPage', {data: f.value})
   }
 }

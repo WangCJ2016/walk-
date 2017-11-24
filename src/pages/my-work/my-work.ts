@@ -88,22 +88,10 @@ export class MyWorkPage {
     }]
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MyWorkPage');
-  }
-  fixClick(i) {
-    i === this.typeIndex ? this.typeIndex = -1 : this.typeIndex = i
-    this.backdrop = this.typeIndex === -1 ?  false : true
-  }
+
   backdropclick() {
     this.typeIndex = -1
     this.backdrop = false
-  }
-  itemClick(id: number,ev: Event) {
-    ev.preventDefault();
-    ev.stopPropagation()
-    this.itemIndex = id;
-    this.backdropclick()
   }
 
   presentPopover(myEvent) {
@@ -111,5 +99,8 @@ export class MyWorkPage {
     popover.present({
       ev: myEvent
     });
+  }
+  godetail() {
+    this.navCtrl.push('ProDetailPage')
   }
 }

@@ -11,11 +11,6 @@ import { FileModalComponent } from '../file-modal/file-modal'
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
-interface  selectDoc {
-  selectDoc: Array<any>
-  selectCamera: Array<any>
-  selectImages: Array<any>
-}
 @Component({
   selector: 'fujian-formcontrol',
   templateUrl: 'fujian-formcontrol.html',

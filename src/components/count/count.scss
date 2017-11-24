@@ -1,0 +1,31 @@
+count {
+  .changeNumofDay {
+    width: 9.166667rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    .click_action {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        text-align: center;
+        line-height: 2.5rem;
+        color: #ccc;
+        font-size: 1.666667em
+    }
+    .numofday {
+        color: #333;
+        flex: 1;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        font-size: 1.166667em;
+        line-height: 2.5rem;
+        .text-input{
+          margin: 0;
+          text-align: center;
+        }
+    }
+}
+}

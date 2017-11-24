@@ -1,17 +1,23 @@
 initalmember-formcontrol {
-  .member_formcontrol{
-    background-color: #fff;
-    padding: 0 1.25rem;
+  .member_inner{
+    margin-left: 1.25rem;
+    padding-right: 1.25rem;
+    border-bottom: .55px solid $border_color;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.16666em;
     height: 4.166667rem;
-    border: .55px solid $border_color;
     >div{
       flex: 1;
       display: flex;
       align-items: center
     }
   }
+  .member_formcontrol{
+    background-color: #fff;
+  }
+}
+initalmember-formcontrol+initalmember-formcontrol{
+  margin-top: -.5px
 }

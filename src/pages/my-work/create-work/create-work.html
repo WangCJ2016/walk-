@@ -22,7 +22,7 @@
       </ion-item>
       <ion-item>
         <ion-label>描述</ion-label>
-        <ion-textarea ></ion-textarea>
+        <ion-textarea formControlName='desc'></ion-textarea>
       </ion-item>
       <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
       <initalmember-formcontrol formControlName='faqiren' style="margin-top:10px"></initalmember-formcontrol>
@@ -30,17 +30,17 @@
       
       <ion-item style="margin-top: 10px">
         <ion-label>起始时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="myDate" ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="startDate" ></ion-datetime>
         <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
       <ion-item>
         <ion-label>截止时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="myDate" ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="endDate" ></ion-datetime>
         <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
     </ion-list>
     <div class="submit_btn" padding>
-      <button ion-button full (click)='goPage("ShiwuDetailPage")'>提交</button>
+      <button ion-button full >提交</button>
     </div>
   </form>
 </ion-content>

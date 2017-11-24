@@ -21,8 +21,6 @@ export class MapComponent {
 
   }
   ngOnInit() {
-    this.loadMap()
-
     // gps 获取经纬度
     this.geolocation.getCurrentPosition()
     .then(res => {
@@ -71,46 +69,5 @@ export class MapComponent {
       })
       })
   }
-  loadMap() {
-    this.http.get('http://restapi.amap.com/v3/assistant/coordinate/convert', {
-      params: {
-        locations: 120.064986536743 + ',' + 30.29185637326135,
-        coordsys: 'gps',
-        key: '17801686afbe4797d60af3df3d1bcd2f'
-      }
-    }).map(res => res.json()).subscribe(v => {
-      const locations = v.locations.split(',')
-      console.log(locations)
-      this.map = new AMap.Map(this.map_container.nativeElement, {
-        zoom: 16, //设置地图缩放级别
-        center: [locations[0], locations[1]]
-      });
-      AMap.service('AMap.Geocoder',  ()=> {
-        const geocoder = new AMap.Geocoder();
-        geocoder.getAddress(new AMap.LngLat(locations[0], locations[1]), (status, result) => {
-          console.log(result)
-          if (result.info === 'ok' || result.info === 'OK') {
-            console.log(result.regeocode.formattedAddress)
-            this.address.emit(result.regeocode.formattedAddress)
-            var info = [];
-            info.push("<div>"+result.regeocode.formattedAddress+"</div>")
-            const infoWindow = new AMap.InfoWindow({
-                content: info.join("<br>"),
-                offset: new AMap.Pixel(10, -30)
-            });
-            infoWindow.open(this.map, [locations[0], locations[1]]);
-            this.map.clearMap();
-            var marker = new AMap.Marker({
-                map: this.map,
-                position: [locations[0], locations[1]]
-            });
-            infoWindow.open(this.map, marker.getPosition());
-          }
-        })
-      })
-
-    }
-      )
-
-  }
+  
 }

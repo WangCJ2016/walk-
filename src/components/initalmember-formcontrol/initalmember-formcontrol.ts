@@ -2,6 +2,7 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ModalController } from 'ionic-angular'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
 import { SelectPersonComponent } from '../../components/select-person/select-person'
+import { person } from '../../domain'
 /**
  * Generated class for the InitalmemberFormcontrolComponent component.
  *
@@ -26,7 +27,9 @@ import { SelectPersonComponent } from '../../components/select-person/select-per
 })
 export class InitalmemberFormcontrolComponent implements ControlValueAccessor {
   @Input() title = '发起人'
-  person: {name: string} = {name: ''}
+  @Input () multiple = false
+  person: person = {name: ''}
+  people: Array<person> = []
   private propagateChange = (_: any) => { }
   constructor(private modalCtrl: ModalController) {
     
@@ -36,12 +39,14 @@ export class InitalmemberFormcontrolComponent implements ControlValueAccessor {
     profileModal.present();
     profileModal.onDidDismiss(res => {
       if(res) {
-        this.person = res
-        this.propagateChange(this.person)
+        this.multiple?this.people.push(res):this.person = res
+        this.multiple?this.propagateChange(this.people):this.propagateChange(this.person)
       }
     })
   }
-
+  dleperson(index: number) {
+    this.people.splice(index, 1)
+  }
   writeValue(obj: any): void { }
   
     registerOnChange(fn: any): void {

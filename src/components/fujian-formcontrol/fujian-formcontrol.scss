@@ -1,12 +1,13 @@
 fujian-formcontrol {
-    .form_item{
-        background-color: #fff;
+    .form_inner{
         height: 4.166667rem;
         display: flex;
-        padding: 0 1.25rem;
+        margin-left: 1.25rem;
+        padding-right: 1.25rem;
         justify-content: space-between;
         align-items: center;
         font-size: 1.166667em;
+        border-bottom: .55px solid $border_color;
         p{
             flex: 1;
             margin-left: .833333rem
@@ -16,5 +17,8 @@ fujian-formcontrol {
             height: 3.333333rem;
             margin-left: .833333rem;
         }
+    }
+    .form_item{
+        background-color: #fff;
     }
 }

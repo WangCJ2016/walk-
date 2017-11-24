@@ -17,6 +17,8 @@ import { FooterInputComponent } from './footer-input/footer-input';
 import { FileModalComponent } from './file-modal/file-modal';
 import { FujianFormcontrolComponent } from './fujian-formcontrol/fujian-formcontrol';
 import { InitalmemberFormcontrolComponent } from './initalmember-formcontrol/initalmember-formcontrol';
+import { CountComponent } from './count/count';
+import { ShenpitypeFormcontrolComponent } from './shenpitype-formcontrol/shenpitype-formcontrol';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { InitalmemberFormcontrolComponent } from './initalmember-formcontrol/ini
     FileModalComponent,
     FujianFormcontrolComponent,
     InitalmemberFormcontrolComponent,
+    CountComponent,
+    ShenpitypeFormcontrolComponent,
     ],
     imports: [IonicModule],
     entryComponents:[FileModalComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
@@ -55,6 +59,8 @@ import { InitalmemberFormcontrolComponent } from './initalmember-formcontrol/ini
     FileModalComponent,
     FujianFormcontrolComponent,
     InitalmemberFormcontrolComponent,
+    CountComponent,
+    ShenpitypeFormcontrolComponent,
     ]
 })
 export class ComponentsModule {}

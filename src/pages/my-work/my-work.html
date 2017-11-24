@@ -6,33 +6,38 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>我的工作</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="presentPopover($event)">
-                <ion-icon name="add"></ion-icon>
+  <ion-navbar>
+    <ion-title>我的工作</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="add"></ion-icon>
       </button>
-        </ion-buttons>
-    </ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-    <fix-top [fixArray]='fixArray'></fix-top>
-    <section class="sec_content">
-        <ion-list>
-            <ion-item>
-                <ion-avatar item-start>
-                    <img src="assets/imgs/work-desk/shiwu.png" alt="">
-                </ion-avatar>
-                <h4>如果下面目中的任务如果下面目中的任务</h4>
-                <p><span>发起人:张三</span>&nbsp;<span>进度:80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
-                <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
-            </ion-item>
-        </ion-list>
-    </section>
-    <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
-        <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
-    </div>
+  <fix-top [fixArray]='fixArray'></fix-top>
+  <section class="sec_content">
+    <ion-list>
+      <ion-item (click)='godetail()'>
+        <ion-avatar item-start>
+          <img src="assets/imgs/work-desk/shiwu.png" alt="">
+        </ion-avatar>
+        <h4>如果下面目中的任务如果下面目中的任务</h4>
+        <p>
+          <span>发起人:张三</span>&nbsp;
+          <span>进度:80%(偏慢)</span>&nbsp;
+          <span class="danger">剩余3天</span>
+        </p>
+
+        <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
+      </ion-item>
+    </ion-list>
+  </section>
+  <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
+    <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
+  </div>
 </ion-content>

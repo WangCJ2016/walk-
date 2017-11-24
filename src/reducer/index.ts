@@ -5,7 +5,6 @@ import { SharedModule} from '../app/shared.modules'
 import * as fromAuth from './auth.reducer';
 import * as fromContacts from './contact.reducer'
 import * as fromAttence from './attence.reducer'
-import { from } from 'rxjs/observable/from';
 
 
 
@@ -36,9 +35,9 @@ export function reducer(state = initialState, action: any ): State {
     imports: [
         SharedModule,
         StoreModule.provideStore(reducer),
-        // StoreDevtoolsModule.instrumentOnlyWithExtension({
-        //   maxAge: 5
-        // })
+        StoreDevtoolsModule.instrumentOnlyWithExtension({
+          maxAge: 5
+        })
     ]
 })
 export class AppStoreModule {}

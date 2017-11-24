@@ -18,7 +18,6 @@ export class SelectPersonComponent {
   xiaji_show: boolean = true
   constructor(private viewCtrl: ViewController,
     private params: NavParams) {
-      console.log(this.params)
       this.title = this.params.data.title
   }
   showList(type: string) {

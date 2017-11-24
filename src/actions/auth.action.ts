@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Auth, Err, User} from '../domain';
+import {Auth, Err} from '../domain';
 
 export const ActionTypes = {
   LOGIN: type('[Auth] Login'),

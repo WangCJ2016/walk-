@@ -68,6 +68,7 @@ $item-md-font-size:1.083333em;
 $item-ios-padding-right: 15px;
 $item-ios-padding-left: 15px;
 $item-ios-avatar-size:3.666667rem;
+$datetime-ios-placeholder-color: #333;
 // label
 $label-ios-text-color: #999;
 // content
@@ -97,4 +98,14 @@ $popover-ios-arrow-background:#16233a;
 $popover-ios-background:#16233a;
 // badge
 $badge-font-size: 1rem;
-// toast
+// range
+$range-ios-bar-height: 10px;
+$range-ios-bar-background-color: #e6e6e6;
+$range-ios-bar-active-background-color: #29b4ff;
+$range-ios-knob-width: 20px;
+$range-ios-tick-width: 20px;
+// $range-ios-hit-width: 20px;
+// $range-ios-hit-height: 20px;
+//$range-ios-slider-height: 20px;
+// $range-ios-padding-vertical:0;
+$range-ios-padding-horizontal: 0;

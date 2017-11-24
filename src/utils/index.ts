@@ -1,5 +1,5 @@
 import { contact } from '../domain'
-import { retry } from 'rxjs/operator/retry';
+
 interface data {
     letter: string,
     data: Array<contact>
@@ -60,4 +60,17 @@ export function getWeekDay(num:number): string {
         }
     }
 }
+
+export function toastSituation(toast) {
+    return {
+        fullName: function() {
+            toast.create({
+                message: '请填写事务名称',
+                position: 'middle',
+                duration: 2000
+              }).present()
+        }
+    }
+}
+
   export * from './type.util'
