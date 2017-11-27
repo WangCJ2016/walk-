@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>日报</ion-title>
+        <ion-title>{{title}}的日报</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -16,7 +16,7 @@
 <ion-content>
     <date-picker></date-picker>
     <blank></blank>
-    <section class="content">
+    <section class="_content">
         <div class="content_item">
             <div class="item_title" (click)='goPage("ChangeAttencePage")'>
                 <span class="type">考勤</span>
@@ -64,9 +64,25 @@
             </div>
         </div>
         <div class="content_item" style="border-left:none">
-            <ion-textarea placeholder="请记录您的工作心得，下一步工作安排或者计划"></ion-textarea>
-            <button ion-button clear float-right>提交</button>
-            <button ion-button clear float-right style="color:#ccc">取消</button>
+            <ion-textarea placeholder="请记录您的工作心得，下一步工作安排或者计划" value={{desc}} >
+            
+            </ion-textarea>
+            <div *ngIf='showIf'>
+                <button ion-button clear float-right>提交</button>
+                <button ion-button clear float-right style="color:#ccc">取消</button>
+            </div>
+           
+        </div>
+        <div *ngIf='!showIf' class="stars_">
+            <span>评分：</span>
+            <div>
+                <img src="assets/imgs/work-desk/{{star}}.png" *ngFor="let star of starsArray; let i=index" alt="">
+            </div>
         </div>
     </section>
+
+    <div *ngIf='!showIf' class="submit_btn">
+        <button ion-button full (click)='pingyue()'>评阅</button>
+    </div>
+    <star [trsition]='backdrop' (cb)='callback($event)' (starcb)='starcb($event)'></star>
 </ion-content>

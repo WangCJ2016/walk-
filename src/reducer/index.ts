@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { StoreModule, combineReducers, ActionReducer } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { SharedModule} from '../app/shared.modules'
 import * as fromAuth from './auth.reducer';
 import * as fromContacts from './contact.reducer'
@@ -35,9 +35,9 @@ export function reducer(state = initialState, action: any ): State {
     imports: [
         SharedModule,
         StoreModule.provideStore(reducer),
-        StoreDevtoolsModule.instrumentOnlyWithExtension({
-          maxAge: 5
-        })
+        // StoreDevtoolsModule.instrumentOnlyWithExtension({
+        //   maxAge: 5
+        // })
     ]
 })
 export class AppStoreModule {}

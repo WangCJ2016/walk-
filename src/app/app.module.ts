@@ -68,7 +68,8 @@ import { ToastSitutionProvider } from '../providers/toast-sitution/toast-situtio
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CityPickerProvider,
     AuthProvider,
-    ToastSitutionProvider
+    ToastSitutionProvider,
+    {provide: 'BASE_URL', useValue: {url: 'http://106.15.103.123:8080/platform'}}
   ]
 })
 export class AppModule {}

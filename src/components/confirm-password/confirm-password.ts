@@ -1,5 +1,5 @@
 import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormGroup, FormBuilder } from '@angular/forms'
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS,Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 
 
 /**
@@ -29,8 +29,8 @@ export class ConfirmPasswordComponent implements ControlValueAccessor {
   private propagateChange = (_: any) => {}
   constructor(private fb: FormBuilder) {
     this._form = this.fb.group({
-      newPassword: [''],
-      confirmPassword: ['']
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     })
     const form$ = this._form.valueChanges
     form$.subscribe(v=>{
@@ -55,7 +55,8 @@ export class ConfirmPasswordComponent implements ControlValueAccessor {
 
   // 验证器
   validate(c: FormControl): {[key: string]: any} {
-    if(!!this._form.get('newPassword').value&&this._form.get('newPassword').value === this._form.get('confirmPassword').value) {
+    console.log(1)
+    if(this._form.get('newPassword').value === this._form.get('confirmPassword').value) {
       return null
     }
     return {

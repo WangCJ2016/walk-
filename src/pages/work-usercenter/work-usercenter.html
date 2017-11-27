@@ -12,9 +12,9 @@
     
     </ion-header>
 <ion-content >
-    <div class="work-usercenter-header" text-center>
-        <img [src]="(authImage | async)" (click)='goPage("MymessPage")' alt="" class="header_img">
-        <p class="header_title" (click)='goPage("LoginPage")'>登录/注册</p>
+    <div class="work-usercenter-header" (click)='headClick()' text-center>
+        <img [src]="(authImage | async)"  alt="" class="header_img">
+        <p class="header_title">登录/注册</p>
     </div>
     <ion-list>
         <button ion-item (click)='goPage("ChangeTermPage")'>

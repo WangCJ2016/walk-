@@ -6,13 +6,19 @@ export const ActionTypes = {
   LOGIN: type('[Auth] Login'),
   LOGIN_SUCCESS: type('[Auth] Login Success'),
   LOGIN_FAIL: type('[Auth] Login Fail'),
+  SIGN:type('[Auth] sign'),
+  SIGN_SUCCESS:type('[Auth] sign_success'),
+  REGISTER_VERCODE: type('[Auth] Register_vercode'),
+  REGISTER_VERCODE_SUCCESS: type('[Auth] Register_vercode_success'),
+  REGISTER_VERCODE_FAIL: type('[Auth] Register_vercode_fail'),
+  CHECKREGCODE: type('[Auth] checkregcode'),
+  CHECKREGCODE_SUCCESS: type('[Auth] checkregcode_success'),
+  
   REGISTER: type('[Auth] Register'),
   REGISTER_SUCCESS: type('[Auth] Register Success'),
   REGISTER_FAIL: type('[Auth] Register Fail'),
   LOGOUT: type('[Auth] Logout'),
-  PASSWORD_VERCOD: type('[Auth] Password_vercode'),
-  PASSWORD_VERCOD_SUCCESS: type('[Auth] Password_vercode_success'),
-  PASSWORD_VERCOD_FAIL: type('[Auth] Password_vercode_fail'),
+  
   FORGET_PASSWORD: type('[Auth] Forget_password'),
   FORGET_PASSWORD_SUCCESS: type('[Auth] Forget_password_success'),
   FORGET_PASSWORD_FAIL: type('[Auth] Forget_password_fail'),
@@ -22,6 +28,13 @@ export const ActionTypes = {
   CHANGE: type('[Auth] Change'),
   CHANGE_SUCCESS: type('[Auth] Change_success'),
   CHANGE_FAIL: type('[Auth] Change_fail'),
+  AUTH_FAIL: type('[Auth] auth_fail')
+}
+export class AuthFailAction implements Action {
+  type = ActionTypes.AUTH_FAIL;
+
+  constructor(public payload: Err) {
+  }
 }
 
 export class LoginAction implements Action {
@@ -44,27 +57,65 @@ export class LoginFailAction implements Action {
   constructor(public payload: Err) {
   }
 }
+// 获取sign
+export class SignAction implements Action {
+  type = ActionTypes.SIGN;
 
+  constructor(public payload: {phoneNum: string, type: string}) {
+  }
+}
+
+export class SignSuccessAction implements Action {
+  type = ActionTypes.SIGN_SUCCESS;
+
+  constructor(public payload: {phoneNum: string,sign: string, sign_type: string}) {
+  }
+}
+// 获取注册验证码
+export class RegisterVercodeAction implements Action {
+  type = ActionTypes.REGISTER_VERCODE;
+
+  constructor(public payload: {phoneNum: string, sign: string}) {
+  }
+}
+
+export class RegisterVercodeSuccessAction implements Action {
+  type = ActionTypes.REGISTER_VERCODE_SUCCESS;
+
+  constructor(public payload: {code: string}) {
+  }
+}
+
+// 注册时短信验证码校验
+export class CheckRegCodeAction implements Action {
+  type = ActionTypes.CHECKREGCODE;
+
+  constructor(public payload: {phoneNum: string, code: string}) {
+  }
+}
+
+export class CheckRegCodeSuccessAction implements Action {
+  type = ActionTypes.CHECKREGCODE_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
+// 注册
 export class RegisterAction implements Action {
   type = ActionTypes.REGISTER;
 
-  constructor(public payload: {phoneNum: string, verCode: string}) {
+  constructor(public payload: { password: string}) {
   }
 }
 
 export class RegisterSuccessAction implements Action {
   type = ActionTypes.REGISTER_SUCCESS;
 
-  constructor(public payload: Auth) {
+  constructor(public payload: any) {
   }
 }
 
-export class RegisterFailAction implements Action {
-  type = ActionTypes.REGISTER_FAIL;
-
-  constructor(public payload: Err) {
-  }
-}
+//  登出
 
 export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
@@ -72,38 +123,19 @@ export class LogoutAction implements Action {
   constructor(public payload: Auth) {
   }
 }
-export class PasswordVercodeAction implements Action {
-  type = ActionTypes.PASSWORD_VERCOD;
 
-  constructor(public payload: { phoneNum: string, verCode: string }) {
-  }
-}
-
-export class PasswordVercodeSuccessAction implements Action {
-  type = ActionTypes.PASSWORD_VERCOD_SUCCESS;
-
-  constructor(public payload: boolean) {
-  }
-}
-
-export class PasswordVercodeFailAction implements Action {
-  type = ActionTypes.PASSWORD_VERCOD_FAIL;
-
-  constructor(public payload: Err) {
-  }
-}
 // 找回密码
 export class ForgetPasswordAction implements Action {
   type = ActionTypes.FORGET_PASSWORD;
 
-  constructor(public payload: { phoneNum: string, newPassword: string }) {
+  constructor(public payload: { password: string}) {
   }
 }
 
 export class ForgetPasswordSuccessAction implements Action {
   type = ActionTypes.FORGET_PASSWORD_SUCCESS;
 
-  constructor(public payload: boolean) {
+  constructor(public payload: any) {
   }
 }
 

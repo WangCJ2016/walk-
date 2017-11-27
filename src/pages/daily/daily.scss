@@ -1,8 +1,8 @@
 page-daily {
-    .content {
-        margin-top: .833333rem;
+    ._content {
         padding-left: 2.5rem!important;
         background-color: #fff;
+        padding-top: 1px;
         .content_item {
             padding: 0 1.666667rem;
             border-left: 1px solid #ccc;
@@ -64,6 +64,27 @@ page-daily {
         }
     }
     ion-textarea {
-        height: 10rem
+        height: 10rem;
+        textarea {
+            margin: 0!important;
+        }
+    }
+    .submit_btn{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        button{
+            margin: 0;
+            border-radius: 0
+        }
+    }
+    .stars_{
+      line-height: 3.333333rem;
+      display: flex;
+      border-top: 0.55px solid $border_color;
+      img{
+          width: 17px;
+          vertical-align: middle
+      }
     }
 }

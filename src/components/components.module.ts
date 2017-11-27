@@ -19,6 +19,8 @@ import { FujianFormcontrolComponent } from './fujian-formcontrol/fujian-formcont
 import { InitalmemberFormcontrolComponent } from './initalmember-formcontrol/initalmember-formcontrol';
 import { CountComponent } from './count/count';
 import { ShenpitypeFormcontrolComponent } from './shenpitype-formcontrol/shenpitype-formcontrol';
+import { StarComponent } from './star/star';
+
 
 
 @NgModule({
@@ -40,6 +42,7 @@ import { ShenpitypeFormcontrolComponent } from './shenpitype-formcontrol/shenpit
     InitalmemberFormcontrolComponent,
     CountComponent,
     ShenpitypeFormcontrolComponent,
+    StarComponent,
     ],
     imports: [IonicModule],
     entryComponents:[FileModalComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
@@ -61,6 +64,7 @@ import { ShenpitypeFormcontrolComponent } from './shenpitype-formcontrol/shenpit
     InitalmemberFormcontrolComponent,
     CountComponent,
     ShenpitypeFormcontrolComponent,
+    StarComponent,
     ]
 })
 export class ComponentsModule {}

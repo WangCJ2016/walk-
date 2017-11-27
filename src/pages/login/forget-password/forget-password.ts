@@ -41,34 +41,48 @@ export class ForgetPasswordPage {
       }),
       newPassword: ['', Validators.required],
     })
+    this.store$.select(store => store.auth).subscribe(res => {
+      if(res.msg) {
+        this.toastCtrl.create({
+          message: res.msg,
+          position: 'middle',
+          duration: 2000
+        }).present()
+      }
+    })
     this._sub = this.service.getStep().subscribe(v => this.step = v)
+  }
+  ionViewDidEnter(){
+    this.store$.select(store => store.auth.auth).subscribe(v => console.log(v))
   }
   ngOnDestroy() {
     this._sub.unsubscribe()
   }
 
-  getVercode() { }
+  getVercode() {
+    this.store$.dispatch(new actions.SignAction({
+      phoneNum: this.form.get('verCodeGroup').get('phoneNum').value,
+      type: '2'
+    }))
+  }
 
   next({ value, valid }, ev: Event) {
     ev.preventDefault()
-    this.store$.dispatch(new actions.PasswordVercodeAction({
-      phoneNum: value.phoneNum,
-      verCode: value.verCode
+    this.store$.dispatch(new actions.CheckRegCodeAction({
+      phoneNum: value.verCodeGroup.phoneNum,
+      code: value.verCodeGroup.verCode
     }))
   }
   form2submit(f, ev: Event) {
+    console.log(f)
     if (!f.valid) {
-      const toast = this.toastCtrl.create({
-        message: '请输入一致的密码',
-        duration: 2000,
-        position: 'middle'
-      })
-      toast.present()
+      this.store$.dispatch(new actions.AuthFailAction({
+        msg: '请输入一致的密码'
+      }))
     } else {
       this.store$.dispatch(
         new actions.ForgetPasswordAction({
-          phoneNum: this.form.get('verCodeGroup').get('phoneNum').value,
-          newPassword: this.form.get('newPassword').value
+          password: f.value.newPassword
         })
       )
       this.form.reset()

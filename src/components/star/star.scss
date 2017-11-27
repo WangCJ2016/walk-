@@ -1,0 +1,46 @@
+star {
+  
+    .pingfen{
+      position: absolute;
+      left: 1.25rem;
+      right: 1.25rem;
+      bottom: -200px;
+      overflow: hidden;
+      border-radius: .416667rem;
+      background-color: #fff;
+      z-index: 3;
+      transition: bottom .3s;
+      transition-delay: 1s;
+      h3{
+        font-size: 1.333333em;
+        line-height: 2rem;
+        text-align: center
+      }
+      .stars{
+        padding: 0 3rem 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        img{
+          width: 3.416667rem;
+        }
+      }
+      .buttons{
+        button{
+          height: 3.333333rem;
+          width: 50%;
+          background-color: transparent;
+          font-size: 1.25em;
+          color: #ccc;
+          border: 0.55px solid $border_color;
+          border-radius: 0;
+        }
+        .handle{
+          color: #29b4ff
+        }
+        button + button{
+          border-left: 0
+        }
+      }
+    }
+  }
+

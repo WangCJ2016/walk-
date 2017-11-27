@@ -1,0 +1,16 @@
+<!-- Generated template for the StarComponent component -->
+
+  <div class="pingfen"  [style.bottom]='trsition?"15px":"-200px"'>
+    <h3>评分</h3>
+    <div class="stars">
+      <img src="assets/imgs/work-desk/{{star}}.png"  *ngFor="let star of stars; let i=index" (click)='starClick(i)'>
+    </div>
+    <div class="buttons">
+      <button class="dismiss" float-left (click)="backdropclick($event)">取消</button>
+      <button class="handle" float-right (click)='hander()'>确定</button>
+    </div>
+  </div>
+  <div *ngIf='trsition'  class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
+    <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
+  </div>
+

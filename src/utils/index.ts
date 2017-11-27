@@ -73,4 +73,14 @@ export function toastSituation(toast) {
     }
 }
 
+export function numtoarray(num: number) {
+    let stars = [];
+    for(let i=0; i<num; i++) {
+        stars.push('full_star')
+    }
+    for(let i=0; i<5-num; i++) {
+        stars.push('blank_star')
+    }
+    return stars
+}
   export * from './type.util'

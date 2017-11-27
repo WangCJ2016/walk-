@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as authActions from '../../actions/auth.action'
+import {ToastSitutionProvider} from '../../providers/toast-sitution/toast-sitution'
 /**
  * Generated class for the LoginPage page.
  *
@@ -20,8 +21,13 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private toastCtrl: ToastController,
+              private toastSitutionProvider: ToastSitutionProvider,
               private store$: Store<fromRoot.State>) {
-                
+                this.store$.select(store => store.auth).subscribe(res => {
+                  if(res.msg) {
+                    this.toastSitutionProvider.message(res.msg)
+                  }
+                })
   }
 
   ionViewDidLoad() {
@@ -33,22 +39,10 @@ export class LoginPage {
   onSubmit(f,ev: Event) {
     ev.preventDefault()
     if(f.controls.phoneNum.errors !== null) {
-      let toast = this.toastCtrl.create({
-        message: f.controls.phoneNum.errors.msg,
-        duration: 2000,
-        position: 'middle',
-        dismissOnPageChange: true
-      })
-      toast.present()
+      this.store$.dispatch(new authActions.AuthFailAction({msg: f.controls.phoneNum.errors.msg}))
       return
     }else if(f.controls.password.errors !== null){
-      let toast = this.toastCtrl.create({
-        message: f.controls.password.errors.msg,
-        duration: 2000,
-        position: 'middle',
-        dismissOnPageChange: true
-      })
-      toast.present()
+      this.store$.dispatch(new authActions.AuthFailAction({msg: f.controls.password.errors.msg}))
       return
     }
     this.store$.dispatch(new authActions.LoginAction({

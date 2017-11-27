@@ -19,6 +19,7 @@ import * as fromRoot from '../../reducer'
   templateUrl: 'work-usercenter.html',
 })
 export class WorkUsercenterPage {
+  token
   authImage: Observable<string>
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -27,8 +28,14 @@ export class WorkUsercenterPage {
   }
   ionViewDidEnter(){
     this.authImage = this.store$.select(state => state.auth.auth.image)
+    this.store$.select(state => state.auth.auth.token).subscribe(token => this.token = token)
+    this.store$.select(state => state.auth.auth).subscribe(res => console.log(res))
   }
   goPage(page: string) {
     this.navCtrl.push(page)
+  }
+  headClick() {
+    console.log(this.token)
+    this.token?this.goPage('MymessPage'):this.goPage('LoginPage')
   }
 }
