@@ -6,6 +6,9 @@
     <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="file://*" />
+    <access launch-external="yes" origin="http:*" />
+    <access launch-external="yes" origin="http://*/*" />
+    <allow-intent href="http:*" />
     <allow-intent href="file://*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

@@ -41,6 +41,7 @@ export class LoginAction implements Action {
   type = ActionTypes.LOGIN;
 
   constructor(public payload: { phoneNum: string, password: string }) {
+
   }
 }
 
@@ -172,21 +173,14 @@ export class ChangePasswordFailAction implements Action {
 export class ChangeAction implements Action {
   type = ActionTypes.CHANGE;
 
-  constructor(public payload: { [key:string]: string}) {
+  constructor(public payload: any) {
   }
 }
 
 export class ChangeSuccessAction implements Action {
   type = ActionTypes.CHANGE_SUCCESS;
 
-  constructor(public payload: { [key:string]: string}) {
-  }
-}
-
-export class ChangeFailAction implements Action {
-  type = ActionTypes.CHANGE_FAIL;
-
-  constructor(public payload: Err) {
+  constructor(public payload: Auth) {
   }
 }
 // export type Actions

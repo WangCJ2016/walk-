@@ -4,5 +4,15 @@ page-mymess {
         span {
             color: #999;
         }
+        ion-avatar{
+            margin: 0!important;
+        }
+        .input-wrapper{
+            justify-content: space-between
+        }
+    }
+    city-picker{
+        margin-left: 1.25rem;
+        color: #999
     }
 }

@@ -1,9 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import { Auth} from '../../domain'
+import { AuthInfo } from '../../domain'
 
 /*
   Generated class for the AuthProvider provider.
@@ -14,15 +13,20 @@ import { Auth} from '../../domain'
 @Injectable()
 export class AuthProvider {
   step1 = new BehaviorSubject<string>('one')
-  
+  private headers = new Headers({
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache'
+  });
   constructor(public http: Http, @Inject('BASE_URL') private config) {
       console.log(this.config)
   }
+  // 登录
   login(phoneNum: string, password: string) {
+    alert(5)
     const uri = `${this.config.url}/app/user_login`;
     return this.http.get(uri, {params: {'userName': phoneNum, 'password': password}})
       .map(res => {
-        console.log(res)
+        alert(3)
         return res.json()
       })
   }
@@ -75,6 +79,19 @@ export class AuthProvider {
     const uri = `${this.config.url}/app/user_resetPassword`
     return this.http.get(uri, {params: {userName: phoneNum, code: verCode, sign: sign, password: passowrd}})
     .map(res => res.json())
+  }
+  // 修改用户信息
+  changeUserInfo(userInfo: AuthInfo) {
+    const uri = `${this.config.url}/app/user_updateUserInfo`
+    return this.http.get(uri, {params: userInfo})
+      .map(res => res.json())
+  }
+  // 获取系统设置区域列表
+  sysRegionList(id: string) {
+    const parentId = parseInt(id)>0?id:1
+    const uri = `${this.config.url}/app/system_sysRegionList`
+    return this.http.get(uri, {params: {parentId:parentId}})
+      .map(res => res.json())
   }
   getStep() {
     return this.step1.asObservable().startWith('')

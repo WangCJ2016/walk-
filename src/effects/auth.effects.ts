@@ -18,17 +18,14 @@ export class AuthEffects {
     login$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGIN)
     .map(toPayload)
-    .switchMap((val: {phoneNum: string, password: string}) => this.service.login(val.phoneNum, val.password))
+    .switchMap((val: {phoneNum: string, password: string}) => {
+        console.log(val.phoneNum, val.password)
+       return this.service.login(val.phoneNum, val.password)})
     .map(res => {
-        console.log(res)
+        console.log('login'+res)
+        alert(4)
         if(res.success) {
-            const obj = {
-                userName: res.dataObject.userName,
-                name: res.dataObject.name,
-                sex: res.dataObject.sex === 1?'男':'女',
-                token: res.dataObject.token
-            }
-           return new actions.LoginSuccessAction(obj)
+           return new actions.LoginSuccessAction(res.dataObject)
         }else {
             return new actions.AuthFailAction({
                 msg: res.msg
@@ -39,7 +36,7 @@ export class AuthEffects {
     navigateHome$: Observable<Action> = this.actions$
       .ofType(actions.ActionTypes.LOGIN_SUCCESS)
       .map((action)=> action.payload)
-      .do(() => this.appCtrl.getRootNav().push('WorkUsercenterPage'))
+      .map(() => this.appCtrl.getRootNav().push('WorkUsercenterPage'))
     // getregistersign
     @Effect() 
     getsign$: Observable<Action> = this.actions$
@@ -104,7 +101,7 @@ export class AuthEffects {
       .ofType(actions.ActionTypes.REGISTER)
       .map(toPayload)
       .withLatestFrom(this.store$.select(store => store.auth.auth))
-      .switchMap(([password, auth]) => this.service.register(auth.phoneNum, auth.code, auth.sign, password.password))
+      .switchMap(([password, auth]) => this.service.register(auth.userName, auth.code, auth.sign, password.password))
       .map(res => {
           console.log(res)
         if(res.success) {
@@ -127,7 +124,7 @@ export class AuthEffects {
     .ofType(actions.ActionTypes.FORGET_PASSWORD)
     .map(toPayload)
     .withLatestFrom(this.store$.select(store => store.auth.auth))
-    .switchMap(([password, auth]) => this.service.resetPassword(auth.phoneNum, auth.code, auth.sign, password.password))
+    .switchMap(([password, auth]) => this.service.resetPassword(auth.userName, auth.code, auth.sign, password.password))
     .map(res => {
         console.log(res)
       if(res.success) {
@@ -166,19 +163,31 @@ export class AuthEffects {
     change$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.CHANGE)
     .map(toPayload)
-    //.switchMap(val => Observable.of(1))
-    .map(v => new actions.ChangeSuccessAction(v))
+    .withLatestFrom(this.store$.select(store => store.auth.auth))
+    .switchMap(([info, auth]) => {
+        console.log(info)
+        return this.service.changeUserInfo({userId: auth.id, token: auth.token, ...info})})
+    .map(res => {
+        console.log(res)
+        if(res.success) {
+            return new actions.ChangeSuccessAction(res.dataObject)
+        }else {
+            return new actions.AuthFailAction({
+                msg: res.msg
+            })
+        }
+    })
     
-    @Effect()
-    ChangeAndHome$: Observable<Action> = this.actions$
-      .ofType(actions.ActionTypes.CHANGE_SUCCESS)
-      .map(_ =>{
-         this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1].pop()
-         return new actions.ChangeFailAction({
-            msg: ''
-        })
-        } 
-        )
+    // @Effect()
+    // ChangeAndHome$: Observable<Action> = this.actions$
+    //   .ofType(actions.ActionTypes.CHANGE_SUCCESS)
+    //   .map(_ =>{
+    //      this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1].pop()
+    //      return new actions.AuthFailAction({
+    //         msg: ''
+    //     })
+    //     } 
+    //     )
    //.do(() => console.log(this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1]))
     constructor(
         private actions$: Actions,

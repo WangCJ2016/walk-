@@ -19,16 +19,27 @@ import * as fromRoot from '../../reducer'
   templateUrl: 'work-usercenter.html',
 })
 export class WorkUsercenterPage {
-  token
+  token: string
+  name: string = '登录/注册'
   authImage: Observable<string>
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private store$: Store<fromRoot.State>) {
-      this.authImage = this.store$.select(state => state.auth.auth.image)
+      this.authImage = this.store$.select(state => state.auth.auth.photo)
+     
   }
   ionViewDidEnter(){
-    this.authImage = this.store$.select(state => state.auth.auth.image)
-    this.store$.select(state => state.auth.auth.token).subscribe(token => this.token = token)
+    this.authImage = this.store$.select(state => state.auth.auth.photo)
+    this.store$.select(state => state.auth.auth).subscribe(auth => {
+      this.token = auth.token
+      if(this.token) {
+        if(auth.name) {
+          this.name = auth.name
+        }else {
+          this.name = auth.userName
+       }
+      }
+      })
     this.store$.select(state => state.auth.auth).subscribe(res => console.log(res))
   }
   goPage(page: string) {

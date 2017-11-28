@@ -5,6 +5,7 @@ import { CityPickerProvider } from '../../../providers/city-picker/city-picker'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'
+import { AuthProvider } from '../../../providers/auth/auth'
 /**
  * Generated class for the MyCityPage page.
  *
@@ -20,15 +21,19 @@ import * as actions from '../../../actions/auth.action'
 export class MyCityPage {
   cityData: string
   cityName: string 
+  selectCityInfo
+  provinceId: number
+  cityId: number
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public cityPickerSev: CityPickerProvider,
+              private service: AuthProvider,
               private store$: Store<fromRoot.State>) {
                 this.setCityPickerData()
   }
 
   ionViewDidLoad() {
-    this.store$.select(store => store.auth.auth.address).subscribe(v => this.cityName = v)
+    
   }
   setCityPickerData(){
     this.cityPickerSev.getCitiesData()
@@ -37,10 +42,24 @@ export class MyCityPage {
       });
   }
   cityChange(e){
-    console.log(e)
-    this.cityName = e.province.text+e.city.text +'-'+'-'+e.region.text
+    this.selectCityInfo = e
+    this.cityName = e.province.text+'-'+e.city.text +'-'+e.region.text
   }
   submit() {
-    this.store$.dispatch(new actions.ChangeAction({address: this.cityName}))
+    this.service.sysRegionList('-1')
+    .map(province => {
+     return province.dataObject.filter(province => province.name === this.selectCityInfo.province.text)
+    })
+    .switchMap(province => {
+      this.provinceId = province[0].id
+      return this.service.sysRegionList(province[0].id)
+     .map(city => {
+      return city.dataObject.filter(city => city.name === this.selectCityInfo.city.text)
+      })})
+      .subscribe(v => {
+        this.cityId = v[0].id
+        this.store$.dispatch(new actions.ChangeAction({provinceId: this.provinceId, cityId: this.cityId}))
+        })
+     
   }
 }

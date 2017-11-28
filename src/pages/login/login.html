@@ -31,7 +31,7 @@
                 <label>密码</label>
                 <input user-password type="password" placeholder='请填写6-16位的密码' required [(ngModel)]='password' name='password'>
             </div>
-            <button ion-button round full class="login_btn">立即登录</button>
+            <button ion-button type="submit" round full class="login_btn">立即登录</button>
         </form>
         <div class="no_account">
             <span (click)='goPage("ForgetPasswordPage")'>忘记密码？</span>
