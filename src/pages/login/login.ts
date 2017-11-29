@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as authActions from '../../actions/auth.action'
 import {ToastSitutionProvider} from '../../providers/toast-sitution/toast-sitution'
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -20,7 +21,6 @@ export class LoginPage {
   phoneNum: number
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private toastCtrl: ToastController,
               private toastSitutionProvider: ToastSitutionProvider,
               private store$: Store<fromRoot.State>) {
                 this.store$.select(store => store.auth).subscribe(res => {
@@ -49,5 +49,6 @@ export class LoginPage {
       phoneNum: f.value.phoneNum,
       password: f.value.password
     }))
+    
   }
 }

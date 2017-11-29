@@ -3,31 +3,27 @@ import {type} from '../utils/type.util';
 import {Auth, Err} from '../domain';
 
 export const ActionTypes = {
+  USERINFO:type('[Auth] userinfo'),
+  USERINFO_SUCCESS:type('[Auth] userinfo_success'),
   LOGIN: type('[Auth] Login'),
   LOGIN_SUCCESS: type('[Auth] Login Success'),
-  LOGIN_FAIL: type('[Auth] Login Fail'),
   SIGN:type('[Auth] sign'),
   SIGN_SUCCESS:type('[Auth] sign_success'),
   REGISTER_VERCODE: type('[Auth] Register_vercode'),
   REGISTER_VERCODE_SUCCESS: type('[Auth] Register_vercode_success'),
-  REGISTER_VERCODE_FAIL: type('[Auth] Register_vercode_fail'),
   CHECKREGCODE: type('[Auth] checkregcode'),
   CHECKREGCODE_SUCCESS: type('[Auth] checkregcode_success'),
-  
   REGISTER: type('[Auth] Register'),
   REGISTER_SUCCESS: type('[Auth] Register Success'),
-  REGISTER_FAIL: type('[Auth] Register Fail'),
   LOGOUT: type('[Auth] Logout'),
-  
   FORGET_PASSWORD: type('[Auth] Forget_password'),
   FORGET_PASSWORD_SUCCESS: type('[Auth] Forget_password_success'),
-  FORGET_PASSWORD_FAIL: type('[Auth] Forget_password_fail'),
   CHANGE_PASSWORD: type('[Auth] Change_password'),
   CHANGE_PASSWORD_SUCCESS: type('[Auth] Change_password_success'),
-  CHANGE_PASSWORD_FAIL: type('[Auth] Change_password_fail'),
+  TERMLIST:type('[Auth] termlist'),
+  TERMLIST_SUCCESS:type('[Auth] termlist_success'),
   CHANGE: type('[Auth] Change'),
   CHANGE_SUCCESS: type('[Auth] Change_success'),
-  CHANGE_FAIL: type('[Auth] Change_fail'),
   AUTH_FAIL: type('[Auth] auth_fail')
 }
 export class AuthFailAction implements Action {
@@ -36,7 +32,22 @@ export class AuthFailAction implements Action {
   constructor(public payload: Err) {
   }
 }
+// 获取用户信息
+export class UserInfoAction implements Action {
+  type = ActionTypes.USERINFO;
 
+  constructor(public payload: { userId: string }) {
+
+  }
+}
+
+export class UserInfoSuccessAction implements Action {
+  type = ActionTypes.USERINFO_SUCCESS;
+
+  constructor(public payload: Auth) {
+  }
+}
+// 登录
 export class LoginAction implements Action {
   type = ActionTypes.LOGIN;
 
@@ -52,12 +63,6 @@ export class LoginSuccessAction implements Action {
   }
 }
 
-export class LoginFailAction implements Action {
-  type = ActionTypes.LOGIN_FAIL;
-
-  constructor(public payload: Err) {
-  }
-}
 // 获取sign
 export class SignAction implements Action {
   type = ActionTypes.SIGN;
@@ -139,13 +144,6 @@ export class ForgetPasswordSuccessAction implements Action {
   constructor(public payload: any) {
   }
 }
-
-export class ForgetPasswordFailAction implements Action {
-  type = ActionTypes.FORGET_PASSWORD_FAIL;
-
-  constructor(public payload: Err) {
-  }
-}
 // 修改密码
 export class ChangePasswordAction implements Action {
   type = ActionTypes.CHANGE_PASSWORD;
@@ -158,13 +156,6 @@ export class ChangePasswordSuccessAction implements Action {
   type = ActionTypes.CHANGE_PASSWORD_SUCCESS;
 
   constructor(public payload: any) {
-  }
-}
-
-export class ChangePasswordFailAction implements Action {
-  type = ActionTypes.CHANGE_PASSWORD_FAIL;
-
-  constructor(public payload: Err) {
   }
 }
 
@@ -183,26 +174,17 @@ export class ChangeSuccessAction implements Action {
   constructor(public payload: Auth) {
   }
 }
-// export type Actions
-  // = LoginAction
-  // | LoginSuccessAction
-  // | LoginFailAction
-  // | RegisterAction
-  // | RegisterSuccessAction
-  // | RegisterFailAction
-  // | LogoutAction
-  // | PasswordVercodeAction
-  // | PasswordVercodeSuccessAction
-  // | PasswordVercodeFailAction
-  // | ForgetPasswordAction
-  // | ForgetPasswordSuccessAction
-  // | ForgetPasswordFailAction
-  // | ChangePasswordAction
-  // | ChangePasswordSuccessAction
-  // | ChangePasswordFailAction
-  // | ChangeHeadImageAction
-  // | ChangeHeadImageSuccessAction
-  // | ChangeHeadImageFailAction
-  // | ChangeNameAction
-  // | ChangeNameSuccessAction
-  // | ChangeNameFailAction
+// 获取termlist
+export class TermListAction implements Action {
+  type = ActionTypes.TERMLIST;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class TermListSuccessAction implements Action {
+  type = ActionTypes.TERMLIST_SUCCESS;
+
+  constructor(public payload: Auth) {
+  }
+}

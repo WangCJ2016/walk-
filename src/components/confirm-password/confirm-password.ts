@@ -55,7 +55,6 @@ export class ConfirmPasswordComponent implements ControlValueAccessor {
 
   // 验证器
   validate(c: FormControl): {[key: string]: any} {
-    console.log(1)
     if(this._form.get('newPassword').value === this._form.get('confirmPassword').value) {
       return null
     }

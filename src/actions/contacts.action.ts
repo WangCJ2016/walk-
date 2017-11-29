@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils';
-
+import { empDetail } from '../domain'
 /**
  * For each action type in an action group, make a simple
  * enum object for all of this group's action types.
@@ -10,7 +10,10 @@ import { type } from '../utils';
  * action types in the application are unique. 
  */
 export const ActionTypes = {
-  VERB:           type('[Class Verb')
+  LOAD: type('[contact] load'),
+  LOAD_SUCCESS: type('[contact] load_success'),
+  EMPDETAIL: type('[contact] empdetail'),
+  EMPDETAIL_SUCCESS: type('[contact] empdetail_success'),
 };
 
 /**
@@ -18,16 +21,29 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
-export class VerbAction implements Action {
-  type = ActionTypes.VERB;
+// 获取员工列表
+export class LoadAction implements Action {
+  type = ActionTypes.LOAD;
 
   constructor(public payload: any) { }
 }
+export class LoadSuccessAction implements Action {
+  type = ActionTypes.LOAD_SUCCESS;
 
+  constructor(public payload: any) { }
+}
+// 获取员工详情
+export class EmpDetailAction implements Action {
+  type = ActionTypes.EMPDETAIL;
+
+  constructor(public payload: {empId: string}) { }
+}
+export class EmpDetailSuccessAction implements Action {
+  type = ActionTypes.EMPDETAIL_SUCCESS;
+
+  constructor(public payload: empDetail) { }
+}
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type Actions
-  = VerbAction;
-  //| AnotherAction

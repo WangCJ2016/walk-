@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { SharedModule } from './shared.modules'
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { AppStoreModule } from '../reducer'
 import {  AppEffectsModule } from '../effects'
 import { ProvidersModule } from '../providers'
@@ -27,6 +27,8 @@ import { WorkDeskPageModule } from '../pages/work-desk/work-desk.module'
 import { WorkContactPageModule } from '../pages/work-contact/work-contact.module'
 import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercenter.module'
 import { ToastSitutionProvider } from '../providers/toast-sitution/toast-sitution';
+import { TeamServiceProvider } from '../providers/team-service/team-service';
+import { ContactServiceProvider } from '../providers/contact-service/contact-service';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { ToastSitutionProvider } from '../providers/toast-sitution/toast-situtio
     WorkContactPageModule,
     WorkUsercenterPageModule,
     HttpModule,
+    JsonpModule,
     SharedModule,
     AppStoreModule,
     AppEffectsModule,
@@ -69,7 +72,9 @@ import { ToastSitutionProvider } from '../providers/toast-sitution/toast-situtio
     CityPickerProvider,
     AuthProvider,
     ToastSitutionProvider,
-    {provide: 'BASE_URL', useValue: {url: 'http://106.15.103.123:8080/platform'}}
+    {provide: 'BASE_URL', useValue: {url: 'http://106.15.103.123:8080/platform'}},
+    TeamServiceProvider,
+    ContactServiceProvider
   ]
 })
 export class AppModule {}

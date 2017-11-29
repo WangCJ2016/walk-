@@ -18,6 +18,7 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: any ): State {
     switch (action.type) {
+        case authAction.ActionTypes.USERINFO_SUCCESS:
         case authAction.ActionTypes.CHANGE_SUCCESS:
         case authAction.ActionTypes.SIGN_SUCCESS:
         case authAction.ActionTypes.REGISTER_VERCODE_SUCCESS:

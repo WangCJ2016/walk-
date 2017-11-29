@@ -1,31 +1,25 @@
 import * as contactActions from '../actions/contacts.action';
-import { contact } from '../domain'
+import { contact, empDetail } from '../domain'
+import * as actions from '../actions/contacts.action'
 
 export interface State {
-         contacts: contact[]
+         contacts: Array<contact>
+         empDetail: empDetail
 };
 
 export const initialState: State = {
-          contacts: [{
-              name: '李冰冰',
-              phoneNum: '18868877305'
-          },{
-            name: '王冰冰',
-            phoneNum: '18868877305'
-        },{
-            name: '赵冰冰',
-            phoneNum: '18868877305'
-        }]
+          contacts: [],
+          empDetail:{}
 };
 
-export function reducer(state = initialState, action: contactActions.Actions ): State {
+export function reducer(state = initialState, action: any ): State {
     switch (action.type) {
-        // case class.ActionTypes.TYPE: {
-        //     return {
-        //         // return new class state
-        //     };
-        // }
-
+        case actions.ActionTypes.LOAD_SUCCESS: {
+            return {...state, contacts: action.payload}
+        }
+        case actions.ActionTypes.EMPDETAIL_SUCCESS: {
+            return {...state, empDetail: action.payload}
+        }
         default: {
             return state;
         }

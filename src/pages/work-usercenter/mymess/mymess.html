@@ -21,7 +21,7 @@
             <img src="assets/imgs/work-usercenter/head.png">
         </ion-avatar>
     </button>
-        <button ion-item (click)='changeName()'>
+        <button ion-item (click)='goPage("ChangeNamePage")'>
         <ion-label>姓名</ion-label>
         <span  item-end>{{(auth$ | async)?.name}}</span>
     </button>
@@ -29,7 +29,7 @@
         <ion-label>账号</ion-label>
         <span item-end>{{(auth$ | async)?.account}}</span>
     </button>
-        <button ion-item (click)='changeSex()'>
+        <button ion-item (click)='goPage("MySexPage")'>
         <ion-label>性别</ion-label>
         <span item-end>{{(auth$ | async)?.sex===1?'男':'女'}}</span>
     </button>

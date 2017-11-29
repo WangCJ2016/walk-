@@ -5,6 +5,7 @@ import {  FormGroup, FormBuilder,Validators,AbstractControl } from '@angular/for
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as authActions from '../../../actions/auth.action'
+import { ToastSitutionProvider } from '../../../providers/toast-sitution/toast-sitution'
 /**
  * Generated class for the ChangePasswordPage page.
  *
@@ -22,15 +23,20 @@ export class ChangePasswordPage {
   constructor(public navCtrl: NavController,
      public navParams: NavParams, 
      private fb: FormBuilder,
+     private toast: ToastSitutionProvider,
      private toastCtrl:ToastController,
      private store$: Store<fromRoot.State>) {
     this.form = this.fb.group({
       oldpassword: ['', Validators.required],
-      confirmpassword: ['']
+      confirmpassword: ['', Validators.required]
     },{validator: this.validate})
+    this.store$.select(store => store.auth).subscribe(res => {
+      if(res.msg) {
+        this.toast.message(res.msg)
+      }
+    })
   }
   validate(c: AbstractControl):{[key: string]:any} {
-    console.log(c.value)
     if(c.value.oldpassword !== c.value.confirmpassword) {
       return null
     }
@@ -41,23 +47,16 @@ export class ChangePasswordPage {
   formsubmit(f, ev: Event) {
     console.log(f.get('confirmpassword').errors);
     if(f.hasError('required','oldpassword')){
-      this.toastCtrl.create({
-        message: '原密码不能为空',
-        duration:2000,
-        position:'middle'
-      }).present()
+      this.toast.message('原密码不能为空')
       return
     }
-    if(f.hasError('msg','confirmpassword')){
-      this.toastCtrl.create({
-        message: f.get('confirmpassword').errors.msg,
-        duration:2000,
-        position:'middle'
-      }).present()
+    if(f.hasError('required','confirmpassword')||f.hasError('msg','confirmpassword')){
+      this.toast.message('新密码与确认密码不能为空且必须相等')
       return
     }
+   
     this.store$.dispatch(
-      new authActions.ChangePasswordAction({ oldpassword: f.value.oldpassword, newpassword: f.value.newpassword })
+      new authActions.ChangePasswordAction({ oldpassword: f.value.oldpassword, newpassword: f.value.confirmpassword })
     )
   }
 

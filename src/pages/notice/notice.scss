@@ -1,0 +1,30 @@
+page-notice {
+  .notice{
+    ion-card-header{
+      h3{
+        font-size: 1.416667rem;
+      }
+      span{
+        font-size: 1rem
+      }
+    }
+    .img{
+      height: 15rem;
+      padding: 0 .833333rem
+    }
+    ion-card-content{
+      p{
+        color: #666;
+        font-size: 1.166667rem;
+        border-bottom: 0.55px solid $border_color;
+        padding-bottom: .833333rem
+      }
+    }
+    .card-content{
+      padding: 1.25rem 1.25rem 0
+    }
+    .label{
+      font-size: 1.25rem
+    }
+  }
+}

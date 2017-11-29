@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import { AuthInfo } from '../../domain'
 
+
 /*
   Generated class for the AuthProvider provider.
 
@@ -13,23 +14,22 @@ import { AuthInfo } from '../../domain'
 @Injectable()
 export class AuthProvider {
   step1 = new BehaviorSubject<string>('one')
-  private headers = new Headers({
-    'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache'
-  });
   constructor(public http: Http, @Inject('BASE_URL') private config) {
-      console.log(this.config)
+      
+  }
+  // 获取用户的信息
+  getUserInfo(userId: string) {
+    const uri = `${this.config.url}/app/user_getUserInfo`
+    return this.http.get(uri, {params: {'userId': userId}})
+    .map(res => res.json()) 
   }
   // 登录
-  login(phoneNum: string, password: string) {
-    alert(5)
-    const uri = `${this.config.url}/app/user_login`;
-    return this.http.get(uri, {params: {'userName': phoneNum, 'password': password}})
-      .map(res => {
-        alert(3)
-        return res.json()
-      })
+  login(phoneNum: string, passowrd: string) {
+    const uri = `${this.config.url}/app/user_login`
+    return this.http.get(uri, {params: {'userName': phoneNum, 'password': passowrd}})
+             .map(res => res.json()) 
   }
+  
   // 注册获取sign
   getSign(phoneNum: string, type: string) {
     const url_sign = `${this.config.url}/app/user_getSmsSign`
@@ -93,6 +93,13 @@ export class AuthProvider {
     return this.http.get(uri, {params: {parentId:parentId}})
       .map(res => res.json())
   }
+  // 修改密码
+  changePassword(userId:string, token:string, oldPassword: string, newPassword: string) {
+    const uri = `${this.config.url}/app/user_updatePassword`
+    return this.http.get(uri, {params: {userId: userId, token: token, oldPassword: oldPassword, newPassword: newPassword}})
+      .map(res => res.json())
+  }
+  
   getStep() {
     return this.step1.asObservable().startWith('')
   }

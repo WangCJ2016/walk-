@@ -16,8 +16,8 @@
 <ion-content>
     <section class="top_section">
         <div class="blank"></div>
-        <avatar name={{contact.name}} [width]='width'></avatar>
-        <h3 class="name">{{contact.name}}</h3>
+        <avatar name={{contact?.name}} [width]='width'></avatar>
+        <h3 class="name">{{contact?.name}}</h3>
         <div class="actions">
             <div>
                 <div class="img_bg dymanic"></div>
@@ -26,11 +26,11 @@
             </div>
             <div>
                 <div class="img_bg call"></div>
-                <a href="tel:18868877305">打电话</a>
+                <a href="tel:{{contact?.phone}}">打电话</a>
             </div>
             <div>
                 <div class="img_bg email"></div>
-                <a href="sms:18868877305">发短信</a>
+                <a href="sms:{{contact?.phone}}">发短信</a>
             </div>
         </div>
     </section>
@@ -39,11 +39,11 @@
             <ion-item-divider color="light">个人信息</ion-item-divider>
             <ion-item>
                 <ion-label>所在部门</ion-label>
-                <ion-input value='设计部' readonly='true'></ion-input>
+                <ion-input value={{contact?.dept}} readonly='true'></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label>手机号码</ion-label>
-                <ion-input value={{contact.phoneNum}} readonly='true'></ion-input>
+                <ion-input value={{contact?.phone}} readonly='true'></ion-input>
             </ion-item>
         </ion-item-group>
     </section>

@@ -31,6 +31,8 @@ export class WorkHomePage {
       ev: myEvent
     });
   }
-  
+  goPage(page: string) {
+    this.navCtrl.push(page)
+  }
 
 }

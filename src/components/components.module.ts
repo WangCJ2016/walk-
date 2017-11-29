@@ -23,6 +23,7 @@ import { StarComponent } from './star/star';
 
 
 
+
 @NgModule({
 	declarations: [RoundRangeComponent,
     BlankComponent,

@@ -15,7 +15,7 @@
 <ion-content>
     <ion-item-group *ngFor="let contact of contactArray">
         <ion-item-divider color="light">{{contact.letter}}</ion-item-divider>
-        <ion-item *ngFor='let contactItem of contact.data' (click)='goPage("ContactDetailPage",contactItem)'>
+        <ion-item *ngFor='let contactItem of contact.data' (click)='goPage("ContactDetailPage",contactItem.id)'>
             <ion-avatar item-start>
                 <avatar name={{contactItem.name}}></avatar>
             </ion-avatar>

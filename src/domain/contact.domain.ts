@@ -1,4 +1,13 @@
 export interface contact {
-    name?: string,
-    phoneNum?: string
+    userId?:string,
+    name?:string,
+    letter?:string,
+    userName?:string
+    id?:string
+}
+
+export interface empDetail {
+    name?: string
+    dept?: string
+    phone?: string
 }

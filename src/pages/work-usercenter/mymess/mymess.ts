@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera'
 import { ImagePicker } from '@ionic-native/image-picker'
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 
 import { CityPickerProvider } from '../../../providers/city-picker/city-picker'
 import { AuthProvider } from '../../../providers/auth/auth'
@@ -40,7 +41,7 @@ export class MymessPage {
     public cityPickerSev: CityPickerProvider,
     private service: AuthProvider,
     private imagePicker: ImagePicker,
-    private alertCtrl: AlertController,
+    private fileTranfer: FileTransfer,
     private store$: Store<fromRoot.State>) {
       this.setCityPickerData()
   }
@@ -54,7 +55,6 @@ export class MymessPage {
      return this.service.sysRegionList(this.provinceId)
     })
     .map(city => {
-      console.log(city)
       this._provinceName = city.dataObject[0].name
       return city.dataObject.filter(city => city.id == this.cityId)
     })
@@ -66,6 +66,7 @@ export class MymessPage {
   // 修改头像
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
+      title:' ',
       buttons: [
         {
           text: '拍摄',
@@ -79,7 +80,17 @@ export class MymessPage {
               targetHeight: 400
             }
             this.camera.getPicture(options).then((imageData) => {
-              this.store$.dispatch(new actions.ChangeAction({image: imageData.replace(/^file:\/\//, '')}))
+              // this.store$.dispatch(new actions.ChangeAction({image: imageData.replace(/^file:\/\//, '')}))
+              const fileTransfer: FileTransferObject = this.fileTranfer.create();
+              fileTransfer.upload(imageData, 'http://106.15.103.123:8080/platform/appPhotoUploadServlet',{})
+              .then((res) => {
+                // success
+                const photo = JSON.parse(res.response).fileUrl[0]
+                console.log('success'+photo)
+                this.store$.dispatch(new actions.ChangeAction({photo: photo}))
+              }, (err) => {
+                // error
+              })
               actionSheet.dismiss()
               return false
              }, (err) => {
@@ -97,7 +108,16 @@ export class MymessPage {
               quality: 50
             }
             this.imagePicker.getPictures(options).then((result) => {
-                  this.store$.dispatch(new actions.ChangeAction({image: result[0].replace(/^file:\/\//, '')}))
+              const fileTransfer: FileTransferObject = this.fileTranfer.create();
+              fileTransfer.upload(result[0], 'http://106.15.103.123:8080/platform/appPhotoUploadServlet',{})
+              .then((res) => {
+                // success
+                const photo = JSON.parse(res.response).fileUrl[0]
+                console.log('success'+photo)
+                this.store$.dispatch(new actions.ChangeAction({photo: photo}))
+              }, (err) => {
+                // error
+              })
                   return false
             }, (err) => { });
           }
@@ -112,62 +132,9 @@ export class MymessPage {
     })
     actionSheet.present();
  }
- // 修改名字
- changeName() {
-  let alert = this.alertCtrl.create({
-    title: '修改名字',
-    inputs: [
-      {
-        name: 'username',
-        placeholder: '请输入要修改的名字'
-      }
-    ],
-    buttons: [
-      {
-        text: '取消',
-        role: 'cancel',
-        handler: data => {
-          this.store$.dispatch(new actions.ChangeAction({name: data.username}))
-        }
-      },
-      {
-        text: '确认',
-        handler: data => {
-          this.store$.dispatch(new actions.ChangeAction({name: data.username}))
-        }
-      }
-    ]
-  });
-  alert.present();
- }
- // 修改性别
- changeSex() {
-    const alert = this.alertCtrl.create()
-    alert.setTitle('请选择性别')
-    alert.addInput({
-      type: 'radio',
-      label: '男',
-      value: '1',
-      checked: true
-    })
-    alert.addInput({
-      type: 'radio',
-      label: '女',
-      value: '2'
-    })
-    alert.addButton('取消');
-    alert.addButton({
-      text: '确认',
-      handler: (data: any) => {
-        this.store$.dispatch(new actions.ChangeAction({sex: data}))
-      }
-    })
-    alert.present();
- }
+ 
  // 修改所在地
- changeAddress() {
-  
- }
+
  setCityPickerData(){
   this.cityPickerSev.getCitiesData()
     .then( data => {
