@@ -14,39 +14,26 @@
 
 
 <ion-content>
-    <date-picker></date-picker>
+    <date-picker (dateEmit)='selectDay($event)'></date-picker>
     <section class="term_daily_graph" padding>
-        <round-range width='90' raduis='10'></round-range>
+        <round-range width='90' raduis='10' [process]='process'></round-range>
         <div class="graph_type">
-            <div><span class="type_color ccc"></span><span>未上交</span><span class="num">3</span></div>
-            <div><span class="type_color blue"></span><span>一已上交</span><span class="num">27</span></div>
+            <div><span class="type_color ccc"></span><span>未上交</span><span class="num">{{people?.notHandIn.notHandInCount}}</span></div>
+            <div><span class="type_color blue"></span><span>已上交</span><span class="num">{{people?.handIn.handInCount}}</span></div>
         </div>
     </section>
     <section class="daily_people">
         <div class="daily_list_title">
             未交
         </div>
-        <ion-list>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='王琪琪'></avatar>
-                </ion-avatar>
-                <h4>王琪琪</h4>
-                <button item-end ion-button disabled='true'>评阅</button>
-            </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='虚荣城'></avatar>
-                </ion-avatar>
-                <h4>虚荣城</h4>
-                <button item-end ion-button disabled='true'>评阅</button>
-            </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='方霞'></avatar>
-                </ion-avatar>
-                <h4>方霞</h4>
-                <button item-end ion-button disabled='true'>评阅</button>
+        <ion-list *ngIf='people'>
+            <ion-item *ngFor="let item of people?.notHandIn.notHandInList; let i=index" >
+                    <ion-avatar item-start >
+                            <img *ngIf='item.head' src={{item.head}} alt="">
+                            <avatar *ngIf='!item.head' name={{item.name}}></avatar>
+                        </ion-avatar>
+                <h4>{{item.name}}</h4>
+                <button item-end ion-button disabled='true'>{{changeStatus(item.status)}}</button>
             </ion-item>
         </ion-list>
     </section>
@@ -54,27 +41,14 @@
         <div class="daily_list_title">
             已交
         </div>
-        <ion-list>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='王琪琪'></avatar>
-                </ion-avatar>
-                <h4>王琪琪</h4>
-                <button item-end ion-button (click)='goPage("DailyPage", "王琪琪")'>已评阅</button>
-            </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='虚荣城'></avatar>
-                </ion-avatar>
-                <h4>虚荣城</h4>
-                <button item-end ion-button>已评阅</button>
-            </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='方霞'></avatar>
-                </ion-avatar>
-                <h4>方霞</h4>
-                <button item-end ion-button>已评阅</button>
+        <ion-list *ngIf='people'>
+            <ion-item *ngFor="let item of people?.handIn.handInList; let i=index" (click)='goPage(item.empId)'>
+                    <ion-avatar item-start >
+                            <img *ngIf='item.head' src={{item.head}} alt="">
+                            <avatar *ngIf='!item.head' name={{item.name}}></avatar>
+                        </ion-avatar>
+                <h4>{{item.name}}</h4>
+                <button item-end ion-button disabled='true'>{{changeStatus(item.status)}}</button>
             </ion-item>
         </ion-list>
     </section>

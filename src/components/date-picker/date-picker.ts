@@ -20,7 +20,7 @@ export class DatePickerComponent {
   selectMonth: number
   selectYear: number
   fenzuArray = [];
-  
+  selectSlideIndex:number
 
   constructor() {
     this.selectYear = getYear(new Date())
@@ -29,8 +29,11 @@ export class DatePickerComponent {
     this.initalMonth(this.selectYear +'-'+ (this.selectMonth))
   }
   
-  initalMonth(year_month){  
-     console.log(year_month)  
+  ngAfterViewInit() {
+    this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
+   this.slides.initialSlide=this.selectSlideIndex
+  }
+  initalMonth(year_month){   
       const num = getDaysInMonth(year_month) // 当前月的天数
       const firstDay = startOfMonth(year_month)
       const firstDayofWeek = getDay(firstDay)
@@ -53,6 +56,12 @@ export class DatePickerComponent {
       
       for(let i=0;i<monthArray.length;i+=7){
         this.fenzuArray.push(monthArray.slice(i,i+7))
+      }
+      for(let i=0;i<this.fenzuArray.length;i++){
+        if(this.fenzuArray[i].indexOf(this.selectDay)>-1){
+          this.selectSlideIndex = i
+          this.activeIndex = this.fenzuArray[i].indexOf(this.selectDay)
+        }
       }
   }
   dayChoose(index: number,day:number) {

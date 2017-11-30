@@ -17,17 +17,14 @@
     <date-picker (dateEmit)='selectDay($event)'></date-picker>
     <blank></blank>
     <div class="attence_detail" padding>
-        <div class="attence_time">
-            <div class="time">10:00:00 签到</div>
-            <div class="address">杭州拱墅区祥园路33号</div>
-            <img class="face" src="assets/imgs/attence/icon_face.png" alt="">
+        <div class="attence_time" *ngFor="let item of attenceRecordList">
+            <div class="time">{{item.clockTime}} {{item.type==1?'签到':'签退'}}</div>
+            <div class="address">{{item.trueAddress}}</div>
+            
+                <img class="face" *ngFor="let pic of item.pictures" src={{pic}} alt="">
+    
             <img class="icon_time" src="assets/imgs/attence/icon_time.png" alt="">
         </div>
-        <div class="attence_time">
-            <div class="time">12:00:00 签到</div>
-            <div class="address">杭州天目山路33号</div>
-            <img class="face" src="assets/imgs/attence/icon_face.png" alt="">
-            <img class="icon_time" src="assets/imgs/attence/icon_time.png" alt="">
-        </div>
+       
     </div>
 </ion-content>

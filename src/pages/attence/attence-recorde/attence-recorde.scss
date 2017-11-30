@@ -4,18 +4,21 @@ page-attence-recorde {
         .attence_time {
             position: relative;
             padding-left: 2.5rem;
+            padding-bottom: .833333rem;
             border-left: 1px solid #f5f5f5;
             .time {
-                font-size: 1.166667em;
+                font-size: 1.333333em;
             }
             .address {
                 margin-top: .833333rem;
+                color: #999;
                 padding-left: 1.5rem;
                 background: url('../assets/imgs/attence/icon_loc.png')no-repeat left center;
                 background-size: 1rem 1rem;
             }
             .face {
                 margin-top: .833333rem;
+                margin-left: .833333rem;
                 width: 5rem;
                 height: 5rem;
             }
@@ -24,7 +27,7 @@ page-attence-recorde {
                 width: 1.166667rem;
                 height: 1.166667rem;
                 left: -7px;
-                top: -7px;
+                top: 1px;
             }
         }
     }

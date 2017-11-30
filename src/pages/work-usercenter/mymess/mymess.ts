@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera'
 import { ImagePicker } from '@ionic-native/image-picker'
@@ -35,6 +35,7 @@ export class MymessPage {
   _provinceName: string
   _cityName: string
   constructor(public navCtrl: NavController, 
+    @Inject('BASE_URL') private config,
     public navParams: NavParams,
     public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
@@ -82,7 +83,7 @@ export class MymessPage {
             this.camera.getPicture(options).then((imageData) => {
               // this.store$.dispatch(new actions.ChangeAction({image: imageData.replace(/^file:\/\//, '')}))
               const fileTransfer: FileTransferObject = this.fileTranfer.create();
-              fileTransfer.upload(imageData, 'http://106.15.103.123:8080/platform/appPhotoUploadServlet',{})
+              fileTransfer.upload(imageData, `${this.config.url}/appPhotoUploadServlet`,{})
               .then((res) => {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
@@ -109,7 +110,7 @@ export class MymessPage {
             }
             this.imagePicker.getPictures(options).then((result) => {
               const fileTransfer: FileTransferObject = this.fileTranfer.create();
-              fileTransfer.upload(result[0], 'http://106.15.103.123:8080/platform/appPhotoUploadServlet',{})
+              fileTransfer.upload(result[0], `${this.config.url}/appPhotoUploadServlet`,{})
               .then((res) => {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]

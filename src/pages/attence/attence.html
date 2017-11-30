@@ -22,7 +22,7 @@
     <div class="attence_address">
         <img class="loc" src="assets/imgs/attence/icon_loc.png" alt="">
         <span>当前位置</span>
-        <span class="address">{{address}}</span>
+        <span class="address">{{addressInfo?.address}}</span>
     </div>
     <div class="map" #map_container style="height:200px">
         <map (address)='getAdress($event)'></map>
@@ -32,7 +32,7 @@
         <i class="icon_camera" (click)='takePhotos()'></i>
     </div>
     <div class="pics">
-        <div class="pic" *ngFor="let pic of pics;let i=index">
+        <div class="pic" *ngFor="let pic of picsView;let i=index">
                 <img [src]="pic" alt="" >
                 <ion-badge color='danger' (click)='delPic(index)'  item-end>
                         <ion-icon name="close"></ion-icon>
@@ -41,7 +41,7 @@
     </div>
     <div class="attendec_button" (click)='signinorup()'>
         <span></span>
-        <span>{{attenceTitle}}</span>
+        <span>{{attenceTitle=='1'?"签到":"签退"}}</span>
         <span class="time">{{date|date:"HH:mm:ss"}}</span>
         <span></span>
     </div>

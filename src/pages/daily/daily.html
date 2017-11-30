@@ -14,7 +14,7 @@
 
 
 <ion-content>
-    <date-picker></date-picker>
+    <date-picker (dateEmit)='selectDay($event)'></date-picker>
     <blank></blank>
     <section class="_content">
         <div class="content_item">
@@ -63,16 +63,26 @@
                 <img src="assets/imgs/work-desk/icon_ribao.png" alt="">
             </div>
         </div>
-        <div class="content_item" style="border-left:none">
-            <ion-textarea placeholder="请记录您的工作心得，下一步工作安排或者计划" value={{desc}} >
+        <div class="content_item" style="border-left:none" *ngIf='showIf'>
+            <ion-textarea placeholder="请记录您的工作心得，下一步工作安排或者计划" [(ngModel)]="desc" >
             
             </ion-textarea>
-            <div *ngIf='showIf'>
-                <button ion-button clear float-right>提交</button>
+            <div *ngIf='showIf' class="cleafix">
+                <button ion-button clear float-right (click)='addDaily()'>提交</button>
                 <button ion-button clear float-right style="color:#ccc">取消</button>
             </div>
            
         </div>
+        <div class="content_item" style="border-left:none" *ngIf='!showIf'>
+                <ion-textarea placeholder="请记录您的工作心得，下一步工作安排或者计划" value={{dailyContent}} >
+                
+                </ion-textarea>
+                <div *ngIf='showIf' class="cleafix">
+                    <button ion-button clear float-right (click)='addDaily()'>提交</button>
+                    <button ion-button clear float-right style="color:#ccc">取消</button>
+                </div>
+               
+            </div>
         <div *ngIf='!showIf' class="stars_">
             <span>评分：</span>
             <div>

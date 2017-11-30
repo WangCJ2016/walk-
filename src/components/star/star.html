@@ -1,6 +1,6 @@
 <!-- Generated template for the StarComponent component -->
 
-  <div class="pingfen"  [style.bottom]='trsition?"15px":"-200px"'>
+  <div class="pingfen" *ngIf='trsition'  [style.bottom]='trsition?"15px":"-200px"'>
     <h3>评分</h3>
     <div class="stars">
       <img src="assets/imgs/work-desk/{{star}}.png"  *ngFor="let star of stars; let i=index" (click)='starClick(i)'>

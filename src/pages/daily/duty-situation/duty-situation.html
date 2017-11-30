@@ -8,61 +8,41 @@
 
 
 <ion-content>
-    <date-picker></date-picker>
+    <date-picker  (dateEmit)='selectDay($event)'></date-picker>
     <section class="term_daily_graph" padding>
-        <round-range width='90' raduis='10' color='#3aad1d'></round-range>
+        <round-range width='90' raduis='10' color='#3aad1d' [process]="process"></round-range>
         <div class="graph_type">
-            <div><span class="type_color ccc"></span><span>未在岗</span><span class="num">3</span></div>
-            <div><span class="type_color blue"></span><span>在岗</span><span class="num">27</span></div>
+            <div><span class="type_color ccc"></span><span>未在岗</span><span class="num">{{attencePeople?.notIn.notInCount}}</span></div>
+            <div><span class="type_color blue"></span><span>在岗</span><span class="num">{{attencePeople?.isIn.isInCount}}</span></div>
         </div>
     </section>
     <section class="daily_people">
         <div class="daily_list_title">
-            不在岗人员(3人)
+            不在岗人员({{attencePeople?.notIn.notInCount}}人)
         </div>
-        <ion-list>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='王琪琪'></avatar>
+        <ion-list *ngIf='attencePeople'>
+            <ion-item *ngFor="let item of attencePeople?.notIn.notInList">
+                <ion-avatar item-start >
+                    <img *ngIf='item.head' src={{item.head}} alt="">
+                    <avatar *ngIf='!item.head' name={{item.name}}></avatar>
                 </ion-avatar>
-                <h4>王琪琪</h4>
-                <button item-end ion-button outline color='bingjia'>病假</button>
+                <h4>{{item.name}}</h4>
+                <button item-end ion-button outline color='bingjia'>{{changeAttenceStatus(item.status)}}</button>
             </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='虚荣城'></avatar>
-                </ion-avatar>
-                <h4>虚荣城</h4>
-                <button item-end ion-button outline color='shijia'>事假</button>
-            </ion-item>
-
         </ion-list>
     </section>
     <section class="daily_people">
         <div class="daily_list_title">
-            在岗人员(27人)
+            在岗人员({{attencePeople?.isIn.isInCount}}人)
         </div>
-        <ion-list>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='王琪琪'></avatar>
-                </ion-avatar>
-                <h4>王琪琪</h4>
-                <button item-end ion-button outline color='danger'>迟到</button>
-            </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='虚荣城'></avatar>
-                </ion-avatar>
-                <h4>虚荣城</h4>
-                <button item-end ion-button outline color='danger'>迟到</button>
-            </ion-item>
-            <ion-item>
-                <ion-avatar item-start>
-                    <avatar name='方霞'></avatar>
-                </ion-avatar>
-                <h4>方霞</h4>
-                <button item-end ion-button outline color='secondary'>正常</button>
+        <ion-list *ngIf='attencePeople'>
+            <ion-item *ngFor="let item of attencePeople?.isIn.isInList">
+                    <ion-avatar item-start >
+                            <img *ngIf='item.head' src={{item.head}} alt="">
+                            <avatar *ngIf='!item.head' name={{item.name}}></avatar>
+                        </ion-avatar>
+                        <h4>{{item.name}}</h4>
+                        <button item-end ion-button outline color='bingjia'>{{changeAttenceStatus(item.status)}}</button>
             </ion-item>
         </ion-list>
     </section>

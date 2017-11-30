@@ -1,4 +1,4 @@
-import * as contactActions from '../actions/contacts.action';
+
 import { contact, empDetail } from '../domain'
 import * as actions from '../actions/contacts.action'
 

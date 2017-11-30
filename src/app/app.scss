@@ -464,3 +464,9 @@ ion-textarea {
 .range-ios [range-right]{
     margin-left: 10px;
 }
+// 清楚浮动
+.cleafix::after{
+    content: '';
+    clear:both;
+    display: table;
+}

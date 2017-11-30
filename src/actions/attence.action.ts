@@ -10,12 +10,15 @@ import { type } from '../utils/type.util';
  * action types in the application are unique. 
  */
 export const ActionTypes = {
-    SETDAY: type('[attence] setday'),
-    SETDAY_SUCCESS: type('[attence] setday_success'),
-    SETDAY_FAIL: type('[attence] setday_fail'),
+    ATTENCE_FAIL: type('[attence] attence_fail'),
+    GETATTENDACE: type('[attence] getattendance'),
+    GETATTENDACE_SUCCESS: type('[attence] getattendance_success'),
     SIGNIN: type('[attence] signin'),
     SIGNIN_SUCCESS: type('[attence] signin_success'),
-    SIGNIN_FAIL: type('[attence] signin_fail')
+    ATTENCERECORD: type('[attence] attencerecord'),
+    ATTENCERECORD_SUCCESS: type('[attence] attencerecord_success'),
+    ATTENCESTAT: type('[attence] attencestat'),
+    ATTENCESTAT_SUCCESS: type('[attence] attencestat_success')
 };
 
 /**
@@ -23,37 +26,55 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
-export class SetDayAction implements Action {
-    type = ActionTypes.SETDAY;
-
-    constructor(public payload: { day: string}) { }
-}
-export class SetDaySuccessAction implements Action {
-    type = ActionTypes.SETDAY_SUCCESS;
-
-    constructor(public payload: { day: string }) { }
-}
-export class SetDayFailAction implements Action {
-    type = ActionTypes.SETDAY_FAIL;
+export class FailAction implements Action {
+    type = ActionTypes.ATTENCE_FAIL;
 
     constructor(public payload: any) { }
 }
+// 显示签到或签退
+export class GetAttendacnceAction implements Action {
+    type = ActionTypes.GETATTENDACE;
+
+    constructor(public payload: any) { }
+}
+export class GetAttendacnceSuccessAction implements Action {
+    type = ActionTypes.GETATTENDACE_SUCCESS;
+
+    constructor(public payload: { day: string }) { }
+}
+// 打卡
 export class SignAction implements Action {
     type = ActionTypes.SIGNIN;
 
-    constructor(public payload: { [key: string]:{time: string, address: string }}) { }
+    constructor(public payload: {type: string, lng:string, lat:string, trueAddress:string,pictures?:string}) { }
 }
 export class SignSuccessAction implements Action {
     type = ActionTypes.SIGNIN_SUCCESS;
 
-    constructor(public payload: { [key: string]:{time: string, address: string }}) { }
+    constructor(public payload: any) { }
 }
-export class SignFailAction implements Action {
-    type = ActionTypes.SIGNIN_FAIL;
+// 获取考勤列表
+export class AttenceRecordAction implements Action {
+    type = ActionTypes.ATTENCERECORD;
+
+    constructor(public payload: {time: string}) { }
+}
+export class AttenceRecordSuccessAction implements Action {
+    type = ActionTypes.ATTENCERECORD_SUCCESS;
 
     constructor(public payload: any) { }
 }
+// 考勤统计在岗情况
+export class AttenceStatAction implements Action {
+    type = ActionTypes.ATTENCESTAT;
 
+    constructor(public payload: {time: string}) { }
+}
+export class AttenceStatSuccessAction implements Action {
+    type = ActionTypes.ATTENCESTAT_SUCCESS;
+
+    constructor(public payload: any) { }
+}
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types

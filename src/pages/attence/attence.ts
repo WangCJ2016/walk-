@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import getDay from 'date-fns/get_day'
 import { getWeekDay } from '../../utils'
 import getDate from 'date-fns/get_date'
@@ -11,41 +12,41 @@ import { Camera } from '@ionic-native/camera'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/attence.action'
+import { ToastSitutionProvider} from '../../providers'
 /**
  * Generated class for the AttencePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+export interface addressInfo{
+  trueAddress: string,
+  lng: string,
+  lat: string
+}
 @IonicPage()
 @Component({
   selector: 'page-attence',
   templateUrl: 'attence.html',
 })
 export class AttencePage {
-  address: string
+  addressInfo: addressInfo
   date: Date
   weekDay: string
   _sub: Subscription
   attenceTitle: string
-  pics: Array<string> = ['assets/imgs/attence/iocn_today.png']
-  constructor(public navCtrl: NavController, 
+  picsView: Array<string> = ['assets/imgs/work-home/shenpi.png']
+  pics: Array<string> = []
+  constructor(
+    @Inject('BASE_URL') private config,    
+    public navCtrl: NavController, 
     public navParams: NavParams,
     private camera: Camera,
+    private fileTranfer: FileTransfer,
+    private toast: ToastSitutionProvider,
     private store$: Store<fromRoot.State>) {
    this._sub = Observable.interval(1000).subscribe(_ => this.date = new Date())
-   this.store$.select(store => store.attence.attence).subscribe(v => {
-     console.log(v)
-     const today = getYear(new Date())+'-'+getMonth(new Date())+'-'+getDate(new Date())
-     if(v.day !== today){
-        this.attenceTitle = '签到'
-        this.store$.dispatch(new actions.SetDayAction({day: today}))
-     }else if(v.signin.time) {
-      this.attenceTitle = '签退'
-     }
-    
-   })
+   this.store$.dispatch(new actions.GetAttendacnceAction({}))
   }
  ngOnDestroy() {
    this._sub.unsubscribe()
@@ -53,6 +54,12 @@ export class AttencePage {
   ionViewDidLoad() {
     this.date = new Date()
     this.weekDay = getWeekDay(getDay(this.date))
+    this.store$.select(store=>store.attence.attence).subscribe(res=>this.attenceTitle=res.attenceInview)
+    this.store$.select(store => store.attence).subscribe(res => {
+      if(res.msg) {
+        this.toast.message(res.msg)
+      }
+    })
   }
   goRecord() {
     this.navCtrl.push('AttenceRecordePage')
@@ -68,7 +75,8 @@ export class AttencePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       // this.store$.dispatch(new actions.ChangeAction({image: imageData.replace(/^file:\/\//, '')}))
-      this.pics.push(imageData.replace(/^file:\/\//, ''))
+      this.pics.push(imageData)
+      this.picsView.push(imageData.replace(/^file:\/\//, ''))
      }, (err) => {
       // Handle error
      });
@@ -76,20 +84,48 @@ export class AttencePage {
   // 删除照片
   delPic(index: number) {
     this.pics.splice(index,1)
+    this.picsView.splice(index,1)
   }
   // 获取地址
   getAdress(v) {
-    this.address = v
+    console.log(v)
+    this.addressInfo = JSON.parse(v)
   }
   // 签到或签退
   signinorup() {
-
-    const h = new Date().getHours()
-    const m = new Date().getMinutes()
-    const s = new Date().getSeconds()
-    const time = h+':'+m+':'+s
-    this.attenceTitle==='签到'? 
-    this.store$.dispatch(new actions.SignAction({signin: {time: time, address:this.address}})):
-    this.store$.dispatch(new actions.SignAction({signup: {time: time, address:this.address}}))
+    let pictures = []
+    if(this.pics.length>0){
+      this.pics.forEach(pic => {
+        const fileTransfer: FileTransferObject = this.fileTranfer.create();
+        fileTransfer.upload(pic, `${this.config.url}/appPhotoUploadServlet`,{})
+        .then((res) => {
+          // success
+          const photo = JSON.parse(res.response).fileUrl[0]
+          console.log('success'+photo)
+          pictures.push(photo)
+          if(pictures.length===this.pics.length) {
+            console.log('success'+photo)
+            this.store$.dispatch(new actions.SignAction({
+              type:this.attenceTitle,
+              lng:this.addressInfo.lng,
+              lat:this.addressInfo.lat,
+              trueAddress:this.addressInfo.trueAddress,
+              pictures:pictures.join(',')}))
+          }
+        }, (err) => {
+          // error
+        }) 
+      })
+    } else {
+      this.store$.dispatch(new actions.SignAction({
+        type:this.attenceTitle,
+        lng:this.addressInfo.lng,
+        lat:this.addressInfo.lat,
+        trueAddress:this.addressInfo.trueAddress}))
+    }
+    
+    
+    
+    
   }
 }

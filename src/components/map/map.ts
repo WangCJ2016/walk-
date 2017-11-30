@@ -47,7 +47,7 @@ export class MapComponent {
           geocoder.getAddress(new AMap.LngLat(locations[0], locations[1]), (status, result) => {
             if (result.info === 'ok' || result.info === 'OK') {
               console.log(result.regeocode.formattedAddress)
-              this.address.emit(result.regeocode.formattedAddress)
+              this.address.emit(JSON.stringify({lng: locations[0],lat:locations[1],trueAddress:result.regeocode.formattedAddress}))
               // 绘制信息窗体
               var info = [];
               info.push("<div>"+result.regeocode.formattedAddress+"</div>")

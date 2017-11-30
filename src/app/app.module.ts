@@ -29,6 +29,8 @@ import { WorkUsercenterPageModule } from '../pages/work-usercenter/work-usercent
 import { ToastSitutionProvider } from '../providers/toast-sitution/toast-sitution';
 import { TeamServiceProvider } from '../providers/team-service/team-service';
 import { ContactServiceProvider } from '../providers/contact-service/contact-service';
+import { AttenceServiceProvider } from '../providers/attence-service/attence-service';
+import { DailyServiceProvider } from '../providers/daily-service/daily-service';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { ContactServiceProvider } from '../providers/contact-service/contact-ser
     ToastSitutionProvider,
     {provide: 'BASE_URL', useValue: {url: 'http://106.15.103.123:8080/platform'}},
     TeamServiceProvider,
-    ContactServiceProvider
+    ContactServiceProvider,
+    AttenceServiceProvider,
+    DailyServiceProvider
   ]
 })
 export class AppModule {}
