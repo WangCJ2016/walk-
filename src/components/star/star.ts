@@ -17,12 +17,11 @@ export class StarComponent {
   starNum: number = 0
   stars
   constructor() {
-    this.stars = numtoarray(0)
-    console.log(this.trsition)
+    this.stars = numtoarray(4)
   }
   starClick(num: number) {
     this.starNum = num
-    this.stars = numtoarray(num + 1)
+    this.stars = numtoarray(num)
   }
   backdropclick() {
     this.trsition = false

@@ -7,13 +7,14 @@ import * as fromContacts from './contact.reducer'
 import * as fromAttence from './attence.reducer'
 import * as fromTeam from './team.reducer'
 import * as fromDaily from './daily.reducer'
-
+import * as fromCreatwork from './creatwork.reducer'
 export interface State {
          auth: fromAuth.State,
          contacts: fromContacts.State,
          attence: fromAttence.State,
          team: fromTeam.State,
-         daily: fromDaily.State
+         daily: fromDaily.State,
+         creatwork: fromCreatwork.State
 };
 
 const initialState: State = {
@@ -21,7 +22,8 @@ const initialState: State = {
         contacts: fromContacts.initialState,
         attence: fromAttence.initialState,
         team: fromTeam.initialState,
-        daily: fromDaily.initialState
+        daily: fromDaily.initialState,
+        creatwork: fromCreatwork.initialState
 };
 
 const reducers = {
@@ -29,7 +31,8 @@ const reducers = {
     contacts: fromContacts.reducer,
     attence: fromAttence.reducer,
     team: fromTeam.reducer,
-    daily: fromDaily.reducer
+    daily: fromDaily.reducer,
+    creatwork: fromCreatwork.reducer
 }
 const productionReducers: ActionReducer<State> = combineReducers(reducers)
 // const developmentReducers: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers)

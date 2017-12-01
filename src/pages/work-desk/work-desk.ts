@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-
+import { Store } from '@ngrx/store'
+import * as fromRoot from '../../reducer'
+import * as actions from '../../actions/daily.action'
 /**
  * Generated class for the WorkDeskPage page.
  *
@@ -15,7 +17,17 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 })
 export class WorkDeskPage {
   @ViewChild('slide') slide: Slides
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  empId: string
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private store$: Store<fromRoot.State>
+  ) {
+    this.store$.select(store=>store.auth.auth).subscribe(v=>{
+      if(v.emp){
+        this.empId = v.emp.id
+      }
+    })
   }
 
   ionViewDidLoad() {
@@ -25,6 +37,10 @@ export class WorkDeskPage {
     }
   }
   goPage(pageName) {
+    if(pageName==='DailyPage'){
+      this.navCtrl.push(pageName,{empId: this.empId});
+      return
+    }
     this.navCtrl.push(pageName);
   }
 }

@@ -1,10 +1,11 @@
 
-import { contact, empDetail } from '../domain'
+import { contact, empDetail, empChooseList } from '../domain'
 import * as actions from '../actions/contacts.action'
 
 export interface State {
-         contacts: Array<contact>
-         empDetail: empDetail
+         contacts?: Array<contact>
+         empDetail?: empDetail,
+         empChooseList?: empChooseList
 };
 
 export const initialState: State = {
@@ -19,6 +20,9 @@ export function reducer(state = initialState, action: any ): State {
         }
         case actions.ActionTypes.EMPDETAIL_SUCCESS: {
             return {...state, empDetail: action.payload}
+        }
+        case actions.ActionTypes.EMPCHOOSELIST_SUCCESS: {
+            return {...state, empChooseList: action.payload}
         }
         default: {
             return state;

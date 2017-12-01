@@ -86,12 +86,38 @@ export class DailyEffects {
 ))
 .map(res => {
   console.log(res)
+  if(res.success&&res.dataObject) {
+    return new actions.DailyDetailSuccessAction({
+      name:res.dataObject.emp.empName,
+      contents:res.dataObject.contents,
+      dailyId:res.dataObject.id,
+      stars: res.dataObject.star?res.dataObject.star:null
+    })
+  }else{
+      return new actions.DailyDetailSuccessAction('')
+  }
+})
+// 修改日报
+@Effect() modifyDaily$: Observable<Action> = this.actions$
+.ofType(actions.ActionTypes.MODIFY)
+.map(toPayload)
+.withLatestFrom(this.store$.select(store=>store.auth.auth))
+.switchMap(([info, auth])=>this.dailyService.modify(
+  auth.id,
+  auth.token,
+  auth.emp.teamId,
+  info
+))
+.map(res => {
+  console.log(res)
+  this.toast.message('已评阅')
   if(res.success) {
-    return new actions.DailyDetailSuccessAction(res.dataObject.contents)
+    return new actions.ModifySuccessAction('')
   }else{
       //return new actions.FailAction(res.res.msg)
   }
 })
+
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,

@@ -28,11 +28,12 @@ import { FileModalComponent } from '../file-modal/file-modal'
   ]
 })
 export class FujianFormcontrolComponent implements ControlValueAccessor {
-  selectData = {
-    selectDoc: [],
-    selectCamera: [],
-    selectImages: [],
-  }
+  // selectData = {
+  //   //selectDoc: [],
+  //   selectCamera: {},
+  //   selectImages: {},
+  // }
+  images: Array<any> = []
   private propagateChange = (_: any) => { }
   constructor(private modalCtrl: ModalController,
   private actionSheetCtrl: ActionSheetController,
@@ -67,8 +68,8 @@ export class FujianFormcontrolComponent implements ControlValueAccessor {
             }
             this.camera.getPicture(options).then((imageData) => {
               const image = {_url: imageData.replace(/^file:\/\//, ''), url: imageData}
-              this.selectData.selectCamera.push(image)
-              this.propagateChange(this.selectData)
+              this.images.push(image)
+              this.propagateChange(this.images)
               actionSheet.dismiss()
               return false
              }, (err) => {
@@ -86,28 +87,26 @@ export class FujianFormcontrolComponent implements ControlValueAccessor {
               quality: 50
             }
             this.imagePicker.getPictures(options).then((results) => {
-                  for(let i=0; i<results.length;i++) {
-                    const image = {_url: results[i].replace(/^file:\/\//, ''), url: results[i]}
-                    this.selectData.selectImages.push(image)
-                  }
-                  this.propagateChange(this.selectData)
+                  const image = {_url: results[0].replace(/^file:\/\//, ''), url: results[0]}
+                  this.images.push(image)
+                  this.propagateChange(this.images)
                   actionSheet.dismiss()
                   return false
-            }, (err) => { });
+            }, (err) => {console.log('err'+err) });
           }
         },
-        {
-          text: '手机文件',
-          handler: () => {
-            let profileModal =  this.modalCtrl.create(FileModalComponent)
-            profileModal.present()
-            profileModal.onDidDismiss(data => {
-              this.selectData.selectDoc.push(data)
-              this.propagateChange(this.selectData)
-            });
+        // {
+        //   text: '手机文件',
+        //   handler: () => {
+        //     let profileModal =  this.modalCtrl.create(FileModalComponent)
+        //     profileModal.present()
+        //     profileModal.onDidDismiss(data => {
+        //       this.selectData.selectDoc.push(data)
+        //       this.propagateChange(this.selectData)
+        //     });
            
-          },
-        },
+        //   },
+        // },
         {
           text: '取消',
           role: 'cancel',
@@ -124,14 +123,14 @@ export class FujianFormcontrolComponent implements ControlValueAccessor {
   }
   del(type: string, index: number) {
     if(type === 'doc') {
-      this.selectData.selectDoc.splice(index, 1)
+      this.images.splice(index, 1)
     }
     if(type === 'camera') {
-      this.selectData.selectCamera.splice(index, 1)
+      this.images.splice(index, 1)
     }
     if(type === 'image') {
-      this.selectData.selectImages.splice(index, 1)
+      this.images.splice(index, 1)
     }
-    this.propagateChange(this.selectData)
+    this.propagateChange(this.images)
   }
 }

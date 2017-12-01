@@ -14,6 +14,8 @@ export const ActionTypes = {
   LOAD_SUCCESS: type('[contact] load_success'),
   EMPDETAIL: type('[contact] empdetail'),
   EMPDETAIL_SUCCESS: type('[contact] empdetail_success'),
+  EMPCHOOSELIST:type('[contact] empchooselist'),
+  EMPCHOOSELIST_SUCCESS:type('[contact] empchooselist_success'),
 };
 
 /**
@@ -42,6 +44,17 @@ export class EmpDetailSuccessAction implements Action {
   type = ActionTypes.EMPDETAIL_SUCCESS;
 
   constructor(public payload: empDetail) { }
+}
+// 获取人员选择列表
+export class EmpChooseListAction implements Action {
+  type = ActionTypes.EMPCHOOSELIST;
+
+  constructor(public payload: any) { }
+}
+export class EmpChooseListSuccessAction implements Action {
+  type = ActionTypes.EMPCHOOSELIST_SUCCESS;
+
+  constructor(public payload: any) { }
 }
 /**
  * Export a type alias of all actions in this action group

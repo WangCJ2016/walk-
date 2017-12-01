@@ -39,4 +39,16 @@ export class DailyServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+  modify(userId,token,teamId,info) {
+    const params = {
+      userId: userId,
+      token: token, 
+      teamId: teamId,
+      ...info
+      }
+      console.log(info)
+      const uri = `${this.config.url}/app/daily_updateDaily`
+      return this.http.get(uri, {params: params})
+      .map(res=>res.json())
+  }
 }

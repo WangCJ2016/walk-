@@ -19,6 +19,5 @@ export class BlankComponent {
       height: this.height,
       backgroundColor: this.bg_color
     }
-    console.log(this.style)
   }
 }

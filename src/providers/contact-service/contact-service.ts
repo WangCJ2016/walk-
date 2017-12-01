@@ -32,4 +32,11 @@ export class ContactServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+  // 获取员工选择列表
+  emp_empChooseList(userId,token,teamId,empId,depId) {
+    const params = {userId: userId,token: token, teamId: teamId, empId: empId,deptId:depId}
+    const uri = `${this.config.url}/app/emp_empChooseList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
 }

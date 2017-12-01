@@ -75,10 +75,10 @@ export function toastSituation(toast) {
 
 export function numtoarray(num: number) {
     let stars = [];
-    for(let i=0; i<num; i++) {
+    for(let i=0; i<=num; i++) {
         stars.push('full_star')
     }
-    for(let i=0; i<5-num; i++) {
+    for(let i=0; i<4-num; i++) {
         stars.push('blank_star')
     }
     return stars

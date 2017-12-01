@@ -1,8 +1,8 @@
 import * as actions from '../actions/daily.action';
-import { dailyPeople} from '../domain'
+import { dailyPeople,dailyDetail} from '../domain'
 export interface State {
   dailyPeople?: dailyPeople
-  dailyDetail?:string
+  dailyDetail?: dailyDetail
 };
 
 export const initialState: State = {

@@ -44,6 +44,35 @@ export class ContactEffects {
         return new actions.EmpDetailSuccessAction(contactArr)
     }
     })
+     // 员工选择详情
+     @Effect() empchooselist$: Observable<Action> = this.actions$
+     .ofType(actions.ActionTypes.EMPCHOOSELIST)
+     .map(toPayload)
+     .withLatestFrom(this.store$.select(store=>store.auth.auth))
+     .switchMap(([_,auth])=>this.contactService.emp_empChooseList(auth.id, auth.token, auth.emp.teamId, auth.emp.id,auth.emp.deptId))
+     .map(res => {
+       console.log(res)
+       if(res.success) {
+         const data = {
+          juniorList: res.dataObject.juniorList.map(v=>({
+            name: v.name,
+            id: v.id,
+            head:v.photo?v.photo:''
+          })),
+          peersList: res.dataObject.peersList.map(v=>({
+            name: v.name,
+            id: v.id,
+            head:v.photo?v.photo:''
+          })),
+          superiorList: res.dataObject.superiorList.map(v=>({
+            name: v.name,
+            id: v.id,
+            head:v.photo?v.photo:''
+          }))
+         }
+         return new actions.EmpChooseListSuccessAction(data)
+     }
+     })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,

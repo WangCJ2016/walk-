@@ -11,6 +11,8 @@ export const ActionTypes = {
   DAILYSTAT_SUCCESS:type('[daily] dailystat_success'),
   DETAILDAILY: type('[daily] detaildaily'),
   DETAILDAILY_SCUCCESS: type('[daily] detaildaily_success'),
+  MODIFY:type('[daily] modifydaily'),
+  MODIFY_SCUCCESS: type('[daily] modifydaily_success'),
 };
 
 /**
@@ -52,6 +54,18 @@ export class DailyDetailAction implements Action {
 
 export class DailyDetailSuccessAction implements Action {
   readonly type = ActionTypes.DETAILDAILY_SCUCCESS;
+
+  constructor(public payload: any) { }
+}
+// 修改日报
+export class ModifyAction implements Action {
+  readonly type = ActionTypes.MODIFY;
+
+  constructor(public payload: {dailyId: string,star?: string,contents?:string}) { }
+}
+
+export class ModifySuccessAction implements Action {
+  readonly type = ActionTypes.MODIFY_SCUCCESS;
 
   constructor(public payload: any) { }
 }

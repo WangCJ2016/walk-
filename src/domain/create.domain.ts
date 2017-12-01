@@ -1,16 +1,18 @@
 export interface createObj {
-  fullName?: string,
-  desc?: string,
-  fujian?: fujian,
-  faqiren?: person,
-  zhujiangren?: person,
-  canhuiren?: person,
-  zhubanren? : person,
-  zhixingren?: person,
-  startTime?: string,
-  endTime?: string,
-  meetingTime?: string,
-  plan_month: string
+  name?: string,
+  remark?: string,
+  mainPerson?: person,
+  startDate?: string,
+  endDate?: string,
+  attach?:string,
+  progress?:string
+  status?:string
+  finishDate?:string
+  mainPersonEmp?:{
+    name?:string,
+    head?:string
+  },
+  surplusDays?:string
 }
 
 export interface fujian {

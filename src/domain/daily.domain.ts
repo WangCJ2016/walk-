@@ -1,8 +1,14 @@
 export interface daily {
   dailyPeople?: dailyPeople
-  dailyDetail?: string
+  dailyDetail?: dailyDetail
 }
 
+export interface dailyDetail{
+  name?:string
+  contents?: string
+  dailyId?:string
+  stars?:number
+}
 
 export interface dailyPeople {
   notHandIn?: notIn,
