@@ -49,7 +49,7 @@
           
             <ion-item *ngFor="let pic of attach; let i=index">
               <ion-label>
-                <img class="add" item-end src={{pic}} alt="">
+                <img  item-end src={{pic}} alt="">
               </ion-label>
               <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
             </ion-item>
@@ -72,7 +72,11 @@
             <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.endDate}} ></ion-datetime>
             <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
           </ion-item>
-
+          <ion-item *ngIf='month'>
+            <ion-label>截止时间</ion-label>
+            <ion-datetime displayFormat="YYYY-MM" placeholder={{month}} ></ion-datetime>
+            <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+          </ion-item>
           <ion-item>
             <ion-range formControlName='progress' [(ngModel)]='progress'>
               <ion-label range-left small>进度</ion-label>

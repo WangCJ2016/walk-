@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { ToastSitutionProvider  } from '../../../providers/toast-sitution/toast-sitution'
+import { Store } from '@ngrx/store'
+import * as fromRoot from '../../../reducer'
+import * as actions from '../../../actions/creatework.action'
 /**
  * Generated class for the CreatePlanYPage page.
  *
@@ -19,15 +22,12 @@ export class CreatePlanYPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private fb: FormBuilder,
+    private store$: Store<fromRoot.State>,
     private toastProvider: ToastSitutionProvider) {
       this.form = this.fb.group({
         fullName: [''],
         desc: [''],
-        fujian: [{
-          selectDoc: [],
-          selectCamera: [],
-          selectImages: []
-        }],
+        fujian: [''],
         zhixingren: [''],
         plan_month: ['']
       })
@@ -49,6 +49,14 @@ export class CreatePlanYPage {
       this.toastProvider.message('请填写月份')
       return
     }
-    this.navCtrl.push('ShiwuDetailPage', {data: f.value})
+    this.store$.dispatch(new actions.planzsubmitAction({
+      name: f.value.fullName,
+      remark: f.value.desc,
+      mainPerson: f.value.zhixingren.id,
+      month: f.value.plan_month.split('-')[1],
+      year: f.value.plan_month.split('-')[0],
+      attach: f.value.fujian?f.value.fujian.map(res=>res.url).join(','):'',
+      type: 'planMonthId'
+    }))
   }
 }

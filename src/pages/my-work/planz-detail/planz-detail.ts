@@ -6,8 +6,9 @@ import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
+
 /**
- * Generated class for the ShiwuDetailPage page.
+ * Generated class for the PlanzDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,10 +16,11 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 
 @IonicPage()
 @Component({
-  selector: 'page-shiwu-detail',
-  templateUrl: 'shiwu-detail.html',
+  selector: 'page-planz-detail',
+  templateUrl: 'planz-detail.html',
 })
-export class ShiwuDetailPage {
+export class PlanzDetailPage {
+
   form: FormGroup
   segment = 'detail'
   params
@@ -26,6 +28,7 @@ export class ShiwuDetailPage {
   data: createObj = {}
   progress: string
   attach: Array<string>
+  attachName: Array<string>
   month:string = ''
   constructor(
     public navCtrl: NavController, 
@@ -46,14 +49,14 @@ export class ShiwuDetailPage {
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.getWorkDetailAction({type: this.params.type,[this.params.type]:this.params.id}))
+    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
     this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
       console.log(v)
       this.data = v
       if(this.data){
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
-        this.month = this.data.year?this.data.year+'-'+this.data.month:''
+        this.attachName = this.data.attachName?this.data.attachName.split(','):[]
       }
     })
    
@@ -65,6 +68,7 @@ export class ShiwuDetailPage {
     
     let data = {}
     let attach = this.attach.slice()
+    let attachName = this.attachName.slice()
     if(f.value.remark){
       data = {...data,remark:f.value.remark}
     }
@@ -79,7 +83,8 @@ export class ShiwuDetailPage {
         .then((res) => {
           // success
           const photo = JSON.parse(res.response).fileUrl[0]
-          attach.push(photo)
+          attach.push(photo.url)
+          attachName.push(photo.name)
           resolve(photo)
         }, (err) => {
           // error
@@ -89,12 +94,13 @@ export class ShiwuDetailPage {
       })
      Promise.all(submitarr)
         .then(res => {
-             data = {...data,attach:attach.join(',')}
+             data = {...data,attach:attach.join(','),attachName:attachName.join(',')}
             console.log(JSON.stringify(data))
-            this.store$.dispatch(new actions.updateAction({...data,...{planWeekId:'c2a3a1b84e0a498193ce19745ff52d3a'}}))
+            this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
             this.form.reset()
         })
     }
    
   }
+
 }

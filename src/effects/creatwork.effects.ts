@@ -18,8 +18,9 @@ export class CreatWorkEffects {
   .switchMap(([info,auth])=>this.creatworkSerice.addPlanWeek(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
     console.log(res)
-    if(res.success) {
-      this.app.getRootNav().push('ShiwuDetailPage',{planWeekId: res.dataObject})
+    const data = JSON.parse(res)
+    if(data.res.success) {
+      this.app.getRootNav().push('PlanzDetailPage',{type:data.type,id:data.res.dataObject})
       return new actions.planzsubmitSuccessAction({})
   }
   })
@@ -31,7 +32,7 @@ export class CreatWorkEffects {
   .switchMap(([info,auth])=>this.creatworkSerice.getWorkDetail(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
     console.log(res)
-    if(res.success) {
+    if(res.success&&res.dataObject) {
       const data = {
         name: res.dataObject.name?res.dataObject.name:'',
         remark: res.dataObject.remark?res.dataObject.remark:'',
@@ -39,6 +40,7 @@ export class CreatWorkEffects {
         startDate: res.dataObject.startDate?res.dataObject.startDate:'',
         endDate: res.dataObject.endDate?res.dataObject.endDate:'',
         attach:res.dataObject.attach?res.dataObject.attach:'',
+        attachName:res.dataObject.attachName?res.dataObject.attachName:'',
         progress:res.dataObject.progress?res.dataObject.progress:'',
         status:res.dataObject.status?res.dataObject.status:'',
         finishDate:res.dataObject.finishDate?res.dataObject.finishDate:'',
@@ -50,6 +52,7 @@ export class CreatWorkEffects {
       }
       return new actions.getWorkDetailSuccessAction(data)
   }
+  return new actions.getWorkDetailSuccessAction({})
   })
 
   // 修改计划

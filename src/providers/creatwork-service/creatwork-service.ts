@@ -24,9 +24,14 @@ export class CreatworkServiceProvider {
       empId:empId,
       ...info
     }
-    const uri=`${this.config.url}/app/plan_addPlanWeek`
+    const uri = `${this.config.url}/app/plan_addPlanWeek`
     return this.http.get(uri, {params: params})
-    .map(res=>res.json())
+    .map(res=>{
+     return JSON.stringify({
+        type: info.type,
+        res: res.json()
+      })
+     })
   }
   // 获取工作详情
   getWorkDetail(userId,token,teamId,info) {
@@ -36,7 +41,8 @@ export class CreatworkServiceProvider {
       teamId:teamId,
       ...info
     }
-    const uri=`${this.config.url}/app//plan_planWeekDetail`
+    
+    let uri = `${this.config.url}/app/plan_planWeekDetail`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
@@ -50,6 +56,7 @@ export class CreatworkServiceProvider {
       empId:empId,
       ...info
     }
+    console.log(JSON.stringify(params))
     const uri=`${this.config.url}/app//plan_updatePlanWeek`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())

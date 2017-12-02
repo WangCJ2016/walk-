@@ -5,9 +5,12 @@ export interface createObj {
   startDate?: string,
   endDate?: string,
   attach?:string,
+  attachName?:string
   progress?:string
   status?:string
   finishDate?:string
+  year?:string
+  month?:string
   mainPersonEmp?:{
     name?:string,
     head?:string

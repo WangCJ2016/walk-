@@ -22,7 +22,7 @@ export const ActionTypes = {
 export class planzsubmitAction implements Action {
   readonly type = ActionTypes.PLANZSUBMIT;
 
-  constructor(public payload: {}) { }
+  constructor(public payload: any) { }
 }
 
 export class planzsubmitSuccessAction implements Action {

@@ -7,7 +7,7 @@ import * as actions from '../../../actions/creatework.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 /**
- * Generated class for the ShiwuDetailPage page.
+ * Generated class for the PlanyDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,10 +15,11 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 
 @IonicPage()
 @Component({
-  selector: 'page-shiwu-detail',
-  templateUrl: 'shiwu-detail.html',
+  selector: 'page-plany-detail',
+  templateUrl: 'plany-detail.html',
 })
-export class ShiwuDetailPage {
+export class PlanyDetailPage {
+
   form: FormGroup
   segment = 'detail'
   params
@@ -46,14 +47,13 @@ export class ShiwuDetailPage {
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.getWorkDetailAction({type: this.params.type,[this.params.type]:this.params.id}))
+    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
     this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
       console.log(v)
       this.data = v
       if(this.data){
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
-        this.month = this.data.year?this.data.year+'-'+this.data.month:''
       }
     })
    
@@ -97,4 +97,5 @@ export class ShiwuDetailPage {
     }
    
   }
+
 }
