@@ -1,5 +1,5 @@
 <!--
-  Generated template for the PlanzDetailPage page.
+  Generated template for the MeetingDetailPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -54,40 +54,21 @@
                 <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
               </ion-item>
      
-  
-  
-            <ion-item *ngIf='data?.mainPersonEmp'>
-              <ion-label item-start>执行人</ion-label>
-              <avatar item-content name={{data.mainPersonEmp.name}}></avatar>
-              <p item-content>{{data.mainPersonEmp.name}}</p>
-            </ion-item>
-  
-            <ion-item *ngIf='data?.startDate'>
-              <ion-label>起始时间</ion-label>
-              <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.startDate}} ></ion-datetime>
-              <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-            </ion-item>
-            <ion-item *ngIf='data?.endDate'>
-              <ion-label>截止时间</ion-label>
-              <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.endDate}} ></ion-datetime>
-              <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+            <initalmember-formcontrol  [person]='data?.initatorEmp' [addIf]='false'></initalmember-formcontrol>
+            <initalmember-formcontrol formControlName='zhujiangren' [person]='data?.mainPersonEmp' title='主讲人'></initalmember-formcontrol>
+            <initalmember-formcontrol formControlName='canhuiren' [people]='data?.empList' multiple='true' title='参会人'></initalmember-formcontrol>
+            <ion-item style="margin-top: 10px">
+              <ion-label>会议时间</ion-label>
+              <ion-datetime displayFormat="YYYY-MM-DD HH-mm" cancelText='取消' doneText='确定' placeholder={{data?.time}} ></ion-datetime>
+              <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
             </ion-item>
             
-            <ion-item>
-              <ion-range formControlName='progress' [(ngModel)]='progress'>
-                <ion-label range-left small>进度</ion-label>
-                <ion-label range-right small>
-                  <span>{{progress}}%</span>
-                  <span>偏慢</span>
-                </ion-label>
-              </ion-range>
-            </ion-item>
       
           </ion-list>
-          <button ion-button class="submitBtn" full style="margin:0">提交审核</button>
+          <button ion-button class="submitBtn" type='button' (click)='close()'  *ngIf='form.pristine' full style="margin:0">关闭</button>
+          <button ion-button class="submitBtn" *ngIf='!form.pristine' full style="margin:0">提交审核</button>
         </form>
       </div>
     </div>
   </ion-content>
   
-

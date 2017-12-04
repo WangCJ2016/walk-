@@ -1,4 +1,5 @@
 import { contact } from '../domain'
+import distanceInWords from 'date-fns/distance_in_words'
 
 interface data {
     letter: string,
@@ -82,5 +83,55 @@ export function numtoarray(num: number) {
         stars.push('blank_star')
     }
     return stars
+}
+
+// 计算时间差
+export function distanceInTime(startTime, endTime) {
+    const startDay =new Date(startTime.split('T')[0])
+    const endDay =new Date(endTime.split('T')[0])
+    
+    const startH = startTime.split('T')[1].slice(0, -4)
+    const endH = endTime.split('T')[1].slice(0, -4)
+    const startSx = parseInt(startH,10)>12?0:.5
+    const endSx = parseInt(endH,10)>12?0:.5
+    console.log(distanceInWords(startDay, endDay), endSx,startSx)
+    const data =  {
+        startDate:startTime.split('T')[0],
+        startSx:startSx,
+        endDate:endTime.split('T')[0],
+        endSx:endSx,
+        days: 5
+    }
+   return data
+}
+// 返回审批类型
+export function applyType(type, classify) {
+    if(type == 1) {
+        switch (classify) {
+            case 1:
+                return '事假'
+            case 2:
+            return '病假'
+            case 3:
+            return '休假'
+            case 4:
+            return '外勤'
+            default:
+                break;
+        }
+    }
+    if(type==2) {
+        switch (classify) {
+            case 1:
+            return '借款'
+            case 2:
+            return '用'
+            default:
+                break;
+        }
+    }
+    if(type==3) {
+        return '报销'
+    }
 }
   export * from './type.util'

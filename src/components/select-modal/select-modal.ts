@@ -21,9 +21,9 @@ export class SelectModalComponent {
   showList(type: string) {
     this[type] = ! this[type]
   }
-  selecttype(type) {
-    this.type = type
-    this.viewCtrl.dismiss(this.type);
+  selecttype(name,type,classify) {
+    this.type = name
+    this.viewCtrl.dismiss({name:name,type:type,classify:classify});
   }
   dismiss() {
     this.viewCtrl.dismiss();

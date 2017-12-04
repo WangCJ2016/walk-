@@ -28,7 +28,6 @@ export class SelectPersonComponent {
       this.title = this.params.data.title
       this.store$.dispatch(new actions.EmpChooseListAction({}))
       this.store$.select(store=>store.contacts.empChooseList).subscribe(v=>{
-        console.log(v)
         if(v) {
           this.empChooseList = v
         }

@@ -23,7 +23,7 @@ export class ShiwuDetailPage {
   segment = 'detail'
   params
   saturation: number = 0
-  data: createObj = {}
+  data:createObj = {}
   progress: string
   attach: Array<string>
   month:string = ''

@@ -6,9 +6,9 @@ import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
-
+import { applyType} from '../../../utils'
 /**
- * Generated class for the PlanzDetailPage page.
+ * Generated class for the ShenpiDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -16,20 +16,18 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 
 @IonicPage()
 @Component({
-  selector: 'page-planz-detail',
-  templateUrl: 'planz-detail.html',
+  selector: 'page-shenpi-detail',
+  templateUrl: 'shenpi-detail.html',
 })
-export class PlanzDetailPage {
-
+export class ShenpiDetailPage {
   form: FormGroup
   segment = 'detail'
   params
   saturation: number = 0
   data: createObj = {}
-  progress: string
   attach: Array<string>
   attachName: Array<string>
-  month:string = ''
+  applyType:string
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -43,20 +41,24 @@ export class PlanzDetailPage {
     this.form = this.fb.group({
       remark: [''],
       attach:[''],
-      progress: [this.progress]
+      applyId: [''],
+      operate: [''],
+      applyPerson: ['']
     })
-   this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
+   
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
+    this.store$.dispatch(new actions.applyDetailAction({'applyId':"46d77bf095c4443f827a38da06896023"}))
     this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
       console.log(v)
       this.data = v
       if(this.data){
-        this.progress = this.data.progress?this.data.progress:'0' 
+        
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
+        this.applyType = applyType(this.data.type, this.data.classify)
+        
       }
     })
    
@@ -64,13 +66,25 @@ export class PlanzDetailPage {
   attachDel(i) {
     this.attach.splice(i,1)
   }
+  close() {
+    this.navCtrl.setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate: true,direction:'back'})
+  }
   onSubmit(f, ev:Event) {
-    
+    console.log(f.value)
     let data = {}
     let attach = this.attach.slice()
     let attachName = this.attachName.slice()
     if(f.value.remark){
       data = {...data,remark:f.value.remark}
+    }
+    if(f.value.progress){
+      data = {...data,progress:f.value.progress}
+    }
+    if(f.value.zhujiangren) {
+      data = {...data,mainPerson:f.value.zhujiangren.id}
+    }
+    if(f.value.canhuiren) {
+      data = {...data,empIds:f.value.canhuiren.map(res=>res.id).join(',')}
     }
     if(f.value.progress){
       data = {...data,progress:f.value.progress}
@@ -96,13 +110,13 @@ export class PlanzDetailPage {
         .then(res => {
              data = {...data,attach:attach.join(','),attachName:attachName.join(',')}
             console.log(JSON.stringify(data))
-            this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
+            this.store$.dispatch(new actions.meetingUpdateAction({...data,...{'mettingId':this.params.id}}))
             this.form.reset()
         })
     }else {
-      this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
+      alert(1)
+      this.store$.dispatch(new actions.meetingUpdateAction({...data,...{'mettingId':this.params.id}}))
     }
    
   }
-
 }

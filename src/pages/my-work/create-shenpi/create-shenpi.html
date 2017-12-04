@@ -30,7 +30,7 @@
       <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
       <ion-item style="margin-top: 10px">
         <ion-label>起始时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD HH" cancelText='取消' doneText='确定' formControlName='startTime' ></ion-datetime>
         <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
       <ion-item>
@@ -39,7 +39,7 @@
       </ion-item>
       <ion-item>
         <ion-label>截止时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='endTime' ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD HH"  cancelText='取消' doneText='确定' formControlName='endTime' ></ion-datetime>
         <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
       <ion-item style="margin-top: 10px">
@@ -47,7 +47,7 @@
         <ion-input placeholder='借款类(必填)' formControlName='money'></ion-input>
       </ion-item>
       <initalmember-formcontrol formControlName='shenheren' title='审核人' style="margin-top:10px"></initalmember-formcontrol>
-      <initalmember-formcontrol formControlName='chaosongren' title='抄送人'></initalmember-formcontrol>
+      <initalmember-formcontrol formControlName='chaosongren' [multiple]='true' title='抄送人'></initalmember-formcontrol>
     </ion-list>
     <div padding>
       <button ion-button full>提交</button>

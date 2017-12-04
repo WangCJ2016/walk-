@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { ToastSitutionProvider  } from '../../../providers/toast-sitution/toast-sitution'
+import { Store } from '@ngrx/store'
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
+import * as fromRoot from '../../../reducer'
+import * as actions from '../../../actions/creatework.action'
 /**
  * Generated class for the CreateMeetingPage page.
  *
@@ -19,15 +23,14 @@ export class CreateMeetingPage {
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private fb: FormBuilder,
+     private fileTranfer: FileTransfer,
+     @Inject('BASE_URL') private config,
+     private store$: Store<fromRoot.State>,
      private toastProvider: ToastSitutionProvider) {
        this.form = this.fb.group({
         fullName: [''],
         desc: [''],
-        fujian: [{
-          selectDoc: [],
-          selectCamera: [],
-          selectImages: []
-        }],
+        fujian: [''],
         faqiren: [''],
         zhujiangren: [''],
         canhuiren: [''],
@@ -38,8 +41,14 @@ export class CreateMeetingPage {
     console.log('ionViewDidLoad CreateMeetingPage');
   }
   onSubmit(f, ev: Event) {
+   // this.navCtrl.push('MeetingDetailPage')
+  
     if(!f.value.fullName) {
       this.toastProvider.message('请填写会议名称')
+      return
+    }
+    if(!f.value.desc) {
+      this.toastProvider.message('请填写会议描述信息')
       return
     }
     if(!f.value.faqiren) {
@@ -58,6 +67,52 @@ export class CreateMeetingPage {
       this.toastProvider.message('请填写会议时间')
       return
     }
-     this.navCtrl.push('ShiwuDetailPage', {data: f.value})
+    if(f.value.fujian){
+      let attachName = []
+      let attach = []
+      const submitarr = f.value.fujian.map((pic,index) => {
+      return new Promise((resolve, reject) => {
+        const fileTransfer: FileTransferObject = this.fileTranfer.create();
+        fileTransfer.upload(pic.url, `${this.config.url}/appPhotoUploadServlet`,{})
+        .then((res) => {
+          // success
+          const photo = JSON.parse(res.response).fileUrl[0]
+          attach.push(photo.url)
+          attachName.push(photo.name)
+          resolve(photo)
+        }, (err) => {
+          // error
+        }) 
+       })
+      
+      })
+     Promise.all(submitarr)
+        .then(res => {
+            this.store$.dispatch(new actions.addMeetingAction({
+              name: f.value.fullName,
+              remark: f.value.desc,
+              initator: f.value.faqiren.id,
+              mainPerson: f.value.zhujiangren.id,
+              empIds:f.value.canhuiren.map(res=>res.id).join(','),
+              startDate: f.value.meetingTime.split('T')[0],
+              startTime: f.value.meetingTime.split('T')[1].slice(0,-4),
+              attach: attach.join(','),
+              attachName: attachName.join(','),
+            }))
+          
+            this.form.reset()
+        })
+    }else{
+      this.store$.dispatch(new actions.addMeetingAction({
+        name: f.value.fullName,
+        remark: f.value.desc,
+        initator: f.value.faqiren.id,
+        mainPerson: f.value.zhujiangren.id,
+        empIds:f.value.canhuiren.map(res=>res.id).join(','),
+        startDate: f.value.meetingTime.split('T')[0],
+        startTime: f.value.meetingTime.split('T')[1].slice(0,-4),
+      }))
+    }
+    
   }
 }

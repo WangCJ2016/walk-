@@ -17,22 +17,22 @@
         <span>假勤类</span>
     </div>
     <ion-list *ngIf='jiaqin_show'>
-        <ion-item (click)='selecttype("事假")'>
+        <ion-item (click)='selecttype("事假",1,1)'>
             <ion-label>
                 事假
             </ion-label>
         </ion-item>
-        <ion-item (click)='selecttype("病假")'>
+        <ion-item (click)='selecttype("病假",1,2)'>
             <ion-label>
                 病假
             </ion-label>
         </ion-item>
-        <ion-item (click)='selecttype("休假")'>
+        <ion-item (click)='selecttype("休假",1,3)'>
             <ion-label>
                 休假
             </ion-label>
         </ion-item>
-        <ion-item (click)='selecttype("外勤")'>
+        <ion-item (click)='selecttype("外勤",1,4)'>
             <ion-label>
                 外勤
             </ion-label>
@@ -43,12 +43,12 @@
         <span>借款类</span>
     </div>
     <ion-list *ngIf='jiekuan_show'>
-        <ion-item (click)='selecttype("备用金")'>
+        <ion-item (click)='selecttype("备用金",2,2)'>
             <ion-label>
                 备用金
             </ion-label>
         </ion-item>
-        <ion-item (click)='selecttype("借款")'>
+        <ion-item (click)='selecttype("借款",2,1)'>
             <ion-label>
                 借款
             </ion-label>
@@ -59,7 +59,7 @@
         <span>报销类</span>
     </div>
     <ion-list *ngIf='baoxiao_show'>
-        <ion-item (click)='selecttype("报销")'>
+        <ion-item (click)='selecttype("报销",3,1)'>
             <ion-label>
                 报销
             </ion-label>

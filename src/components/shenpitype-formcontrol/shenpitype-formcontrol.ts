@@ -26,7 +26,7 @@ import { SelectModalComponent } from '../select-modal/select-modal'
 })
 export class ShenpitypeFormcontrolComponent implements  ControlValueAccessor{
 
-  type: string;
+  type
   private propagateChange = (_: any) => { }
   constructor(private modalCtrl: ModalController) {
    
@@ -35,6 +35,7 @@ export class ShenpitypeFormcontrolComponent implements  ControlValueAccessor{
     let modal = this.modalCtrl.create(SelectModalComponent)
     modal.present()
     modal.onDidDismiss(res => {
+      console.log(res)
       this.type = res
       this.propagateChange(res)
     })

@@ -49,7 +49,7 @@
             
               <ion-item *ngFor="let pic of attach; let i=index">
                 <ion-label>
-                  <img  item-end src={{pic}} alt="">
+                  <img class="attach_img"  item-end src={{pic}} alt="">
                 </ion-label>
                 <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
               </ion-item>
@@ -62,9 +62,9 @@
               <p item-content>{{data.mainPersonEmp.name}}</p>
             </ion-item>
   
-            <ion-item *ngIf='data?.startDate'>
-              <ion-label>起始时间</ion-label>
-              <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.startDate}} ></ion-datetime>
+            <ion-item *ngIf='month'>
+              <ion-label>月份</ion-label>
+              <ion-datetime displayFormat="YYYY-MM" placeholder={{month}} ></ion-datetime>
               <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
             </ion-item>
             <ion-item *ngIf='data?.endDate'>
@@ -84,7 +84,8 @@
             </ion-item>
       
           </ion-list>
-          <button ion-button class="submitBtn" full style="margin:0">提交审核</button>
+          <button ion-button class="submitBtn" type='button' (click)='close()'  *ngIf='form.untouched' full style="margin:0">关闭</button>
+          <button ion-button class="submitBtn" *ngIf='!form.untouched' full style="margin:0">提交审核</button>
         </form>
       </div>
     </div>

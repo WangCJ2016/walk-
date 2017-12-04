@@ -11,6 +11,13 @@ export interface createObj {
   finishDate?:string
   year?:string
   month?:string
+  empList?: any
+  type?:string
+  classify?:string
+  days?:string
+  step?:string
+  reason?:string
+  id?:string
   mainPersonEmp?:{
     name?:string,
     head?:string

@@ -2,11 +2,11 @@
 <div class="member_formcontrol">
   <div class="member_inner">
       <span>{{title}}</span>
-      <div *ngIf='person.name&&!multiple'>
-        <avatar name={{person.name}} ></avatar>
-        <p >{{person.name}}</p>
+      <div *ngIf='person?.name&&!multiple'>
+        <avatar name={{person?.name}} ></avatar>
+        <p >{{person?.name}}</p>
       </div>
-      <img class="create_add" src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
+      <img class="create_add" *ngIf='addIf' src="assets/imgs/work-desk/add.png" alt="" (click)='presentModal()'>
   </div>
   <div *ngIf='multiple'>
       <div class="member_inner" *ngFor="let person of people; let i=index">
@@ -14,7 +14,7 @@
               <avatar name={{person.name}} ></avatar>
               <p >{{person.name}}</p>
             </div>
-            <img class="create_add" src="assets/imgs/work-desk/icon_del.png" (click)='dleperson(i)' alt="" >
+            <img class="create_add" *ngIf='addIf' src="assets/imgs/work-desk/icon_del.png" (click)='dleperson(i)' alt="" >
       </div>
   </div>
 </div>

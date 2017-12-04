@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
@@ -33,6 +33,7 @@ export class PlanyDetailPage {
     public navParams: NavParams,
     private fb: FormBuilder,
     private fileTranfer: FileTransfer,
+    private appCtrl: App,
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {
@@ -44,22 +45,27 @@ export class PlanyDetailPage {
       progress: [this.progress]
     })
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
+   this.form.pristine
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
+    this.store$.dispatch(new actions.getPlanYDetailAction({'planMonthId':this.params.id}))
     this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
       console.log(v)
       this.data = v
       if(this.data){
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
+        this.month = this.data.year?this.data.year+'-'+this.data.month:''
       }
     })
    
   }
   attachDel(i) {
     this.attach.splice(i,1)
+  }
+  close() {
+    this.navCtrl.setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate: true,direction:'back'})
   }
   onSubmit(f, ev:Event) {
     
@@ -91,9 +97,11 @@ export class PlanyDetailPage {
         .then(res => {
              data = {...data,attach:attach.join(',')}
             console.log(JSON.stringify(data))
-            this.store$.dispatch(new actions.updateAction({...data,...{planWeekId:'c2a3a1b84e0a498193ce19745ff52d3a'}}))
+            this.store$.dispatch(new actions.updateYAction({...data,...{planMonthId:this.params.id}}))
             this.form.reset()
         })
+    }else {
+      this.store$.dispatch(new actions.updateYAction({...data,...{planMonthId:this.params.id}}))
     }
    
   }

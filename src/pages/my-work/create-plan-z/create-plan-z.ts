@@ -43,9 +43,13 @@ export class CreatePlanZPage {
     console.log('ionViewDidLoad CreatePlanZPage');
   }
   onSubmit(f, ev: Event) {
-    console.log(f.value.fujian)
+    // this.navCtrl.push('PlanzDetailPage')
     if(!f.value.fullName) {
       this.toastProvider.message('请填写会议名称')
+      return
+    }
+    if(!f.value.desc) {
+      this.toastProvider.message('请填写描述信息')
       return
     }
     if(!f.value.zhixingren) {
@@ -62,7 +66,6 @@ export class CreatePlanZPage {
     }
 
     if(f.value.fujian){
-      alert(1)
       let attachName = []
       let attach = []
       const submitarr = f.value.fujian.map((pic,index) => {
@@ -92,17 +95,17 @@ export class CreatePlanZPage {
               attach: attach.join(','),
               attachName: attachName.join(','),
             }))
-            console.log({
-              name: f.value.fullName,
-              remark: f.value.desc,
-              mainPerson: f.value.zhixingren.id,
-              startDate: f.value.startTime,
-              endDate: f.value.endTime,
-              attach: attach.join(','),
-              attachName: attachName.join(','),
-            })
+          
             this.form.reset()
         })
+    }else{
+      this.store$.dispatch(new actions.planzsubmitAction({
+        name: f.value.fullName,
+        remark: f.value.desc,
+        mainPerson: f.value.zhixingren.id,
+        startDate: f.value.startTime,
+        endDate: f.value.endTime,
+      }))
     }
     
     //this.navCtrl.push('ShiwuDetailPage')

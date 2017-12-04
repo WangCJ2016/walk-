@@ -1,0 +1,133 @@
+<!--
+  Generated template for the ShenpiDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>详情</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]='segment'>
+      <ion-segment-button value="dynamic">
+        动态
+      </ion-segment-button>
+      <ion-segment-button value="detail">
+        审批详情
+      </ion-segment-button>
+
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div [ngSwitch]=[(segment)]>
+    <div class="dynamic" *ngSwitchCase="'dynamic'">
+      <footer-input></footer-input>
+    </div>
+    <div class="detail" *ngSwitchCase="'detail'">
+      <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
+        <ion-list>
+          <ion-item *ngIf='applyType'>
+            <ion-label>
+              <p>名称</p>
+            </ion-label>
+            <span class="content-item" item-content>{{applyType}}</span>
+            <span class="status_btn" item-end>{{data.status==1?'进行中':'完成'}}</span>
+          </ion-item>
+          <ion-item *ngIf='data?.remark'>
+            <ion-label>
+              <p>描述</p>
+            </ion-label>
+            <ion-input formControlName='remark' value={{data.remark}}></ion-input>
+          </ion-item>
+          <fujian-formcontrol formControlName='attach'></fujian-formcontrol>
+
+
+          <ion-item *ngFor="let pic of attach; let i=index">
+            <ion-label>
+              <img class="attach_img" item-end src={{pic}} alt="">
+            </ion-label>
+            <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
+          </ion-item>
+          <initalmember-formcontrol [person]='data?.initatorEmp' [addIf]='false'></initalmember-formcontrol>
+
+          <ion-item class='time' *ngIf='data?.startDate'>
+            <ion-label>
+              起始时间
+            </ion-label>
+            <ion-label>
+              {{data?.startDate}}
+            </ion-label>
+          </ion-item >
+          <ion-item class='time' *ngIf='data?.endDate'>
+            <ion-label>
+              截止时间
+            </ion-label>
+            <ion-label>
+                    {{data?.endDate}}
+            </ion-label>
+          </ion-item >
+          <ion-item class='time' *ngIf='data?.days'>
+            <ion-label>
+              天数(天)
+            </ion-label>
+            <ion-label>
+                 {{data?.days}}天
+            </ion-label>
+          </ion-item>
+          <ion-item class='time' *ngIf='data?.money'>
+            <ion-label>
+              金额
+            </ion-label>
+            <ion-label>
+              ¥{{data?.money}}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <div padding style="background-color:#fff;">
+          <div class="flowline">
+            <div class="item_flow">
+              <span>方霞</span>
+              <span>发起申请</span>
+              <span class="time">2017-09-20</span>
+              <span class="time">13:09:23</span>
+              
+            </div>
+            <div class="item_flow">
+              <span>方霞</span>
+              <span>发起申请</span>
+              <span class="time">2017-09-20</span>
+              <span class="time">13:09:23</span>
+              <div class="flow_name">方霞</div>
+            </div>
+            <div class="item_flow disagree">
+              <span>方航班</span>
+              <span>未审批</span>
+              <span class="time">2017-09-20</span>
+              <span class="time">13:09:23</span>
+              <div class="flow_name">方霞</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer_shenpi">
+          <div class="footer_item">
+            同意并结束
+          </div>
+          <div class="footer_item">
+            同意并转发
+          </div>
+          <div class="footer_item">
+            转发
+          </div>
+          <div class="footer_item">
+            驳回
+          </div>
+        </div>
+    </form>
+    </div>
+  </div>
+</ion-content>

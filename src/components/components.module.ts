@@ -20,6 +20,7 @@ import { InitalmemberFormcontrolComponent } from './initalmember-formcontrol/ini
 import { CountComponent } from './count/count';
 import { ShenpitypeFormcontrolComponent } from './shenpitype-formcontrol/shenpitype-formcontrol';
 import { StarComponent } from './star/star';
+import { ShenpiPopverComponent } from './shenpi-popver/shenpi-popver';
 
 
 
@@ -44,9 +45,10 @@ import { StarComponent } from './star/star';
     CountComponent,
     ShenpitypeFormcontrolComponent,
     StarComponent,
+    ShenpiPopverComponent,
     ],
     imports: [IonicModule],
-    entryComponents:[FileModalComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
+    entryComponents:[FileModalComponent,ShenpiPopverComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
 	exports: [RoundRangeComponent,
     BlankComponent,
     DatePickerComponent,
@@ -66,6 +68,7 @@ import { StarComponent } from './star/star';
     CountComponent,
     ShenpitypeFormcontrolComponent,
     StarComponent,
+    ShenpiPopverComponent,
     ]
 })
 export class ComponentsModule {}
