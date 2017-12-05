@@ -1,6 +1,6 @@
 page-shenpi {
     .name {
-        font-size: 1.25em
+        font-size: 16px;
     }
     .intr {
         font-size: .916667em
@@ -9,6 +9,9 @@ page-shenpi {
         img {
             width: 3.333333rem;
             height: 3.333333rem;
+        }
+        avatar>div{
+            margin: 0
         }
     }
 }

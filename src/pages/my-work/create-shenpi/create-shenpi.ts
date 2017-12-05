@@ -39,7 +39,7 @@ export class CreateShenpiPage {
     this.form = this.fb.group({
       fullName: [''],
       desc: [''],
-      fujian: [''],
+      fujian:[''],
       day: ['0.5'],
       startTime: [''],
       endTime: [''],
@@ -50,7 +50,7 @@ export class CreateShenpiPage {
     this.form.get('endTime').valueChanges.subscribe(endtime => {
       if(this.form.get('startTime').value) {
        this.time =  distanceInTime(this.form.get('startTime').value, endtime)
-       this.form.patchValue({day: 5});
+       this.form.patchValue({day: this.time.days});
       }
     })
   }

@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { SelectPersonComponent } from '../../../components/select-person/select-person'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
 import { ToastSitutionProvider } from '../../../providers/toast-sitution/toast-sitution'
+import { Store } from '@ngrx/store'
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
+import * as fromRoot from '../../../reducer'
+import * as actions from '../../../actions/creatework.action'
 /**
  * Generated class for the CreateWorkPage page.
  *
@@ -17,6 +21,7 @@ import { ToastSitutionProvider } from '../../../providers/toast-sitution/toast-s
   templateUrl: 'create-work.html',
 })
 export class CreateWorkPage {
+  params
   form: FormGroup
   startDate: string
   endDate: string
@@ -24,15 +29,15 @@ export class CreateWorkPage {
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private toastProvider: ToastSitutionProvider,
+    private fileTranfer: FileTransfer,
+    @Inject('BASE_URL') private config,
+    private store$: Store<fromRoot.State>,
     private fb: FormBuilder) {
+      this.params = this.navParams.data
       this.form = this.fb.group({
         fullName: [''],
         desc: [''],
-        fujian: [{
-          selectDoc: [],
-          selectCamera: [],
-          selectImages: []
-        }],
+        fujian: [''],
         faqiren: [''],
         zhubanren: [''],
         startTime: [''],
@@ -58,8 +63,13 @@ export class CreateWorkPage {
     profileModal.present();
   }
   onSubmit(f, ev: Event) {
+    //this.navCtrl.push('ShiwuDetailPage')
     if(!f.value.fullName) {
       this.toastProvider.message('请填写项目名称')
+      return
+    }
+    if(!f.value.desc) {
+      this.toastProvider.message('请填写事务描述')
       return
     }
     if(!f.value.faqiren) {
@@ -82,7 +92,54 @@ export class CreateWorkPage {
       this.toastProvider.message('截止时间必须大于起始时间')
       return
     }
-    this.navCtrl.push('ShiwuDetailPage', {data: f.value})
+    if(f.value.fujian){
+      let attachName = []
+      let attach = []
+      const submitarr = f.value.fujian.map((pic,index) => {
+      return new Promise((resolve, reject) => {
+        const fileTransfer: FileTransferObject = this.fileTranfer.create();
+        fileTransfer.upload(pic.url, `${this.config.url}/appPhotoUploadServlet`,{})
+        .then((res) => {
+          // success
+          const photo = JSON.parse(res.response).fileUrl[0]
+          attach.push(photo.url)
+          attachName.push(photo.name)
+          resolve(photo)
+        }, (err) => {
+          // error
+        }) 
+       })
+      
+      })
+     Promise.all(submitarr)
+        .then(res => {
+            this.store$.dispatch(new actions.addShiwuAction({
+              name: f.value.fullName,
+              remark: f.value.desc,
+              initator: f.value.faqiren.id,
+              mainPerson: f.value.zhubanren.id,
+              startDate: f.value.startTime,
+              endDate: f.value.endTime,
+              attach: attach.join(','),
+              attachName: attachName.join(','),
+              ...this.params
+            }))
+          
+            this.form.reset()
+        })
+    }else{
+
+      this.store$.dispatch(new actions.addShiwuAction({
+        name: f.value.fullName,
+        remark: f.value.desc,
+        initator: f.value.faqiren.id,
+        mainPerson: f.value.zhubanren.id,
+        startDate: f.value.startTime,
+        endDate: f.value.endTime,
+        ...this.params
+      })) 
+      this.form.reset()
+    }
   }
   
 }

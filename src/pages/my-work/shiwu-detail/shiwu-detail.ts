@@ -27,6 +27,8 @@ export class ShiwuDetailPage {
   progress: string
   attach: Array<string>
   month:string = ''
+  mainPersonIf: boolean
+  initatorIf: boolean
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -40,13 +42,14 @@ export class ShiwuDetailPage {
     this.form = this.fb.group({
       remark: [''],
       attach:[''],
-      progress: [this.progress]
+      progress: [this.progress],
+      zhubanren:['']
     })
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.getWorkDetailAction({type: this.params.type,[this.params.type]:this.params.id}))
+    this.store$.dispatch(new actions.shiwuDetailAction({'thingId':'608dc0b2386b453c91d0e428c4fd6cd9'}))
     this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
       console.log(v)
       this.data = v
@@ -54,22 +57,30 @@ export class ShiwuDetailPage {
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.month = this.data.year?this.data.year+'-'+this.data.month:''
+        this.store$.select(store=>store.auth).subscribe(auth => {
+            this.mainPersonIf = auth.auth.emp.id == v.mainPersonId
+            this.initatorIf = auth.auth.emp.id == v.initatorId
+        })
       }
     })
-   
+    
   }
   attachDel(i) {
     this.attach.splice(i,1)
   }
-  onSubmit(f, ev:Event) {
-    
+  onSubmit(f, ev:Event, status) {
+    alert(1)
     let data = {}
     let attach = this.attach.slice()
+    data = {status: status}
     if(f.value.remark){
       data = {...data,remark:f.value.remark}
     }
     if(f.value.progress){
       data = {...data,progress:f.value.progress}
+    }
+    if(f.value.zhubanren){
+      data = {...data,mainPerson:f.value.zhubanren.id}
     }
     if(f.value.attach){
       const submitarr = f.value.attach.map((pic,index) => {
@@ -90,10 +101,11 @@ export class ShiwuDetailPage {
      Promise.all(submitarr)
         .then(res => {
              data = {...data,attach:attach.join(',')}
-            console.log(JSON.stringify(data))
-            this.store$.dispatch(new actions.updateAction({...data,...{planWeekId:'c2a3a1b84e0a498193ce19745ff52d3a'}}))
+            this.store$.dispatch(new actions.shiwuUpdateAction({...data,...{thingId:'608dc0b2386b453c91d0e428c4fd6cd9'}}))
             this.form.reset()
         })
+    }else{
+      this.store$.dispatch(new actions.shiwuUpdateAction({...data,...{thingId:'608dc0b2386b453c91d0e428c4fd6cd9'}}))
     }
    
   }

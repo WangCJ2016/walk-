@@ -8,6 +8,7 @@ import * as actions from '../actions/creatework.action'
 import * as fromRoot from '../reducer'
 import { CreatworkServiceProvider } from '../providers'
 import { ToastSitutionProvider } from '../providers'
+import { applyType, applyStatus} from '../utils'
 @Injectable()
 export class CreatWorkEffects {
   // 创建周计划
@@ -190,7 +191,7 @@ export class CreatWorkEffects {
       console.log(res)
       
       if(res.success) {
-        this.app.getRootNav().push('ApplyDetailPage',{type:'applyId',id:res.dataObject})
+        this.app.getRootNav().push('ApplyDetailPage',{type:'ShenpiDetailPage',id:res.dataObject})
         return new actions.addapplySuccessAction({})
       }
     })
@@ -233,8 +234,124 @@ export class CreatWorkEffects {
     console.log(res)
     if(res.success) {
       this.toast.message('已提交审核')
-      return new actions.meetingUpdateSuccessAction({})
+      return new actions.applyUpdateSuccessAction({})
    }
+  })
+  // shenpi列表
+  @Effect() applylist$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.APPLYLIST)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.applyList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      const data = res.dataObject.result.map(apply => ({
+        startDate:apply.apply.startDate,
+        endDate:apply.apply.endDate,
+        id:apply.apply.applyId,
+        pageNo:res.dataObject.pageNo,
+        type: apply.type,
+        status:applyStatus(apply.apply.status),
+        initatorEmp:apply.apply.initatorEmp,
+        classify:applyType(apply.apply.type,apply.apply.classify)
+      }))
+      return new actions.applyListSuccessAction(data)
+    }
+  })
+  // shenpi流程图
+  @Effect() applyflow$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.APPLYFLOW)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.applyFlow(auth.id, auth.token, auth.emp.teamId,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      const data = res.dataObject.map(apply => ({
+         status:applyStatus(apply.status),
+         emp:apply.emp,
+         updateTime:apply.updateTime
+      }))
+      return new actions.applyFlowSuccessAction(data)
+    }
+  })
+   // 添加事务
+  @Effect() addshiwu$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ADDSHIWU)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.addShiwu(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.dataObject})
+      return new actions.addShiwuSuccessAction({})
+    }
+  })
+  // 获取事务详情
+  @Effect() getshiwudetail$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.SHIWUDETAIL)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.getShiwuDetail(auth.id, auth.token, auth.emp.teamId,info))
+  .map(res => {
+    console.log(res)
+    if(res.success&&res.dataObject) {
+      const data = {
+        name: res.dataObject.name?res.dataObject.name:'',
+        remark: res.dataObject.remark?res.dataObject.remark:'',
+        initatorEmp: res.dataObject.initatorEmp?res.dataObject.initatorEmp:'',
+        mainPersonEmp: res.dataObject.mainPersonEmp?res.dataObject.mainPersonEmp:'',
+        startDate:res.dataObject.startDate?res.dataObject.startDate:'',
+        endDate:res.dataObject.endDate?res.dataObject.endDate:'',
+        attach:res.dataObject.attach?res.dataObject.attach:'',
+        attachName:res.dataObject.attachName?res.dataObject.attachName:'',
+        progress:res.dataObject.progress?res.dataObject.progress:'',
+        status:res.dataObject.status?res.dataObject.status:'',
+        finishDate:res.dataObject.finishDate?res.dataObject.finishDate:'',
+        mainPersonId:res.dataObject.mainPerson?res.dataObject.mainPerson:'',
+        initatorId:res.dataObject.initator?res.dataObject.initator:'',
+        surplusDays:res.dataObject.name?res.dataObject.name:'',
+      }
+      return new actions.getWorkDetailSuccessAction(data)
+  }
+  return new actions.getWorkDetailSuccessAction({})
+  })
+  // 修改shiwu
+  @Effect() updateshiwu$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.SHIWUUPDATE)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.shiwuUpdate(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      this.toast.message('已提交审核')
+      return new actions.shiwuUpdateSuccessAction({})
+   }
+  })
+  // 获取子事务详情
+  @Effect() getzishiwudetail$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ZISHIWU)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.zishiwu(auth.id, auth.token, auth.emp.teamId,info))
+  .map(res => {
+    console.log(res)
+    if(res.success&&res.dataObject) {
+    
+      const data = res.dataObject.map(apply=>({
+        
+        name: apply.name?apply.name:'',
+        remark: apply.remark?apply.remark:'',
+        progress:apply.progress?apply.progress:'',
+        surplusDays:apply.name?apply.name:'',
+      
+      }))
+      return new actions.zishiwuSuccessAction(data)
+  }
+  return new actions.zishiwuSuccessAction({})
   })
   constructor(
     private actions$: Actions,

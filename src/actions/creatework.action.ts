@@ -33,6 +33,20 @@ export const ActionTypes = {
   APPLYDETAIL_SUCCESS:'[creatwork] applydetail_success',
   UPDATEAPPLY:'[creatwork] updateapply',
   UPDATEAPPLY_SUCCESS:'[creatwork] updateapply_success',
+  APPLYLIST: '[creatwork] applylist',
+  APPLYLIST_SUCCESS: '[creatwork] applylist_success',
+  APPLYFLOW:'[creatwork] applyflowlist',
+  APPLYFLOW_SUCCESS:'[creatwork] applyflowlist_success',
+  // shiwu
+  ADDSHIWU:'[creatwork] addshiwu',
+  ADDSHIWU_SUCCESS:'[creatwork] addshiwu_success',
+  SHIWUDETAIL:'[creatwork] shiwudetail',
+  SHIWUDETAIL_SUCCESS:'[creatwork] shiwudetail_success',
+  SHIWUUPDATE:'[creatwork] shiwuupdate',
+  SHIWUUPDATE_SUCCESS:'[creatwork] shiwuupdate_success',
+  // 获取子事务
+  ZISHIWU:'[creatwork] zishiwu',
+  ZISHIWU_SUCCESS:'[creatwork] zishiwu_success',
 };
 
 /**
@@ -182,6 +196,78 @@ export class applyUpdateAction implements Action {
 
 export class applyUpdateSuccessAction implements Action {
   readonly type = ActionTypes.UPDATEAPPLY_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 审批列表
+export class applyListAction implements Action {
+  readonly type = ActionTypes.APPLYLIST;
+
+  constructor(public payload: {type:string,pageNo:string}) { }
+}
+
+export class applyListSuccessAction implements Action {
+  readonly type = ActionTypes.APPLYLIST_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 审批流程图
+export class applyFlowAction implements Action {
+  readonly type = ActionTypes.APPLYFLOW;
+
+  constructor(public payload: {applyId:string}) { }
+}
+
+export class applyFlowSuccessAction implements Action {
+  readonly type = ActionTypes.APPLYFLOW_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 添加事务
+export class addShiwuAction implements Action {
+  readonly type = ActionTypes.ADDSHIWU;
+
+  constructor(public payload: any) { }
+}
+
+export class addShiwuSuccessAction implements Action {
+  readonly type = ActionTypes.ADDSHIWU_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 事务详情
+export class shiwuDetailAction implements Action {
+  readonly type = ActionTypes.SHIWUDETAIL;
+
+  constructor(public payload: {thingId:string}) { }
+}
+
+export class shiwuDetailuSuccessAction implements Action {
+  readonly type = ActionTypes.SHIWUDETAIL_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 修改事务
+export class shiwuUpdateAction implements Action {
+  readonly type = ActionTypes.SHIWUUPDATE;
+
+  constructor(public payload: any) { }
+}
+
+export class shiwuUpdateSuccessAction implements Action {
+  readonly type = ActionTypes.SHIWUUPDATE_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 字十五
+export class zishiwuAction implements Action {
+  readonly type = ActionTypes.ZISHIWU;
+
+  constructor(public payload: {parentId:string}) { }
+}
+
+export class zishiwuSuccessAction implements Action {
+  readonly type = ActionTypes.ZISHIWU_SUCCESS;
 
   constructor(public payload: {}) { }
 }

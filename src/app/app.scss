@@ -483,3 +483,12 @@ ion-textarea {
     border: 1px solid #32b16c;
     text-align: center
 }
+.work_divier{
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    background-color: #fff;
+    border-bottom: 0.55px solid $border_color;
+}

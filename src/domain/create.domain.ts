@@ -2,6 +2,8 @@ export interface createObj {
   name?: string,
   remark?: string,
   mainPerson?: person,
+  mainPersonId?:string
+  initatorId?:string // 发起人ID
   startDate?: string,
   endDate?: string,
   attach?:string,
@@ -38,4 +40,29 @@ export interface imageUrl {
 
 export interface person {
   name: string
+}
+
+export interface applyList {
+  applyId?:string
+  type?:string
+  empId?:string
+  step?:string
+  status?:string
+  pageNo?: number
+}
+// 事务流程图
+export interface applyFlow {
+  status:string
+  emp:{
+    name:string
+    photo?:string
+  }
+  updateTime:string
+}
+// 子事务
+export interface zishiwu {
+  name: string
+  remark: string
+  progress:string
+  surplusDays:string
 }

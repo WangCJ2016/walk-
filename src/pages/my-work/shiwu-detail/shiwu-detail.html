@@ -28,7 +28,7 @@
       <footer-input></footer-input>
     </div>
     <div *ngSwitchCase='"detail"'>
-      <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
+      <form [formGroup]='form' >
         <ion-list>
           <ion-item *ngIf='data?.name'>
             <ion-label>
@@ -55,12 +55,9 @@
             </ion-item>
    
 
-
-          <ion-item *ngIf='data?.mainPersonEmp'>
-            <ion-label item-start>执行人</ion-label>
-            <avatar item-content name={{data.mainPersonEmp.name}}></avatar>
-            <p item-content>{{data.mainPersonEmp.name}}</p>
-          </ion-item>
+            <initalmember-formcontrol  [person]='data?.initatorEmp' [addIf]='false'></initalmember-formcontrol>
+            <initalmember-formcontrol formControlName='zhubanren' [person]='data?.mainPersonEmp' title='主办人'></initalmember-formcontrol>
+         
 
           <ion-item *ngIf='data?.startDate'>
             <ion-label>起始时间</ion-label>
@@ -143,7 +140,19 @@
           </ion-item-options>
         </ion-item-sliding> -->
         </ion-list>
-        <button ion-button class="submitBtn" full style="margin:0">提交审核</button>
+        <button ion-button class="submitBtn" *ngIf='mainPersonIf'  full style="margin:0" (click)='onSubmit(form, $event,3)'>提交审核</button>
+        <div class="footer_shenpi" *ngIf='initatorIf'>
+          <div class="footer_item" (click)='onSubmit(form, $event,2)'>
+            暂停
+          </div>
+          <div class="footer_item" (click)='onSubmit(form, $event,4)'>
+            打回
+          </div>
+          <div class="footer_item" (click)='onSubmit(form, $event,5)'>
+            关闭
+          </div>
+          
+        </div>
       </form>
     </div>
   </div>

@@ -16,13 +16,13 @@
     </ion-navbar>
     <ion-toolbar>
         <ion-segment [(ngModel)]='shenpiType'>
-            <ion-segment-button value="wodeshenpi">
+            <ion-segment-button value="3" (click)='applyTypeChange()'>
                 我的审批
             </ion-segment-button>
-            <ion-segment-button value="yaowoshenpi">
+            <ion-segment-button value="2" (click)='applyTypeChange()'>
                 要我审批
             </ion-segment-button>
-            <ion-segment-button value="chaosonggeiwo">
+            <ion-segment-button value="1" (click)='applyTypeChange()'>
                 抄送给我
             </ion-segment-button>
         </ion-segment>
@@ -31,16 +31,49 @@
 
 
 <ion-content>
-    <div [ngSwitch]='shenpiType'>
-        <ion-list *ngSwitchCase="'wodeshenpi'">
-            <ion-item (click)='goDetail()'>
-                <ion-avatar item-start>
-                    <img src="assets/imgs/attence/icon_face.png">
-                </ion-avatar>
-                <h2 class="name">王琪琪</h2>
-                <p class="intr"><span>备用金</span>&nbsp;&nbsp;<span>2017-06-17至2017-06-17</span>&nbsp;&nbsp;<span>¥2000</span></p>
-                <button ion-button outline item-end color='kim'>审批中</button>
-            </ion-item>
-        </ion-list>
+    <div [ngSwitch]='shenpiType' >
+        <div *ngSwitchCase="'3'">
+                <ion-list  >
+                        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList3; let i=index">
+                            <ion-avatar item-start>
+                                <!-- <img *ngIf='!!item?.initatorEmp.photo' src={{item?.initatorEmp.photo}} alt=""> -->
+                                <avatar  name={{item.initatorEmp?.name}}></avatar>
+                            </ion-avatar>
+                            <h2 class="name">{{item.initatorEmp?.name}}</h2>
+                            <p class="intr"><span>{{item.classify}}</span>&nbsp;&nbsp;<span>{{item.startDate}}至{{item.endDate}}</span>&nbsp;&nbsp;<span *ngIf='item?.money'>¥2000</span></p>
+                            <button ion-button outline item-end color='kim'>{{item.status}}</button>
+                        </ion-item>
+                    </ion-list>
+        </div>
     </div>
+    <div [ngSwitch]='shenpiType'>
+        <div *ngSwitchCase="'1'">
+                <ion-list *ngIf='applyList1.length>0'>
+                        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList1; let i=index">
+                            <ion-avatar item-start>
+                                <img *ngIf='!!item.initatorEmp?.photo' src={{item?.initatorEmp.photo}} alt="">
+                                <avatar *ngIf='!item?.initatorEmp?.photo' name={{item.initatorEmp?.name}}></avatar>
+                            </ion-avatar>
+                            <h2 class="name">{{item.initatorEmp?.name}}</h2>
+                            <p class="intr"><span>{{item?.classify}}</span>&nbsp;&nbsp;<span>{{item?.startDate}}至{{item?.endDate}}</span>&nbsp;&nbsp;<span *ngIf='item?.money'>¥2000</span></p>
+                            <button ion-button outline item-end color='kim'>{{item.status}}</button>
+                        </ion-item>
+                    </ion-list>
+        </div>
+        </div>
+        <div [ngSwitch]='shenpiType'>
+            <div *ngSwitchCase="'2'">
+                    <ion-list *ngIf='applyList2.length>0'>
+                            <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList2; let i=index">
+                                <ion-avatar item-start>
+                                    <img *ngIf='!!item.initatorEmp?.photo' src={{item?.initatorEmp.photo}} alt="">
+                                    <avatar *ngIf='!item.initatorEmp?.photo' name={{item.initatorEmp?.name}}></avatar>
+                                </ion-avatar>
+                                <h2 class="name">{{item.initatorEmp?.name}}</h2>
+                                <p class="intr"><span>{{item?.classify}}</span>&nbsp;&nbsp;<span>{{item?.startDate}}至{{item?.endDate}}</span>&nbsp;&nbsp;<span *ngIf='item?.money'>¥2000</span></p>
+                                <button ion-button outline item-end color='kim'>{{item.status}}</button>
+                            </ion-item>
+                        </ion-list>
+            </div>
+            </div>
 </ion-content>

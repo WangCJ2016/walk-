@@ -6,7 +6,7 @@ import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
-
+import { zishiwu } from '../../../domain'
 /**
  * Generated class for the PlanzDetailPage page.
  *
@@ -30,6 +30,7 @@ export class PlanzDetailPage {
   attach: Array<string>
   attachName: Array<string>
   month:string = ''
+  zishiwuList: Array<zishiwu>
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -49,10 +50,12 @@ export class PlanzDetailPage {
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
-    this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
+    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':'3867fdd2d5ed4a868dc9f8a89f12e11f'}))
+    this.store$.dispatch(new actions.zishiwuAction({parentId:'3867fdd2d5ed4a868dc9f8a89f12e11f'}))
+    this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
-      this.data = v
+      this.data = v.workdetail
+      this.zishiwuList = v.zishiwu
       if(this.data){
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
@@ -63,6 +66,10 @@ export class PlanzDetailPage {
   }
   attachDel(i) {
     this.attach.splice(i,1)
+  }
+  // 创建子事务
+  createzishiwu() {
+    this.navCtrl.push('CreateWorkPage',{parentId:'3867fdd2d5ed4a868dc9f8a89f12e11f',type:4})
   }
   onSubmit(f, ev:Event) {
     

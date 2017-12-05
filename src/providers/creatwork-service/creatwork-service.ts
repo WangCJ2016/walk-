@@ -183,9 +183,88 @@ export class CreatworkServiceProvider {
       token:token,
       teamId:teamId,
       empId:empId,
+      applyPerson: empId,
       ...info
     }
     const uri=`${this.config.url}/app/apply_updateApplyStatus`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 审批列表
+  applyList(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info,
+      pageSize: 5
+    }
+    const uri=`${this.config.url}/app/apply_applyList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 审批流程图
+  applyFlow(userId,token,teamId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/apply_applyFlowList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 添加事务
+  addShiwu(userId,token,teamId,deptId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      deptId:deptId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/thing_addThing`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 获取shiwu内容
+  getShiwuDetail(userId, token, teamId, info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_thingDetail`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  //shiwu update
+  shiwuUpdate(userId,token,teamId,deptId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      deptId:deptId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/thing_updateThing`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 子事务
+  zishiwu(userId,token,teamId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/thing_sonThingList`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }

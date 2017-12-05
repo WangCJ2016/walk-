@@ -1,5 +1,5 @@
 import { contact } from '../domain'
-import distanceInWords from 'date-fns/distance_in_words'
+import differenceInDays from 'date-fns/difference_in_days'
 
 interface data {
     letter: string,
@@ -92,15 +92,14 @@ export function distanceInTime(startTime, endTime) {
     
     const startH = startTime.split('T')[1].slice(0, -4)
     const endH = endTime.split('T')[1].slice(0, -4)
-    const startSx = parseInt(startH,10)>12?0:.5
-    const endSx = parseInt(endH,10)>12?0:.5
-    console.log(distanceInWords(startDay, endDay), endSx,startSx)
+    const startSx = parseInt(startH,10)>12?0.5:0
+    const endSx = parseInt(endH,10)>12?0.5:0
     const data =  {
         startDate:startTime.split('T')[0],
         startSx:startSx,
         endDate:endTime.split('T')[0],
         endSx:endSx,
-        days: 5
+        days: differenceInDays(endDay, startDay)+endSx-startSx
     }
    return data
 }
@@ -132,6 +131,21 @@ export function applyType(type, classify) {
     }
     if(type==3) {
         return '报销'
+    }
+}
+// 审批状态
+export function applyStatus(status: number) {
+    switch (status) {
+        case 1:
+          return '审核中'
+        case 2:
+        return '关闭'
+        case 3:
+        return '拒绝'
+        case 4:
+        return '同意'
+        case 5:
+        return '转发'
     }
 }
   export * from './type.util'
