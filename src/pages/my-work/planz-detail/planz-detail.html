@@ -6,8 +6,14 @@
 -->
 <ion-header>
   
-    <ion-navbar>
+    <ion-navbar hideBackButton="true">
+        <button ion-button icon-only  color="light" clear (click)='back()'>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
       <ion-title>详情</ion-title>
+      <ion-buttons end>
+        <button ion-button (click)='onSubmit(form, $event)' >保存</button>
+      </ion-buttons>
     </ion-navbar>
     <ion-toolbar>
       <ion-segment [(ngModel)]='segment'>
@@ -28,7 +34,7 @@
         <footer-input></footer-input>
       </div>
       <div *ngSwitchCase='"detail"'>
-        <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
+        <form [formGroup]='form' >
           <ion-list>
             <ion-item *ngIf='data?.name'>
               <ion-label>
@@ -85,25 +91,48 @@
           </ion-list>
          
           <div class="work_divier" style='margin-top:10px'>
+              <span>成果&检查项</span>
+              <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createzishiwu()' alt="">
+            </div>
+            <ion-list>
+                <ion-item-sliding #item>
+                  <ion-item>
+                    Item
+                  </ion-item>
+                  <ion-item-options side="left">
+                    <button ion-button (click)="favorite(item)">Favorite</button>
+                    <button ion-button color="danger" (click)="share(item)">Share</button>
+                  </ion-item-options>
+              
+                  <ion-item-options side="right">
+                    <button ion-button (click)="unread(item)">Unread</button>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+
+          <div class="work_divier" style='margin-top:10px'>
             <span>子事务</span>
             <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createzishiwu()' alt="">
           </div>
-          <ion-item-sliding *ngFor="let item of zishiwuList; let i=index">
-            <ion-item style="border:none">
-              <ion-label>
-                <span>{{item.name}}</span>
-                <p class="">
-                  <span>{{item.mainPersonEmp.name}}</span>
-                  <span>剩余{{item.surplusDays}}天</span>
-                  <span>已完成{{item.progress}}%</span>
-                </p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options>
-              <button ion-button color="danger" (click)="archive()">删除</button>
-            </ion-item-options>
-          </ion-item-sliding> 
-          <button ion-button class="submitBtn" full style="margin:0">提交审核</button>
+          <ion-list>
+              <ion-item-sliding *ngFor="let item of zishiwuList; let i=index">
+                  <ion-item style="border:none">
+                    <ion-label>
+                      <span>{{item?.name}}</span>
+                      <p class="item_sliding_p">
+                        <span>{{item?.mainPersonEmp?.name}}</span>
+                        <span>剩余{{item?.surplusDays}}天</span>
+                        <span>已完成{{item?.progress}}%</span>
+                      </p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="del(item.id,i)">删除</button>
+                  </ion-item-options>
+                </ion-item-sliding> 
+          </ion-list>
+          
+          <button ion-button type="button" class="submitBtn" (click)='endPlanz()' full style="margin:0">关闭</button>
         </form>
       </div>
     </div>

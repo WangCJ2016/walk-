@@ -16,8 +16,13 @@ export class CreateWorkPopoverComponent {
     public appCtrl: App) {
     
   }
-  goPage(page: string) {
+  goPage(page: string,param) {
     this.viewCtrl.dismiss();
-    this.appCtrl.getRootNav().push(page);
+    if(page === 'CreateWorkPage') {
+      this.appCtrl.getRootNav().push(page,{type:1});
+    }else {
+      this.appCtrl.getRootNav().push(page);
+    }
+    
   }
 }

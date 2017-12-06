@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,PopoverController,InfiniteScroll } from 'ionic-angular';
 import { CreateWorkPopoverComponent} from '../../components/create-work-popover/create-work-popover'
+import { Store } from '@ngrx/store'
+import * as fromRoot from '../../reducer'
+import * as actions from '../../actions/creatework.action'
+import getMonth from 'date-fns/get_month'
+import getYear from 'date-fns/get_year'
+import getDate from 'date-fns/get_date'
 // import { state } from '@angular/animations'
 /**
  * Generated class for the MyWorkPage page.
@@ -18,74 +24,40 @@ export class MyWorkPage {
   fixArray: Array<any>
   typeIndex: number
   itemIndex: number
+  data = {type: '2', currDate:getYear(new Date())+getMonth(new Date())+getDate(new Date())}
   backdrop: boolean = false
-  constructor(public navCtrl: NavController, public navParams: NavParams,public popoverCtrl: PopoverController) {
-    this.fixArray = [{
-      type: '类型',
-      items: [{
-        name: '全部',
-        num: 17,
-        id: 0
-      },{
-        name: '项目相关',
-        num: 2,
-        id: 1
-      },{
-        name: '计划',
-        num: 17,
-        id: 2
-      },{
-        name: '会议',
-        num: 17,
-        id: 3
-      },{
-        name: '审批',
-        num: 17,
-        id: 4
-      },{
-        name: '事务',
-        num: 17,
-        id: 5
-      }]
-    },{
-      type: '时间',
-      items: [{
-        name: '全部',
-        num: 17,
-        id: 6
-      },{
-        name: '超期的',
-        num: 2,
-        id: 7
-      },{
-        name: '今天的事',
-        num: 17,
-        id: 8
-      },{
-        name: '最近一周',
-        num: 17,
-        id: 9
-      },{
-        name: '远期安排',
-        num: 17,
-        id: 10
-      }]
-    },{
-      type: '排序',
-      items: [{
-        name: '全部',
-        num: 17,
-        id: 11
-      },{
-        name: '智能排序',
-        num: 2,
-        id: 12
-      },{
-        name: '按剩余时间',
-        num: 17,
-        id: 13
-      }]
-    }]
+  lists: Array<any> = []
+  pageNo: number = 0
+  totalPages: number = 0
+  inifite$ :InfiniteScroll
+  workPlate
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public popoverCtrl: PopoverController,
+    private store$: Store<fromRoot.State>) {
+    
+    this.store$.dispatch(new actions.shiwuListAction(this.data))
+    this.store$.dispatch(new actions.workPlateAction({}))
+    this.store$.select(store => store.creatwork).subscribe(res => {
+      console.log(res)
+      const shiwuList = res.shiwuList
+      const workPlate = res.workPlate
+      if(shiwuList&&shiwuList.pageNo!=this.pageNo) {
+        this.lists = [...this.lists,...shiwuList.list]
+        this.pageNo = shiwuList.pageNo
+        this.totalPages++
+        //this.inifite$.next(true)
+        this.inifite$?this.inifite$.complete():null
+        if(this.totalPages === shiwuList.totalPages) {
+          this.inifite$.enable(false)
+        }
+      }
+      if(workPlate) {
+        this.workPlate = workPlate
+      }
+    })
   }
 
 
@@ -100,7 +72,22 @@ export class MyWorkPage {
       ev: myEvent
     });
   }
+  // 获取筛选条件
+  getDate(data) {
+    console.log(data)
+    this.data = data
+    this.store$.dispatch(new actions.shiwuListAction(data))
+    this.pageNo = 0
+    this.totalPages = 0
+    this.lists = []
+    this.inifite$.enable(true)
+  }
   godetail() {
     this.navCtrl.push('ProDetailPage')
+  }
+  // 下拉刷新
+  doInfinite(infiniteScroll) {
+    this.inifite$ = infiniteScroll
+    this.store$.dispatch(new actions.shiwuListAction({...this.data, pageNo: this.pageNo+1}))
   }
 }

@@ -25,6 +25,7 @@ export class CreateWorkPage {
   form: FormGroup
   startDate: string
   endDate: string
+  faqiren
   constructor(public modalCtrl: ModalController,
     public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -38,14 +39,16 @@ export class CreateWorkPage {
         fullName: [''],
         desc: [''],
         fujian: [''],
-        faqiren: [''],
         zhubanren: [''],
         startTime: [''],
         endTime: ['']
       })
-      this.form.get('fujian').valueChanges.subscribe(res => console.log('fujian'+ JSON.stringify(res)))
-      this.form.get('faqiren').valueChanges.subscribe(res => console.log('fujian'+ JSON.stringify(res)))
-      this.form.get('startTime').valueChanges.subscribe(res => console.log('fujian'+ JSON.stringify(res)))
+      this.store$.select(store=>store.auth.auth).subscribe(auth=>this.faqiren={
+        name: auth.name,
+        id:auth.emp.id,
+        photo: auth.photo?auth.photo:''
+      })
+     
   }
 
   
@@ -72,10 +75,7 @@ export class CreateWorkPage {
       this.toastProvider.message('请填写事务描述')
       return
     }
-    if(!f.value.faqiren) {
-      this.toastProvider.message('请填写发起人')
-      return
-    }
+    
     if(!f.value.zhubanren) {
       this.toastProvider.message('请填写主办人')
       return
@@ -116,7 +116,7 @@ export class CreateWorkPage {
             this.store$.dispatch(new actions.addShiwuAction({
               name: f.value.fullName,
               remark: f.value.desc,
-              initator: f.value.faqiren.id,
+              initator: this.faqiren.id,
               mainPerson: f.value.zhubanren.id,
               startDate: f.value.startTime,
               endDate: f.value.endTime,
@@ -132,7 +132,7 @@ export class CreateWorkPage {
       this.store$.dispatch(new actions.addShiwuAction({
         name: f.value.fullName,
         remark: f.value.desc,
-        initator: f.value.faqiren.id,
+        initator: this.faqiren.id,
         mainPerson: f.value.zhubanren.id,
         startDate: f.value.startTime,
         endDate: f.value.endTime,

@@ -1,10 +1,16 @@
 import * as actions from '../actions/creatework.action'
-import { createObj, applyList, applyFlow, zishiwu} from '../domain'
+import { createObj, applyList, applyFlow, zishiwu, shiwuitem} from '../domain'
 export interface State {
      workdetail?: createObj
      applyList?: Array<applyList>
      applyFlow?: Array<applyFlow>
      zishiwu?:Array<zishiwu>
+     shiwuList?: {
+       pageNo: number,
+       totalPages: number,
+       list: Array<shiwuitem>
+     }
+     workPlate?:any
 };
 
 export const initialState: State = {
@@ -25,6 +31,13 @@ export function reducer(state = initialState, action: any ): State {
     } 
     case actions.ActionTypes.ZISHIWU_SUCCESS: {
       return {...state,zishiwu:action.payload}
+    } 
+    case actions.ActionTypes.SHIWULIST_SUCCESS: {
+      return {...state,shiwuList:action.payload}
+    } 
+    case actions.ActionTypes.WORKPLATE_SUCCESS: {
+    
+      return {...state,workPlate:action.payload}
     } 
     default: {
       return state;

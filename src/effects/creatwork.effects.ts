@@ -47,7 +47,7 @@ export class CreatWorkEffects {
         finishDate:res.dataObject.finishDate?res.dataObject.finishDate:'',
         mainPersonEmp:{
           name:res.dataObject.mainPersonEmp?res.dataObject.mainPersonEmp.name:'',
-          head:res.dataObject.mainPersonEmp.photo?res.dataObject.mainPersonEmp.photo:'',
+         // head:res.dataObject.mainPersonEmp.photo?res.dataObject.mainPersonEmp.photo:'',
         },
         surplusDays:res.dataObject.name?res.dataObject.name:'',
       }
@@ -65,7 +65,7 @@ export class CreatWorkEffects {
   .map(res => {
     console.log(res)
     if(res.success) {
-      this.toast.message('已提交审核')
+      this.toast.message('已保存')
       return new actions.updateSuccessAction({})
    }
   })
@@ -276,6 +276,28 @@ export class CreatWorkEffects {
       return new actions.applyFlowSuccessAction(data)
     }
   })
+   // 事务list
+   @Effect() shiwulist$: Observable<Action> = this.actions$
+   .ofType(actions.ActionTypes.SHIWULIST)
+   .map(toPayload)
+   .withLatestFrom(this.store$.select(store=>store.auth.auth))
+   .switchMap(([info,auth])=>this.creatworkSerice.shiwuList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
+   .map(res => {
+     console.log(res)
+     if(res.success) {
+       const data = {
+         pageNo: res.dataObject.pageNo,
+         totalPages: res.dataObject.totalPages,
+         list: res.dataObject.result.map(res => ({
+           id:res.id,
+           mainPersonEmp: res.mainPersonEmp,
+           name: res.name,
+           type: res.type
+         }))
+       }
+       return new actions.shiwuListSuccessAction(data)
+     }
+   })
    // 添加事务
   @Effect() addshiwu$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.ADDSHIWU)
@@ -284,8 +306,12 @@ export class CreatWorkEffects {
   .switchMap(([info,auth])=>this.creatworkSerice.addShiwu(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
     console.log(res)
-    if(res.success) {
-      this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.dataObject})
+    if(res.res.success) {
+      if(res.type=='1') {
+        this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.res.dataObject})
+      }else {
+        this.app.getRootNav().pop()
+      }
       return new actions.addShiwuSuccessAction({})
     }
   })
@@ -342,16 +368,42 @@ export class CreatWorkEffects {
     if(res.success&&res.dataObject) {
     
       const data = res.dataObject.map(apply=>({
-        
+        id: apply.id?apply.id:'',
         name: apply.name?apply.name:'',
         remark: apply.remark?apply.remark:'',
-        progress:apply.progress?apply.progress:'',
-        surplusDays:apply.name?apply.name:'',
-      
+        progress:apply.progress?apply.progress:0,
+        surplusDays:apply.surplusDays?apply.surplusDays:0,
+        mainPersonEmp: apply.mainPersonEmp?apply.mainPersonEmp:''
       }))
       return new actions.zishiwuSuccessAction(data)
   }
   return new actions.zishiwuSuccessAction({})
+  })
+  // 删除事务
+  @Effect() delshiwudetail$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.SHIWUDEL)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.shiwuDel(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
+  .map(res => {
+    console.log(res)
+    if(res.success&&res.dataObject) {
+      return new actions.zishiwuDelSuccessAction({})
+  }
+  return new actions.zishiwuDelSuccessAction({})
+  })
+  // 获取日期
+  @Effect() workplate$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.WORKPLATE)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.workPlate(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
+  .map(res => {
+    console.log(res)
+    if(res.success&&res.dataObject) {
+      return new actions.workPlateSuccessAction(res.dataObject)
+  }
+  return new actions.workPlateSuccessAction({})
   })
   constructor(
     private actions$: Actions,

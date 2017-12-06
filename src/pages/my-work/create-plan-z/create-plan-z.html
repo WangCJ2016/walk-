@@ -25,7 +25,7 @@
         <ion-textarea class="create_textarea" formControlName='desc'></ion-textarea>
       </ion-item>
       <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
-      <initalmember-formcontrol formControlName='zhixingren' title='执行人' style="margin-top:10px"></initalmember-formcontrol>
+      <initalmember-formcontrol  title='执行人' [addIf]=false [person]='auth' style="margin-top:10px"></initalmember-formcontrol>
       <ion-item style="margin-top: 10px">
         <ion-label>起始时间</ion-label>
         <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="myDate"></ion-datetime>

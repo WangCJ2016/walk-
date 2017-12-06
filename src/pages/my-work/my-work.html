@@ -19,9 +19,9 @@
 
 
 <ion-content>
-  <fix-top [fixArray]='fixArray'></fix-top>
+  <fix-top [workPlate]='workPlate' (data)='getDate($event)'></fix-top>
   <section class="sec_content">
-    <ion-list>
+    <ion-list *ngIf='type==1'>
       <ion-item (click)='godetail()'>
         <ion-avatar item-start>
           <img src="assets/imgs/work-desk/shiwu.png" alt="">
@@ -36,8 +36,24 @@
         <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
       </ion-item>
     </ion-list>
+    <ion-list *ngIf='type==2'>
+      <ion-item *ngFor="let item of lists; let i=index">
+          <ion-avatar item-start>
+              <img *ngIf='item.type==1' src="assets/imgs/work-desk/week.png" alt="">
+              <img *ngIf='item.type==2' src="assets/imgs/work-desk/month.png" alt="">
+            </ion-avatar>
+            <h3>{{item.name}}</h3>
+            <span>执行人：{{item.name}}</span>
+      </ion-item>
+    </ion-list>
   </section>
   <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
     <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
   </div>
+  <ion-infinite-scroll enabled=false (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

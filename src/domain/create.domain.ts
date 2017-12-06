@@ -39,7 +39,8 @@ export interface imageUrl {
 }
 
 export interface person {
-  name: string
+  name: string,
+  photo?: string
 }
 
 export interface applyList {
@@ -65,4 +66,12 @@ export interface zishiwu {
   remark: string
   progress:string
   surplusDays:string
+}
+
+// 事务item
+export interface shiwuitem{
+  id:string
+  mainPersonEmp: person
+  name: string
+  type: string
 }

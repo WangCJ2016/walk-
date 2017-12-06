@@ -216,6 +216,20 @@ export class CreatworkServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+  // 事务list
+  shiwuList(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info,
+      pageSize: 10
+    }
+    const uri=`${this.config.url}/app/thing_thingList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
   // 添加事务
   addShiwu(userId,token,teamId,deptId,empId,info) {
     const params = {
@@ -228,7 +242,10 @@ export class CreatworkServiceProvider {
     }
     const uri=`${this.config.url}/app/thing_addThing`
     return this.http.get(uri, {params: params})
-    .map(res=>res.json())
+    .map(res=>({
+      type: info.type,
+      res: res.json()
+    }))
   }
   // 获取shiwu内容
   getShiwuDetail(userId, token, teamId, info) {
@@ -265,6 +282,31 @@ export class CreatworkServiceProvider {
       ...info,
     }
     const uri=`${this.config.url}/app/thing_sonThingList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 删除事务
+  shiwuDel(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/thing_deleteThing`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 获取日期
+  workPlate(userId,token,teamId,empId) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+    }
+    const uri=`${this.config.url}/app/thing_workPlate`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }

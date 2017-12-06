@@ -44,9 +44,16 @@ export const ActionTypes = {
   SHIWUDETAIL_SUCCESS:'[creatwork] shiwudetail_success',
   SHIWUUPDATE:'[creatwork] shiwuupdate',
   SHIWUUPDATE_SUCCESS:'[creatwork] shiwuupdate_success',
+  SHIWULIST:'[creatwork] shiwulist',
+  SHIWULIST_SUCCESS:'[creatwork] shiwulist_success',
   // 获取子事务
   ZISHIWU:'[creatwork] zishiwu',
   ZISHIWU_SUCCESS:'[creatwork] zishiwu_success',
+  SHIWUDEL:'[creatwork] delshiwu',
+  SHIWUDEL_SUCCESS:'[creatwork] delzishiwu_success',
+  // 获取日期
+  WORKPLATE:'[creatwork] workplate',
+  WORKPLATE_SUCCESS:'[creatwork] workplate_success',
 };
 
 /**
@@ -54,6 +61,18 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+// 获取日期
+export class workPlateAction implements Action {
+  readonly type = ActionTypes.WORKPLATE;
+
+  constructor(public payload: any) { }
+}
+
+export class workPlateSuccessAction implements Action {
+  readonly type = ActionTypes.WORKPLATE_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
 // 周计划
 export class planzsubmitAction implements Action {
   readonly type = ActionTypes.PLANZSUBMIT;
@@ -223,6 +242,18 @@ export class applyFlowSuccessAction implements Action {
 
   constructor(public payload: {}) { }
 }
+// 事务list
+export class shiwuListAction implements Action {
+  readonly type = ActionTypes.SHIWULIST;
+
+  constructor(public payload: any) { }
+}
+
+export class shiwuListSuccessAction implements Action {
+  readonly type = ActionTypes.SHIWULIST_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 // 添加事务
 export class addShiwuAction implements Action {
   readonly type = ActionTypes.ADDSHIWU;
@@ -259,17 +290,29 @@ export class shiwuUpdateSuccessAction implements Action {
 
   constructor(public payload: {}) { }
 }
-// 字十五
+// 获取子事务
 export class zishiwuAction implements Action {
   readonly type = ActionTypes.ZISHIWU;
 
-  constructor(public payload: {parentId:string}) { }
+  constructor(public payload: {parentId:string,type:string}) { }
 }
 
 export class zishiwuSuccessAction implements Action {
   readonly type = ActionTypes.ZISHIWU_SUCCESS;
 
   constructor(public payload: {}) { }
+}
+ // 删除事务
+ export class zishiwuDelAction implements Action {
+  readonly type = ActionTypes.SHIWUDEL;
+
+  constructor(public payload: {thingId:string}) { }
+}
+
+export class zishiwuDelSuccessAction implements Action {
+  readonly type = ActionTypes.SHIWUDEL_SUCCESS;
+
+  constructor(public payload: any) { }
 }
 /**
  * Export a type alias of all actions in this action group
