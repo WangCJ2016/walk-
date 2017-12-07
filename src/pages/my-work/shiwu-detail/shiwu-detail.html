@@ -6,8 +6,14 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton="true">
+      <button ion-button icon-only  color="light" clear (click)='back()'>
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
     <ion-title>详情</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)='onSubmit(form, $event)' >保存</button>
+      </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]='segment'>
@@ -61,99 +67,91 @@
 
           <ion-item *ngIf='data?.startDate'>
             <ion-label>起始时间</ion-label>
-            <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.startDate}} ></ion-datetime>
+            <span style='margin-left:15px' item-content>{{data.startDate}}</span>
             <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
           </ion-item>
           <ion-item *ngIf='data?.endDate'>
             <ion-label>截止时间</ion-label>
-            <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.endDate}} ></ion-datetime>
+            <span style='margin-left:15px' item-content>{{data.endDate}}</span>
             <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
           </ion-item>
-          <ion-item *ngIf='month'>
-            <ion-label>截止时间</ion-label>
-            <ion-datetime displayFormat="YYYY-MM" placeholder={{month}} ></ion-datetime>
-            <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-          </ion-item>
+    
           <ion-item>
-            <ion-range formControlName='progress' [(ngModel)]='progress'>
-              <ion-label range-left small>进度</ion-label>
-              <ion-label range-right small>
-                <span>{{progress}}%</span>
-                <span>偏慢</span>
-              </ion-label>
-            </ion-range>
-          </ion-item>
-          <!-- <ion-item *ngIf='data.count'>
-          <ion-label>天数</ion-label>
-          <span item-end>{{data.count}}</span>
-        </ion-item>
-        <ion-item *ngIf='data.money'>
-          <ion-label>金额</ion-label>
-          <span item-end>{{data.money}}</span>
-        </ion-item>
-        <ion-item>
-          <ion-range [(ngModel)]="saturation">
-            <ion-label small range-left>进度</ion-label>
-            <ion-label small range-right>{{saturation}}% 偏慢</ion-label>
-          </ion-range>
-        </ion-item>
-        <ion-item style="margin-top: 10px">
-          <ion-label>
-            成果&检查项
-          </ion-label>
-          <img item-end class="add" src="assets/imgs/work-desk/add.png" alt="">
-        </ion-item>
-        <ion-item-sliding>
-          <ion-item>
-            <ion-label>
-              <img class="add" item-end src="assets/imgs/work-desk/icon_document.png" alt="">
-            </ion-label>
-            <div item-content>
-              <p>初步文档</p>
-              <ion-label>2015-06-01 15:05:07</ion-label>
+              <ion-range formControlName='progress' [(ngModel)]='progress'>
+                <ion-label range-left small>进度</ion-label>
+                <ion-label range-right small>
+                  <span>{{progress}}%</span>
+                  <span>偏慢</span>
+                </ion-label>
+              </ion-range>
+            </ion-item>
+         
+          <div class="work_divier" style='margin-top:10px'>
+              <span>成果&检查项</span>
+              <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createrequire()' alt="">
             </div>
-            <img class="add" item-end src="assets/imgs/work-desk/download.png" alt="">
-          </ion-item>
-          <ion-item-options>
-            <button ion-button color="danger" (click)="archive()">删除</button>
-          </ion-item-options>
-        </ion-item-sliding>
-        <ion-item style="margin-top: 10px">
-          <ion-label>
-            子事务
-          </ion-label>
-          <img item-end class="add" src="assets/imgs/work-desk/add.png" alt="">
-        </ion-item>
-        <ion-item-sliding>
-          <ion-item style="border:none">
-            <ion-label>
-              <span>需求分析</span>
-              <p class="">
-                <span>小芳</span>
-                <span>剩余7天</span>
-                <span>已完成90%</span>
-              </p>
-            </ion-label>
-          </ion-item>
-          <ion-item-options>
-            <button ion-button color="danger" (click)="archive()">删除</button>
-          </ion-item-options>
-        </ion-item-sliding> -->
-        </ion-list>
-        <button ion-button class="submitBtn" *ngIf='mainPersonIf'  full style="margin:0" (click)='onSubmit(form, $event,3)'>提交审核</button>
-        <div class="footer_shenpi" *ngIf='initatorIf'>
-          <div class="footer_item" (click)='onSubmit(form, $event,2)'>
-            暂停
+            <ion-list>
+                <ion-item-sliding *ngFor="let item of requireList; let i=index">
+                  
+                  <ion-item class="reuire_list">
+                    <p class="reuire_title">{{item.name}}</p>
+                    <div class="reuire_content" *ngIf='item.attachName'>
+                        
+                            <img class="add" src="assets/imgs/work-desk/icon_document.png" alt="">
+                      
+                          <div>
+                              <span>{{item.attachName}}</span>
+                              <span>{{item.updateTime}}</span>
+                          </div>
+                    </div>
+                  </ion-item>
+                 
+                  <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="delRequire(item.id,index)">删除</button>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+
+          <div class="work_divier" style='margin-top:10px'>
+            <span>子事务</span>
+            <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createzishiwu()' alt="">
           </div>
-          <div class="footer_item" (click)='onSubmit(form, $event,4)'>
-            打回
-          </div>
-          <div class="footer_item" (click)='onSubmit(form, $event,5)'>
-            关闭
-          </div>
+          <ion-list >
+              <ion-item-sliding *ngFor="let item of zishiwuList; let i=index">
+                  <ion-item style="border:none">
+                    <ion-label>
+                      <span>{{item?.name}}</span>
+                      <p class="item_sliding_p">
+                        <span>{{item?.mainPersonEmp?.name}}</span>
+                        <span>剩余{{item?.surplusDays}}天</span>
+                        <span>已完成{{item?.progress}}%</span>
+                      </p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="del(item.id,i)">删除</button>
+                  </ion-item-options>
+                </ion-item-sliding> 
+          </ion-list>
           
-        </div>
+        </ion-list>
+       
       </form>
     </div>
   </div>
 </ion-content>
+<ion-footer>
+    <button ion-button class="submitBtn" *ngIf='mainPersonIf'  full style="margin:0" (click)='endPlanz(3)'>提交审核</button>
+    <div class="footer_shenpi" *ngIf='initatorIf'>
+      <div class="footer_item" (click)='endPlanz(2)'>
+        暂停
+      </div>
+      <div class="footer_item" (click)='endPlanz(4)'>
+        打回
+      </div>
+      <div class="footer_item" (click)='endPlanz(5)'>
+        关闭
+      </div>
+      
+    </div>
+</ion-footer>

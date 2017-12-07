@@ -1,7 +1,7 @@
 <!-- Generated template for the FixTopComponent component -->
 <section class="work_fix_top">
     <div class="type" *ngFor="let onefix of fixArray; let i=index" [class.checked]='i===typeIndex' (click)='fixClick(i)'>
-        <span>{{onefix.type}}:{{onefix.items[itemIndex].name}}</span>
+        <span>{{onefix.type}}:{{onefix.items[itemIndex]?.name}}</span>
         <ion-icon name="arrow-down"></ion-icon>
         <div class="type_item">
             <ion-list>

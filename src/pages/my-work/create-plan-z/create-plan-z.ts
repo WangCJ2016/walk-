@@ -6,7 +6,7 @@ import { ToastSitutionProvider  } from '../../../providers/toast-sitution/toast-
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
-
+import { todayFormat } from '../../../utils'
 /**
  * Generated class for the CreatePlanZPage page.
  *
@@ -22,6 +22,7 @@ import * as actions from '../../../actions/creatework.action'
 export class CreatePlanZPage {
   form: FormGroup
   auth
+  todayFormat
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private fb: FormBuilder,
@@ -43,13 +44,13 @@ export class CreatePlanZPage {
         id:res.emp.id,
         photo:res.photo
       })
+      this.todayFormat = todayFormat()
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreatePlanZPage');
-  }
+  
   onSubmit(f, ev: Event) {
-     //this.navCtrl.push('PlanzDetailPage')
+    // this.navCtrl.push('PlanzDetailPage')
     if(!f.value.fullName) {
       this.toastProvider.message('请填写周计划名称')
       return

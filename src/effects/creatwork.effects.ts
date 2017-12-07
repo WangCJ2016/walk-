@@ -19,9 +19,9 @@ export class CreatWorkEffects {
   .switchMap(([info,auth])=>this.creatworkSerice.addPlanWeek(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
     console.log(res)
-    const data = JSON.parse(res)
-    if(data.res.success) {
-      this.app.getRootNav().push('PlanzDetailPage',{type:data.type,id:data.res.dataObject})
+  
+    if(res.success) {
+      this.app.getRootNav().push('PlanzDetailPage',{id:res.dataObject})
       return new actions.planzsubmitSuccessAction({})
   }
   })
@@ -66,6 +66,7 @@ export class CreatWorkEffects {
     console.log(res)
     if(res.success) {
       this.toast.message('已保存')
+      this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
       return new actions.updateSuccessAction({})
    }
   })
@@ -76,10 +77,8 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.addPlanMonth(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
-    const data = JSON.parse(res)
-    if(data.res.success) {
-      this.app.getRootNav().push('PlanyDetailPage',{type:data.type,id:data.res.dataObject})
+    if(res.success) {
+      this.app.getRootNav().push('PlanyDetailPage',{id:res.dataObject})
       return new actions.planysubmitSuccessAction({})
     }
   })
@@ -122,7 +121,8 @@ export class CreatWorkEffects {
   .map(res => {
     console.log(res)
     if(res.success) {
-      this.toast.message('已提交审核')
+      this.toast.message('已保存')
+      this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
       return new actions.updateYSuccessAction({})
    }
   })
@@ -136,7 +136,7 @@ export class CreatWorkEffects {
      console.log(res)
      
      if(res.success) {
-       this.app.getRootNav().push('MeetingDetailPage',{type:'mettingId',id:res.dataObject})
+       this.app.getRootNav().push('MeetingDetailPage',{id:res.dataObject})
        return new actions.addMeetingSuccessAction({})
      }
    })
@@ -153,6 +153,7 @@ export class CreatWorkEffects {
         name: res.dataObject.name?res.dataObject.name:'',
         remark: res.dataObject.remark?res.dataObject.remark:'',
         initatorEmp: res.dataObject.initatorEmp?res.dataObject.initatorEmp:'',
+        initatorId:res.dataObject.initator?res.dataObject.initator:'',
         mainPersonEmp: res.dataObject.mainPersonEmp?res.dataObject.mainPersonEmp:'',
         empList: res.dataObject.empList?res.dataObject.empList:'',
         time: res.dataObject.startDate?res.dataObject.startDate+' '+res.dataObject.startTime:'',
@@ -168,7 +169,7 @@ export class CreatWorkEffects {
   }
   return new actions.getWorkDetailSuccessAction({})
   })
-   // 修改yue计划
+   // 修改meeting
    @Effect() updatemeeting$: Observable<Action> = this.actions$
    .ofType(actions.ActionTypes.UPDATEMEETING)
    .map(toPayload)
@@ -177,7 +178,7 @@ export class CreatWorkEffects {
    .map(res => {
      console.log(res)
      if(res.success) {
-       this.toast.message('已提交审核')
+       this.toast.message('已保存')
        return new actions.meetingUpdateSuccessAction({})
     }
    })
@@ -224,7 +225,7 @@ export class CreatWorkEffects {
   }
   return new actions.getWorkDetailSuccessAction({})
   })
-  // 修改yue计划
+  // 修改shnepi
   @Effect() updateapply$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.UPDATEAPPLY)
   .map(toPayload)
@@ -291,7 +292,7 @@ export class CreatWorkEffects {
          list: res.dataObject.result.map(res => ({
            id:res.id,
            mainPersonEmp: res.mainPersonEmp,
-           name: res.name,
+           name: res.name?res.name:'',
            type: res.type
          }))
        }
@@ -307,10 +308,11 @@ export class CreatWorkEffects {
   .map(res => {
     console.log(res)
     if(res.res.success) {
-      if(res.type=='1') {
+      if(res.type===1) {
         this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.res.dataObject})
       }else {
-        this.app.getRootNav().pop()
+        
+        console.log(this.app.getActiveNavs('-1'))
       }
       return new actions.addShiwuSuccessAction({})
     }
@@ -353,7 +355,7 @@ export class CreatWorkEffects {
   .map(res => {
     console.log(res)
     if(res.success) {
-      this.toast.message('已提交审核')
+      this.toast.message('已保存')
       return new actions.shiwuUpdateSuccessAction({})
    }
   })
@@ -404,6 +406,49 @@ export class CreatWorkEffects {
       return new actions.workPlateSuccessAction(res.dataObject)
   }
   return new actions.workPlateSuccessAction({})
+  })
+  // 添加成果产出物
+  @Effect() addrequire$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ADDREQUIRE)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.addRequire(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      return new actions.addRequireSuccessAction({})
+   }
+  })
+  // 删除成果产出物
+  @Effect() delrequire$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.DELREQUIRE)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.delRequire(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      return new actions.delRequireSuccessAction({})
+   }
+  })
+  // 成果产出物list
+  @Effect() requireList$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.REQUIRELIST)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.requireList(auth.id, auth.token, auth.emp.teamId,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      const data = res.dataObject.map(list=>({
+        name: list.name,
+        attach: list.attach?list.attach:'',
+        attachName: list.attachName?list.attachName:'',
+        id: list.id,
+        updateTime: list.updateTime
+      }))
+      return new actions.requireListSuccessAction(data)
+   }
   })
   constructor(
     private actions$: Actions,

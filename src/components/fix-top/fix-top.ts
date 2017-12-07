@@ -145,7 +145,7 @@ export class FixTopComponent {
         break
         case '远期安排':
         this.timeType = 'forward'
-        this.workTime = {forwardStartDate:this.workPlate.forward.forwardStartDate,finishDate:this.workPlate.forward.forwardEndDate}
+        this.workTime = {forwardStartDate:this.workPlate.forward.forwardStartDate}
         break
         default:
         break

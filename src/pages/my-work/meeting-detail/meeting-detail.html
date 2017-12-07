@@ -5,9 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  
-    <ion-navbar>
+
+    <ion-navbar hideBackButton="true">
+        <button ion-button icon-only  color="light" clear (click)='back()'>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
       <ion-title>详情</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)='onSubmit(form, $event)' >保存</button>
+        </ion-buttons>
     </ion-navbar>
     <ion-toolbar>
       <ion-segment [(ngModel)]='segment'>
@@ -15,7 +21,7 @@
           动态
         </ion-segment-button>
         <ion-segment-button value="detail">
-          事务详情
+          会议详情
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
@@ -59,16 +65,63 @@
             <initalmember-formcontrol formControlName='canhuiren' [people]='data?.empList' multiple='true' title='参会人'></initalmember-formcontrol>
             <ion-item style="margin-top: 10px">
               <ion-label>会议时间</ion-label>
-              <ion-datetime displayFormat="YYYY-MM-DD HH-mm" cancelText='取消' doneText='确定' placeholder={{data?.time}} ></ion-datetime>
+              <span style='margin-left:15px' item-content>{{data?.time}}</span>
               <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
             </ion-item>
             
-      
+            <div class="work_divier" style='margin-top:10px'>
+              <span>成果&检查项</span>
+              <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createrequire()' alt="">
+            </div>
+            <ion-list>
+                <ion-item-sliding *ngFor="let item of requireList; let i=index">
+                  
+                  <ion-item class="reuire_list">
+                    <p class="reuire_title">{{item.name}}</p>
+                    <div class="reuire_content" *ngIf='item.attachName'>
+                        
+                            <img class="add" src="assets/imgs/work-desk/icon_document.png" alt="">
+                      
+                          <div>
+                              <span>{{item.attachName}}</span>
+                              <span>{{item.updateTime}}</span>
+                          </div>
+                    </div>
+                  </ion-item>
+                 
+                  <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="delRequire(item.id,index)">删除</button>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+
+          <div class="work_divier" style='margin-top:10px'>
+            <span>子事务</span>
+            <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createzishiwu()' alt="">
+          </div>
+          <ion-list >
+              <ion-item-sliding *ngFor="let item of zishiwuList; let i=index">
+                  <ion-item style="border:none">
+                    <ion-label>
+                      <span>{{item?.name}}</span>
+                      <p class="item_sliding_p">
+                        <span>{{item?.mainPersonEmp?.name}}</span>
+                        <span>剩余{{item?.surplusDays}}天</span>
+                        <span>已完成{{item?.progress}}%</span>
+                      </p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="del(item.id,i)">删除</button>
+                  </ion-item-options>
+                </ion-item-sliding> 
           </ion-list>
-          <button ion-button class="submitBtn" type='button' (click)='close()'  *ngIf='form.pristine' full style="margin:0">关闭</button>
-          <button ion-button class="submitBtn" *ngIf='!form.pristine' full style="margin:0">提交审核</button>
+          </ion-list>
+         
         </form>
       </div>
     </div>
   </ion-content>
-  
+  <ion-footer *ngIf='initatorIf'>
+    <button ion-button type="button" class="submitBtn" (click)='endPlanz()' full style="margin:0">关闭</button>
+</ion-footer>

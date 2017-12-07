@@ -70,12 +70,12 @@
   
             <ion-item *ngIf='data?.startDate'>
               <ion-label>起始时间</ion-label>
-              <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.startDate}} ></ion-datetime>
+              <span style='margin-left:15px' item-content>{{data.startDate}}</span>
               <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
             </ion-item>
             <ion-item *ngIf='data?.endDate'>
               <ion-label>截止时间</ion-label>
-              <ion-datetime displayFormat="YYYY-MM-DD" placeholder={{data.endDate}} ></ion-datetime>
+              <span style='margin-left:15px' item-content>{{data.endDate}}</span>
               <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
             </ion-item>
             
@@ -92,20 +92,26 @@
          
           <div class="work_divier" style='margin-top:10px'>
               <span>成果&检查项</span>
-              <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createzishiwu()' alt="">
+              <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createrequire()' alt="">
             </div>
             <ion-list>
-                <ion-item-sliding #item>
-                  <ion-item>
-                    Item
+                <ion-item-sliding *ngFor="let item of requireList; let i=index">
+                  
+                  <ion-item class="reuire_list">
+                    <p class="reuire_title">{{item.name}}</p>
+                    <div class="reuire_content" *ngIf='item.attachName'>
+                        
+                            <img class="add" src="assets/imgs/work-desk/icon_document.png" alt="">
+                      
+                          <div>
+                              <span>{{item.attachName}}</span>
+                              <span>{{item.updateTime}}</span>
+                          </div>
+                    </div>
                   </ion-item>
-                  <ion-item-options side="left">
-                    <button ion-button (click)="favorite(item)">Favorite</button>
-                    <button ion-button color="danger" (click)="share(item)">Share</button>
-                  </ion-item-options>
-              
+                 
                   <ion-item-options side="right">
-                    <button ion-button (click)="unread(item)">Unread</button>
+                    <button ion-button color="danger" (click)="delRequire(item.id,index)">删除</button>
                   </ion-item-options>
                 </ion-item-sliding>
               </ion-list>
@@ -114,7 +120,7 @@
             <span>子事务</span>
             <img item-end class="add" src="assets/imgs/work-desk/add.png" (click)='createzishiwu()' alt="">
           </div>
-          <ion-list>
+          <ion-list >
               <ion-item-sliding *ngFor="let item of zishiwuList; let i=index">
                   <ion-item style="border:none">
                     <ion-label>
@@ -132,10 +138,13 @@
                 </ion-item-sliding> 
           </ion-list>
           
-          <button ion-button type="button" class="submitBtn" (click)='endPlanz()' full style="margin:0">关闭</button>
+          
         </form>
       </div>
     </div>
   </ion-content>
+  <ion-footer>
+      <button ion-button type="button" class="submitBtn" (click)='endPlanz()' full style="margin:0">关闭</button>
+  </ion-footer>
   
 

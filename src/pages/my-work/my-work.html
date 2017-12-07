@@ -14,12 +14,14 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+ 
+      <fix-top [workPlate]='workPlate' (data)='getDate($event)'></fix-top>
 
 </ion-header>
 
 
 <ion-content>
-  <fix-top [workPlate]='workPlate' (data)='getDate($event)'></fix-top>
+  
   <section class="sec_content">
     <ion-list *ngIf='type==1'>
       <ion-item (click)='godetail()'>
@@ -36,21 +38,21 @@
         <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
       </ion-item>
     </ion-list>
-    <ion-list *ngIf='type==2'>
-      <ion-item *ngFor="let item of lists; let i=index">
+    <ion-list *ngIf='data.type==2'>
+      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
           <ion-avatar item-start>
               <img *ngIf='item.type==1' src="assets/imgs/work-desk/week.png" alt="">
               <img *ngIf='item.type==2' src="assets/imgs/work-desk/month.png" alt="">
             </ion-avatar>
-            <h3>{{item.name}}</h3>
-            <span>执行人：{{item.name}}</span>
+            <h3>{{item?.name}}</h3>
+            <span>执行人：{{item?.mainPersonEmp?.name}}</span>
       </ion-item>
     </ion-list>
   </section>
   <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
     <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
   </div>
-  <ion-infinite-scroll enabled=false (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll position='bottom' enabled='lists.length==0' threshold='10%' (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Loading more data...">

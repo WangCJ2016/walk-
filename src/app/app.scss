@@ -492,3 +492,22 @@ ion-textarea {
     background-color: #fff;
     border-bottom: 0.55px solid $border_color;
 }
+// alert
+.xuqiu_alert{
+    align-items: center!important
+}
+
+// 详情需求item
+.reuire_title{
+    line-height: 2.5rem!important;
+    color: #333!important;
+}
+.reuire_content{
+    height: 3.333333rem;
+    display: flex;
+    align-items: center;
+    >div{
+        margin-left: 1.25rem;
+        
+    }
+}

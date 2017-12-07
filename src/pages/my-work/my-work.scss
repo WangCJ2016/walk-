@@ -1,12 +1,5 @@
 page-my-work {
-    .work_fix_top {
-        position: fixed;
-        z-index: 9;
-        top: 4.166667rem;
-    }
-    .sec_content {
-        margin-top: 3.333333rem;
-    }
+    
     @keyframes translateY {
         0% {
             transform: translateY(-150%)
@@ -14,6 +7,10 @@ page-my-work {
         100% {
             transform: translateY(0%)
         }
+    }
+    .top_toolbar{
+        padding: 0;
+        min-height: 3.333333rem
     }
     .sec_content {
         .beback {
@@ -42,6 +39,3 @@ page-my-work {
     }
 }
 
-.platform-ios .work_fix_top {
-    top: 5.833333rem
-}

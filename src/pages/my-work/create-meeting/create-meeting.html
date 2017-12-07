@@ -25,12 +25,12 @@
         <ion-textarea formControlName='desc'></ion-textarea>
       </ion-item>
       <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
-      <initalmember-formcontrol formControlName='faqiren' style="margin-top:10px"></initalmember-formcontrol>
+      <initalmember-formcontrol [addIf]=false [person]='auth' style="margin-top:10px"></initalmember-formcontrol>
       <initalmember-formcontrol formControlName='zhujiangren' title='主讲人'></initalmember-formcontrol>
       <initalmember-formcontrol formControlName='canhuiren' multiple='true' title='参会人'></initalmember-formcontrol>
       <ion-item style="margin-top: 10px">
         <ion-label>会议时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD HH-mm" cancelText='取消' doneText='确定' formControlName='meetingTime' [(ngModel)]="startDate" ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD HH-mm" min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' formControlName='meetingTime' [(ngModel)]="startDate" ></ion-datetime>
         <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
     </ion-list>

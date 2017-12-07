@@ -1,5 +1,8 @@
 import { contact } from '../domain'
 import differenceInDays from 'date-fns/difference_in_days'
+import getMonth from 'date-fns/get_month'
+import getYear from 'date-fns/get_year'
+import getDate from 'date-fns/get_date'
 
 interface data {
     letter: string,
@@ -146,6 +149,24 @@ export function applyStatus(status: number) {
         return '同意'
         case 5:
         return '转发'
+    }
+}
+// 获取格式日期
+export function todayFormat() {
+    const min = getYear(new Date())+'-'+doublenum(getMonth(new Date()))+'-'+doublenum(getDate(new Date()))
+    const max = (getYear(new Date())+1)+'-'+doublenum(getMonth(new Date()))+'-'+doublenum(getDate(new Date()))
+    console.log(min,max)
+    return {
+        min: min,
+        max: max
+    }
+}
+function doublenum(num) {
+    console.log(num)
+    if(num<10) {
+        return '0'+num
+    }else{
+        return num
     }
 }
   export * from './type.util'

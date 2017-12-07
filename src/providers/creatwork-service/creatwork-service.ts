@@ -26,12 +26,7 @@ export class CreatworkServiceProvider {
     }
     const uri = `${this.config.url}/app/plan_addPlanWeek`
     return this.http.get(uri, {params: params})
-    .map(res=>{
-     return JSON.stringify({
-        type: info.type,
-        res: res.json()
-      })
-     })
+    .map(res=>res.json())
   }
   // 获取工作详情
   getWorkDetail(userId,token,teamId,info) {
@@ -72,15 +67,10 @@ export class CreatworkServiceProvider {
       empId:empId,
       ...info
     }
-    console.log(JSON.stringify(params))
+   
     const uri = `${this.config.url}/app/plan_addPlanMonth`
     return this.http.get(uri, {params: params})
-    .map(res=>{
-     return JSON.stringify({
-        type: info.type,
-        res: res.json()
-      })
-     })
+    .map(res=>res.json())
   }
   // 获取工作详情
   getMonthDetail(userId,token,teamId,info) {
@@ -307,6 +297,43 @@ export class CreatworkServiceProvider {
       empId:empId,
     }
     const uri=`${this.config.url}/app/thing_workPlate`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 成果产出物
+  requireList(userId,token,teamId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_resultsList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  addRequire(userId,token,teamId,deptId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      deptId:deptId,
+      empId:empId,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_addResults`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  delRequire(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_deleteResults`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }

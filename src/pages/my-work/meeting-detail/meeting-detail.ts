@@ -1,11 +1,12 @@
-import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
+import { zishiwu } from '../../../domain'
 /**
  * Generated class for the MeetingDetailPage page.
  *
@@ -19,7 +20,7 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
   templateUrl: 'meeting-detail.html',
 })
 export class MeetingDetailPage {
-
+  
   form: FormGroup
   segment = 'detail'
   params
@@ -31,15 +32,19 @@ export class MeetingDetailPage {
   month:string = ''
   zhujiangren
   canhuiren
+  zishiwuList: Array<zishiwu>
+  requireList: Array<any> = []
+  initatorIf: boolean = false //是否是发起人
+  submitIf: boolean = false // 是否提交保存
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private fb: FormBuilder,
     private fileTranfer: FileTransfer,
+    private alertCtrl: AlertController,
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {
-    console.log(JSON.stringify(this.navParams.data))
     this.params = this.navParams.data
     this.form = this.fb.group({
       remark: [''],
@@ -51,27 +56,108 @@ export class MeetingDetailPage {
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter(){ 
     this.store$.dispatch(new actions.meetingDetailAction({'mettingId':this.params.id}))
-    this.store$.select(store=>store.creatwork.workdetail).subscribe(v=>{
+    this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'6'}))
+    this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
+    this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
-      this.data = v
+      this.data = v.workdetail
+      this.zishiwuList = v.zishiwu
+      this.requireList = v.requireList
       if(this.data){
-        
+        this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
-        this.zhujiangren = this.data.mainPerson?this.data.mainPerson:null
-        this.canhuiren = this.data.empList?this.data.empList:null
-        
+        this.store$.select(store=>store.auth.auth).subscribe(auth=>{
+          this.initatorIf =  auth.emp.id === this.data.initatorId
+        })
       }
     })
    
   }
+  back() {
+    console.log(this.form.pristine)
+    if(this.form.get('canhuiren').value !== '' ||
+      this.form.get('zhujiangren').value !== '' ||
+    this.form.get('attach').value !== '' || 
+    this.form.get('remark').value !== this.data.remark &&!this.submitIf) {
+     let alert =  this.alertCtrl.create({
+        title:'是否保存修改？',
+        buttons: [
+          {
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+            }
+          },
+          {
+            text: '保存',
+            handler: () => {
+              this.onSubmit(this.form, event)
+              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+            }
+          }
+        ]
+      })
+      alert.present()
+    }else{
+      this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+    }
+  }
   attachDel(i) {
     this.attach.splice(i,1)
   }
-  close() {
-    this.navCtrl.setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate: true,direction:'back'})
+  // 添加需求
+  createrequire() {
+    this.alertCtrl.create({
+      title: '创建需求',
+      cssClass: 'xuqiu_alert',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: '请填写需求名字'
+        }
+      ],
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '确定',
+          handler: data => {
+           console.log(data)
+           this.requireList.push({name: data.name})
+           this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
+          }
+        }
+      ]
+    }).present()
+  
+  }
+  // 删除需求
+  delRequire(id, index) {
+    this.requireList.splice(index, 1)
+    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'mettingId':this.params.id}))
+  }
+   // 创建子事务
+   createzishiwu() {
+    this.navCtrl.push('CreateWorkPage',{parentId:this.params.id,type:6})
+  }
+  // 关闭周计划
+  endPlanz() {
+    console.log(this.data)
+    this.store$.dispatch(new actions.meetingUpdateAction({'status': '2','mettingId':this.params.id}))
+  }
+  // 删除子事务
+  del(id,i) {
+    this.zishiwuList.splice(i,1)
+    this.store$.dispatch(new actions.zishiwuDelAction({thingId:id}))
   }
   onSubmit(f, ev:Event) {
     console.log(f.value)
@@ -118,7 +204,7 @@ export class MeetingDetailPage {
             this.form.reset()
         })
     }else {
-      alert(1)
+      this.form.reset()
       this.store$.dispatch(new actions.meetingUpdateAction({...data,...{'mettingId':this.params.id}}))
     }
    

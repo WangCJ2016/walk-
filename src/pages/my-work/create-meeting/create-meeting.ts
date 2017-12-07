@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
+import { todayFormat } from '../../../utils'
 /**
  * Generated class for the CreateMeetingPage page.
  *
@@ -20,6 +21,8 @@ import * as actions from '../../../actions/creatework.action'
 })
 export class CreateMeetingPage {
   form: FormGroup
+  auth
+  todayFormat
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private fb: FormBuilder,
@@ -31,17 +34,20 @@ export class CreateMeetingPage {
         fullName: [''],
         desc: [''],
         fujian: [''],
-        faqiren: [''],
         zhujiangren: [''],
         canhuiren: [''],
         meetingTime: ['']
        })
+       this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
+        name: res.name,
+        id:res.emp.id,
+        photo:res.photo
+      })
+      this.todayFormat = todayFormat()
   }  
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateMeetingPage');
-  }
+ 
   onSubmit(f, ev: Event) {
-   // this.navCtrl.push('MeetingDetailPage')
+    //this.navCtrl.push('MeetingDetailPage')
   
     if(!f.value.fullName) {
       this.toastProvider.message('请填写会议名称')
@@ -51,10 +57,7 @@ export class CreateMeetingPage {
       this.toastProvider.message('请填写会议描述信息')
       return
     }
-    if(!f.value.faqiren) {
-      this.toastProvider.message('请填写发起人')
-      return
-    }
+    
     if(!f.value.zhujiangren) {
       this.toastProvider.message('请填写主讲人')
       return
@@ -91,7 +94,7 @@ export class CreateMeetingPage {
             this.store$.dispatch(new actions.addMeetingAction({
               name: f.value.fullName,
               remark: f.value.desc,
-              initator: f.value.faqiren.id,
+              initator: this.auth.id,
               mainPerson: f.value.zhujiangren.id,
               empIds:f.value.canhuiren.map(res=>res.id).join(','),
               startDate: f.value.meetingTime.split('T')[0],
@@ -106,7 +109,7 @@ export class CreateMeetingPage {
       this.store$.dispatch(new actions.addMeetingAction({
         name: f.value.fullName,
         remark: f.value.desc,
-        initator: f.value.faqiren.id,
+        initator: this.auth.id,
         mainPerson: f.value.zhujiangren.id,
         empIds:f.value.canhuiren.map(res=>res.id).join(','),
         startDate: f.value.meetingTime.split('T')[0],

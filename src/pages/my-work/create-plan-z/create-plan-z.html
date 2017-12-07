@@ -28,12 +28,12 @@
       <initalmember-formcontrol  title='执行人' [addIf]=false [person]='auth' style="margin-top:10px"></initalmember-formcontrol>
       <ion-item style="margin-top: 10px">
         <ion-label>起始时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="myDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD" min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="myDate"></ion-datetime>
         <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
       <ion-item>
         <ion-label>截止时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="myDate1"></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD" min='2017-12-07' max='2018-12-07' cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="myDate1"></ion-datetime>
         <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
     </ion-list>

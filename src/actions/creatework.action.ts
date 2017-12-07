@@ -51,6 +51,13 @@ export const ActionTypes = {
   ZISHIWU_SUCCESS:'[creatwork] zishiwu_success',
   SHIWUDEL:'[creatwork] delshiwu',
   SHIWUDEL_SUCCESS:'[creatwork] delzishiwu_success',
+  // 成果产出物
+  REQUIRELIST:'[creatwork] requirelist',
+  REQUIRELIST_SUCCESS:'[creatwork] requirelist_success',
+  ADDREQUIRE:'[creatwork] addrequire',
+  ADDREQUIRE_SUCCESS:'[creatwork] addrequire_success',
+  DELREQUIRE:'[creatwork] delrequire',
+  DELREQUIRE_SUCCESS:'[creatwork] delrequire_success',
   // 获取日期
   WORKPLATE:'[creatwork] workplate',
   WORKPLATE_SUCCESS:'[creatwork] workplate_success',
@@ -61,6 +68,40 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+// 成果产出物
+export class requireListAction implements Action {
+  readonly type = ActionTypes.REQUIRELIST;
+
+  constructor(public payload: any) { }
+}
+
+export class requireListSuccessAction implements Action {
+  readonly type = ActionTypes.REQUIRELIST_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+export class addRequireAction implements Action {
+  readonly type = ActionTypes.ADDREQUIRE;
+
+  constructor(public payload: any) { }
+}
+
+export class addRequireSuccessAction implements Action {
+  readonly type = ActionTypes.ADDREQUIRE_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+export class delRequireAction implements Action {
+  readonly type = ActionTypes.DELREQUIRE;
+
+  constructor(public payload: any) { }
+}
+
+export class delRequireSuccessAction implements Action {
+  readonly type = ActionTypes.DELREQUIRE_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
 // 获取日期
 export class workPlateAction implements Action {
   readonly type = ActionTypes.WORKPLATE;

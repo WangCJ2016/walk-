@@ -7,6 +7,7 @@ import * as actions from '../../../actions/creatework.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
+
 /**
  * Generated class for the PlanzDetailPage page.
  *
@@ -31,6 +32,7 @@ export class PlanzDetailPage {
   attachName: Array<string>
   month:string = ''
   zishiwuList: Array<zishiwu>
+  requireList: Array<any> = []
   submitIf: boolean = false // 是否提交保存
   constructor(
     public navCtrl: NavController, 
@@ -41,6 +43,8 @@ export class PlanzDetailPage {
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {
+    
+    
     this.params = this.navParams.data
     this.form = this.fb.group({
       remark: [''],
@@ -57,10 +61,12 @@ export class PlanzDetailPage {
 
     this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'4'}))
+    this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
+      this.requireList = v.requireList
       if(this.data){
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
@@ -69,12 +75,9 @@ export class PlanzDetailPage {
     })
   }
   back() {
-    this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
-  }
-  ionViewCanLeave() {
-  
+    
     if(this.form.get('progress').value !== this.data.progress ||
-    this.form.get('attach').value !== this.data.attach || 
+    this.form.get('attach').value !== '' || 
     this.form.get('remark').value !== this.data.remark &&!this.submitIf) {
      let alert =  this.alertCtrl.create({
         title:'是否保存修改？',
@@ -83,24 +86,62 @@ export class PlanzDetailPage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-              return true
+              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
             }
           },
           {
             text: '保存',
             handler: () => {
               this.onSubmit(this.form, event)
-              return true
+              return
             }
           }
         ]
       })
-     
+      alert.present()
+    }else{
+      this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
     }
- 
   }
+  
   attachDel(i) {
     this.attach.splice(i,1)
+  }
+  // 添加需求
+  createrequire() {
+    this.alertCtrl.create({
+      title: '创建需求',
+      cssClass: 'xuqiu_alert',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: '请填写需求名字'
+        }
+      ],
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '确定',
+          handler: data => {
+           console.log(data)
+           this.requireList.push({name: data.name})
+           this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
+          }
+        }
+      ]
+    }).present()
+  
+  }
+  // 删除需求
+  delRequire(id, index) {
+    this.requireList.splice(index, 1)
+    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'planWeekId':this.params.id}))
   }
   // 创建子事务
   createzishiwu() {
@@ -109,8 +150,7 @@ export class PlanzDetailPage {
   // 关闭周计划
   endPlanz() {
     console.log(this.data)
-    // this.store$.dispatch(new actions.updateAction({'status': '2'}))
-    // this.submitIf = true
+    this.store$.dispatch(new actions.updateAction({'status': '2','planWeekId':this.params.id}))
   }
   // 删除子事务
   del(id,i) {

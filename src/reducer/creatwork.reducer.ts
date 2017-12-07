@@ -10,7 +10,8 @@ export interface State {
        totalPages: number,
        list: Array<shiwuitem>
      }
-     workPlate?:any
+     workPlate?:any,
+     requireList?:Array<any>
 };
 
 export const initialState: State = {
@@ -36,8 +37,10 @@ export function reducer(state = initialState, action: any ): State {
       return {...state,shiwuList:action.payload}
     } 
     case actions.ActionTypes.WORKPLATE_SUCCESS: {
-    
       return {...state,workPlate:action.payload}
+    } 
+    case actions.ActionTypes.REQUIRELIST_SUCCESS: {
+      return {...state,requireList:action.payload}
     } 
     default: {
       return state;

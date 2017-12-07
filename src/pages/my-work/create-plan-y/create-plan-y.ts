@@ -6,6 +6,7 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
+import { todayFormat } from '../../../utils'
 /**
  * Generated class for the CreatePlanYPage page.
  *
@@ -20,6 +21,8 @@ import * as actions from '../../../actions/creatework.action'
 })
 export class CreatePlanYPage {
   form: FormGroup
+  todayFormat
+  auth
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private fb: FormBuilder,
@@ -31,9 +34,14 @@ export class CreatePlanYPage {
         fullName: [''],
         desc: [''],
         fujian: [''],
-        zhixingren: [''],
         plan_month: ['']
       })
+      this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
+        name: res.name,
+        id:res.emp.id,
+        photo:res.photo
+      })
+      this.todayFormat = todayFormat()
   }
 
   ionViewDidLoad() {
@@ -49,10 +57,7 @@ export class CreatePlanYPage {
       this.toastProvider.message('请填写描述信息')
       return
     }
-    if(!f.value.zhixingren) {
-      this.toastProvider.message('请填写执行人')
-      return
-    }
+   
     if(!f.value.plan_month) {
       this.toastProvider.message('请填写月份')
       return
@@ -81,7 +86,7 @@ export class CreatePlanYPage {
             this.store$.dispatch(new actions.planysubmitAction({
               name: f.value.fullName,
               remark: f.value.desc,
-              mainPerson: f.value.zhixingren.id,
+              mainPerson: this.auth.id,
               year: f.value.plan_month.split('-')[0],
               month: f.value.plan_month.split('-')[1],
               attach: attach.join(','),
@@ -93,7 +98,7 @@ export class CreatePlanYPage {
       this.store$.dispatch(new actions.planysubmitAction({
         name: f.value.fullName,
         remark: f.value.desc,
-        mainPerson: f.value.zhixingren.id,
+        mainPerson: this.auth.id,
         year: f.value.plan_month.split('-')[0],
         month: f.value.plan_month.split('-')[1],
       }))

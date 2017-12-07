@@ -31,10 +31,10 @@
         <ion-textarea class="create_textarea" formControlName='desc'></ion-textarea>
       </ion-item>
       <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
-      <initalmember-formcontrol formControlName='zhixingren' title='执行人' style="margin-top:10px"></initalmember-formcontrol>
+      <initalmember-formcontrol title='执行人' [addIf]=false [person]='auth' style="margin-top:10px"></initalmember-formcontrol>
       <ion-item style="margin-top: 10px">
         <ion-label>月份</ion-label>
-        <ion-datetime displayFormat="YYYY-MM" cancelText='取消' doneText='确定' [(ngModel)]="plan_month" formControlName='plan_month'></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM" min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' [(ngModel)]="plan_month" formControlName='plan_month'></ion-datetime>
         <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
     </ion-list>

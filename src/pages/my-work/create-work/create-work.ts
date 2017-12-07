@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ModalController, App } from 'ionic-angular';
 import { SelectPersonComponent } from '../../../components/select-person/select-person'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
+import { todayFormat } from '../../../utils'
 /**
  * Generated class for the CreateWorkPage page.
  *
@@ -26,15 +27,18 @@ export class CreateWorkPage {
   startDate: string
   endDate: string
   faqiren
+  todayFormat
   constructor(public modalCtrl: ModalController,
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private toastProvider: ToastSitutionProvider,
+    private app: App,
     private fileTranfer: FileTransfer,
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>,
     private fb: FormBuilder) {
       this.params = this.navParams.data
+      console.log(this.params)
       this.form = this.fb.group({
         fullName: [''],
         desc: [''],
@@ -48,23 +52,12 @@ export class CreateWorkPage {
         id:auth.emp.id,
         photo: auth.photo?auth.photo:''
       })
-     
+      this.todayFormat = todayFormat()
+      console.log(this.app.getActiveNavs(this.app.getActiveNavs.length-1+''))
   }
 
   
-  validate(c):{[key: string]:any} {
-    console.log(c.value)
-    if(c.value.oldpassword !== c.value.confirmpassword) {
-      return null
-    }
-    return {
-      valid: true
-    }
-  }
-  presentModal() {
-    let profileModal = this.modalCtrl.create(SelectPersonComponent, { userId: 8675309 });
-    profileModal.present();
-  }
+  
   onSubmit(f, ev: Event) {
     //this.navCtrl.push('ShiwuDetailPage')
     if(!f.value.fullName) {

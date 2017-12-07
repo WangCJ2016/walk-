@@ -30,12 +30,12 @@
       
       <ion-item style="margin-top: 10px">
         <ion-label>起始时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="startDate" ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD"  min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' formControlName='startTime' [(ngModel)]="startDate" ></ion-datetime>
         <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
       <ion-item>
         <ion-label>截止时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="endDate" ></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MM-DD"  min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' formControlName='endTime' [(ngModel)]="endDate" ></ion-datetime>
         <img class="add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
       </ion-item>
     </ion-list>
