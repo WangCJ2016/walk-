@@ -30,6 +30,7 @@ export class ShenpiDetailPage {
   attachName: Array<string>
   applyType:string
   applyFlowList: Array<applyFlow>
+  applyEmpIf: boolean = false
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -58,6 +59,7 @@ export class ShenpiDetailPage {
       this.data = v.workdetail
       this.applyFlowList = v.applyFlow
       if(this.data){
+        //this.applyEmpIf = this.data.
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
         this.applyType = applyType(this.data.type, this.data.classify)

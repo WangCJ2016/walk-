@@ -20,46 +20,16 @@
 
 <ion-content>
     <ion-list>
-        <ion-item class="item_top" (click)='goPage("NoticePage")'>
+        <ion-item class="item_top" (click)='goPage("NoticePage")' *ngFor="let item of lists.chatGroupPage; let i=index">
             <ion-avatar item-start >
-                <img src="assets/imgs/work-home/gonggao.png" alt="">
+                <img src="assets/imgs/work-home/group.png" alt="">
             </ion-avatar>
-            <h4>公告</h4>
-            <p>2016年十一放假安排通知</p>
+            <h4>{{item.name}}</h4>
+            <p>{{item.contents}}</p>
             <div item-end>
-                <span class="time" item-end>10:24:33</span>
+                <span class="time" item-end>{{item.updateTime}}</span>
             </div>
         </ion-item>
-        <ion-item class="item_top">
-            <ion-avatar item-start>
-                <img src="assets/imgs/work-home/shenpi.png" alt="">
-            </ion-avatar>
-            <h4>审批</h4>
-            <p>请病假</p>
-            <div class="item_end" item-end>
-                <span class="time" item-end>10:24:33</span>
-                <span class="badge">1</span>
-            </div>
-        </ion-item>
-        <ion-item class="item_top">
-            <ion-avatar item-start>
-                <img src="assets/imgs/work-home/fuwuhao.png" alt="">
-            </ion-avatar>
-            <h4>服务号</h4>
-            <p>您有新的消息</p>
-            <div item-end>
-                <span class="time" item-end>10:24:33</span>
-            </div>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="assets/imgs/work-home/project.png" alt="">
-            </ion-avatar>
-            <h4>杭州展览馆WIFI项目</h4>
-            <p>李四:这周五我们能去部署了吗</p>
-            <div item-end>
-                <span class="time" item-end>10:24:33</span>
-            </div>
-        </ion-item>
+        
     </ion-list>
 </ion-content>

@@ -34,8 +34,10 @@ export class MyApp {
       const userId = localStorage.getItem('userId')
       if(userId) {
         this.store$.dispatch(new actions.UserInfoAction({userId: userId}))
+      }else{
+        this.nav.push('LoginPage')
       }
-      console.log(111)
+      
     });
   }
 }

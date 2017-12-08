@@ -31,6 +31,7 @@ export class InitalmemberFormcontrolComponent implements ControlValueAccessor {
   @Input () addIf = true
   @Input () person: person = {name: ''}
   @Input () people: Array<person> = []
+  @Input () showType = true
   private propagateChange = (_: any) => { }
   constructor(private modalCtrl: ModalController) {
     
@@ -38,17 +39,17 @@ export class InitalmemberFormcontrolComponent implements ControlValueAccessor {
   ngOnChanges() {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    console.log(this.addIf)
+    console.log(this.showType)
   }
   presentModal() {
-    let profileModal = this.modalCtrl.create(SelectPersonComponent, { title: this.title });
+    let profileModal = this.modalCtrl.create(SelectPersonComponent, { title: this.title, showType: this.showType });
     profileModal.present();
     profileModal.onDidDismiss(res => {
       if(res) {
         this.multiple?this.people.push(res):this.person = res
         this.multiple?this.propagateChange(this.people):this.propagateChange(this.person)
       }
-    })
+    })  
   }
   dleperson(index: number) {
     this.people.splice(index, 1)

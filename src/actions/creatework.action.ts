@@ -61,6 +61,8 @@ export const ActionTypes = {
   // 获取日期
   WORKPLATE:'[creatwork] workplate',
   WORKPLATE_SUCCESS:'[creatwork] workplate_success',
+  // 动态首页列表
+  
 };
 
 /**

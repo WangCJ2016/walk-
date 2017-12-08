@@ -7,6 +7,7 @@ import { ContactServiceProvider } from './contact-service/contact-service'
 import { AttenceServiceProvider } from './attence-service/attence-service'
 import { DailyServiceProvider } from './daily-service/daily-service'
 import { CreatworkServiceProvider} from './creatwork-service/creatwork-service'
+import { WorkhomeServiceProvider } from './workhome-service/workhome-service'
 export {
 	CityPickerProvider,
 	AuthProvider,
@@ -15,7 +16,8 @@ export {
 	ContactServiceProvider,
 	AttenceServiceProvider,
 	DailyServiceProvider,
-	CreatworkServiceProvider
+	CreatworkServiceProvider,
+	WorkhomeServiceProvider
 }
 @NgModule()
 export class ProvidersModule {
@@ -30,7 +32,8 @@ export class ProvidersModule {
 				ContactServiceProvider,
 				AttenceServiceProvider,
 				DailyServiceProvider,
-				CreatworkServiceProvider
+				CreatworkServiceProvider,
+				WorkhomeServiceProvider
 			]
 		}
 	}

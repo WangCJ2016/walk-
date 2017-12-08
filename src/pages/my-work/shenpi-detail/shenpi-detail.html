@@ -52,14 +52,9 @@
             <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
           </ion-item>
 
-          <ion-item *ngFor="let pic of attach; let i=index">
-            <ion-label>
-              <img class="attach_img" item-end src={{pic}} alt="">
-            </ion-label>
-            <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
-          </ion-item>
+         
           <initalmember-formcontrol [person]='data?.initatorEmp' [addIf]='false'></initalmember-formcontrol>
-
+          <initalmember-formcontrol  title='审核人' [addIf]=false [person]='data?.applyEmp' style="margin-top:10px"></initalmember-formcontrol>
           <ion-item class='time' *ngIf='data?.startDate'>
             <ion-label>
               起始时间

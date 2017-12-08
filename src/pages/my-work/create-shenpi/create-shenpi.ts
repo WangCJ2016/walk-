@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { ToastSitutionProvider  } from '../../../providers/toast-sitution/toast-sitution'
-import { distanceInTime } from '../../../utils'
+import { distanceInTime, todayFormat, toEndDate } from '../../../utils'
+import {Observable} from 'rxjs/Observable'
 /**
  * Generated class for the CreateShenpiPage page.
  *
@@ -28,6 +29,7 @@ export interface time {
 export class CreateShenpiPage {
   form: FormGroup
   time:any
+  todayFormat
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private fb: FormBuilder,
@@ -47,12 +49,28 @@ export class CreateShenpiPage {
       shenheren: [''],
       chaosongren: ['']
     })
+    const startTime$ = this.form.get('startTime').valueChanges
+    const endTime$ = this.form.get('endTime').valueChanges
+    const day$ = this.form.get('day').valueChanges
+    // Observable.merge(startTime$,endTime$,day$).subscribe((s,e,d)=> {
+    //   console.log(s,e,d)
+    //   if() {
+    //     distanceInTime(this.form.get('startTime').value, endtime)
+    //   }
+    // })
     this.form.get('endTime').valueChanges.subscribe(endtime => {
+      console.log(endtime)
       if(this.form.get('startTime').value) {
        this.time =  distanceInTime(this.form.get('startTime').value, endtime)
        this.form.patchValue({day: this.time.days});
       }
     })
+    // this.form.get('day').valueChanges.subscribe(v => {                  
+    //   const endDate =  toEndDate(this.form.get('startTime').value, v)
+    //   console.log(endDate)
+    //   this.form.patchValue({endTime: endDate});
+    // })
+    this.todayFormat = todayFormat()
   }
   
   onSubmit(f, ev: Event) {

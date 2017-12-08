@@ -15,7 +15,7 @@
     </ion-buttons>
   </ion-navbar>
  
-      <fix-top [workPlate]='workPlate' (data)='getDate($event)'></fix-top>
+      <fix-top [workPlate]='workPlate' [workInfo]='data' (data)='getDate($event)'></fix-top>
 
 </ion-header>
 
@@ -23,7 +23,7 @@
 <ion-content>
   
   <section class="sec_content">
-    <ion-list *ngIf='type==1'>
+    <ion-list *ngIf='workType==1'>
       <ion-item (click)='godetail()'>
         <ion-avatar item-start>
           <img src="assets/imgs/work-desk/shiwu.png" alt="">
@@ -38,7 +38,7 @@
         <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
       </ion-item>
     </ion-list>
-    <ion-list *ngIf='data.type==2'>
+    <ion-list *ngIf='workType==2'>
       <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
           <ion-avatar item-start>
               <img *ngIf='item.type==1' src="assets/imgs/work-desk/week.png" alt="">
@@ -46,6 +46,33 @@
             </ion-avatar>
             <h3>{{item?.name}}</h3>
             <span>执行人：{{item?.mainPersonEmp?.name}}</span>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf='workType==3'>
+      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
+          <ion-avatar item-start>
+              <img  src="assets/imgs/work-desk/meeting.png" alt="">
+            </ion-avatar>
+            <h3>{{item?.name}}</h3>
+            <p><span>发起人：{{item?.initatorEmp?.name}}</span><span style="margin-left:15px">主讲人：{{item?.mainPersonEmp?.name}}</span></p>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf='workType==4'>
+      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
+          <ion-avatar item-start>
+              <img  src="assets/imgs/work-desk/shen.png" alt="">
+            </ion-avatar>
+            <h3>{{item?.shenpiType}}</h3>
+            <p><span>发起人：{{item?.initatorEmp?.name}}</span></p>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf='workType==5'>
+      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
+          <ion-avatar item-start>
+              <img  src="assets/imgs/work-desk/shiwu.png" alt="">
+            </ion-avatar>
+            <h3>{{item?.name}}</h3>
+            <p><span>发起人：{{item?.initatorEmp?.name}}</span><span>进度{{item?.progress}}%</span><span>剩余：{{item?.surplusDays}}天</span></p>
       </ion-item>
     </ion-list>
   </section>

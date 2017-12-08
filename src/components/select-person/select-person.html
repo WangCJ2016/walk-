@@ -24,7 +24,7 @@
       <h4>{{item.name}}</h4>
     </ion-item>
   </ion-list>
-  <div class="type_title" padding (click)='showList("pingji_show")'>
+  <div class="type_title" padding (click)='showList("pingji_show")' >
     <ion-icon class="arrow" [style.transform]="pingji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
     <span>平级</span>
   </div>
@@ -37,11 +37,11 @@
       <h4>{{item.name}}</h4>
     </ion-item>
   </ion-list>
-  <div class="type_title" padding (click)='showList("xiaji_show")'>
+  <div class="type_title" padding (click)='showList("xiaji_show")' *ngIf='showType'>
     <ion-icon class="arrow" [style.transform]="xiaji_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
     <span>下级</span>
   </div>
-  <ion-list *ngIf='xiaji_show'>
+  <ion-list *ngIf='xiaji_show&&showType'>
     <ion-item *ngFor="let item of empChooseList?.juniorList; let i=index" (click)='choose(item)'>
       <ion-avatar item-start>
         <img *ngIf='item.head' src={{item.head}} alt="">

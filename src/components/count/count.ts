@@ -40,7 +40,9 @@ export class CountComponent implements  ControlValueAccessor{
     this.num+=0.5
     this.propagateChange(this.num)
   }
-  writeValue(obj: any): void { }
+  writeValue(obj: any): void {
+    console.log(obj)
+  }
   
     registerOnChange(fn: any): void {
       this.propagateChange = fn

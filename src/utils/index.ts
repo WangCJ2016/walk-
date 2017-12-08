@@ -3,7 +3,9 @@ import differenceInDays from 'date-fns/difference_in_days'
 import getMonth from 'date-fns/get_month'
 import getYear from 'date-fns/get_year'
 import getDate from 'date-fns/get_date'
-
+import addHours from 'date-fns/add_hours'
+import addDays from 'date-fns/add_days'
+import { getHours } from 'date-fns';
 interface data {
     letter: string,
     data: Array<contact>
@@ -105,6 +107,14 @@ export function distanceInTime(startTime, endTime) {
         days: differenceInDays(endDay, startDay)+endSx-startSx
     }
    return data
+}
+// 根据天数计算截止日期
+export function toEndDate(starTime, day) {
+    console.log(starTime)
+  const endTime = addDays(new Date(starTime.slice(0,-4)),day)
+  const time = getYear(endTime)+'-'+getMonth(endTime)+'-'+getDate(endTime)+'-'+getHours(endTime)
+  console.log(time)
+  return time
 }
 // 返回审批类型
 export function applyType(type, classify) {

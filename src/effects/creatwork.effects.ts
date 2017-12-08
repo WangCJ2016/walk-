@@ -192,7 +192,7 @@ export class CreatWorkEffects {
       console.log(res)
       
       if(res.success) {
-        this.app.getRootNav().push('ApplyDetailPage',{type:'ShenpiDetailPage',id:res.dataObject})
+        this.app.getRootNav().push('ShenpiDetailPage',{id:res.dataObject})
         return new actions.addapplySuccessAction({})
       }
     })
@@ -212,6 +212,7 @@ export class CreatWorkEffects {
         endDate: res.dataObject.endDate?res.dataObject.endDate:'',
         days: res.dataObject.days?res.dataObject.days:'',
         initatorEmp: res.dataObject.initatorEmp?res.dataObject.initatorEmp:'',
+        applyEmp:res.dataObject.applyEmp?res.dataObject.applyEmp:'',
         reason: res.dataObject.reason?res.dataObject.reason:'',
         step: res.dataObject.step?res.dataObject.step:'',
         attach:res.dataObject.attach?res.dataObject.attach:'',
@@ -251,7 +252,7 @@ export class CreatWorkEffects {
         startDate:apply.apply.startDate,
         endDate:apply.apply.endDate,
         id:apply.apply.applyId,
-        pageNo:res.dataObject.pageNo,
+        pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
         type: apply.type,
         status:applyStatus(apply.apply.status),
         initatorEmp:apply.apply.initatorEmp,
@@ -285,19 +286,24 @@ export class CreatWorkEffects {
    .switchMap(([info,auth])=>this.creatworkSerice.shiwuList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
    .map(res => {
      console.log(res)
-     if(res.success) {
+     if(res.success&&res.dataObject) {
        const data = {
-         pageNo: res.dataObject.pageNo,
+         pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
          totalPages: res.dataObject.totalPages,
          list: res.dataObject.result.map(res => ({
            id:res.id,
-           mainPersonEmp: res.mainPersonEmp,
+           initatorEmp:res.initatorEmp?res.initatorEmp:'',
+           mainPersonEmp: res.mainPersonEmp?res.mainPersonEmp:'',
            name: res.name?res.name:'',
-           type: res.type
+           type: res.type,
+           shenpiType: applyType(res.type,res.classify),
+           progress:res.progress?res.progress:0,
+           surplusDays:res.surplusDays?res.surplusDays:0,
          }))
        }
        return new actions.shiwuListSuccessAction(data)
      }
+     return new actions.shiwuListSuccessAction([])
    })
    // 添加事务
   @Effect() addshiwu$: Observable<Action> = this.actions$
@@ -311,8 +317,8 @@ export class CreatWorkEffects {
       if(res.type===1) {
         this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.res.dataObject})
       }else {
-        
-        console.log(this.app.getActiveNavs('-1'))
+        console.log(this.app.getRootNav())
+        this.app.getRootNav().pop()
       }
       return new actions.addShiwuSuccessAction({})
     }

@@ -41,33 +41,33 @@
         <div class="title">我的工作</div>
         <ion-grid no-padding text-center>
             <ion-row>
-                <ion-col align-self-center>
+                <ion-col align-self-center (click)='goWorkTimePage(1)'>
                     <div class="num red">5</div>
                     <p class="intr">超期的事</p>
                 </ion-col>
-                <ion-col>
+                <ion-col (click)='goWorkTimePage(0)'>
                     <div class="num blue">5</div>
                     <p class="intr">今天的事</p>
-                </ion-col>
-                <ion-col>
+                </ion-col >
+                <ion-col (click)='goWorkTimePage(2)'>
                     <div class="num normal">5</div>
                     <p class="intr">最近一周</p>
                 </ion-col>
-                <ion-col>
+                <ion-col (click)='goWorkTimePage(3)'>
                     <div class="num normal">5</div>
                     <p class="intr">远期安排</p>
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col col-3 (click)='goPage("MyWorkPage")'>
+                <ion-col col-3 (click)='goWorkPage(0)'>
                     <div class="num">5</div>
-                    <p class="intr">项目相关</p>
+                    <p class="intr">项目</p>
                 </ion-col>
-                <ion-col col-3>
+                <ion-col col-3 (click)='goWorkPage(1)'>
                     <div class="num">5</div>
                     <p class="intr">计划</p>
                 </ion-col>
-                <ion-col col-3>
+                <ion-col col-3 (click)='goWorkPage(2)'>
                     <div class="num">5</div>
                     <p class="intr">会议</p>
                 </ion-col>

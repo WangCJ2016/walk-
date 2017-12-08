@@ -53,7 +53,7 @@ export class CreateWorkPage {
         photo: auth.photo?auth.photo:''
       })
       this.todayFormat = todayFormat()
-      console.log(this.app.getActiveNavs(this.app.getActiveNavs.length-1+''))
+      
   }
 
   

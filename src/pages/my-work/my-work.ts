@@ -22,7 +22,7 @@ export class MyWorkPage {
   fixArray: Array<any>
   typeIndex: number
   itemIndex: number
-  data = {type: '2', currDate:'2017-12-06'}
+  data
   backdrop: boolean = false
   lists: Array<any> = []
   pageNo: number = 0
@@ -30,16 +30,18 @@ export class MyWorkPage {
   inifite$ :InfiniteScroll
   workPlate
   todayFormat
+  workType
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public popoverCtrl: PopoverController,
     private store$: Store<fromRoot.State>) {
+    this.data = this.navParams.data
     this.todayFormat = todayFormat
-    this.store$.dispatch(new actions.shiwuListAction(this.data))
+   // this.store$.dispatch(new actions.shiwuListAction(this.data))
     this.store$.dispatch(new actions.workPlateAction({}))
     this.store$.select(store => store.creatwork).subscribe(res => {
-      console.log(res)
+      console.log(res.shiwuList)
       const shiwuList = res.shiwuList
       const workPlate = res.workPlate
       if(shiwuList&&shiwuList.pageNo!=this.pageNo) {
@@ -73,6 +75,7 @@ export class MyWorkPage {
   getDate(data) {
     console.log(data)
     this.data = data
+    this.workType = this.data.type
     this.store$.dispatch(new actions.shiwuListAction(data))
     this.pageNo = 0
     this.totalPages = 0
@@ -80,7 +83,19 @@ export class MyWorkPage {
     this.inifite$?this.inifite$.enable(true):null
   }
   goPlanDetail(id,type) {
-    type == 1?this.navCtrl.push('PlanzDetailPage',{id: id}):this.navCtrl.push('PlanyDetailPage',{id: id})
+    if(this.workType == 2) {
+      type == 1?this.navCtrl.push('PlanzDetailPage',{id: id}):this.navCtrl.push('PlanyDetailPage',{id: id})
+    }
+    
+    if(this.workType == 3) {
+      this.navCtrl.push('MeetingDetailPage',{id: id})
+    }
+    if(this.workType == 4) {
+      this.navCtrl.push('ShenpiDetailPage',{id: id})
+    }
+    if(this.workType == 5) {
+      this.navCtrl.push('ShiwuDetailPage',{id: id})
+    }
   }
   // 下拉刷新
   doInfinite(infiniteScroll) {

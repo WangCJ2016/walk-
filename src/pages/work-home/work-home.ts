@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { WorkHomePopverComponent} from '../../components/work-home-popver/work-home-popver'
+import { Store } from '@ngrx/store'
+import * as actions from '../../actions/work-home.action'
+import * as fromRoot from '../../reducer'
 /**
  * Generated class for the WorkHomePage page.
  *
@@ -14,11 +17,14 @@ import { WorkHomePopverComponent} from '../../components/work-home-popver/work-h
   templateUrl: 'work-home.html',
 })
 export class WorkHomePage {
-
+  lists
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
+              private store$: Store<fromRoot.State>
               ) {
+                this.store$.dispatch(new actions.ListAction({pageNo: 1}))
+                this.store$.select(store=>store.workhome).subscribe(res=>this.lists=res)
   }
 
   ionViewDidLoad() {
