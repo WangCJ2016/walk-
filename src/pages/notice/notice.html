@@ -15,14 +15,14 @@
 
 <ion-content >
   <div class="notice">
-    <ion-card>
+    <ion-card *ngFor="let item of list">
       <ion-card-header>
-        <h3>国庆、中秋节放假通知</h3>
-        <span>11月20日</span>
+        <h3>{{item.title}}</h3>
+        <span>{{item.updateTime}}</span>
       </ion-card-header>
       <img class="img"  src="assets/imgs/work-home/1.jpg" alt="">
       <ion-card-content>
-        <p>冯绍峰的方式是的发生的发生的发斯蒂芬斯蒂芬水电费递四方速递</p>
+        <p>{{item.content}}</p>
       </ion-card-content>
       <button ion-item>
         <ion-label>阅读全文</ion-label>

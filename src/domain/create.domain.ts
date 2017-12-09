@@ -19,6 +19,7 @@ export interface createObj {
   days?:string
   step?:string
   reason?:string
+  applyEmp?:any
   id?:string
   mainPersonEmp?:{
     name?:string,
@@ -49,6 +50,7 @@ export interface applyList {
   empId?:string
   step?:string
   status?:string
+  applyEmp?:any
   pageNo?: number
 }
 // 事务流程图

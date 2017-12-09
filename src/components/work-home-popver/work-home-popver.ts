@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {  ViewController, App } from 'ionic-angular'
 
 /**
  * Generated class for the WorkHomePopverComponent component.
@@ -11,12 +12,15 @@ import { Component } from '@angular/core';
   templateUrl: 'work-home-popver.html'
 })
 export class WorkHomePopverComponent {
-
-  text: string;
-
-  constructor() {
-    console.log('Hello WorkHomePopverComponent Component');
-    this.text = 'Hello World';
+  
+  constructor(
+    private view: ViewController,
+    private appCtrl: App
+  ) {
+    
   }
-
+  openModal() {
+    this.appCtrl.getRootNav().push('AddGroupPage')
+    this.view.dismiss()
+  }
 }

@@ -22,7 +22,8 @@ export class ContactEffects {
           name:contact.name,
           letter:contact.letter,
           userName:contact.userName,
-          id:contact.id
+          id:contact.id,
+          photo:contact.photo?contact.photo:''
         }))
         return new actions.LoadSuccessAction(contactArr)
     }

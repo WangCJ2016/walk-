@@ -59,13 +59,15 @@ export class ShenpiDetailPage {
       this.data = v.workdetail
       this.applyFlowList = v.applyFlow
       if(this.data){
-        //this.applyEmpIf = this.data.
+        this.store$.select(store=>store.auth.auth).subscribe(auth=>this.applyEmpIf = this.data.applyEmp.id === auth.emp.id)
+        
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
         this.applyType = applyType(this.data.type, this.data.classify)
         
       }
     })
+    
    
   }
   attachDel(i) {

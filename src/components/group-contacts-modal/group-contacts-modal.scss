@@ -1,0 +1,17 @@
+group-contacts-modal {
+  
+  .footer{
+    background-color: #fff;
+    width: 100%;
+    >span {
+      color: #29b4ff
+    };
+    height: 4.166667rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .button-ios{
+      height: 2.083333rem
+    }
+  }
+}

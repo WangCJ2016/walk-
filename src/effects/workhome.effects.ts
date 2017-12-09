@@ -11,7 +11,7 @@ import {WorkhomeServiceProvider } from '../providers'
 export class WokrHomeEffects {
   @Effect() getList$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.LISTS)
-  .mapTo(toPayload)
+  .map(toPayload)
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info, auth])=>this.service.getList(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
   .map(res => {
@@ -31,10 +31,40 @@ export class WokrHomeEffects {
           id: res.id
         })):[],
       }
-      return new actions.ListSuccessAction(data)
+      return new actions.ListSuccessAction({workhomeList:data})
     }
+    
   })
-
+  @Effect() addGroup$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ADDGROUP)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info, auth])=>this.service.addGroup(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id, info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      return new actions.addGroupSuccessAction({})
+    }
+    
+  })
+  @Effect() noticeList$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.NOTICELIST)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info, auth])=>this.service.noticeList(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      const data = res.dataObject.result.map(notice=>({
+        noticeId: notice.noticeId,
+        title: notice.notice.title,
+        contents: notice.notice.contents,
+        updateTime: notice.updateTime
+      }))
+      return new actions.noticeListSuccessAction({noticeList:data})
+    }
+    
+  })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,

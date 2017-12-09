@@ -1,0 +1,34 @@
+<!-- Generated template for the GroupContactsModalComponent component -->
+<ion-header>
+  
+      <ion-navbar>
+          <ion-title>选择联系人</ion-title>
+          <ion-buttons end>
+              <button ion-button (click)='closeModal()'>
+                          取消
+                  </button>
+          </ion-buttons>
+      </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let item of contacts; let i=index">
+            <ion-avatar item-content>
+                <avatar *ngIf='!item.photo' name={{item.name}}></avatar>
+                <img *ngIf='item.photo'  src={{item.photo}} alt="">
+            </ion-avatar>
+          <p item-content style="margin-left:15px; color:#333">{{item.name}}</p>
+          <ion-checkbox item-start *ngIf='item.checked' checked={{item.checked}} color='light' [disabled]='item.checked'  (ionChange)="updateCucumber(item,$event)"></ion-checkbox>
+          <ion-checkbox item-start *ngIf='!item.checked'  (ionChange)="updateCucumber(item,$event)"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+  </ion-content>
+ <ion-footer padding>
+   <div class="footer">
+     <span>已选择：{{membersId.length}}人</span>
+     <button ion-button (click)=submit()>确定</button>
+   </div>
+ </ion-footer>

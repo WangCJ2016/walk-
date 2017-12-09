@@ -29,4 +29,30 @@ export class WorkhomeServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+  // addgroup
+  addGroup(userId,token,teamId,deptId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      deptId:deptId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/chat_addGroup`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  noticeList(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/notice_noticeList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
 }

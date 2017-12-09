@@ -1,0 +1,14 @@
+page-add-group {
+  .grouplist{
+    display: flex;
+    margin-left: 1.25rem;
+    avatar{
+      margin-left: .833333rem;
+    }
+  }
+  .add{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+  }
+}
