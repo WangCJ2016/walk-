@@ -34,6 +34,8 @@ export class AuthEffects {
        return this.service.login(val.phoneNum, val.password)})
     .map(res => {
         if(res.success) {
+        
+            this.appCtrl.getRootNav().pop()
             localStorage.setItem('userId', res.dataObject.id)
            return new actions.LoginSuccessAction(res.dataObject)
         }else {

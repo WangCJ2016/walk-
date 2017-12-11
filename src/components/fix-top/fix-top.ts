@@ -21,7 +21,7 @@ export class FixTopComponent {
   orderArray
   orderActiveIndex = 0
   text: string;
-  workType = 0
+  workType = 1
   timeType: string = 'curr'
   workTime:{[key: string]:string} 
   typeIndex: number 
@@ -89,6 +89,7 @@ export class FixTopComponent {
   workClick(i) {
     this.workActiveIndex = i
     this.workType = i+1
+
     this.data.emit({type: this.workType, ...this.workTime})
   }
   timeClick(i) {

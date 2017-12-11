@@ -1,3 +1,30 @@
 page-notice-detail {
-
+  .title{
+    font-size: 1.333333em;
+  }
+  .time{
+    color: #666;
+  }
+ .contents{
+   text-indent: 2em;
+   font-size: 1.166667rem;
+   color: #666;
+ }
+ .attach{
+   p{
+    font-size: 1.166667rem;
+   }
+  >div{
+    .download_btn{
+      height: 1.666667rem;
+      font-size: 1em
+    }
+    .attachName{
+      margin-left: .833333rem
+    }
+  }
+ }
+ .notice_count{
+   color: #999
+ }
 }

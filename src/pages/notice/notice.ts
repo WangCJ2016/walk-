@@ -24,15 +24,15 @@ export class NoticePage {
   ) {
     this.store$.dispatch(new actions.noticeListAction({pageNo:1}))
     this.store$.select(store=>store.workhome.noticeList).subscribe(res=>{
-      console.log(res)
       if(res) {
         this.lists = res
       }
+      console.log(this.lists)
     })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NoticePage');
+  goDetail(id) {
+    this.navCtrl.push('NoticeDetailPage',{id:id})
   }
 
 }

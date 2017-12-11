@@ -21,5 +21,8 @@ export class WorkCommunityPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad WorkCommunityPage');
   }
-
+  submit() {
+    alert('submit')
+  }
+ 
 }

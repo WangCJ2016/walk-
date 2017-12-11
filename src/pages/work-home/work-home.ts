@@ -29,6 +29,7 @@ export class WorkHomePage {
                 this.store$.dispatch(new actions.ListAction({pageNo: 1}))
                 this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
                   if(res) {
+                    console.log(res)
                     this.lists=res
                   }
                 })

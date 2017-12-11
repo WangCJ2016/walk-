@@ -13,9 +13,9 @@
 </ion-header>
 
 
-<ion-content >
+<ion-content  >
   <div class="notice">
-    <ion-card *ngFor="let item of list">
+    <ion-card *ngFor="let item of lists" (click)='goDetail(item.noticeId)'>
       <ion-card-header>
         <h3>{{item.title}}</h3>
         <span>{{item.updateTime}}</span>

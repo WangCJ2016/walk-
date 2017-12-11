@@ -17,6 +17,8 @@ export const ActionTypes = {
    // 公告列表
    NOTICELIST: '[work-home] notice',
    NOTICELIST_SUCCESS: '[work-home] notice_success',
+   NOTICEDETAIL: '[work-home] noticedetail',
+   NOTICEDETAIL_SUCCESS: '[work-home] noticedetail_success',
 };
 
 /**
@@ -69,6 +71,17 @@ export class noticeListAction implements Action {
 
 export class noticeListSuccessAction implements Action {
   readonly type = ActionTypes.NOTICELIST_SUCCESS;
+
+  constructor(public payload: any) { }
+}
+export class noticeDetailAction implements Action {
+  readonly type = ActionTypes.NOTICEDETAIL;
+
+  constructor(public payload: {noticeId: string}) { }
+}
+
+export class noticeDetailSuccessAction implements Action {
+  readonly type = ActionTypes.NOTICEDETAIL_SUCCESS;
 
   constructor(public payload: any) { }
 }

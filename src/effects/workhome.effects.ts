@@ -24,12 +24,12 @@ export class WokrHomeEffects {
           updateTime: res.updateTime,
           id: res.id
         })):[],
-        notice:res.dataObject.notice.notice?res.dataObject.notice.notice.result.map(res => ({
-          name: res.name,
-          contents: res.contents,
-          updateTime: res.updateTime,
-          id: res.id
-        })):[],
+        // notice:res.dataObject.notice.notice?res.dataObject.notice.notice.map(res => ({
+        //   name: res.name,
+        //   contents: res.contents,
+        //   updateTime: res.updateTime,
+        //   id: res.id
+        // })):[],
       }
       return new actions.ListSuccessAction({workhomeList:data})
     }
@@ -62,6 +62,27 @@ export class WokrHomeEffects {
         updateTime: notice.updateTime
       }))
       return new actions.noticeListSuccessAction({noticeList:data})
+    }
+    
+  })
+  @Effect() noticeDetail$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.NOTICEDETAIL)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info, auth])=>this.service.noticeDetail(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      const data = {
+        attach: res.dataObject.attach?res.dataObject.attach:'',
+        attachName: res.dataObject.attachName?res.dataObject.attachName:'',
+        contents: res.dataObject.contents,
+        updateTime: res.dataObject.updateTime,
+        title: res.dataObject.title,
+        totalCount:res.dataObject.totalCount,
+        notReadCount:res.dataObject.notReadCount
+      }
+      return new actions.noticeDetailSuccessAction({noticeDetail: data})
     }
     
   })

@@ -1,5 +1,9 @@
-import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, forwardRef, Inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard'
+//import { ImagePicker } from '@ionic-native/image-picker';
 /**
  * Generated class for the FooterInputComponent component.
  *
@@ -8,14 +12,35 @@ import { Keyboard } from '@ionic-native/keyboard'
  */
 @Component({
   selector: 'footer-input',
-  templateUrl: 'footer-input.html'
+  templateUrl: 'footer-input.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FooterInputComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => FooterInputComponent),
+      multi: true
+    }
+  ]
 })
-export class FooterInputComponent {
+export class FooterInputComponent implements ControlValueAccessor {
   @ViewChild('more') more: ElementRef
   @ViewChild('inputcase') inputcase: ElementRef
+  content: string
   show: boolean = false
   moreShow: boolean = false
-  constructor(private rd: Renderer2,private keyboard: Keyboard,) {
+  private propagateChange = (_: any) => { }
+  constructor(
+    private rd: Renderer2,
+    private keyboard: Keyboard,
+    private camera2: Camera,
+    private fileTranfer: FileTransfer,
+    @Inject('BASE_URL') private config,
+   // private imagepicker: ImagePicker
+  ) {
 
   }
   moreClick() {
@@ -41,4 +66,66 @@ export class FooterInputComponent {
     window.removeEventListener('native.keyboardshow',function() {})
     window.removeEventListener('native.keyboardhide', function() {})
   }
+  // submit
+  submit() {
+    console.log(this.content)
+    this.propagateChange({contents:this.content,type:4})
+  }
+  // 拍照
+  camera() {
+    const options = {
+      destinationType: this.camera2.DestinationType.FILE_URI,
+      sourceType: this.camera2.PictureSourceType.CAMERA,
+      quality: 40,
+      allowEdit: true,
+      targetWidth: 400, //照片宽度
+      targetHeight: 400
+    }
+    this.camera2.getPicture(options).then((imageData) => {
+      const fileTransfer: FileTransferObject = this.fileTranfer.create();
+      fileTransfer.upload(imageData, `${this.config.url}/appPhotoUploadServlet`,{})
+      .then((res) => {
+        // success
+        const photo = JSON.parse(res.response).fileUrl[0]
+        this.propagateChange({attach:photo.url,attachName:photo.name,type:2})
+      }, (err) => {
+        // error
+      })  
+     }, (err) => {
+      // Handle error
+     });
+  }
+  // 相册
+  imagePicker() {
+   
+    ImagePicker.getPictures(function(result) {
+      alert(result);
+      const fileTransfer: FileTransferObject = this.fileTranfer.create();
+      fileTransfer.upload(result, `${this.config.url}/appPhotoUploadServlet`,{})
+      .then((res) => {
+        // success
+        const photo = JSON.parse(res.response).fileUrl[0]
+        this.propagateChange({attach:photo.url,attachName:photo.name,type:2})
+      }, (err) => {
+        // error
+      }) 
+      
+  }, function(err) {
+      alert(err);
+  }, { maximumImagesCount : 1, width : 1920, height : 1440, quality : 100 });
+  }
+
+
+  writeValue(obj: any): void { }
+  
+    registerOnChange(fn: any): void {
+      this.propagateChange = fn
+    }
+  
+    registerOnTouched() {
+  
+    }
+    validate(c): {[key: string]: any} {
+      return null
+     }
 }

@@ -465,7 +465,7 @@ ion-textarea {
     margin-left: 10px;
 }
 // 清楚浮动
-.cleafix::after{
+.clearfix::after{
     content: '';
     clear:both;
     display: table;

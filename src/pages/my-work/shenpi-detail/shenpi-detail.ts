@@ -52,8 +52,8 @@ export class ShenpiDetailPage {
   }
 
   ionViewDidLoad() {
-    this.store$.dispatch(new actions.applyDetailAction({'applyId':'46d77bf095c4443f827a38da06896023'}))
-    this.store$.dispatch(new actions.applyFlowAction({'applyId':'46d77bf095c4443f827a38da06896023'}))
+    this.store$.dispatch(new actions.applyDetailAction({'applyId':this.params.id}))
+    this.store$.dispatch(new actions.applyFlowAction({'applyId':this.params.id}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
       this.data = v.workdetail
@@ -77,7 +77,7 @@ export class ShenpiDetailPage {
     this.navCtrl.setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate: true,direction:'back'})
   }
   operate(i) {
-    this.store$.dispatch(new actions.applyUpdateAction({operate:i,'applyId':'46d77bf095c4443f827a38da06896023'}))
+    this.store$.dispatch(new actions.applyUpdateAction({operate:i,'applyId':this.params.id}))
   }
   
 }

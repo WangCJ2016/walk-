@@ -55,4 +55,16 @@ export class WorkhomeServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+  noticeDetail(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/notice_noticeDetail`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
 }

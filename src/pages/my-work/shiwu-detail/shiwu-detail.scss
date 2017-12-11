@@ -35,4 +35,31 @@ page-shiwu-detail {
             border-left: 1px solid #ccc;
         }
     }
+    .chat_item{
+        display: flex;
+        line-height: 3.333333rem;
+        .chat_content{
+            position: relative;
+            padding: 0 .833333rem;
+            border-radius: .416667rem;
+            background-color: #fff;
+            margin-left: 1.666667rem;
+            &::after{
+                content: '';
+                display: block;
+                width: .833333rem;
+                height: .833333rem;
+                position: absolute;
+                left: -.833333rem;
+                top: .833333rem;
+                background: url('../assets/imgs/work-home/arr.png') no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+        .head{
+            width: 3.333333rem;
+            height: 3.333333rem;
+            border-radius: 50%;
+        }
+    }
 }

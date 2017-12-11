@@ -7,12 +7,26 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>noticeDetail</ion-title>
+    <ion-title>详情</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content style="background-color:#fff" padding>
+  <h3 class="title">{{noticeDetail?.title}}</h3>
+  <p class="time">{{noticeDetail?.updateTime}}</p>
+  
+  <p class="contents">{{noticeDetail?.contents}}</p>
+  <div class="attach">
+    <p>附件:</p>
+    <div class="clearfix">
+      <img class='create_add' float-left src="assets/imgs/work-home/icon_document.png" alt="">
+      <span class="attachName" float-left>{{noticeDetail?.attachName}}</span>
+      <button float-right ion-button small class="download_btn">下载</button>
+    </div>
+  </div>
+  <p class="notice_count">
+    共{{noticeDetail?.totalCount}}人，{{noticeDetail?.notReadCount}}人未查看
+  </p>
 </ion-content>
