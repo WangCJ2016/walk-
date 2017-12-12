@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, LoadingController } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/creatework.action'
@@ -24,14 +24,13 @@ export class WorkDeskPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private load: LoadingController,
     private store$: Store<fromRoot.State>
   ) {
-   
+  
     const userId = localStorage.getItem('userId')
     if(userId) {
       this.store$.dispatch(new authActions.UserInfoAction({userId: userId}))
-    }else{
-      this.navCtrl.push('LoginPage')
     }
     this.store$.select(store=>store.auth.auth).subscribe(v=>{
       if(v.emp){

@@ -11,9 +11,13 @@ export const initialState: State = {
 export function reducer(state = initialState, action: any ): State {
   switch (action.type) {
     case actions.ActionTypes.CHATLIST_SUCCESS: {
-      return {...state,...action.payload}
+      const data = [...action.payload,...state.chatList]
+      return {...state,chatList:data}
     }
-
+    case actions.ActionTypes.SENDCHAT_SUCCESS: {
+      const data = [...state.chatList,action.payload]
+      return {...state, chatList:data}
+    }
     default: {
       return state;
     }

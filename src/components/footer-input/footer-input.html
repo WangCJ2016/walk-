@@ -9,13 +9,13 @@
       <img class="face icon" src="assets/imgs/attence/icon_face.png" alt="">
       <img class="more icon" src="assets/imgs/attence/more.png" (click)='moreClick()' alt="">
     </div>
-    <div class="more_input" #more *ngIf='moreShow'>
+    <div class="more_input" #more >
       <figure>
         <img src="assets/imgs/work-desk/camera.png" alt="" (click)='camera()'>
         <figcaption>相机</figcaption>
       </figure>
       <figure>
-        <img src="assets/imgs/work-desk/takephoto.png" (click)='imagePicker()' alt="">
+        <img src="assets/imgs/work-desk/takephoto.png" (click)='imgPicker()' alt="">
         <figcaption>拍摄</figcaption>
       </figure>
       <!-- <figure>

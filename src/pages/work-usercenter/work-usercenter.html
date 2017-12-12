@@ -12,6 +12,7 @@
     
     </ion-header>
 <ion-content >
+    
     <div class="work-usercenter-header" (click)='headClick()' text-center>
         <img [src]="(authImage | async)"  alt="" class="header_img">
         <p class="header_title">{{name}}</p>
@@ -32,6 +33,6 @@
         </ion-item>
     </ion-list>
     <div class="logout">
-        <button ion-button full>退出账号</button>
+        <button ion-button full (click)='logout()'>退出账号</button>
     </div>
 </ion-content>

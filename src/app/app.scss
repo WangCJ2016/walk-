@@ -394,7 +394,14 @@ ion-list {
 .button-full-ios {
     border-radius: .333333rem
 }
-
+//ion-spinner
+ion-spinner{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 999
+}
 // work_home_popover
 .work_home_popover,
 .create_work_po {
@@ -510,4 +517,8 @@ ion-textarea {
         margin-left: 1.25rem;
         
     }
+}
+
+.hasfooter .scroll-content{
+    margin-bottom: 4.166667rem
 }

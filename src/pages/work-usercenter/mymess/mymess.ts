@@ -88,7 +88,7 @@ export class MymessPage {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
                 console.log('success'+photo)
-                this.store$.dispatch(new actions.ChangeAction({photo: photo}))
+                this.store$.dispatch(new actions.ChangeAction({photo: photo.url}))
               }, (err) => {
                 // error
               })
@@ -115,7 +115,7 @@ export class MymessPage {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
                 console.log('success'+photo)
-                this.store$.dispatch(new actions.ChangeAction({photo: photo}))
+                this.store$.dispatch(new actions.ChangeAction({photo: photo.url}))
               }, (err) => {
                 // error
               })

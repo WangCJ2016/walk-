@@ -18,12 +18,15 @@ export class ChatEffects {
   .map(res => {
     console.log(res)
     if(res.success) {
-      const data = res.dataObject.result.map(res=>({
-        chatGroupId: res.chatGroupId,
-        initatorEmp: res.initatorEmp,
-        contents: res.contents
+      const data = res.dataObject.result.reverse().map(chat=>({
+        chatGroupId: chat.chatGroupId,
+        initatorEmp: chat.initatorEmp,
+        contents: chat.contents?chat.contents:'',
+        attach: chat.attach?chat.attach:'',
+        pageNo: res.dataObject.pageNo,
+        totalPages: res.dataObject.totalPages
       }))
-      return new actions.ChatListSuccessAction({chatList: data})
+      return new actions.ChatListSuccessAction(data)
     }
   })
  // sendchat
@@ -35,8 +38,13 @@ export class ChatEffects {
  .map(res => {
    console.log(res)
    if(res.success) {
-  
-     return new actions.ChatListSuccessAction({})
+     const data = {
+      chatGroupId: res.dataObject.chatGroupId,
+      initatorEmp: res.dataObject.initatorEmp,
+      contents: res.dataObject.contents?res.dataObject.contents:'',
+      attach: res.dataObject.attach?res.dataObject.attach:''
+     }
+     return new actions.sendChatSuccessAction(data)
    }
  })
   constructor(

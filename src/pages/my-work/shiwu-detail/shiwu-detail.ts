@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Content, Refresher } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
@@ -21,6 +21,7 @@ import { zishiwu } from '../../../domain'
   templateUrl: 'shiwu-detail.html',
 })
 export class ShiwuDetailPage {
+  @ViewChild(Content) content: Content;
   form: FormGroup
   form2: FormGroup
   segment = 'dymanic'
@@ -35,8 +36,12 @@ export class ShiwuDetailPage {
   submitIf: boolean = false // 是否提交保存
   mainPersonIf: boolean
   initatorIf: boolean
-  chatList: Array<any>
+  chatList: Array<any> = []
   chatGroupId: string
+  dymanicPageNo = 0
+  dymanicPageTotal = 1
+  refresher: Refresher
+  enabled: boolean = false
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -84,13 +89,28 @@ export class ShiwuDetailPage {
       }
     })
     this.store$.select(store=>store.chat).subscribe(v=>{
-      if(v&&v.chatList.length>0) {
+      
+      if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
+        const preLength = this.chatList.length
+        this.enabled = true
         this.chatGroupId = v.chatList[0].chatGroupId
         this.chatList = v.chatList
-        console.log(this.chatGroupId)
+        this.dymanicPageNo = v.chatList[0].pageNo
+        this.refresher?this.refresher.complete():null
+        
+        if(this.dymanicPageTotal == v.chatList[0].totalPages) {
+          this.enabled=false
+          console.log(this.enabled)
+        }
+        
+        if(v.chatList.length-preLength==1) {
+          this.content.resize();
+          this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight+100)
+        }
       }
     })
   }
+  
   back() {
     
     if(this.form.get('progress').value !== this.data.progress ||
@@ -216,4 +236,10 @@ export class ShiwuDetailPage {
 sendChat(obj) {
   this.store$.dispatch(new chatActions.sendChatAction({parentId:'128fd57d36784e18862087138d188bf0',chatGroupId:this.chatGroupId,...obj}))
 }
+doRefresh(refresher) {
+  this.refresher = refresher
+  this.dymanicPageTotal++
+  this.store$.dispatch(new chatActions.ChatListAction({parentId:'128fd57d36784e18862087138d188bf0',pageNo:this.dymanicPageNo+1}))
+}
+
 }

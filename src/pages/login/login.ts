@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as authActions from '../../actions/auth.action'
@@ -19,19 +19,23 @@ import {ToastSitutionProvider} from '../../providers/toast-sitution/toast-situti
 })
 export class LoginPage {
   phoneNum: number
+  loading: Loading
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private toastSitutionProvider: ToastSitutionProvider,
+              private load: LoadingController,
               private store$: Store<fromRoot.State>) {
-                this.store$.select(store => store.auth).subscribe(res => {
-                  if(res.msg) {
-                    this.toastSitutionProvider.message(res.msg)
-                  }
+                this.loading = this.load.create({
+                  dismissOnPageChange: true
                 })
+            
   }
 
   ionViewDidLoad() {
-    this.store$.select(state => state.auth).subscribe(v => console.log(v))
+    this.store$.select(state => state.auth).subscribe(v => {
+      console.log(this.loading)
+      this.loading.dismiss()
+    })
   }
   goPage(page: string) {
     this.navCtrl.push(page)
@@ -39,12 +43,13 @@ export class LoginPage {
   onSubmit(f,ev: Event) {
     ev.preventDefault()
     if(f.controls.phoneNum.errors !== null) {
-      this.store$.dispatch(new authActions.AuthFailAction({msg: f.controls.phoneNum.errors.msg}))
+      this.toastSitutionProvider.message(f.controls.phoneNum.errors.msg)
       return
     }else if(f.controls.password.errors !== null){
-      this.store$.dispatch(new authActions.AuthFailAction({msg: f.controls.password.errors.msg}))
+      this.toastSitutionProvider.message(f.controls.password.errors.msg)
       return
     }
+    this.loading.present()
     this.store$.dispatch(new authActions.LoginAction({
       phoneNum: f.value.phoneNum,
       password: f.value.password

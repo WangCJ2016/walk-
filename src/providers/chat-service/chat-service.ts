@@ -36,6 +36,7 @@ export class ChatServiceProvider {
       userId:userId,
       token:token,
       teamId:teamId,
+      pageSize: 10,
       ...info
     }
     const uri = `${this.config.url}/app/chat_chatThingList`

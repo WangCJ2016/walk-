@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, Renderer2, forwardRef, Inject } from 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker'
 import { Keyboard } from '@ionic-native/keyboard'
 //import { ImagePicker } from '@ionic-native/image-picker';
 /**
@@ -38,12 +39,14 @@ export class FooterInputComponent implements ControlValueAccessor {
     private keyboard: Keyboard,
     private camera2: Camera,
     private fileTranfer: FileTransfer,
+    private imagePicker: ImagePicker,
     @Inject('BASE_URL') private config,
    // private imagepicker: ImagePicker
   ) {
-
+    
   }
   moreClick() {
+    
     this.moreShow = true
     this.show = !this.show
     this.show === true ? this.rd.setStyle(this.more.nativeElement, 'height', '10.916667rem'):
@@ -55,6 +58,7 @@ export class FooterInputComponent implements ControlValueAccessor {
     const that = this
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
     function keyboardShowHandler(e){
+  
       that.rd.setStyle(that.inputcase.nativeElement,'bottom',e.keyboardHeight+'px')
     }
     window.addEventListener('native.keyboardhide', function() {
@@ -70,6 +74,7 @@ export class FooterInputComponent implements ControlValueAccessor {
   submit() {
     console.log(this.content)
     this.propagateChange({contents:this.content,type:4})
+    this.content = ''
   }
   // 拍照
   camera() {
@@ -82,6 +87,7 @@ export class FooterInputComponent implements ControlValueAccessor {
       targetHeight: 400
     }
     this.camera2.getPicture(options).then((imageData) => {
+      console.log('camera:'+imageData)
       const fileTransfer: FileTransferObject = this.fileTranfer.create();
       fileTransfer.upload(imageData, `${this.config.url}/appPhotoUploadServlet`,{})
       .then((res) => {
@@ -96,23 +102,27 @@ export class FooterInputComponent implements ControlValueAccessor {
      });
   }
   // 相册
-  imagePicker() {
-   
-    ImagePicker.getPictures(function(result) {
-      alert(result);
+  imgPicker() {
+    const options = {
+      maximumImagesCount: 1,
+      width: 100,
+      height: 100,
+      quality: 50
+    }
+    this.imagePicker.getPictures(options).then((result) => {
+      console.log('imgPicker:'+result)
       const fileTransfer: FileTransferObject = this.fileTranfer.create();
-      fileTransfer.upload(result, `${this.config.url}/appPhotoUploadServlet`,{})
+      fileTransfer.upload(result[0], `${this.config.url}/appPhotoUploadServlet`,{})
       .then((res) => {
         // success
         const photo = JSON.parse(res.response).fileUrl[0]
+        console.log('success'+photo)
         this.propagateChange({attach:photo.url,attachName:photo.name,type:2})
       }, (err) => {
         // error
-      }) 
-      
-  }, function(err) {
-      alert(err);
-  }, { maximumImagesCount : 1, width : 1920, height : 1440, quality : 100 });
+      })
+          return false
+    }, (err) => { });
   }
 
 

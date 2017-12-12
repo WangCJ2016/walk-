@@ -28,13 +28,23 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class='hasfooter'>
+    <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]='enabled'>
+        <ion-refresher-content
+          refreshingSpinner="circles"
+        >
+        </ion-refresher-content>
+      </ion-refresher>
   <div [ngSwitch]='segment'>
     <div *ngSwitchCase='"dymanic"' padding>
       <div class="chat_item" *ngFor="let item of chatList">
         <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
         <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">
-        <div class="chat_content">{{item?.contents}}</div>
+        <div *ngIf='!item?.attach' class="chat_content">{{item?.contents}}</div>
+        <div *ngIf='item?.attach' class="chat_content_img">
+          <img src="{{item?.attach}}" alt="">
+          
+        </div>
       </div>
     </div>
     <div *ngSwitchCase='"detail"'>

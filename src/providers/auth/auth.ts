@@ -30,17 +30,12 @@ export class AuthProvider {
              .map(res => res.json()) 
   }
   
+  
   // 注册获取sign
-  getSign(phoneNum: string, type: string) {
+  getSign(type: string) {
     const url_sign = `${this.config.url}/app/user_getSmsSign`
     return this.http.get(url_sign, {params:{type: type}})
-    .map(res => {
-      return {
-        phoneNum: phoneNum,
-        sign_type: type,
-        res: res.json()
-      }
-    })
+    .map(res => (res.json()))
   }
   // 注册验证码
   getRegisterCode(phoneNum: string,sign: string) {
@@ -63,6 +58,7 @@ export class AuthProvider {
   }
   // 找回密码获取验证码
   getForgetCode(phoneNum: string,sign: string) {
+    alert(10)
     const url_code = `${this.config.url}/app/user_resetPasswordGetVerifyCode`
     return this.http.get(url_code, {params:{userName: phoneNum, sign: sign}})
       .map(res =>res.json())

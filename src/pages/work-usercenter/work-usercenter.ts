@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController,Loading, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable'
 
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
-
+import * as actions from '../../actions/auth.action'
 
 /**
  * Generated class for the WorkUsercenterPage page.
@@ -22,15 +22,20 @@ export class WorkUsercenterPage {
   token: string
   name: string = '登录/注册'
   authImage: Observable<string>
+  loading:  Loading
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
+    private load: LoadingController,
+    private alert: AlertController,
     private store$: Store<fromRoot.State>) {
-      this.authImage = this.store$.select(state => state.auth.auth.photo)
      
   }
   ionViewDidEnter(){
+    this.loading = this.load.create()
+    
     this.authImage = this.store$.select(state => state.auth.auth.photo)
     this.store$.select(state => state.auth.auth).subscribe(auth => {
+      this.loading.dismiss()
       this.token = auth.token
       if(this.token) {
         if(auth.name) {
@@ -38,6 +43,7 @@ export class WorkUsercenterPage {
         }else {
           this.name = auth.userName
        }
+       this.name = ''
       }
       })
     this.store$.select(state => state.auth.auth).subscribe(res => console.log(res))
@@ -48,5 +54,28 @@ export class WorkUsercenterPage {
   headClick() {
     console.log(this.token)
     this.token?this.goPage('MymessPage'):this.goPage('LoginPage')
+  }
+  logout() {
+    this.alert.create({
+      title: '是否退出',
+     
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.loading.present()
+            this.store$.dispatch(new actions.LogoutAction({}))
+          }
+        }
+      ]
+    }).present()
+    
   }
 }

@@ -16,6 +16,9 @@ export const ActionTypes = {
   REGISTER: type('[Auth] Register'),
   REGISTER_SUCCESS: type('[Auth] Register Success'),
   LOGOUT: type('[Auth] Logout'),
+  LOGOUT_SUCCESS: type('[Auth] Logout_success'),
+  FORGET_PASSWORD_CODE: type('[Auth] Forget_password_code'),
+  FORGET_PASSWORDCDDE_SUCCESS: type('[Auth] Forget_passwordcode_success'),
   FORGET_PASSWORD: type('[Auth] Forget_password'),
   FORGET_PASSWORD_SUCCESS: type('[Auth] Forget_password_success'),
   CHANGE_PASSWORD: type('[Auth] Change_password'),
@@ -24,10 +27,17 @@ export const ActionTypes = {
   TERMLIST_SUCCESS:type('[Auth] termlist_success'),
   CHANGE: type('[Auth] Change'),
   CHANGE_SUCCESS: type('[Auth] Change_success'),
-  AUTH_FAIL: type('[Auth] auth_fail')
+  AUTH_FAIL: type('[Auth] auth_fail'),
+  AUTH_FAIL_SUCCESS: type('[Auth] auth_fail_success')
 }
 export class AuthFailAction implements Action {
   type = ActionTypes.AUTH_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+export class AuthFailSuccessAction implements Action {
+  type = ActionTypes.AUTH_FAIL_SUCCESS;
 
   constructor(public payload: Err) {
   }
@@ -67,14 +77,14 @@ export class LoginSuccessAction implements Action {
 export class SignAction implements Action {
   type = ActionTypes.SIGN;
 
-  constructor(public payload: {phoneNum: string, type: string}) {
+  constructor(public payload: {type: number}) {
   }
 }
 
 export class SignSuccessAction implements Action {
   type = ActionTypes.SIGN_SUCCESS;
 
-  constructor(public payload: {phoneNum: string,sign: string, sign_type: string}) {
+  constructor(public payload: any) {
   }
 }
 // 获取注册验证码
@@ -88,7 +98,7 @@ export class RegisterVercodeAction implements Action {
 export class RegisterVercodeSuccessAction implements Action {
   type = ActionTypes.REGISTER_VERCODE_SUCCESS;
 
-  constructor(public payload: {code: string}) {
+  constructor(public payload: any) {
   }
 }
 
@@ -96,7 +106,7 @@ export class RegisterVercodeSuccessAction implements Action {
 export class CheckRegCodeAction implements Action {
   type = ActionTypes.CHECKREGCODE;
 
-  constructor(public payload: {phoneNum: string, code: string}) {
+  constructor(public payload: {phoneNum: string, code: string,type:number}) {
   }
 }
 
@@ -126,10 +136,29 @@ export class RegisterSuccessAction implements Action {
 export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
 
+  constructor(public payload: any) {
+  }
+}
+export class LogoutSucccessAction implements Action {
+  type = ActionTypes.LOGOUT_SUCCESS;
+
   constructor(public payload: Auth) {
   }
 }
+// 找回密码验证码
+export class ForgetPasswordCodeAction implements Action {
+  type = ActionTypes.FORGET_PASSWORD_CODE;
 
+  constructor(public payload: any) {
+  }
+}
+
+export class ForgetPasswordCodeSuccessAction implements Action {
+  type = ActionTypes.FORGET_PASSWORDCDDE_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
 // 找回密码
 export class ForgetPasswordAction implements Action {
   type = ActionTypes.FORGET_PASSWORD;

@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { App } from 'ionic-angular';
 
+import { ToastSitutionProvider} from '../providers'
 import { AuthProvider} from '../providers'
 import * as actions from '../actions/auth.action'
 import { Store } from '@ngrx/store'
@@ -12,6 +13,17 @@ import * as fromRoot from '../reducer'
 
 @Injectable()
 export class AuthEffects {
+     // authfail
+     @Effect() 
+     fail$: Observable<Action> = this.actions$
+     .ofType(actions.ActionTypes.AUTH_FAIL)
+     .map(toPayload)
+     .map(res => {
+         if(res.msg){
+            this.toast.message(res.msg)
+            return new actions.AuthFailSuccessAction({msg:res.msg})
+         }
+     })
     // userinfo
     @Effect() 
     userinfo$: Observable<Action> = this.actions$
@@ -34,23 +46,34 @@ export class AuthEffects {
        return this.service.login(val.phoneNum, val.password)})
     .map(res => {
         if(res.success) {
-        
-            this.appCtrl.getRootNav().pop()
+
+            this.appCtrl.getActiveNav().goToRoot({animate:true,direction:'forward'})
             localStorage.setItem('userId', res.dataObject.id)
            return new actions.LoginSuccessAction(res.dataObject)
         }else {
+            this.toast.message(res.msg)
             return new actions.AuthFailAction({
                 msg: res.msg
               })
         }
     })
-    
+     // loginout
+     @Effect() 
+     loginout$: Observable<Action> = this.actions$
+     .ofType(actions.ActionTypes.LOGOUT)
+     .map(toPayload)
+     .map(res => {
+             localStorage.removeItem('userId')
+             this.appCtrl.getRootNav().push('LoginPage')
+            return new actions.LogoutSucccessAction(res.dataObject)
+     })
+
     @Effect()
     navigateHome$: Observable<Action> = this.actions$
       .ofType(actions.ActionTypes.LOGIN_SUCCESS)
       .map((action)=> action.payload)
       .map(() => {
-          this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1].pop()
+         // this.appCtrl.getRootNav().setRoot('WorkDeskPage')
           return new actions.AuthFailAction({
             msg: ''
           })
@@ -60,47 +83,62 @@ export class AuthEffects {
     getsign$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.SIGN)
     .map(toPayload)
-    .switchMap(val => this.service.getSign(val.phoneNum, val.type))
-    .map(res => {
-      if(res.res.success) {
-          console.log(res)
-          return new actions.SignSuccessAction({phoneNum: res.phoneNum,sign: res.res.dataObject, sign_type: res.sign_type})
-      }else{
-          return new actions.AuthFailAction({
-              msg: res.res.msg
-            })
+    .switchMap(val => this.service.getSign( val.type))
+    .map((res) =>{
+        console.log(res)
+       if(res.success) {
+           return new actions.SignSuccessAction({sign:res.dataObject})
+       }
+        })
+   // 找回密码获取验证码
+   @Effect() 
+   getforgetcode$: Observable<Action> = this.actions$
+   .ofType(actions.ActionTypes.FORGET_PASSWORD_CODE)
+   .map(toPayload)
+   .withLatestFrom(this.store$.select(store=>store.auth.auth))
+   .switchMap(([info,auth]) => this.service.getForgetCode(info.phoneNum,auth.sign))
+   .map((res) =>{
+       console.log(res)
+      if(res.success) {
+          return new actions.ForgetPasswordCodeSuccessAction({code:res.dataObject})
       }
-    })
-    
+       })
     // getregistercode
-      @Effect() 
-      getregistercode$: Observable<Action> = this.actions$
-      .ofType(actions.ActionTypes.SIGN_SUCCESS)
-      .map(toPayload)
-      .switchMap(res => {
-          console.log(res)
-          if(res.sign_type === '1') {
-            return this.service.getRegisterCode(res.phoneNum, res.sign)
-          }
-          if(res.sign_type === '2') {
-            return this.service.getForgetCode(res.phoneNum, res.sign)
-          }
-      })
-      .map((res) => {
-          return new actions.RegisterVercodeSuccessAction({code: res.dataObject})
-      })
+    //   @Effect() 
+    //   getregistercode$: Observable<Action> = this.actions$
+    //   .ofType(actions.ActionTypes.SIGN_SUCCESS)
+    //   .map(toPayload)
+    //   .switchMap(res => {
+    //       console.log(res)
+    //       if(res.sign_type === '1') {
+    //         return this.service.getRegisterCode(res.phoneNum, res.sign)
+    //       }
+    //       if(res.sign_type === '2') {
+    //         return this.service.getForgetCode(res.phoneNum, res.sign)
+    //       }
+    //   })
+    //   .map((res) => {
+    //       console.log(res)
+    //       if(res.success) {
+    //         return new actions.RegisterVercodeSuccessAction({})
+    //       }else{
+    //         return new actions.AuthFailAction({
+    //             msg: res.msg
+    //           })
+    //       }
+    //   })
     // checkregistercode
     @Effect() 
     checkregistercode$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.CHECKREGCODE)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(store => store.auth.auth.sign_type))
-    .switchMap(([val, sign_type]) => {
-        if(sign_type==='1') {
-            return this.service.checkRegisterCode(val.phoneNum,val.code)
+    .switchMap((res) => {
+        console.log(res)
+        if(res.type=='1') {
+            return this.service.checkRegisterCode(res.phoneNum,res.code)
         }
-        if(sign_type==='2') {
-            return this.service.checkForgetCode(val.phoneNum,val.code)
+        if(res.type=='2') {
+            return this.service.checkForgetCode(res.phoneNum,res.code)
         }
        })
     .map(res => {
@@ -146,9 +184,8 @@ export class AuthEffects {
     .map(res => {
         console.log(res)
       if(res.success) {
-          return new actions.ForgetPasswordSuccessAction({
-              msg: '修改密码成功'
-          })
+        this.appCtrl.getRootNav().push('LoginPage')
+          return new actions.ForgetPasswordSuccessAction({ })
       }else{
           return new actions.AuthFailAction({
               msg: res.msg
@@ -156,10 +193,7 @@ export class AuthEffects {
       }
     })
     
-    @Effect()
-    forgetAndHome$: Observable<Action> = this.actions$
-      .ofType(actions.ActionTypes.FORGET_PASSWORD_SUCCESS)
-      .map(() => this.appCtrl.getRootNav().push('LoginPage'))
+   
     
       // 修改密码
       @Effect()
@@ -219,6 +253,7 @@ export class AuthEffects {
         private actions$: Actions,
         public appCtrl: App,
         private service: AuthProvider,
+        private toast: ToastSitutionProvider,
         private store$: Store<fromRoot.State>
     ) {}
 }

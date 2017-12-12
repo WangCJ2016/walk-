@@ -11,6 +11,7 @@ export interface Auth {
     status?:string,
     emp?: emp
     id?:string,
+    countIf?:boolean
     isDelete?:string,
     creator?:string,
     modifier?:string,

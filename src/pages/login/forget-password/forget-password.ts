@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController,Loading } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'
 import { AuthProvider } from '../../../providers/auth/auth'
+import { ToastSitutionProvider} from '../../../providers'
 /**
  * Generated class for the ForgetPasswordPage page.
  *
@@ -27,13 +28,19 @@ export class ForgetPasswordPage {
   form: FormGroup
   form2: FormGroup
   _sub: Subscription
+  loading: Loading
+  countIf: boolean = false
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private fb: FormBuilder,
+    private load: LoadingController,
     private service: AuthProvider,
     private toastCtrl: ToastController,
     private store$: Store<fromRoot.State>) {
 
+      this.loading = this.load.create({
+        dismissOnPageChange: true
+      })
     this.form = this.fb.group({
       verCodeGroup: this.fb.group({
         phoneNum: ['', Validators.compose([Validators.required, Validators.pattern(/^[1][3,4,5,7,8][0-9]{9}$/)])],
@@ -41,36 +48,35 @@ export class ForgetPasswordPage {
       }),
       newPassword: ['', Validators.required],
     })
+    // 获取sign
+    this.store$.dispatch(new actions.SignAction({type:2}))
     this.store$.select(store => store.auth).subscribe(res => {
-      if(res.msg) {
-        this.toastCtrl.create({
-          message: res.msg,
-          position: 'middle',
-          duration: 2000
-        }).present()
-      }
+      console.log(res)
+      this.countIf = res.auth.countIf
+     this.loading.dismiss()
     })
     this._sub = this.service.getStep().subscribe(v => this.step = v)
   }
-  ionViewDidEnter(){
-    this.store$.select(store => store.auth.auth).subscribe(v => console.log(v))
-  }
+  
   ngOnDestroy() {
     this._sub.unsubscribe()
   }
 
   getVercode() {
-    this.store$.dispatch(new actions.SignAction({
+    this.store$.dispatch(new actions.ForgetPasswordCodeAction({
       phoneNum: this.form.get('verCodeGroup').get('phoneNum').value,
       type: '2'
     }))
+   // this.loading.present()
   }
 
   next({ value, valid }, ev: Event) {
     ev.preventDefault()
+    this.loading.present()
     this.store$.dispatch(new actions.CheckRegCodeAction({
       phoneNum: value.verCodeGroup.phoneNum,
-      code: value.verCodeGroup.verCode
+      code: value.verCodeGroup.verCode,
+      type:2
     }))
   }
   form2submit(f, ev: Event) {
@@ -85,6 +91,7 @@ export class ForgetPasswordPage {
           password: f.value.newPassword
         })
       )
+      this.loading.present()
       this.form.reset()
     }
   }

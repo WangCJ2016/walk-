@@ -38,12 +38,14 @@ page-shiwu-detail {
     .chat_item{
         display: flex;
         line-height: 3.333333rem;
+        margin-top: 1.25rem;
         .chat_content{
             position: relative;
             padding: 0 .833333rem;
             border-radius: .416667rem;
             background-color: #fff;
             margin-left: 1.666667rem;
+            font-size: 1.083333em;
             &::after{
                 content: '';
                 display: block;
@@ -55,6 +57,15 @@ page-shiwu-detail {
                 background: url('../assets/imgs/work-home/arr.png') no-repeat;
                 background-size: 100% 100%;
             }
+        }
+        .chat_content_img{
+            margin-left: 1.666667rem;
+            >img{
+                width: auto;
+                height: 8.333333rem;
+                border-radius: .416667rem;
+            }
+            
         }
         .head{
             width: 3.333333rem;
