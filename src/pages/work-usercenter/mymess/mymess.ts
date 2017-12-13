@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController, Loading } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera'
 import { ImagePicker } from '@ionic-native/image-picker'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
@@ -34,6 +34,10 @@ export class MymessPage {
   cityId: string
   _provinceName: string
   _cityName: string
+  head: string = "assets/imgs/work-usercenter/head.png"
+  loading: Loading
+
+
   constructor(public navCtrl: NavController, 
     @Inject('BASE_URL') private config,
     public navParams: NavParams,
@@ -43,14 +47,21 @@ export class MymessPage {
     private service: AuthProvider,
     private imagePicker: ImagePicker,
     private fileTranfer: FileTransfer,
+    private load: LoadingController,
     private store$: Store<fromRoot.State>) {
       this.setCityPickerData()
-  }
+      this.loading = this.load.create({
+        dismissOnPageChange: true,
+        duration: 5000
+      })
+  } 
 
   ionViewDidEnter(){
     this.auth$ = this.store$.select(store => store.auth.auth)
     this.auth$
     .switchMap(auth => {
+      this.loading.dismiss()
+      this.head = auth.photo
      this.provinceId = auth.provinceId
      this.cityId = auth.cityId
      return this.service.sysRegionList(this.provinceId)
@@ -72,6 +83,7 @@ export class MymessPage {
         {
           text: '拍摄',
           handler: () => {
+            this.loading.present()
             const options = {
               destinationType: this.camera.DestinationType.FILE_URI,
               sourceType: this.camera.PictureSourceType.CAMERA,
@@ -81,13 +93,14 @@ export class MymessPage {
               targetHeight: 400
             }
             this.camera.getPicture(options).then((imageData) => {
-              // this.store$.dispatch(new actions.ChangeAction({image: imageData.replace(/^file:\/\//, '')}))
+             
               const fileTransfer: FileTransferObject = this.fileTranfer.create();
               fileTransfer.upload(imageData, `${this.config.url}/appPhotoUploadServlet`,{})
               .then((res) => {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
-                console.log('success'+photo)
+                console.log('success'+photo.url)
+                this.head = photo.url
                 this.store$.dispatch(new actions.ChangeAction({photo: photo.url}))
               }, (err) => {
                 // error
@@ -114,7 +127,8 @@ export class MymessPage {
               .then((res) => {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
-                console.log('success'+photo)
+                this.head = photo.url
+                console.log('success'+photo.url)
                 this.store$.dispatch(new actions.ChangeAction({photo: photo.url}))
               }, (err) => {
                 // error

@@ -38,7 +38,6 @@
     "@ngrx/store": "^2.2.3",
     "@ngrx/store-devtools": "^3.2.4",
     "cordova-ios": "4.5.3",
-    "cordova-plugin-ImagePicker": "git+https://github.com/giantss/cordova-plugin-ImagePicker.git",
     "cordova-plugin-camera": "^3.0.0",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-file": "^5.0.0",
@@ -73,17 +72,13 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-camera": {},
-      "cordova-plugin-image-picker": {
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "修改头像"
-      },
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
       },
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-ImagePicker": {
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+      "cordova-plugin-image-picker": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "
       }
     },
     "platforms": [

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import getDay from 'date-fns/get_day'
 import { getWeekDay } from '../../utils'
@@ -35,8 +35,10 @@ export class AttencePage {
   weekDay: string
   _sub: Subscription
   attenceTitle: string
-  picsView: Array<string> = ['assets/imgs/work-home/shenpi.png']
+  picsView: Array<string> = []
   pics: Array<string> = []
+  loading: Loading
+  loadNum: number = 1
   constructor(
     @Inject('BASE_URL') private config,    
     public navCtrl: NavController, 
@@ -44,9 +46,16 @@ export class AttencePage {
     private camera: Camera,
     private fileTranfer: FileTransfer,
     private toast: ToastSitutionProvider,
+    private load: LoadingController,
     private store$: Store<fromRoot.State>) {
+      this.loading = this.load.create({
+        dismissOnPageChange:true,
+        duration:5000
+      })
    this._sub = Observable.interval(1000).subscribe(_ => this.date = new Date())
    this.store$.dispatch(new actions.GetAttendacnceAction({}))
+   this.loading.present()
+   
   }
  ngOnDestroy() {
    this._sub.unsubscribe()
@@ -56,8 +65,10 @@ export class AttencePage {
     this.weekDay = getWeekDay(getDay(this.date))
     this.store$.select(store=>store.attence.attence).subscribe(res=>this.attenceTitle=res.attenceInview)
     this.store$.select(store => store.attence).subscribe(res => {
-      if(res.msg) {
-        this.toast.message(res.msg)
+      console.log(this.loading)
+      if(this.loading._state>1&&this.loadNum) {
+        this.loading.dismiss()
+        this.loadNum = 0
       }
     })
   }
@@ -101,10 +112,12 @@ export class AttencePage {
         .then((res) => {
           // success
           const photo = JSON.parse(res.response).fileUrl[0]
-          console.log('success'+photo)
-          pictures.push(photo)
+          console.log('success'+photo.url)
+          pictures.push(photo.url)
           if(pictures.length===this.pics.length) {
             console.log('success'+photo)
+            this.loading.present()
+            this.loadNum = 1
             this.store$.dispatch(new actions.SignAction({
               type:this.attenceTitle,
               lng:this.addressInfo.lng,
@@ -117,6 +130,8 @@ export class AttencePage {
         }) 
       })
     } else {
+      this.loading.present()
+      this.loadNum = 1
       this.store$.dispatch(new actions.SignAction({
         type:this.attenceTitle,
         lng:this.addressInfo.lng,

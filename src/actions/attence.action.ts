@@ -57,7 +57,7 @@ export class SignSuccessAction implements Action {
 export class AttenceRecordAction implements Action {
     type = ActionTypes.ATTENCERECORD;
 
-    constructor(public payload: {time: string}) { }
+    constructor(public payload: {time: string,empId?:any}) { }
 }
 export class AttenceRecordSuccessAction implements Action {
     type = ActionTypes.ATTENCERECORD_SUCCESS;

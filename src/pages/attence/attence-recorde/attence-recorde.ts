@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
 import * as fromRoot from '../../../reducer'
 import { Store } from '@ngrx/store'
 import * as actions from '../../../actions/attence.action'
@@ -21,14 +21,26 @@ import { Subject } from 'rxjs/Subject';
 export class AttenceRecordePage {
   time$ = new Subject<string>()
   attenceRecordList
+  loading: Loading
+  loadNum = 0
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private toast: ToastSitutionProvider,
     private store$: Store<fromRoot.State>) {
+      this.loading = this.toast.loadfn()
+      
       const _time$ = this.time$.asObservable().subscribe(v=>{
+        this.loading.present()
+        this.loadNum = 1
         this.store$.dispatch(new actions.AttenceRecordAction({time: v}))
       })
       this.store$.select(store=>store.attence).subscribe(v => {
+        if(this.loadNum == 1) {
+          this.loading.dismiss()
+          this.loadNum = 0
+        }
+       
         this.attenceRecordList = v.attence.attenceRecordList
       })
   }

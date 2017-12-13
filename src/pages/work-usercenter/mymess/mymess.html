@@ -18,16 +18,16 @@
         <button ion-item (click)='presentActionSheet()'>
         <ion-label>头像</ion-label>
         <ion-avatar item-end>
-            <img src="assets/imgs/work-usercenter/head.png">
+            <img src={{head}}>
         </ion-avatar>
     </button>
         <button ion-item (click)='goPage("ChangeNamePage")'>
         <ion-label>姓名</ion-label>
         <span  item-end>{{(auth$ | async)?.name}}</span>
     </button>
-        <button ion-item  (click)='goPage("MyAccountPage",auth$)'>
+        <button ion-item  >
         <ion-label>账号</ion-label>
-        <span item-end>{{(auth$ | async)?.account}}</span>
+        <span item-end>{{(auth$ | async)?.userName}}</span>
     </button>
         <button ion-item (click)='goPage("MySexPage")'>
         <ion-label>性别</ion-label>

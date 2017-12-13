@@ -24,6 +24,7 @@ export class TeamEffects {
            console.log(teamArr)
            return new actions.LoadSuccessAction(teamArr)
        }else {
+           this.toast.message(res.msg)
            return new actions.AuthFailAction({
                msg: res.msg
            })
@@ -40,8 +41,8 @@ export class TeamEffects {
     console.log(res)
     if(res.success) {
         this.toast.message('设置成功')
-        this.appCtrl.getRootNav().push('WorkUsercenterPage')
-        return new actions.SetdefaultSuccessAction({})
+        this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})
+        return new actions.SetdefaultSuccessAction(res.dataObject)
     }else {
         return new actions.AuthFailAction({
             msg: res.msg

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastController } from 'ionic-angular'
+import { ToastController, LoadingController } from 'ionic-angular'
 import 'rxjs/add/operator/map';
 
 /*
@@ -13,7 +13,9 @@ import 'rxjs/add/operator/map';
 export class ToastSitutionProvider {
 
   constructor(public http: Http,
-        private toast: ToastController) {
+        private toast: ToastController,
+        private load: LoadingController
+      ) {
   }
   message(mess: string) {
     this.toast.create({
@@ -21,5 +23,11 @@ export class ToastSitutionProvider {
       position: 'middle',
       duration: 2000
     }).present()
+  }
+  loadfn() {
+   return this.load.create({
+      dismissOnPageChange:true,
+      duration:5000
+    })
   }
 }

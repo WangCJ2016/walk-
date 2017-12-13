@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
+
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { App } from 'ionic-angular';
 
@@ -45,13 +46,13 @@ export class AuthEffects {
         console.log(val.phoneNum, val.password)
        return this.service.login(val.phoneNum, val.password)})
     .map(res => {
+        console.log(res)
         if(res.success) {
-
-            this.appCtrl.getActiveNav().goToRoot({animate:true,direction:'forward'})
+            this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})
             localStorage.setItem('userId', res.dataObject.id)
            return new actions.LoginSuccessAction(res.dataObject)
         }else {
-            this.toast.message(res.msg)
+           
             return new actions.AuthFailAction({
                 msg: res.msg
               })
@@ -68,16 +69,7 @@ export class AuthEffects {
             return new actions.LogoutSucccessAction(res.dataObject)
      })
 
-    @Effect()
-    navigateHome$: Observable<Action> = this.actions$
-      .ofType(actions.ActionTypes.LOGIN_SUCCESS)
-      .map((action)=> action.payload)
-      .map(() => {
-         // this.appCtrl.getRootNav().setRoot('WorkDeskPage')
-          return new actions.AuthFailAction({
-            msg: ''
-          })
-        })
+    
     // getregistersign
     @Effect() 
     getsign$: Observable<Action> = this.actions$
@@ -90,56 +82,35 @@ export class AuthEffects {
            return new actions.SignSuccessAction({sign:res.dataObject})
        }
         })
-   // 找回密码获取验证码
-   @Effect() 
-   getforgetcode$: Observable<Action> = this.actions$
-   .ofType(actions.ActionTypes.FORGET_PASSWORD_CODE)
-   .map(toPayload)
-   .withLatestFrom(this.store$.select(store=>store.auth.auth))
-   .switchMap(([info,auth]) => this.service.getForgetCode(info.phoneNum,auth.sign))
-   .map((res) =>{
-       console.log(res)
-      if(res.success) {
-          return new actions.ForgetPasswordCodeSuccessAction({code:res.dataObject})
-      }
-       })
+   
     // getregistercode
-    //   @Effect() 
-    //   getregistercode$: Observable<Action> = this.actions$
-    //   .ofType(actions.ActionTypes.SIGN_SUCCESS)
-    //   .map(toPayload)
-    //   .switchMap(res => {
-    //       console.log(res)
-    //       if(res.sign_type === '1') {
-    //         return this.service.getRegisterCode(res.phoneNum, res.sign)
-    //       }
-    //       if(res.sign_type === '2') {
-    //         return this.service.getForgetCode(res.phoneNum, res.sign)
-    //       }
-    //   })
-    //   .map((res) => {
-    //       console.log(res)
-    //       if(res.success) {
-    //         return new actions.RegisterVercodeSuccessAction({})
-    //       }else{
-    //         return new actions.AuthFailAction({
-    //             msg: res.msg
-    //           })
-    //       }
-    //   })
+      @Effect() 
+      getregistercode$: Observable<Action> = this.actions$
+      .ofType(actions.ActionTypes.REGISTER_VERCODE)
+      .map(toPayload)
+      .withLatestFrom(this.store$.select(store=>store.auth.auth))
+      .switchMap(([info,auth]) => {
+            return this.service.getRegisterCode(info.phoneNum, auth.sign)
+      })
+      .map((res) => {
+          
+          if(res.success) {
+              this.toast.message('发送成功')
+            return new actions.RegisterVercodeSuccessAction({code: res.dataObject,countIf: true})
+          }else{
+            return new actions.AuthFailAction({
+                msg: res.msg
+              })
+          }
+      })
     // checkregistercode
     @Effect() 
     checkregistercode$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.CHECKREGCODE)
     .map(toPayload)
-    .switchMap((res) => {
-        console.log(res)
-        if(res.type=='1') {
-            return this.service.checkRegisterCode(res.phoneNum,res.code)
-        }
-        if(res.type=='2') {
-            return this.service.checkForgetCode(res.phoneNum,res.code)
-        }
+    .withLatestFrom(this.store$.select(store=>store.auth.auth))
+    .switchMap(([info,auth]) => {
+            return this.service.checkRegisterCode(info.phoneNum,auth.code,auth.sign)
        })
     .map(res => {
       if(res.success) {
@@ -157,12 +128,17 @@ export class AuthEffects {
       .ofType(actions.ActionTypes.REGISTER)
       .map(toPayload)
       .withLatestFrom(this.store$.select(store => store.auth.auth))
-      .switchMap(([password, auth]) => this.service.register(auth.userName, auth.code, auth.sign, password.password))
+      .switchMap(([info, auth]) => {
+          console.log(info)
+          return this.service.register(info.phoneNum, auth.code, auth.sign, info.password)})
       .map(res => {
           console.log(res)
         if(res.success) {
+            this.toast.message('注册成功')
+            this.appCtrl.getActiveNav().push('LoginPage')
             return new actions.RegisterSuccessAction({})
         }else{
+            this.toast.message(res.msg)
             return new actions.AuthFailAction({
                 msg: res.msg
               })
@@ -173,14 +149,50 @@ export class AuthEffects {
       registerAndHome$: Observable<Action> = this.actions$
         .ofType(actions.ActionTypes.REGISTER_SUCCESS)
         .map(() => this.appCtrl.getRootNav().push('LoginPage'))
-   
+   // 找回密码获取验证码
+   @Effect() 
+   getforgetcode$: Observable<Action> = this.actions$
+   .ofType(actions.ActionTypes.FORGET_PASSWORD_CODE)
+   .map(toPayload)
+   .withLatestFrom(this.store$.select(store=>store.auth.auth))
+   .switchMap(([info,auth]) => this.service.getForgetCode(info.phoneNum,auth.sign))
+   .map((res) =>{
+       console.log(res)
+      if(res.success) {
+        this.toast.message('发送成功')
+          return new actions.ForgetPasswordCodeSuccessAction({code:res.dataObject,countIf: true})
+      }else{
+        return new actions.AuthFailAction({
+            msg: res.msg
+          })
+      }
+       })
+    //找回密码验证码验证
+    @Effect() 
+    checkforgetcode$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.CHECKFORGETCODE)
+    .map(toPayload)
+    .withLatestFrom(this.store$.select(store=>store.auth.auth))
+    .switchMap(([info,auth]) => {
+            return this.service.checkForgetCode(info.phoneNum,auth.code,auth.sign)
+       })
+    .map(res => {
+      if(res.success) {
+          this.service.setStep();
+          return new actions.checkForgetPasswordCodeSuccessAction({})
+      }else{
+          return new actions.AuthFailAction({
+              msg: res.msg
+            })
+      }
+    })
     // 找回密码    
     @Effect()
     forgetPassword$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.FORGET_PASSWORD)
     .map(toPayload)
     .withLatestFrom(this.store$.select(store => store.auth.auth))
-    .switchMap(([password, auth]) => this.service.resetPassword(auth.userName, auth.code, auth.sign, password.password))
+    .switchMap(([info, auth]) => this.service.resetPassword(info.phoneNum, auth.code, auth.sign, info.password))
     .map(res => {
         console.log(res)
       if(res.success) {
@@ -205,6 +217,8 @@ export class AuthEffects {
       .map(res => {
          console.log(res)
          if(res.success) {
+             this.appCtrl.getRootNav().push('LoginPage')
+             localStorage.removeItem('userId')
             return new actions.ChangePasswordSuccessAction(true)
          }else {
             return new actions.AuthFailAction({
@@ -212,12 +226,6 @@ export class AuthEffects {
               })
          }})
          
-     
-
-      @Effect()
-      changeAndHome$: Observable<Action> = this.actions$
-        .ofType(actions.ActionTypes.CHANGE_PASSWORD_SUCCESS)
-        .map(() => this.appCtrl.getRootNav().push('WorkUsercenterPage'))
    
     
     // 修改auth项
@@ -227,28 +235,23 @@ export class AuthEffects {
     .map(toPayload)
     .withLatestFrom(this.store$.select(store => store.auth.auth))
     .switchMap(([info, auth]) => {
-        return this.service.changeUserInfo({userId: auth.id, token: auth.token, ...info})})
+        return this.service.changeUserInfo(auth.id, auth.token, info)})
     .map(res => {
-        if(res.success) {
-            return new actions.ChangeSuccessAction(res.dataObject)
+        console.log(res)    
+        if(res.res.success) {
+            if(res.name||res.sex){
+                this.appCtrl.getActiveNav().pop()
+            }
+            this.toast.message('保存成功')
+            return new actions.ChangeSuccessAction(res.res.dataObject)
         }else {
+            this.toast.message(res.msg)
             return new actions.AuthFailAction({
                 msg: res.msg
             })
         }
     })
    
-    // @Effect()
-    // ChangeAndHome$: Observable<Action> = this.actions$
-    //   .ofType(actions.ActionTypes.CHANGE_SUCCESS)
-    //   .map(_ =>{
-    //      this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1].pop()
-    //      return new actions.AuthFailAction({
-    //         msg: ''
-    //     })
-    //     } 
-    //     )
-   //.do(() => console.log(this.appCtrl.getActiveNavs()[this.appCtrl.getActiveNavs().length-1]))
     constructor(
         private actions$: Actions,
         public appCtrl: App,

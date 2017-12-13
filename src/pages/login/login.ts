@@ -26,17 +26,16 @@ export class LoginPage {
               private load: LoadingController,
               private store$: Store<fromRoot.State>) {
                 this.loading = this.load.create({
-                  dismissOnPageChange: true
+                  dismissOnPageChange: true,
+                  duration: 5000
                 })
-            
+              this.store$.select(store=>store.auth).subscribe(v=>{
+                console.log(v)
+                this.loading.dismiss()
+              })
   }
 
-  ionViewDidLoad() {
-    this.store$.select(state => state.auth).subscribe(v => {
-      console.log(this.loading)
-      this.loading.dismiss()
-    })
-  }
+  
   goPage(page: string) {
     this.navCtrl.push(page)
   }
@@ -54,6 +53,6 @@ export class LoginPage {
       phoneNum: f.value.phoneNum,
       password: f.value.password
     }))
-    
+    f.reset()
   }
 }

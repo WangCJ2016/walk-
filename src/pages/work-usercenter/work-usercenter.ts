@@ -28,26 +28,27 @@ export class WorkUsercenterPage {
     private load: LoadingController,
     private alert: AlertController,
     private store$: Store<fromRoot.State>) {
-     
-  }
-  ionViewDidEnter(){
-    this.loading = this.load.create()
-    
-    this.authImage = this.store$.select(state => state.auth.auth.photo)
-    this.store$.select(state => state.auth.auth).subscribe(auth => {
-      this.loading.dismiss()
-      this.token = auth.token
-      if(this.token) {
-        if(auth.name) {
-          this.name = auth.name
-        }else {
-          this.name = auth.userName
-       }
-       this.name = ''
-      }
+      this.loading = this.load.create({
+        dismissOnPageChange:true,
+        duration:5000
       })
-    this.store$.select(state => state.auth.auth).subscribe(res => console.log(res))
+      
+      this.authImage = this.store$.select(state => state.auth.auth.photo)
+      this.store$.select(state => state.auth.auth).subscribe(auth => {
+        this.loading.dismiss()
+        this.token = auth.token
+        if(this.token) {
+          if(auth.name) {
+            this.name = auth.name
+          }else {
+            this.name = auth.userName
+         }
+         this.name = ''
+        }
+        })
+      this.store$.select(state => state.auth.auth).subscribe(res => console.log(res))
   }
+  
   goPage(page: string) {
     this.navCtrl.push(page)
   }

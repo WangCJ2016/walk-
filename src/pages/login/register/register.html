@@ -23,7 +23,7 @@
             <input class='input' placeholder='请输入手机号' type="number" formControlName='phoneNum' name="phoneNum" />
           </div>
           <div item-end>
-            <get-vercode [disabled]='phoneNumValid' (btnClick)='getVercode($event)'></get-vercode>
+            <get-vercode [countIf]='countIf' [disabled]='phoneNumValid' (btnClick)='getVercode($event)'></get-vercode>
           </div>
         </ion-item>
         <ion-item>
@@ -34,7 +34,7 @@
         </ion-item>
       </ion-list>
       <div padding>
-        <button full ion-button (click)='next(form, $event)' [disabled]='!form.controls["verCodeGroup"].valid'>下一步</button>
+        <button full ion-button (click)='next(form, $event)' type="button" [disabled]='!form.controls["verCodeGroup"].valid'>下一步</button>
       </div>
     </div>
     <div *ngSwitchCase='"two"'>

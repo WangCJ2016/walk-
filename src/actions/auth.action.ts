@@ -19,6 +19,8 @@ export const ActionTypes = {
   LOGOUT_SUCCESS: type('[Auth] Logout_success'),
   FORGET_PASSWORD_CODE: type('[Auth] Forget_password_code'),
   FORGET_PASSWORDCDDE_SUCCESS: type('[Auth] Forget_passwordcode_success'),
+  CHECKFORGETCODE: type('[Auth] check_Forget_password_code'),
+  CHECKFORGETCDDE_SUCCESS: type('[Auth] check_Forget_passwordcode_success'),
   FORGET_PASSWORD: type('[Auth] Forget_password'),
   FORGET_PASSWORD_SUCCESS: type('[Auth] Forget_password_success'),
   CHANGE_PASSWORD: type('[Auth] Change_password'),
@@ -91,7 +93,7 @@ export class SignSuccessAction implements Action {
 export class RegisterVercodeAction implements Action {
   type = ActionTypes.REGISTER_VERCODE;
 
-  constructor(public payload: {phoneNum: string, sign: string}) {
+  constructor(public payload: any) {
   }
 }
 
@@ -106,7 +108,7 @@ export class RegisterVercodeSuccessAction implements Action {
 export class CheckRegCodeAction implements Action {
   type = ActionTypes.CHECKREGCODE;
 
-  constructor(public payload: {phoneNum: string, code: string,type:number}) {
+  constructor(public payload: any) {
   }
 }
 
@@ -120,7 +122,7 @@ export class CheckRegCodeSuccessAction implements Action {
 export class RegisterAction implements Action {
   type = ActionTypes.REGISTER;
 
-  constructor(public payload: { password: string}) {
+  constructor(public payload: { password: string,phoneNum: string}) {
   }
 }
 
@@ -159,11 +161,25 @@ export class ForgetPasswordCodeSuccessAction implements Action {
   constructor(public payload: any) {
   }
 }
+// 找回密码验证码验证
+export class checkForgetPasswordCodeAction implements Action {
+  type = ActionTypes.CHECKFORGETCODE;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class checkForgetPasswordCodeSuccessAction implements Action {
+  type = ActionTypes.CHECKFORGETCDDE_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
 // 找回密码
 export class ForgetPasswordAction implements Action {
   type = ActionTypes.FORGET_PASSWORD;
 
-  constructor(public payload: { password: string}) {
+  constructor(public payload: any) {
   }
 }
 

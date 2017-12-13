@@ -39,7 +39,8 @@ export class ForgetPasswordPage {
     private store$: Store<fromRoot.State>) {
 
       this.loading = this.load.create({
-        dismissOnPageChange: true
+        dismissOnPageChange: true,
+        duration: 5000
       })
     this.form = this.fb.group({
       verCodeGroup: this.fb.group({
@@ -72,11 +73,9 @@ export class ForgetPasswordPage {
 
   next({ value, valid }, ev: Event) {
     ev.preventDefault()
-    this.loading.present()
-    this.store$.dispatch(new actions.CheckRegCodeAction({
+    this.store$.dispatch(new actions.checkForgetPasswordCodeAction({
       phoneNum: value.verCodeGroup.phoneNum,
-      code: value.verCodeGroup.verCode,
-      type:2
+    
     }))
   }
   form2submit(f, ev: Event) {
@@ -88,7 +87,8 @@ export class ForgetPasswordPage {
     } else {
       this.store$.dispatch(
         new actions.ForgetPasswordAction({
-          password: f.value.newPassword
+          password: f.value.newPassword,
+          phoneNum: f.value.verCodeGroup.phoneNum
         })
       )
       this.loading.present()

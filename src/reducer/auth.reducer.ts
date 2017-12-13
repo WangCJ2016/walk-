@@ -23,13 +23,14 @@ export function reducer(state = initialState, action: any ): State {
         case authAction.ActionTypes.CHANGE_SUCCESS:
         case authAction.ActionTypes.SIGN_SUCCESS:
         case authAction.ActionTypes.REGISTER_VERCODE_SUCCESS:
-        case authAction.ActionTypes.LOGIN_SUCCESS: {
-            console.log(action.payload)
+        case authAction.ActionTypes.LOGIN_SUCCESS:
+        case authAction.ActionTypes.FORGET_PASSWORDCDDE_SUCCESS: {
             const auth = {...state.auth,...action.payload}
             return {...state, auth, msg: ''}
         }
         case authAction.ActionTypes.FORGET_PASSWORD_SUCCESS:
         case authAction.ActionTypes.AUTH_FAIL_SUCCESS: {
+            console.log(action.payload)
             return {...state, ...action.payload}
         }
         case authAction.ActionTypes.LOGOUT_SUCCESS: {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { todayFormat} from '../../../utils'
 /**
  * Generated class for the ChangeAttencePage page.
  *
@@ -16,7 +16,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ChangeAttencePage {
   attence_types: Array<any>
   check_index: number
+  todayFormat
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.todayFormat = todayFormat()
     this.attence_types = [
       {class: 'thing',title: '事假'},
       {class: 'sick',title: '病假'},
@@ -25,8 +27,8 @@ export class ChangeAttencePage {
       {class: 'normal',title: '正常'}]
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChangeAttencePage');
+  ionViewDidEnter(){
+   console.log(this.navParams.data)
   }
   choseType(index: number) {
     console.log(index)

@@ -24,21 +24,16 @@
                 <ion-icon name="ios-arrow-forward"></ion-icon>
                 <img src="assets/imgs/work-desk/icon_kaoqin.png" alt="">
             </div>
-            <div class="item_item first">
-                <span class="type">病假</span>
+           
+            <div class="item_item" *ngFor="let item of attenceList">
+                <span>{{item.clockTime}}</span>
+                <span>{{item.type==1?'签到':'签退'}}</span>
+                <span class="trueAddress">{{item.trueAddress}}</span>
             </div>
-            <div class="item_item">
-                <span>08:30:07</span>
-                <span>签到</span>
-                <span>杭州拱墅区祥园路33号</span>
-            </div>
-            <div class="item_item">
-                <span>08:30:07</span>
-                <span>李四将张三改为“外勤”0.5天</span>
-            </div>
+            
         </div>
         <div class="border"></div>
-        <div class="content_item">
+        <!-- <div class="content_item">
             <div class="item_title">
                 <span class="type">工作记录</span>
                 <span class="prag">应该完成量(1)</span>
@@ -55,8 +50,8 @@
                 <span>08:30:07</span>
                 <span>李四将张三改为“外勤”0.5天</span>
             </div>
-        </div>
-        <div class="border"></div>
+        </div> -->
+        
         <div class="content_item">
             <div class="item_title">
                 <span class="type">日报</span>
@@ -78,7 +73,7 @@
                     
                 </textarea>
                 <img  *ngIf='!showIf&&isSelf' (click)='edit()' class="edit" src="assets/imgs/work-desk/edit.png" alt="">
-                <div *ngIf='showIf||!contentDisabled' class="cleafix">
+                <div *ngIf='showIf||!contentDisabled' class="clearfix">
                     <button ion-button clear float-right (click)='addDaily()'>提交</button>
                     <button ion-button clear float-right style="color:#ccc">取消</button>
                 </div>

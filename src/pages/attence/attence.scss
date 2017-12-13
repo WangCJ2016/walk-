@@ -57,6 +57,7 @@ page-attence {
         .pic{
             padding: .416667rem 0;
             position: relative;
+
         }
         img{
             width: 4.166667rem;
@@ -88,7 +89,11 @@ page-attence {
         flex-direction: column;
         justify-content: center;
         .time {
-            font-size: 1.833333rem
+            font-size: 1.166667rem;
+            color: rgba(255,255,255,.7)
+        }
+        &:active{
+            opacity: .6
         }
     }
     .check {

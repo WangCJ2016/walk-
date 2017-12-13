@@ -26,7 +26,7 @@ export function reducer(state = initialState, action: any ): State {
             return {...state, attence: attence}
         }
         case actions.ActionTypes.ATTENCE_FAIL: {
-            return {...state, msg: action.payload}
+            return {...state, ...initialState}
         }
         default: {
             return state;

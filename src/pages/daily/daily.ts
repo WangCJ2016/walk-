@@ -4,6 +4,7 @@ import { numtoarray } from '../../utils'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/daily.action'
+import * as attenceActions from '../../actions/attence.action'
 import { Subject } from 'rxjs/Subject';
 /**
  * Generated class for the DailyPage page.
@@ -30,21 +31,40 @@ export class DailyPage {
   time$ = new Subject<string>()
   dailyContent: string
   dailyId: string
+  attenceList: Array<any>
+  empId: string
+  depId: string
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private store$: Store<fromRoot.State>
   ) {
+    console.log(this.navParams.data)
+    this.time$.asObservable().subscribe(v=>{
+      this.store$.dispatch(new actions.DailyDetailAction({empId1:this.navParams.data.empId,submitDate:v}))
+      this.store$.dispatch(new attenceActions.AttenceRecordAction({time:v,empId:this.navParams.data.empId}))
+    })
+    
+    //this.store$.
+  }
+  ionViewDidEnter(){
     this.store$.select(store=>store.auth.auth.emp.id).subscribe(id=>{
       if(id===this.navParams.data.empId){
         this.title = '我'
         this.isSelf = true 
       }
-      this.time$.asObservable().subscribe(v=>{
-        this.store$.dispatch(new actions.DailyDetailAction({empId1:this.navParams.data.empId,submitDate:v}))
+      
+      this.store$.select(store=>store.attence.attence).subscribe(res=>{
+        console.log(res)
+        if(res) {
+          this.attenceList = res.attenceRecordList
+        }
       })
       this.store$.select(store=>store.daily.dailyDetail).subscribe(v=>{
+        console.log(v)
         if(v){
+          this.empId = v.empId
+          this.depId = v.deptId
           this.dailyContent = v.contents
           this.dailyId = v.dailyId
           this.title = v.name
@@ -64,11 +84,9 @@ export class DailyPage {
       })
     })
     
-    
-    //this.store$.
   }
   goPage(page: string) {
-    this.navCtrl.push(page)
+    this.navCtrl.push(page,{empId:this.empId,deptId:this.depId})
   }
   pingyue() {
     this.backdrop = true

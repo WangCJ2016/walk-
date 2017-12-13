@@ -13,6 +13,7 @@ page-daily {
                 display: flex;
                 align-items: center;
                 position: relative;
+                margin-bottom: .833333rem;
                 .type {
                     font-size: 1.333333rem
                 }
@@ -36,8 +37,16 @@ page-daily {
             }
             .item_item {
                 position: relative;
-                &.first {
-                    margin-top: 1.25rem
+                display: flex;
+                
+                >span{
+                    margin-left: .833333rem
+                }
+                .trueAddress{
+                    flex: 1;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
                 &::before {
                     content: '';

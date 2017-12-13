@@ -31,22 +31,16 @@
     <ion-list>
         <ion-item>
             <ion-label item-start>起始时间</ion-label>
-            <ion-datetime item-content cancelText='取消' doneText='完成' displayFormat="YYYY/DD/MM" [(ngModel)]="myDate"></ion-datetime>
+            <ion-datetime item-content displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' [(ngModel)]="myDate"></ion-datetime>
             <img class="icon_date" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
         </ion-item>
         <ion-item>
             <ion-label>天数(天)</ion-label>
-            <div item-end class="changeNumofDay">
-                <span class="click_action">
-                  <ion-icon name="remove"></ion-icon>
-                </span>
-                <span class="numofday">0.5</span>
-                <span class="click_action"><ion-icon name="add"></ion-icon></span>
-            </div>
-        </ion-item>
+            <count  item-end></count>
+          </ion-item>
         <ion-item>
             <ion-label>截止时间</ion-label>
-            <ion-datetime cancelText='取消' doneText='完成' item-content displayFormat="YYYY/DD/MM" [(ngModel)]="myDate"></ion-datetime>
+            <ion-datetime displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' [(ngModel)]="myDate"></ion-datetime>
             <img class="icon_date" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
         </ion-item>
     </ion-list>

@@ -8,6 +8,8 @@ export interface dailyDetail{
   contents?: string
   dailyId?:string
   stars?:number
+  empId?: string
+  deptId?: string
 }
 
 export interface dailyPeople {

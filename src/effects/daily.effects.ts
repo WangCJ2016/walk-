@@ -91,7 +91,9 @@ export class DailyEffects {
       name:res.dataObject.emp.empName,
       contents:res.dataObject.contents,
       dailyId:res.dataObject.id,
-      stars: res.dataObject.star?res.dataObject.star:null
+      stars: res.dataObject.star?res.dataObject.star:null,
+      empId: res.dataObject.empId,
+      deptId: res.dataObject.deptId
     })
   }else{
       return new actions.DailyDetailSuccessAction('')

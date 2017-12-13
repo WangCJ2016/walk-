@@ -21,6 +21,7 @@ export class WorkDeskPage {
   empId: string
   workTime
   workPlate
+  team
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,10 +36,13 @@ export class WorkDeskPage {
     this.store$.select(store=>store.auth.auth).subscribe(v=>{
       if(v.emp){
         this.empId = v.emp.id
-        
       }
     })
-    
+    this.store$.select(store=>store.team.defaultTeam).subscribe(v=>{
+      if(v){
+        this.team = v
+      }
+    })
   }
 
   ionViewDidLoad() {
