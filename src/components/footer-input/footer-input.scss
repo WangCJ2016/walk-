@@ -8,7 +8,7 @@ footer-input {
     .inputcase {
         display: flex;
         align-items: center;
-        height: 3.75rem;
+        height: 3.8rem;
         background-color: #e6e6e6;
         width: 100%;
         .icon {
@@ -27,11 +27,13 @@ footer-input {
         }
         .input {
             flex: 1;
+            
             input {
                 background-color: #fff;
                 width: 100%;
                 border-radius: 2px;
                 height: 2.916667rem;
+                padding: .416667rem 0;
                 border: none;
                 outline: none;
                 font-size: 1.25em;

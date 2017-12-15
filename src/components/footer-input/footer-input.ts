@@ -53,17 +53,19 @@ export class FooterInputComponent implements ControlValueAccessor {
     this.rd.setStyle(this.more.nativeElement, 'height', '0')
   }
   inputFocus() {
-    this.moreShow = false
+    //this.moreShow = false
+  
+    
     this.keyboard.disableScroll(true)
     const that = this
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
     function keyboardShowHandler(e){
-      console.log(e.keyboardHeight)
+  
       that.rd.setStyle(that.inputcase.nativeElement,'bottom',e.keyboardHeight+'px')
-      this.propagateChange({keyboardHeight:e.keyboardHeight+'px'})
+      that.propagateChange({keyboardHeight:e.keyboardHeight+'px'})
     }
     window.addEventListener('native.keyboardhide', function() {
-      this.propagateChange({keyboardHeight:'0px'})
+      that.propagateChange({keyboardHeight:'0px'})
       that.rd.setStyle(that.inputcase.nativeElement,'bottom',0+'px')
       that.rd.setStyle(that.more.nativeElement, 'height', '10.916667rem')
     });

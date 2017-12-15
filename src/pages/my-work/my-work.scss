@@ -13,7 +13,10 @@ page-my-work {
         overflow: visible;
         contain: none;
         z-index: -1;
-        min-height: 3.333333rem
+        min-height: 3.333333rem;
+        .toolbar-background{
+            background-color: #fff!important
+        }
     }
     .top_toolbar{
         padding: 0;

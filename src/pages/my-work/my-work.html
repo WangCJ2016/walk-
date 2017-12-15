@@ -79,7 +79,7 @@
   <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
     <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
   </div>
-  <ion-infinite-scroll position='bottom' enabled='lists.length==0' threshold='10%' (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll #ininfinite position='bottom' [enabled]='enable' threshold='10%' (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Loading more data...">

@@ -68,10 +68,10 @@ export class ShiwuDetailPage {
     })
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
    this.form2.get('submitContent').valueChanges.subscribe(res => {
-    console.log(res)
-    alert(res.keyboardHeight)
+    console.log(res.keyboardHeight)
+    
     if(res.keyboardHeight) {
-      this.rd.setStyle(this.dymanic.nativeElement,'marginBottom',res.keyboardHeight)
+      this.rd.setStyle(this.dymanic.nativeElement,'paddingBottom',res.keyboardHeight)
     }else{
       this.sendChat(res)
     }
@@ -79,7 +79,7 @@ export class ShiwuDetailPage {
   }
 
   ionViewDidEnter(){
-    
+    console.log(this.dymanic.nativeElement)
     this.store$.dispatch(new actions.shiwuDetailAction({'thingId':'128fd57d36784e18862087138d188bf0'}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:'128fd57d36784e18862087138d188bf0',type:'2'}))
     this.store$.dispatch(new actions.requireListAction({parentId:'128fd57d36784e18862087138d188bf0'}))

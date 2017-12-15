@@ -33,7 +33,7 @@ export class FixTopComponent {
     console.log(this.workInfo)
     if(this.workPlate){
     const counts  = this.workPlate[this.timeType]
-    this.workTime = {currDate: this.workPlate.curr.currDate}
+    
     this.workArray = [{
         name: '项目',
         num: counts[this.timeType+'PlanWeekCount']+counts[this.timeType+'PlanMonthCount'],
@@ -89,7 +89,10 @@ export class FixTopComponent {
   workClick(i) {
     this.workActiveIndex = i
     this.workType = i+1
-
+    console.log(this.workTime)
+    if(!this.workTime){
+      this.workTime = {currDate: this.workPlate.curr.currDate}
+    }
     this.data.emit({type: this.workType, ...this.workTime})
   }
   timeClick(i) {

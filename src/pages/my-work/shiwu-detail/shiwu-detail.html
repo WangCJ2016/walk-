@@ -28,7 +28,7 @@
 </ion-header>
 
 
-<ion-content class='hasfooter'>
+<ion-content >
     <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]='enabled'>
         <ion-refresher-content
           refreshingSpinner="circles"
@@ -36,7 +36,7 @@
         </ion-refresher-content>
       </ion-refresher>
   <div [ngSwitch]='segment'>
-    <div *ngSwitchCase='"dymanic"' padding #dymanic>
+    <div *ngSwitchCase='"dymanic"' padding #dymanic style="margin-bottom:50px">
       <div class="chat_item" *ngFor="let item of chatList">
         <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
         <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">
@@ -152,6 +152,9 @@
       </form>
     </div>
   </div>
+  <!-- <form *ngIf='segment=="dymanic"' [formGroup]='form2' (submit)='ngSubmit(form2)'>
+    <footer-input formControlName='submitContent'></footer-input>
+</form> -->
 </ion-content>
 <ion-footer *ngIf='segment=="detail"'>
     <button ion-button class="submitBtn" *ngIf='mainPersonIf'  full style="margin:0" (click)='endPlanz(3)'>提交审核</button>
@@ -167,7 +170,7 @@
       </div>
       
     </div>
-</ion-footer>
+</ion-footer> -->
 <ion-footer *ngIf='segment=="dymanic"'>
   <form [formGroup]='form2' (submit)='ngSubmit(form2)'>
       <footer-input formControlName='submitContent'></footer-input>

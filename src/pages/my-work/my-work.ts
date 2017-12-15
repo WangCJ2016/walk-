@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,PopoverController,InfiniteScroll } from 'ionic-angular';
 import { CreateWorkPopoverComponent} from '../../components/create-work-popover/create-work-popover'
 import { Store } from '@ngrx/store'
@@ -19,6 +19,7 @@ import { todayFormat } from '../../utils'
   templateUrl: 'my-work.html',
 })
 export class MyWorkPage {
+  @ViewChild('ininfinite') ininfinite
   fixArray: Array<any>
   typeIndex: number
   itemIndex: number
@@ -31,6 +32,7 @@ export class MyWorkPage {
   workPlate
   todayFormat
   workType
+  enable: boolean
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -38,7 +40,7 @@ export class MyWorkPage {
     private store$: Store<fromRoot.State>) {
     this.data = this.navParams.data
     this.todayFormat = todayFormat
-   // this.store$.dispatch(new actions.shiwuListAction(this.data))
+    this.store$.dispatch(new actions.shiwuListAction(this.data))
     this.store$.dispatch(new actions.workPlateAction({}))
     this.store$.select(store => store.creatwork).subscribe(res => {
       console.log(res.shiwuList)
@@ -47,9 +49,11 @@ export class MyWorkPage {
       if(shiwuList&&shiwuList.pageNo!=this.pageNo) {
         this.lists = [...this.lists,...shiwuList.list]
         this.pageNo = shiwuList.pageNo
-        this.totalPages++
         this.inifite$?this.inifite$.complete():null
-        if(this.totalPages === shiwuList.totalPages) {
+        this.enable = this.lists.length>=12?true:false
+        console.log(this.enable)
+        if(this.pageNo === shiwuList.totalPages) {
+          console.log(this.ininfinite)
           this.inifite$?this.inifite$.enable(false):null
         }
       }

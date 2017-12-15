@@ -188,7 +188,7 @@ export class CreatworkServiceProvider {
       teamId:teamId,
       empId:empId,
       ...info,
-      pageSize: 10
+      pageSize: 12
     }
     const uri=`${this.config.url}/app/apply_applyList`
     return this.http.get(uri, {params: params})
@@ -226,7 +226,7 @@ export class CreatworkServiceProvider {
       teamId:teamId,
       empId:empId,
       ...info,
-      pageSize: 10
+      pageSize: 12
     }
     const uri=`${this.config.url}/app/thing_thingList`
     return this.http.get(uri, {params: params})
