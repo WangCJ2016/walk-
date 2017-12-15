@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
+import { App } from 'ionic-angular'
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import * as actions from '../actions/attence.action'
 import { Store } from '@ngrx/store'
@@ -120,10 +121,58 @@ export class AttenceEffects {
             return new actions.FailAction(res.msg)
         }
     })
+    // 考勤设置时获取截止日期
+    @Effect() getendate$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.GETENDDATE)
+    .map(toPayload)
+    .withLatestFrom(this.store$.select(store=> store.auth.auth))
+    .switchMap(([info, auth]) => {
+        return this.attenceService.getEndate(
+           auth.id,
+           auth.token,
+           auth.emp.teamId,
+           auth.emp.deptId,
+           auth.emp.id,
+           info
+       )
+    })
+    .map(res => {
+        console.log(res)
+        if(res.success) {
+          return new actions.getEndDateSuccessAction({endDate:res.dataObject})
+        }else{
+            return new actions.FailAction(res.msg)
+        }
+    })
+     // 设置员工考勤状态
+     @Effect() setattence$: Observable<Action> = this.actions$
+     .ofType(actions.ActionTypes.SETATTENCE)
+     .map(toPayload)
+     .withLatestFrom(this.store$.select(store=> store.auth.auth))
+     .switchMap(([info, auth]) => {
+         return this.attenceService.setAttence(
+            auth.id,
+            auth.token,
+            auth.emp.teamId,
+            auth.emp.id,
+            info
+        )
+     })
+     .map(res => {
+         console.log(res)
+         if(res.success) {
+             this.toast.message('设置成功')
+             this.appCtrl.getActiveNav().pop()
+           return new actions.setAttenceSuccessAction({})
+         }else{
+             return new actions.FailAction(res.msg)
+         }
+     })
     constructor(
         private actions$: Actions,
         private store$: Store<fromRoot.State>,
         private attenceService: AttenceServiceProvider,
-        private toast: ToastSitutionProvider
+        private toast: ToastSitutionProvider,
+        private appCtrl: App
     ) {}
 }

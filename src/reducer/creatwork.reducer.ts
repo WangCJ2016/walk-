@@ -1,9 +1,10 @@
 import * as actions from '../actions/creatework.action'
-import { createObj, applyList, applyFlow, zishiwu, shiwuitem} from '../domain'
+import { createObj, applyList, applyFlow, zishiwu, shiwuitem, applyCollect} from '../domain'
 export interface State {
      workdetail?: createObj
      applyList?: Array<applyList>
      applyFlow?: Array<applyFlow>
+     applyCollect?: applyCollect
      zishiwu?:Array<zishiwu>
      shiwuList?: {
        pageNo: number,
@@ -11,6 +12,7 @@ export interface State {
        list: Array<shiwuitem>
      }
      workPlate?:any,
+     thingCount?:any
      requireList?:Array<any>
 };
 
@@ -25,6 +27,7 @@ export function reducer(state = initialState, action: any ): State {
       return {...state,workdetail:action.payload}
     }
     case actions.ActionTypes.APPLYLIST_SUCCESS: {
+      console.log(action.payload)
       return {...state,applyList:action.payload}
     }
     case actions.ActionTypes.APPLYFLOW_SUCCESS: {
@@ -41,6 +44,12 @@ export function reducer(state = initialState, action: any ): State {
     } 
     case actions.ActionTypes.REQUIRELIST_SUCCESS: {
       return {...state,requireList:action.payload}
+    } 
+    case actions.ActionTypes.THIINGCOUND_SUCCESS: {
+      return {...state,thingCount:action.payload}
+    } 
+    case actions.ActionTypes.APPLYCOLLECT_SUCCESS: {
+      return {...state,applyCollect:action.payload}
     } 
     default: {
       return state;

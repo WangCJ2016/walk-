@@ -52,8 +52,9 @@ export interface applyList {
   status?:string
   applyEmp?:any
   pageNo?: number
+  totalPage?:number
 }
-// 事务流程图
+// shenpi流程图
 export interface applyFlow {
   status:string
   emp:{
@@ -61,6 +62,11 @@ export interface applyFlow {
     photo?:string
   }
   updateTime:string
+}
+// 审批汇总
+export interface applyCollect {
+  myApplyCount: number,
+ progressCount: number
 }
 // 子事务
 export interface zishiwu {

@@ -45,7 +45,7 @@ export class CreatePlanZPage {
         photo:res.photo
       })
       this.todayFormat = todayFormat()
-    
+      console.log(this.todayFormat)
   }
 
   

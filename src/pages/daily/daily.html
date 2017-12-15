@@ -87,8 +87,8 @@
         </div>
     </section>
 
-    <div *ngIf='!showIf&&!isSelf' class="submit_btn">
+    <div  class="submit_btn" *ngIf='!showIf&&!isSelf'>
         <button ion-button full (click)='pingyue()'>评阅</button>
     </div>
-    <star [trsition]='backdrop' (cb)='callback($event)' (starcb)='starcb($event)'></star>
+    <!-- <star [trsition]='backdrop' (cb)='callback($event)' (starcb)='starcb($event)'></star> -->
 </ion-content>

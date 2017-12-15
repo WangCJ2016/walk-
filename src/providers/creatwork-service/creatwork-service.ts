@@ -188,7 +188,7 @@ export class CreatworkServiceProvider {
       teamId:teamId,
       empId:empId,
       ...info,
-      pageSize: 5
+      pageSize: 10
     }
     const uri=`${this.config.url}/app/apply_applyList`
     return this.http.get(uri, {params: params})
@@ -203,6 +203,18 @@ export class CreatworkServiceProvider {
       ...info,
     }
     const uri=`${this.config.url}/app/apply_applyFlowList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 审批汇总
+  applyCollect(userId,token,teamId,empId) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId
+    }
+    const uri=`${this.config.url}/app/apply_applyCollect`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
@@ -300,6 +312,18 @@ export class CreatworkServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+   // 获取事务个数统计
+   thingCount(userId,token,teamId,empId) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+    }
+    const uri=`${this.config.url}/app/thing_thingCount`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
   // 成果产出物
   requireList(userId,token,teamId,info) {
     const params = {
@@ -334,6 +358,17 @@ export class CreatworkServiceProvider {
       ...info
     }
     const uri=`${this.config.url}/app/thing_deleteResults`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  requireLink(userId,token,teamId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_fileUniteResults`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }

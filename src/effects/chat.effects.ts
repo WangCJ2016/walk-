@@ -24,7 +24,8 @@ export class ChatEffects {
         contents: chat.contents?chat.contents:'',
         attach: chat.attach?chat.attach:'',
         pageNo: res.dataObject.pageNo,
-        totalPages: res.dataObject.totalPages
+        totalPages: res.dataObject.totalPages,
+        updateTime: chat.updateTime
       }))
       return new actions.ChatListSuccessAction(data)
     }
@@ -42,7 +43,8 @@ export class ChatEffects {
       chatGroupId: res.dataObject.chatGroupId,
       initatorEmp: res.dataObject.initatorEmp,
       contents: res.dataObject.contents?res.dataObject.contents:'',
-      attach: res.dataObject.attach?res.dataObject.attach:''
+      attach: res.dataObject.attach?res.dataObject.attach:'',
+      
      }
      return new actions.sendChatSuccessAction(data)
    }

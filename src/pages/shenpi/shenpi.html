@@ -6,74 +6,98 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>审批</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="presentPopover()">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-buttons>
-    </ion-navbar>
-    <ion-toolbar>
-        <ion-segment [(ngModel)]='shenpiType'>
-            <ion-segment-button value="3" (click)='applyTypeChange()'>
-                我的审批
-            </ion-segment-button>
-            <ion-segment-button value="2" (click)='applyTypeChange()'>
-                要我审批
-            </ion-segment-button>
-            <ion-segment-button value="1" (click)='applyTypeChange()'>
-                抄送给我
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
+  <ion-navbar>
+    <ion-title>审批</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]='shenpiType'>
+      <ion-segment-button value="3" (click)='applyTypeChange()'>
+        我的审批
+      </ion-segment-button>
+      <ion-segment-button value="2" (click)='applyTypeChange()'>
+        要我审批
+      </ion-segment-button>
+      <ion-segment-button value="1" (click)='applyTypeChange()'>
+        抄送给我
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-    <div [ngSwitch]='shenpiType' >
-        <div *ngSwitchCase="'3'">
-                <ion-list  >
-                        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList3; let i=index">
-                            <ion-avatar item-start>
-                                <!-- <img *ngIf='!!item?.initatorEmp.photo' src={{item?.initatorEmp.photo}} alt=""> -->
-                                <avatar  name={{item.initatorEmp?.name}}></avatar>
-                            </ion-avatar>
-                            <h2 class="name">{{item.initatorEmp?.name}}</h2>
-                            <p class="intr"><span>{{item.classify}}</span>&nbsp;&nbsp;<span>{{item.startDate}}至{{item.endDate}}</span>&nbsp;&nbsp;<span *ngIf='item?.money'>¥2000</span></p>
-                            <button ion-button outline item-end color='kim'>{{item.status}}</button>
-                        </ion-item>
-                    </ion-list>
-        </div>
+  <div [ngSwitch]='shenpiType'>
+    <div *ngSwitchCase="'3'">
+      <ion-list>
+        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList3; let i=index">
+          <ion-avatar item-start>
+            <!-- <img *ngIf='!!item?.initatorEmp.photo' src={{item?.initatorEmp.photo}} alt=""> -->
+            <avatar name={{item.initatorEmp?.name}}></avatar>
+          </ion-avatar>
+          <h2 class="name">{{item.initatorEmp?.name}}</h2>
+          <p class="intr">
+            <span>{{item.classify}}</span>&nbsp;&nbsp;
+            <span>{{item.startDate}}至{{item.endDate}}</span>&nbsp;&nbsp;
+            <span *ngIf='item?.money'>¥2000</span>
+          </p>
+          <button ion-button outline item-end color='kim'>{{item.status}}</button>
+        </ion-item>
+      </ion-list>
     </div>
-    <div [ngSwitch]='shenpiType'>
-        <div *ngSwitchCase="'1'">
-                <ion-list *ngIf='applyList1.length>0'>
-                        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList1; let i=index">
-                            <ion-avatar item-start>
-                                <img *ngIf='!!item.initatorEmp?.photo' src={{item?.initatorEmp.photo}} alt="">
-                                <avatar *ngIf='!item?.initatorEmp?.photo' name={{item.initatorEmp?.name}}></avatar>
-                            </ion-avatar>
-                            <h2 class="name">{{item.initatorEmp?.name}}</h2>
-                            <p class="intr"><span>{{item?.classify}}</span>&nbsp;&nbsp;<span>{{item?.startDate}}至{{item?.endDate}}</span>&nbsp;&nbsp;<span *ngIf='item?.money'>¥2000</span></p>
-                            <button ion-button outline item-end color='kim'>{{item.status}}</button>
-                        </ion-item>
-                    </ion-list>
-        </div>
-        </div>
-        <div [ngSwitch]='shenpiType'>
-            <div *ngSwitchCase="'2'">
-                    <ion-list *ngIf='applyList2.length>0'>
-                            <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList2; let i=index">
-                                <ion-avatar item-start>
-                                    <img *ngIf='!!item.initatorEmp?.photo' src={{item?.initatorEmp.photo}} alt="">
-                                    <avatar *ngIf='!item.initatorEmp?.photo' name={{item.initatorEmp?.name}}></avatar>
-                                </ion-avatar>
-                                <h2 class="name">{{item.initatorEmp?.name}}</h2>
-                                <p class="intr"><span>{{item?.classify}}</span>&nbsp;&nbsp;<span>{{item?.startDate}}至{{item?.endDate}}</span>&nbsp;&nbsp;<span *ngIf='item?.money'>¥2000</span></p>
-                                <button ion-button outline item-end color='kim'>{{item.status}}</button>
-                            </ion-item>
-                        </ion-list>
-            </div>
-            </div>
+  </div>
+  <div [ngSwitch]='shenpiType'>
+    <div *ngSwitchCase="'1'">
+      <ion-list *ngIf='applyList1.length>0'>
+        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList1; let i=index">
+          <ion-avatar item-start>
+            <img *ngIf='!!item.initatorEmp?.photo' src={{item?.initatorEmp.photo}} alt="">
+            <avatar *ngIf='!item?.initatorEmp?.photo' name={{item.initatorEmp?.name}}></avatar>
+          </ion-avatar>
+          <h2 class="name">{{item.initatorEmp?.name}}</h2>
+          <p class="intr">
+            <span>{{item?.classify}}</span>&nbsp;&nbsp;
+            <span>{{item?.startDate}}至{{item?.endDate}}</span>&nbsp;&nbsp;
+            <span *ngIf='item?.money'>¥2000</span>
+          </p>
+          <button ion-button outline item-end color='kim'>{{item.status}}</button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div [ngSwitch]='shenpiType'>
+    <div *ngSwitchCase="'2'">
+      <ion-list *ngIf='applyList2.length>0'>
+        <ion-item (click)='goDetail(item.id)' *ngFor="let item of applyList2; let i=index">
+          <ion-avatar item-start>
+            <img *ngIf='!!item.initatorEmp?.photo' src={{item?.initatorEmp.photo}} alt="">
+            <avatar *ngIf='!item.initatorEmp?.photo' name={{item.initatorEmp?.name}}></avatar>
+          </ion-avatar>
+          <h2 class="name">{{item.initatorEmp?.name}}</h2>
+          <p class="intr">
+            <span>{{item?.classify}}</span>&nbsp;&nbsp;
+            <span>{{item?.startDate}}至{{item?.endDate}}</span>&nbsp;&nbsp;
+            <span *ngIf='item?.money'>¥2000</span>
+          </p>
+          <button ion-button outline item-end color='kim'>{{item.status}}</button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <ion-infinite-scroll position='bottom' [enabled]='enabled1' threshold='2%' (ionInfinite)="doInfinite1($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-infinite-scroll position='bottom'  [enabled]='enabled2' threshold='2%' (ionInfinite)="doInfinite2($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-infinite-scroll position='bottom' [enabled]='enabled3' threshold='2%' (ionInfinite)="doInfinite3($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

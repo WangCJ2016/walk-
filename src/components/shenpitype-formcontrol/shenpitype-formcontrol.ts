@@ -27,6 +27,7 @@ import { SelectModalComponent } from '../select-modal/select-modal'
 export class ShenpitypeFormcontrolComponent implements  ControlValueAccessor{
 
   type
+  valuename = '请选择审批类型'
   private propagateChange = (_: any) => { }
   constructor(private modalCtrl: ModalController) {
    
@@ -37,6 +38,7 @@ export class ShenpitypeFormcontrolComponent implements  ControlValueAccessor{
     modal.onDidDismiss(res => {
       console.log(res)
       this.type = res
+      this.valuename = res.name
       this.propagateChange(res)
     })
   }

@@ -1,0 +1,34 @@
+require-link-modal {
+  .applyflow{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    .title{
+      display: flex;
+      padding: 0 1.25rem;
+      justify-content: space-between;
+      font-size: 1.166667rem;
+      align-items: center;
+      line-height: 3.333333rem;
+      border-bottom: 0.55px solid $border_color;
+      ion-icon{
+        font-size: 24px;
+      }
+    }
+    .radio-icon{
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      border: 0.55px solid #ccc;
+      
+    }
+    .radio-ios .radio-checked{
+      background-color: #29b4ff
+    }
+    .radio-ios .radio-checked .radio-inner{
+      border-color: #fff!important;
+    }
+  }
+}

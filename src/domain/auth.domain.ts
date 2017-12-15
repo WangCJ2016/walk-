@@ -1,26 +1,26 @@
 export interface Auth {
-    userName?:string,
-    password?:string,
-    name?:string,
-    sex?:string,
-    provinceId?:string,
-    cityId?:string,
-    lastLoginTime?:string,
-    token?:string,
-    colorPreference?:string,
-    status?:string,
-    emp?: emp
-    id?:string,
-    countIf?:boolean
-    isDelete?:string,
-    creator?:string,
-    modifier?:string,
-    createTime?:string,
-    updateTime?:string,
-    sign?: string,
-    code?: string,
-    sign_type?: string 
+    cityId?: string
+    id?: string
+    name?: string
     photo?: string
+    provinceId?: string
+    sex?: string
+    token?: string
+    userName?: string
+    sign?:string
+    code?:string
+    countIf?:boolean
+    emp?:{
+        deptId?: string
+        id?:string
+        name?: string
+        photo?: string
+        teamId?:string
+        team?: {
+            id?: string
+            name?: string
+        }
+    }
 }
 export interface AuthInfo {
     userId: string

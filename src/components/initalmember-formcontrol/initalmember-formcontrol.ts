@@ -36,11 +36,7 @@ export class InitalmemberFormcontrolComponent implements ControlValueAccessor {
   constructor(private modalCtrl: ModalController) {
     
   }
-  ngOnChanges() {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    console.log(this.showType)
-  }
+  
   presentModal() {
     let profileModal = this.modalCtrl.create(SelectPersonComponent, { title: this.title, showType: this.showType });
     profileModal.present();

@@ -34,7 +34,28 @@ export class AuthEffects {
     .map(res => {
         console.log(res)
         if(res.success) {
-            return new actions.UserInfoSuccessAction(res.dataObject)
+            const data = {
+                cityId: res.dataObject.cityId,
+                id: res.dataObject.id,
+                name: res.dataObject.name,
+                photo: res.dataObject.photo,
+                provinceId: res.dataObject.provinceId,
+                sex: res.dataObject.sex,
+                token: res.dataObject.token,
+                userName: res.dataObject.userName,
+                emp:{
+                    deptId: res.dataObject.emp.deptId,
+                    id:res.dataObject.emp.id,
+                    name: res.dataObject.emp.name,
+                    photo: res.dataObject.emp.photo,
+                    teamId:res.dataObject.emp.team.id,
+                    team: {
+                        id: res.dataObject.emp.team.id,
+                        name: res.dataObject.emp.team.name,
+                    }
+                }
+            }
+            return new actions.UserInfoSuccessAction(data)
          }
     })
     // login
@@ -50,7 +71,28 @@ export class AuthEffects {
         if(res.success) {
             this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})
             localStorage.setItem('userId', res.dataObject.id)
-           return new actions.LoginSuccessAction(res.dataObject)
+            const data = {
+                cityId: res.dataObject.cityId,
+                id: res.dataObject.id,
+                name: res.dataObject.name,
+                photo: res.dataObject.photo,
+                provinceId: res.dataObject.provinceId,
+                sex: res.dataObject.sex,
+                token: res.dataObject.token,
+                userName: res.dataObject.token,
+                emp:{
+                    deptId: res.dataObject.emp.deptId,
+                    id:res.dataObject.emp.id,
+                    name: res.dataObject.emp.name,
+                    photo: res.dataObject.emp.photo,
+                    teamId:res.dataObject.emp.team.id,
+                    team: {
+                        id: res.dataObject.emp.team.id,
+                        name: res.dataObject.emp.team.name,
+                    }
+                }
+            }
+           return new actions.LoginSuccessAction(data)
         }else {
            
             return new actions.AuthFailAction({

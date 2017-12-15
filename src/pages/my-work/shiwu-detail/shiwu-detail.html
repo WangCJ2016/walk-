@@ -36,14 +36,13 @@
         </ion-refresher-content>
       </ion-refresher>
   <div [ngSwitch]='segment'>
-    <div *ngSwitchCase='"dymanic"' padding>
+    <div *ngSwitchCase='"dymanic"' padding #dymanic>
       <div class="chat_item" *ngFor="let item of chatList">
         <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
         <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">
         <div *ngIf='!item?.attach' class="chat_content">{{item?.contents}}</div>
-        <div *ngIf='item?.attach' class="chat_content_img">
-          <img src="{{item?.attach}}" alt="">
-          
+        <div *ngIf='item?.attach' class="chat_content_img" (click)='requireModal(item)'>
+          <img src="{{item?.attach}}" alt="">  
         </div>
       </div>
     </div>
@@ -111,7 +110,7 @@
                     <p class="reuire_title">{{item.name}}</p>
                     <div class="reuire_content" *ngIf='item.attachName'>
                         
-                            <img class="add" src="assets/imgs/work-desk/icon_document.png" alt="">
+                            <img class="add" src={{item.attach}} alt="">
                       
                           <div>
                               <span>{{item.attachName}}</span>

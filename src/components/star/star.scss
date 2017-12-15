@@ -4,13 +4,12 @@ star {
       position: absolute;
       left: 1.25rem;
       right: 1.25rem;
-      bottom: -200px;
+      bottom: 100px;
       overflow: hidden;
       border-radius: .416667rem;
       background-color: #fff;
       z-index: 3;
-      transition: bottom .3s;
-      transition-delay: 1s;
+     
       h3{
         font-size: 1.333333em;
         line-height: 2rem;

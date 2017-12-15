@@ -1,11 +1,12 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { numtoarray } from '../../utils'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/daily.action'
 import * as attenceActions from '../../actions/attence.action'
 import { Subject } from 'rxjs/Subject';
+import { StarComponent} from '../../components/star/star'
 /**
  * Generated class for the DailyPage page.
  *
@@ -37,6 +38,7 @@ export class DailyPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private modal: ModalController,
     private store$: Store<fromRoot.State>
   ) {
     console.log(this.navParams.data)
@@ -45,7 +47,7 @@ export class DailyPage {
       this.store$.dispatch(new attenceActions.AttenceRecordAction({time:v,empId:this.navParams.data.empId}))
     })
     
-    //this.store$.
+  
   }
   ionViewDidEnter(){
     this.store$.select(store=>store.auth.auth.emp.id).subscribe(id=>{
@@ -55,7 +57,7 @@ export class DailyPage {
       }
       
       this.store$.select(store=>store.attence.attence).subscribe(res=>{
-        console.log(res)
+       
         if(res) {
           this.attenceList = res.attenceRecordList
         }
@@ -70,7 +72,7 @@ export class DailyPage {
           this.title = v.name
           this.stars = v.stars
         }
-        console.log(this.dailyContent)
+        
         if(this.stars){
           this.starsArray = numtoarray(this.stars)
         }
@@ -89,16 +91,19 @@ export class DailyPage {
     this.navCtrl.push(page,{empId:this.empId,deptId:this.depId})
   }
   pingyue() {
-    this.backdrop = true
+    const modal = this.modal.create(StarComponent,{},{showBackdrop:true,enableBackdropDismiss:true})
+    modal.present()
+    modal.onDidDismiss(v=>{
+      console.log(v)
+      this.stars = v
+      this.starsArray = numtoarray(this.stars)
+      this.store$.dispatch(new actions.ModifyAction({dailyId:this.dailyId,star: v}))
+    })
   }
   callback(cb) {
     this.backdrop = cb
   }
-  starcb(num) {
-    this.stars = num
-    this.starsArray = numtoarray(this.stars)
-    this.store$.dispatch(new actions.ModifyAction({dailyId:this.dailyId,star: num}))
-  }
+ 
   // 添加日报
   addDaily() {
     console.log(this.desc)

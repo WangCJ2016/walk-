@@ -42,40 +42,17 @@ export class CreateShenpiPage {
       fullName: [''],
       desc: [''],
       fujian:[''],
-      day: ['0.5'],
-      startTime: [''],
-      endTime: [''],
+      timeObj: [''],
       money: [''],
       shenheren: [''],
       chaosongren: ['']
     })
-    const startTime$ = this.form.get('startTime').valueChanges
-    const endTime$ = this.form.get('endTime').valueChanges
-    const day$ = this.form.get('day').valueChanges
-    // Observable.merge(startTime$,endTime$,day$).subscribe((s,e,d)=> {
-    //   console.log(s,e,d)
-    //   if() {
-    //     distanceInTime(this.form.get('startTime').value, endtime)
-    //   }
-    // })
-    this.form.get('endTime').valueChanges.subscribe(endtime => {
-      console.log(endtime)
-      if(this.form.get('startTime').value) {
-       this.time =  distanceInTime(this.form.get('startTime').value, endtime)
-       this.form.patchValue({day: this.time.days});
-      }
-    })
-    // this.form.get('day').valueChanges.subscribe(v => {                  
-    //   const endDate =  toEndDate(this.form.get('startTime').value, v)
-    //   console.log(endDate)
-    //   this.form.patchValue({endTime: endDate});
-    // })
-    this.todayFormat = todayFormat()
+    this.form.get('timeObj').valueChanges.subscribe(v=>console.log(v))
+    
   }
   
   onSubmit(f, ev: Event) {
-    console.log(f.value)
-    this.navCtrl.push('ShenpiDetailPage')
+   
     if(!f.value.fullName) {
       this.toastProvider.message('请选择审批类型')
       return
@@ -85,10 +62,7 @@ export class CreateShenpiPage {
       return
     }
 
-    if(f.value.fullName.type!=2&&!f.value.startTime) {
-      this.toastProvider.message('请填写起始时间')
-      return
-    }
+    
     if(f.value.fullName.type==2){
       this.toastProvider.message('请填写起借款金额')
       return
@@ -127,11 +101,11 @@ export class CreateShenpiPage {
               type: f.value.fullName.type,
               classify: f.value.fullName.classify,
               reason: f.value.desc,
-              startDate: this.time.startDate?this.time.startDate:'',
-              startSx: this.time.startSx?this.time.startSx:'',
-              endDate: this.time.endDate?this.time.endDate:'',
-              endSx: this.time.endSx?this.time.endSx:'',
-              days: this.time.days?this.time.days:'',
+              startDate: f.value.timeObj.startDate,
+              startSx: f.value.timeObj.startSx=='AM'?1:2,
+              endDate: f.value.timeObj.endDate,
+              // endSx: f.value.timeObj.endSx=='AM'?1:2,
+              days: f.value.timeObj.day,
               money:f.value.money?f.value.money:'',
               attach: attach.join(','),
               attachName: attachName.join(','),
@@ -146,11 +120,11 @@ export class CreateShenpiPage {
         type: f.value.fullName.type,
         classify: f.value.fullName.classify,
         reason: f.value.desc,
-        startDate: this.time.startDate?this.time.startDate:'',
-        startSx: this.time.startSx?this.time.startSx:'',
-        endDate: this.time.endDate?this.time.endDate:'',
-        endSx: this.time.endSx?this.time.endSx:'',
-        days: this.time.days?this.time.days:'',
+        startDate: f.value.timeObj.startDate,
+        startSx: f.value.timeObj.startSx=='AM'?1:2,
+        endDate: f.value.timeObj.endDate,
+       // endSx: f.value.timeObj.endSx=='AM'?1:2,
+        days: f.value.timeObj.day,
         money:f.value.money?f.value.money:'',
         applyPerson: f.value.shenheren.id,
         ccEmpIds:f.value.chaosongren.map(res=>res.id).join(','),

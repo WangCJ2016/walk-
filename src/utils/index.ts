@@ -108,13 +108,31 @@ export function distanceInTime(startTime, endTime) {
     }
    return data
 }
+// 日期转化格式
+export function dayFormat(day) {
+   return getYear(day)+'-'+(getMonth(day)+1)+'-'+getDate(day)
+}
 // 根据天数计算截止日期
 export function toEndDate(starTime, day) {
-    console.log(starTime)
-  const endTime = addDays(new Date(starTime.slice(0,-4)),day)
-  const time = getYear(endTime)+'-'+getMonth(endTime)+'-'+getDate(endTime)+'-'+getHours(endTime)
-  console.log(time)
-  return time
+    if(!starTime){
+        const startDate = new Date().toISOString()
+        const endTime = addDays(startDate,day)
+        const time = getYear(endTime)+'-'+(getMonth(endTime)+1)+'-'+getDate(endTime)+' '+(getHours(endTime)>=12?'PM':'AM')
+        return {
+            startDate:  getYear(startDate)+'-'+(getMonth(startDate)+1)+'-'+getDate(startDate),
+            startSx: (getHours(startDate)>=12?'PM':'AM'),
+            day:day
+        }
+    }else{
+        const startDate = new Date(starTime.slice(0,-4))
+        const endTime = addDays(startDate,day)
+        const time = getYear(endTime)+'-'+(getMonth(endTime)+1)+'-'+getDate(endTime)+' '+(getHours(endTime)>=12?'PM':'AM')
+        return {
+            startDate:  getYear(startDate)+'-'+(getMonth(startDate)+1)+'-'+getDate(startDate),
+            startSx: (getHours(startDate)>=12?'PM':'AM'),
+            day:day
+        }
+    }
 }
 // 返回审批类型
 export function applyType(type, classify) {
@@ -163,8 +181,8 @@ export function applyStatus(status: number) {
 }
 // 获取格式日期
 export function todayFormat() {
-    const min = getYear(new Date())+'-'+doublenum(getMonth(new Date()))+'-'+doublenum(getDate(new Date()))
-    const max = (getYear(new Date())+1)+'-'+doublenum(getMonth(new Date()))+'-'+doublenum(getDate(new Date()))
+    const min = getYear(new Date())+'-'+doublenum(getMonth(new Date())+1)+'-'+doublenum(getDate(new Date()))
+    const max = (getYear(new Date())+1)+'-'+doublenum(getMonth(new Date())+1)+'-'+doublenum(getDate(new Date()))
     console.log(min,max)
     return {
         min: min,

@@ -57,7 +57,7 @@ export class WorkUsercenterPage {
     this.token?this.goPage('MymessPage'):this.goPage('LoginPage')
   }
   logout() {
-    this.alert.create({
+    const alert = this.alert.create({
       title: '是否退出',
      
       buttons: [
@@ -66,6 +66,7 @@ export class WorkUsercenterPage {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
+            
           }
         },
         {
@@ -73,10 +74,12 @@ export class WorkUsercenterPage {
           handler: () => {
             this.loading.present()
             this.store$.dispatch(new actions.LogoutAction({}))
+            alert.dismiss()
           }
         }
       ]
-    }).present()
+    })
+    alert.present()
     
   }
 }

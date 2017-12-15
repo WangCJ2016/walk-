@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>杭州越团信息技术有限公司</ion-title>
+        <ion-title>{{teamName}}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -42,33 +42,45 @@
         <ion-grid no-padding text-center>
             <ion-row>
                 <ion-col align-self-center (click)='goWorkTimePage(1)'>
-                    <div class="num red">5</div>
+                    <div class="num red">{{workPlate?.delay.delayMettingCount+workPlate?.delay.delayPlanMonthCount+
+                        workPlate?.delay.delayPlanWeekCount+workPlate?.delay.delayThingCount}}</div>
                     <p class="intr">超期的事</p>
                 </ion-col>
                 <ion-col (click)='goWorkTimePage(0)'>
-                    <div class="num blue">5</div>
+                    <div class="num blue">{{workPlate?.curr.currApplyCount+workPlate?.curr.currMettingCount+
+                            workPlate?.curr.currPlanMonthCount+
+                            workPlate?.curr.currPlanWeekCount+
+                            workPlate?.curr.currThingCount}}</div>
                     <p class="intr">今天的事</p>
                 </ion-col >
                 <ion-col (click)='goWorkTimePage(2)'>
-                    <div class="num normal">5</div>
+                    <div class="num normal">{{workPlate?.week.weekApplyCount+
+                            workPlate?.week.weekMettingCount+
+                            workPlate?.week.weekPlanMonthCount+
+                            workPlate?.week.weekPlanWeekCount+
+                            workPlate?.week.weekThingCount}}</div>
                     <p class="intr">最近一周</p>
                 </ion-col>
                 <ion-col (click)='goWorkTimePage(3)'>
-                    <div class="num normal">5</div>
+                    <div class="num normal">{{workPlate?.forward.forwardApplyCount+
+                            workPlate?.forward.forwardMettingCount+
+                            workPlate?.forward.forwardPlanMonthCount+
+                            workPlate?.forward.forwardPlanWeekCount+
+                            workPlate?.forward.forwardThingCount}}</div>
                     <p class="intr">远期安排</p>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col col-3 (click)='goWorkPage(0)'>
-                    <div class="num">5</div>
+                    <div class="num">{{thingCount?.projectThingCount}}</div>
                     <p class="intr">项目</p>
                 </ion-col>
                 <ion-col col-3 (click)='goWorkPage(1)'>
-                    <div class="num">5</div>
+                    <div class="num">{{thingCount?.planCount}}</div>
                     <p class="intr">计划</p>
                 </ion-col>
                 <ion-col col-3 (click)='goWorkPage(2)'>
-                    <div class="num">5</div>
+                    <div class="num">{{thingCount?.mettingCount}}</div>
                     <p class="intr">会议</p>
                 </ion-col>
             </ion-row>
@@ -83,14 +95,16 @@
                     <img src="assets/imgs/work-desk/shenhe.png" alt="">
                 </ion-col>
                 <ion-col>
-                    <div class="num orange">15</div>
+                    <div class="num orange">{{applyCollect?.myApplyCount
+                        }}</div>
                     <p class="intr">要我审核</p>
                 </ion-col>
                 <ion-col>
                     <img src="assets/imgs/work-desk/going.png" alt="">
                 </ion-col>
                 <ion-col>
-                    <div class="num green">35</div>
+                    <div class="num green">{{applyCollect?.progressCount
+                        }}</div>
                     <p class="intr">进行中的</p>
                 </ion-col>
             </ion-row>
@@ -106,8 +120,8 @@
                 </ion-col>
                 <ion-col (click)='goPage("DutySituationPage")'>
                     <div class="termwork_num">
-                        <span class="active green">27</span>
-                        <span class="num_small">/30</span>
+                        <span class="active green">{{attencePeople?.isIn.isInCount}}</span>
+                        <span class="num_small">/{{attencePeople?.isIn.isInCount+attencePeople?.notIn.notInCount}}</span>
                     </div>
                     <p class="intr">在岗人员</p>
                 </ion-col>
@@ -116,12 +130,13 @@
                 </ion-col>
                 <ion-col (click)='goPage("TermDailyPage")'>
                     <div class="termwork_num">
-                        <span class="active blue">18</span>
-                        <span class="num_small">/30</span>
+                        <span class="active blue">{{dailyPeople?.handIn.handInCount}}</span>
+                        <span class="num_small">/{{dailyPeople?.handIn.handInCount+dailyPeople?.notHandIn.notHandInCount}}</span>
                     </div>
                     <p class="intr">今日日报</p>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </div>
+   
 </ion-content>

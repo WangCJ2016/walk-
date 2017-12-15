@@ -1,5 +1,5 @@
-import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
+import { Component, Output, EventEmitter } from '@angular/core';
+
 /**
  * Generated class for the CountComponent component.
  *
@@ -9,23 +9,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/
 @Component({
   selector: 'count',
   templateUrl: 'count.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CountComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => CountComponent),
-      multi: true
-    }
-  ]
-})
-export class CountComponent implements  ControlValueAccessor{
   
+})
+export class CountComponent {
+  @Output() countNum = new EventEmitter<number>()
   num: number = 0.5
-  private propagateChange = (_: any) => { }
   constructor() {
     
   }
@@ -34,24 +22,11 @@ export class CountComponent implements  ControlValueAccessor{
     if(this.num<0) {
       this.num = 0
     }
-    this.propagateChange(this.num)
+    this.countNum.emit(this.num)
   }
   plus() {
     this.num+=0.5
-    this.propagateChange(this.num)
-  }
-  writeValue(obj: any): void {
-    console.log(obj)
+    this.countNum.emit(this.num)
   }
   
-    registerOnChange(fn: any): void {
-      this.propagateChange = fn
-    }
-  
-    registerOnTouched() {
-  
-    }
-    validate(c): {[key: string]: any} {
-      return null
-     }
 }

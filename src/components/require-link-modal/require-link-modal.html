@@ -1,0 +1,26 @@
+<!-- Generated template for the RequireLinkModalComponent component -->
+<!-- Generated template for the GroupContactsModalComponent component -->
+
+
+
+<ion-content style="background-color:transparent">
+  <div class="applyflow">
+    <div class="title">
+        <span></span>
+        <span>关联成果&检查项</span>
+        <ion-icon name="close" (click)='close()'></ion-icon>
+    </div>
+    <ion-list radio-group [(ngModel)]="select">
+      <ion-item *ngFor="let item of requireList">
+        <ion-label>{{item.name}}</ion-label>
+        <ion-radio value={{item.name}} ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <div padding>
+            <button ion-button full (click)='submit()'>
+                确定
+            </button>
+        </div>
+  </div>
+  
+</ion-content>

@@ -37,6 +37,8 @@ export const ActionTypes = {
   APPLYLIST_SUCCESS: '[creatwork] applylist_success',
   APPLYFLOW:'[creatwork] applyflowlist',
   APPLYFLOW_SUCCESS:'[creatwork] applyflowlist_success',
+  APPLYCOLLECT:'[creatwork] applycollect',
+  APPLYCOLLECT_SUCCESS:'[creatwork] applycollect_success',
   // shiwu
   ADDSHIWU:'[creatwork] addshiwu',
   ADDSHIWU_SUCCESS:'[creatwork] addshiwu_success',
@@ -58,9 +60,14 @@ export const ActionTypes = {
   ADDREQUIRE_SUCCESS:'[creatwork] addrequire_success',
   DELREQUIRE:'[creatwork] delrequire',
   DELREQUIRE_SUCCESS:'[creatwork] delrequire_success',
+  REQUIRELINK:'[creatwork] requirelink',
+  REQUIRELINK_SUCCESS:'[creatwork] requirelink_success',
   // 获取日期
   WORKPLATE:'[creatwork] workplate',
   WORKPLATE_SUCCESS:'[creatwork] workplate_success',
+  // 事务个数统计
+  THIINGCOUND:'[creatwork] thingcount',
+  THIINGCOUND_SUCCESS:'[creatwork] thingcount_success',
   // 动态首页列表
   
 };
@@ -70,6 +77,18 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+// 事务个数统计
+export class thingCountAction implements Action {
+  readonly type = ActionTypes.THIINGCOUND;
+
+  constructor(public payload: any) { }
+}
+
+export class thingCountSuccessAction implements Action {
+  readonly type = ActionTypes.THIINGCOUND_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
 // 成果产出物
 export class requireListAction implements Action {
   readonly type = ActionTypes.REQUIRELIST;
@@ -101,6 +120,17 @@ export class delRequireAction implements Action {
 
 export class delRequireSuccessAction implements Action {
   readonly type = ActionTypes.DELREQUIRE_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+export class requireLinkAction implements Action {
+  readonly type = ActionTypes.REQUIRELINK;
+
+  constructor(public payload: any) { }
+}
+
+export class requireLinkSuccessAction implements Action {
+  readonly type = ActionTypes.REQUIRELINK_SUCCESS;
 
   constructor(public payload: {}) { }
 }
@@ -265,7 +295,7 @@ export class applyUpdateSuccessAction implements Action {
 export class applyListAction implements Action {
   readonly type = ActionTypes.APPLYLIST;
 
-  constructor(public payload: {type:string,pageNo:string}) { }
+  constructor(public payload: {type:string,pageNo:number}) { }
 }
 
 export class applyListSuccessAction implements Action {
@@ -282,6 +312,18 @@ export class applyFlowAction implements Action {
 
 export class applyFlowSuccessAction implements Action {
   readonly type = ActionTypes.APPLYFLOW_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+// 审批汇总
+export class applyCollectAction implements Action {
+  readonly type = ActionTypes.APPLYCOLLECT;
+
+  constructor(public payload: any) { }
+}
+
+export class applyCollectSuccessAction implements Action {
+  readonly type = ActionTypes.APPLYCOLLECT_SUCCESS;
 
   constructor(public payload: {}) { }
 }

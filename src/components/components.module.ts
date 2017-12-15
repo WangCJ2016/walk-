@@ -22,6 +22,8 @@ import { ShenpitypeFormcontrolComponent } from './shenpitype-formcontrol/shenpit
 import { StarComponent } from './star/star';
 import { ShenpiPopverComponent } from './shenpi-popver/shenpi-popver';
 import { GroupContactsModalComponent } from './group-contacts-modal/group-contacts-modal';
+import { TimeCountFormcontrolComponent } from './time-count-formcontrol/time-count-formcontrol';
+import { RequireLinkModalComponent } from './require-link-modal/require-link-modal';
 
 
 
@@ -48,9 +50,11 @@ import { GroupContactsModalComponent } from './group-contacts-modal/group-contac
     StarComponent,
     ShenpiPopverComponent,
     GroupContactsModalComponent,
+    TimeCountFormcontrolComponent,
+    RequireLinkModalComponent,
     ],
     imports: [IonicModule],
-    entryComponents:[FileModalComponent,GroupContactsModalComponent,ShenpiPopverComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
+    entryComponents:[RequireLinkModalComponent,FileModalComponent,StarComponent,GroupContactsModalComponent,ShenpiPopverComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
 	exports: [RoundRangeComponent,
     BlankComponent,
     DatePickerComponent,
@@ -72,6 +76,8 @@ import { GroupContactsModalComponent } from './group-contacts-modal/group-contac
     StarComponent,
     ShenpiPopverComponent,
     GroupContactsModalComponent,
+    TimeCountFormcontrolComponent,
+    RequireLinkModalComponent,
     ]
 })
 export class ComponentsModule {}

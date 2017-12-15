@@ -18,7 +18,11 @@ export const ActionTypes = {
     ATTENCERECORD: type('[attence] attencerecord'),
     ATTENCERECORD_SUCCESS: type('[attence] attencerecord_success'),
     ATTENCESTAT: type('[attence] attencestat'),
-    ATTENCESTAT_SUCCESS: type('[attence] attencestat_success')
+    ATTENCESTAT_SUCCESS: type('[attence] attencestat_success'),
+    SETATTENCE:type('[attence] setattence'),
+    SETATTENCE_SUCCESS:type('[attence] setattence_success'),
+    GETENDDATE:type('[attence] getendate'),
+    GETENDDATE_SUCCESS:type('[attence] getendate_success'),
 };
 
 /**
@@ -26,6 +30,7 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+
 export class FailAction implements Action {
     type = ActionTypes.ATTENCE_FAIL;
 
@@ -72,6 +77,28 @@ export class AttenceStatAction implements Action {
 }
 export class AttenceStatSuccessAction implements Action {
     type = ActionTypes.ATTENCESTAT_SUCCESS;
+
+    constructor(public payload: any) { }
+}
+// 设置员工考勤状态
+export class setAttenceAction implements Action {
+    type = ActionTypes.SETATTENCE;
+
+    constructor(public payload: any) { }
+}
+export class setAttenceSuccessAction implements Action {
+    type = ActionTypes.SETATTENCE_SUCCESS;
+
+    constructor(public payload: any) { }
+}
+// 考勤设置时获取截止
+export class getEndDateAction implements Action {
+    type = ActionTypes.GETENDDATE;
+
+    constructor(public payload: any) { }
+}
+export class getEndDateSuccessAction implements Action {
+    type = ActionTypes.GETENDDATE_SUCCESS;
 
     constructor(public payload: any) { }
 }

@@ -28,20 +28,8 @@
         <ion-textarea formControlName='desc' class="create_textarea"></ion-textarea>
       </ion-item>
       <fujian-formcontrol formControlName='fujian'></fujian-formcontrol>
-      <ion-item style="margin-top: 10px">
-        <ion-label>起始时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' formControlName='startTime' ></ion-datetime>
-        <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-      </ion-item>
-      <ion-item>
-        <ion-label>天数(天)</ion-label>
-        <count formControlName='day' item-end></count>
-      </ion-item>
-      <ion-item>
-        <ion-label>截止时间</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' min={{todayFormat.min}} min={{todayFormat.min}} max={{todayFormat.max}}  cancelText='取消' doneText='确定' formControlName='endTime' ></ion-datetime>
-        <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-      </ion-item>
+      <blank></blank>
+      <time-count-formcontrol  formControlName='timeObj'></time-count-formcontrol>
       <ion-item style="margin-top: 10px">
         <ion-label>金额(元)</ion-label>
         <ion-input placeholder='借款类(必填)' formControlName='money'></ion-input>

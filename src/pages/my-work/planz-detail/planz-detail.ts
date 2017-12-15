@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Refresher, Content } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
+import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
@@ -21,8 +22,9 @@ import { zishiwu } from '../../../domain'
   templateUrl: 'planz-detail.html',
 })
 export class PlanzDetailPage {
-
+  @ViewChild(Content) content: Content;
   form: FormGroup
+  form2: FormGroup
   segment = 'detail'
   params
   saturation: number = 0
@@ -34,6 +36,13 @@ export class PlanzDetailPage {
   zishiwuList: Array<zishiwu>
   requireList: Array<any> = []
   submitIf: boolean = false // 是否提交保存
+
+  chatList: Array<any> = []
+  chatGroupId: string
+  dymanicPageNo = 0
+  dymanicPageTotal = 1
+  refresher: Refresher
+  enabled: boolean = false
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -51,26 +60,61 @@ export class PlanzDetailPage {
       attach:[''],
       progress: [this.progress]
     })
+    this.form2 = this.fb.group({
+      submitContent: ['']
+    })
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
-  
+   this.form2.get('submitContent').valueChanges.subscribe(res => {
+    console.log(res)
+   
+    if(res.keyboardHeight) {
+     // this.rd.setStyle(this.dymanic.nativeElement,'marginBottom',res.keyboardHeight)
+    }else{
+      this.sendChat(res)
+    }
+   })
    
   }
 
   
   ionViewDidEnter() {
 
-    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
-    this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'4'}))
-    this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
+    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}))
+    this.store$.dispatch(new actions.zishiwuAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',type:'4'}))
+    this.store$.dispatch(new actions.requireListAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040'}))
+    this.store$.dispatch(new chatActions.ChatListAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',pageNo:1}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
       if(this.data){
+        this.form.get('remark').patchValue(this.data.remark)
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
+      }
+    })
+
+    this.store$.select(store=>store.chat).subscribe(v=>{
+      
+      if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
+        const preLength = this.chatList.length
+        this.enabled = true
+        this.chatGroupId = v.chatList[0].chatGroupId
+        this.chatList = v.chatList
+        this.dymanicPageNo = v.chatList[0].pageNo
+        this.refresher?this.refresher.complete():null
+        
+        if(this.dymanicPageTotal == v.chatList[0].totalPages) {
+          this.enabled=false
+          console.log(this.enabled)
+        }
+        
+        if(v.chatList.length-preLength==1) {
+          this.content.resize();
+          this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight+100)
+        }
       }
     })
   }
@@ -78,7 +122,7 @@ export class PlanzDetailPage {
     
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
-    this.form.get('remark').value !== this.data.remark &&!this.submitIf) {
+    this.form.get('remark').value !== this.data.remark ) {
      let alert =  this.alertCtrl.create({
         title:'是否保存修改？',
         buttons: [
@@ -86,7 +130,7 @@ export class PlanzDetailPage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+             this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
             }
           },
           {
@@ -131,7 +175,7 @@ export class PlanzDetailPage {
           handler: data => {
            console.log(data)
            this.requireList.push({name: data.name})
-           this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
+           this.store$.dispatch(new actions.addRequireAction({parentId: '5aba63cc3caf4d1bb1cdc60e676fa040', type:2,name: data.name}))
           }
         }
       ]
@@ -141,16 +185,16 @@ export class PlanzDetailPage {
   // 删除需求
   delRequire(id, index) {
     this.requireList.splice(index, 1)
-    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'planWeekId':this.params.id}))
+    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}))
   }
   // 创建子事务
   createzishiwu() {
-    this.navCtrl.push('CreateWorkPage',{parentId:this.params.id,type:4})
+    this.navCtrl.push('CreateWorkPage',{parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',type:4})
   }
   // 关闭周计划
   endPlanz() {
     console.log(this.data)
-    this.store$.dispatch(new actions.updateAction({'status': '2','planWeekId':this.params.id}))
+    this.store$.dispatch(new actions.updateAction({'status': '2','planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}))
   }
   // 删除子事务
   del(id,i) {
@@ -190,13 +234,20 @@ export class PlanzDetailPage {
         .then(res => {
              data = {...data,attach:attach.join(','),attachName:attachName.join(',')}
             console.log(JSON.stringify(data))
-            this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
+            this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}}))
             this.form.reset()
         })
     }else {
-      this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
+      this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}}))
     }
     this.submitIf = true
   }
-
+  sendChat(obj) {
+    this.store$.dispatch(new chatActions.sendChatAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',chatGroupId:this.chatGroupId,...obj}))
+  }
+  doRefresh(refresher) {
+    this.refresher = refresher
+    this.dymanicPageTotal++
+    this.store$.dispatch(new chatActions.ChatListAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',pageNo:this.dymanicPageNo+1}))
+  }
 }

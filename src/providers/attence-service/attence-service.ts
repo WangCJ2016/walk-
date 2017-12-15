@@ -46,4 +46,25 @@ export class AttenceServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res => res.json())
   }
+  // 设置员工考勤状态
+  setAttence(userId,token,teamId,empId,info) {
+    const uri = `${this.config.url}/app/attendanceEmp_setAttendanceEmpStatus`
+    const params = {userId:userId,token:token,teamId:teamId,empId:empId,...info}
+    return this.http.get(uri, {params: params})
+    .map(res => res.json())
+  }
+  // 考勤设置时获取截止日期
+  getEndate(userId,token,teamId,deptId,empId,info) {
+    const uri = `${this.config.url}/app/attendanceEmp_getEndDate`
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      deptId:deptId,
+      empId:empId,
+      ...info
+    }
+    return this.http.get(uri, {params: params})
+    .map(res => res.json())
+  }
 }

@@ -14,37 +14,26 @@
 
 
 <ion-content>
-    <section class="attence_type" padding>
-        <h4 class="attence_title">类型</h4>
-        <div class="attence_check">
-            <div class="attenc_item {{item.class}}" *ngFor="let item of attence_types; let i=index" (click)='choseType(i)' [class.checked]='i===check_index'>
-                <i></i>
-                <span>{{item.title}}</span>
+    <form [formGroup]='form' (submit)='ngSubmit(form)'>
+        <section class="attence_type" padding>
+            <h4 class="attence_title">类型</h4>
+            <div class="attence_check" >
+                <div class="attenc_item {{item.class}}" *ngFor="let item of attence_types; let i=index" (click)='choseType(i)' [class.checked]='i===check_index'>
+                    <i></i>
+                    <span>{{item.title}}</span>
+                </div>
             </div>
+        </section>
+        <section class="attence_type" padding>
+            <h4 class="attence_title">描述</h4>
+            <ion-textarea placeholder='请填写理由' formControlName='reason' >
+            </ion-textarea>
+        </section>
+        
+            <time-count-formcontrol formControlName='timeObj'></time-count-formcontrol>
+    
+        <div class="submit_btn" padding>
+            <button ion-button full>提交</button>
         </div>
-    </section>
-    <section class="attence_type" padding>
-        <h4 class="attence_title">描述</h4>
-        <ion-textarea>
-        </ion-textarea>
-    </section>
-    <ion-list>
-        <ion-item>
-            <ion-label item-start>起始时间</ion-label>
-            <ion-datetime item-content displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' [(ngModel)]="myDate"></ion-datetime>
-            <img class="icon_date" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-        </ion-item>
-        <ion-item>
-            <ion-label>天数(天)</ion-label>
-            <count  item-end></count>
-          </ion-item>
-        <ion-item>
-            <ion-label>截止时间</ion-label>
-            <ion-datetime displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定' [(ngModel)]="myDate"></ion-datetime>
-            <img class="icon_date" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
-        </ion-item>
-    </ion-list>
-    <div class="submit_btn" padding>
-        <button ion-button full>提交</button>
-    </div>
+    </form>
 </ion-content>

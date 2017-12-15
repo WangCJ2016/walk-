@@ -8,6 +8,13 @@ page-my-work {
             transform: translateY(0%)
         }
     }
+    .topfix_toolbar{
+        padding: 0;
+        overflow: visible;
+        contain: none;
+        z-index: -1;
+        min-height: 3.333333rem
+    }
     .top_toolbar{
         padding: 0;
         min-height: 3.333333rem

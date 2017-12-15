@@ -39,8 +39,6 @@ export class ShenpiDetailPage {
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {
-    console.log(JSON.stringify(this.navParams.data))
-    this.params = this.navParams.data
     this.form = this.fb.group({
       remark: [''],
       attach:[''],
@@ -51,7 +49,9 @@ export class ShenpiDetailPage {
    
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    console.log(this.navParams.data)
+    this.params = this.navParams.data
     this.store$.dispatch(new actions.applyDetailAction({'applyId':this.params.id}))
     this.store$.dispatch(new actions.applyFlowAction({'applyId':this.params.id}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{

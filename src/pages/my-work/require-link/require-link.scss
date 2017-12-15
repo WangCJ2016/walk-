@@ -1,0 +1,27 @@
+page-require-link {
+  .doc{
+    margin-top: 8.333333rem;
+    text-align: center;
+    img{
+      width: 30%;
+    }
+    p{
+      color: #999;
+      font-size: 1.166667em
+    }
+    
+  }
+  .btn{
+    display: block;
+    width: 50%;
+    float: left;
+    line-height: 4.166667rem;
+    text-align: center;
+    font-size: 1.333333em;
+    background-color: #fff;
+  }
+  .download{
+    background-color: #29b4ff;
+    color: #fff;
+  }
+}

@@ -3,6 +3,10 @@ page-change-attence {
         margin-top: .833333rem;
         background-color: #fff;
         border-bottom: 1px solid $border_color;
+        textarea{
+            margin:0!important;
+            font-size: 1.166667rem;
+        }
         .attence_title {
             font-size: 1.333333em;
             font-weight: normal;
@@ -65,6 +69,6 @@ page-change-attence {
         }
     }
     .submit_btn {
-        margin-top: 12.5rem
+        margin-top: 10.5rem
     }
 }

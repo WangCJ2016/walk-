@@ -515,10 +515,54 @@ ion-textarea {
     align-items: center;
     >div{
         margin-left: 1.25rem;
-        
+        span{
+            margin-left: .833333rem;
+            color: #999;
+        }
     }
 }
 
 .hasfooter .scroll-content{
     margin-bottom: 4.166667rem
+}
+
+// 详情聊天列表
+.chat_item{
+    display: flex;
+    
+    margin-top: 1.25rem;
+    .chat_content{
+        position: relative;
+        padding: .833333rem .833333rem;
+        line-height: 1.666667rem;
+        border-radius: .416667rem;
+        background-color: #fff;
+        margin-left: 1.666667rem;
+        font-size: 1.166667rem;
+        &::after{
+            content: '';
+            display: block;
+            width: .833333rem;
+            height: .833333rem;
+            position: absolute;
+            left: -.833333rem;
+            top: .833333rem;
+            background: url('../assets/imgs/work-home/arr.png') no-repeat;
+            background-size: 100% 100%;
+        }
+    }
+    .chat_content_img{
+        margin-left: 1.666667rem;
+        >img{
+            width: auto;
+            height: 8.333333rem;
+            border-radius: .416667rem;
+        }
+        
+    }
+    .head{
+        width: 3.333333rem;
+        height: 3.333333rem;
+        border-radius: 50%;
+    }
 }

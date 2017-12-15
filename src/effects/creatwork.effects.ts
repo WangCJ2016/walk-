@@ -251,13 +251,15 @@ export class CreatWorkEffects {
       const data = res.dataObject.result.map(apply => ({
         startDate:apply.apply.startDate,
         endDate:apply.apply.endDate,
-        id:apply.apply.applyId,
+        id:apply.applyId,
         pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
+        totalPages:res.dataObject.totalPages,
         type: apply.type,
         status:applyStatus(apply.apply.status),
         initatorEmp:apply.apply.initatorEmp,
         classify:applyType(apply.apply.type,apply.apply.classify)
       }))
+      console.log(data)
       return new actions.applyListSuccessAction(data)
     }
   })
@@ -276,6 +278,18 @@ export class CreatWorkEffects {
          updateTime:apply.updateTime
       }))
       return new actions.applyFlowSuccessAction(data)
+    }
+  })
+  // shenpi汇总
+  @Effect() applyCollect$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.APPLYCOLLECT)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.applyCollect(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      return new actions.applyCollectSuccessAction(res.dataObject)
     }
   })
    // 事务list
@@ -413,6 +427,19 @@ export class CreatWorkEffects {
   }
   return new actions.workPlateSuccessAction({})
   })
+  // 获取事务个数是统计
+  @Effect() thingCount$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.THIINGCOUND)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.thingCount(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
+  .map(res => {
+    console.log(res)
+    if(res.success&&res.dataObject) {
+      return new actions.thingCountSuccessAction(res.dataObject)
+  }
+  
+  })
   // 添加成果产出物
   @Effect() addrequire$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.ADDREQUIRE)
@@ -454,6 +481,18 @@ export class CreatWorkEffects {
         updateTime: list.updateTime
       }))
       return new actions.requireListSuccessAction(data)
+   }
+  })
+  // 文档关联事务成果产
+  @Effect() requireLink$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.REQUIRELINK)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info,auth])=>this.creatworkSerice.requireLink(auth.id, auth.token, auth.emp.teamId,info))
+  .map(res => {
+    console.log(res)
+    if(res.success) {
+      return new actions.requireLinkSuccessAction({})
    }
   })
   constructor(

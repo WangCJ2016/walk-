@@ -1,0 +1,19 @@
+<!-- Generated template for the TimeCountFormcontrolComponent component -->
+<ion-list>
+  <ion-item>
+    <ion-label >起始时间</ion-label>
+    <ion-datetime item-content displayFormat="YYYY-MM-DD A" pickerFormat='YYYY-MM-DD hh A' 
+    min={{todayFormat.min}} max={{todayFormat.max}} cancelText='取消' doneText='确定'
+     [placeholder]='startDateplaceholer|date:"y-MM-dd a"' [(ngModel)]="startDate"  (ngModelChange)="startDateChange($event)"></ion-datetime>
+    <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+</ion-item>
+<ion-item>
+    <ion-label>天数(天)</ion-label>
+    <count (countNum)='countNum($event)'  item-end></count>
+  </ion-item>
+<ion-item>
+    <ion-label>截止时间</ion-label>
+    <span item-content style="margin-left:15px">{{endDate}}</span>
+    <img class="create_add" item-end src="assets/imgs/work-desk/icon_date.png" alt="">
+</ion-item>
+</ion-list>
