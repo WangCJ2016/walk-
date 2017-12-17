@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
+import { Component, Inject, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { IonicPage, NavController, NavParams, App, AlertController, Content, Refresher } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
+import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
@@ -20,8 +21,10 @@ import { zishiwu } from '../../../domain'
   templateUrl: 'plany-detail.html',
 })
 export class PlanyDetailPage {
-
+  @ViewChild(Content) content: Content;
+  @ViewChild('dymanic') dymanic: ElementRef
   form: FormGroup
+  form2: FormGroup
   segment = 'detail'
   params
   saturation: number = 0
@@ -33,12 +36,19 @@ export class PlanyDetailPage {
   zishiwuList: Array<zishiwu>
   requireList: Array<any> = []
   submitIf: boolean = false // 是否提交保存
+  chatList: Array<any> = []
+  chatGroupId: string
+  dymanicPageNo = 0
+  dymanicPageTotal = 1
+  refresher: Refresher
+  enabled: boolean = false
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private fb: FormBuilder,
     private fileTranfer: FileTransfer,
     private alertCtrl: AlertController,
+    private rd: Renderer2,
     private app: App,
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
@@ -50,22 +60,57 @@ export class PlanyDetailPage {
       attach:[''],
       progress: [this.progress]
     })
+    this.form2 = this.fb.group({
+      submitContent: ['']
+    })
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
+   this.form2.get('submitContent').valueChanges.subscribe(res => {  
+    if(res.keyboardHeight) {
+      this.rd.setStyle(this.dymanic.nativeElement,'paddingBottom',res.keyboardHeight)
+    }else{
+      this.sendChat(res)
+    }
+   })
+   
   }
 
   ionViewDidEnter() {
+    this.store$.dispatch( new chatActions.ChatListInitalAction({}))
     this.store$.dispatch(new actions.getPlanYDetailAction({'planMonthId':this.params.id}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'5'}))
     this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
+    this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
       if(this.data){
+        this.form.get('remark').patchValue(this.data.remark)
         this.progress = this.data.progress?this.data.progress:'0' 
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
+      }
+    })
+    this.store$.select(store=>store.chat).subscribe(v=>{
+      console.log(v)
+      if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
+        const preLength = this.chatList.length
+        this.enabled = true
+        this.chatGroupId = v.chatList[0].chatGroupId
+        this.chatList = v.chatList
+        this.dymanicPageNo = v.chatList[0].pageNo
+        this.refresher?this.refresher.complete():null
+        
+        if(this.dymanicPageTotal == v.chatList[0].totalPages) {
+          this.enabled=false
+          console.log(this.enabled)
+        }
+        
+        if(v.chatList.length-preLength==1) {
+          this.content.resize();
+          this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight)
+        }
       }
     })
    
@@ -74,7 +119,7 @@ export class PlanyDetailPage {
     
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
-    this.form.get('remark').value !== this.data.remark &&!this.submitIf) {
+    this.form.get('remark').value !== this.data.remark ) {
      let alert =  this.alertCtrl.create({
         title:'是否保存修改？',
         buttons: [
@@ -190,5 +235,17 @@ export class PlanyDetailPage {
     }
     this.submitIf = true
   }
-
+// 动态发送聊天信息
+sendChat(obj) {
+  this.store$.dispatch(new chatActions.sendChatAction({parentId:'128fd57d36784e18862087138d188bf0',chatGroupId:this.chatGroupId,...obj}))
+}
+doRefresh(refresher) {
+  this.refresher = refresher
+  this.dymanicPageTotal++
+  this.store$.dispatch(new chatActions.ChatListAction({parentId:'128fd57d36784e18862087138d188bf0',pageNo:this.dymanicPageNo+1}))
+}
+// 打开成果关联modal
+requireModal(item) {
+ this.navCtrl.push('RequireLinkPage', {item: item})
+}
 }

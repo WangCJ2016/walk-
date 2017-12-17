@@ -24,98 +24,115 @@
 
 
 <ion-content>
-  <div [ngSwitch]=[(segment)]>
-    <div class="dynamic" *ngSwitchCase="'dynamic'">
-      <footer-input></footer-input>
-    </div>
-    <div class="detail" *ngSwitchCase="'detail'">
-      <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
-        <ion-list>
-          <ion-item *ngIf='applyType'>
-            <ion-label>
-              <p>名称</p>
-            </ion-label>
-            <span class="content-item" item-content>{{applyType}}</span>
-            <span class="status_btn" item-end>{{data.status==1?'进行中':'完成'}}</span>
-          </ion-item>
-          <ion-item *ngIf='data?.remark'>
-            <ion-label>
-              <p>描述</p>
-            </ion-label>
-            <ion-input formControlName='remark' value={{data.remark}}></ion-input>
-          </ion-item>
-          <fujian-formcontrol formControlName='attach'></fujian-formcontrol>
-          <ion-item *ngFor="let pic of attach; let i=index">
-            <ion-label>
-              <img class="attach_img"  item-end src={{pic}} alt="">
-            </ion-label>
-            <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
-          </ion-item>
+  <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]='enabled'>
+    <ion-refresher-content refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div [ngSwitch]='segment'>
 
-         
-          <initalmember-formcontrol [person]='data?.initatorEmp' [addIf]='false'></initalmember-formcontrol>
-          <initalmember-formcontrol  title='审核人' [addIf]=false [person]='data?.applyEmp' style="margin-top:10px"></initalmember-formcontrol>
-          <ion-item class='time' *ngIf='data?.startDate'>
-            <ion-label>
-              起始时间
-            </ion-label>
-            <ion-label>
-              {{data?.startDate}}
-            </ion-label>
-          </ion-item >
-          <ion-item class='time' *ngIf='data?.endDate'>
-            <ion-label>
-              截止时间
-            </ion-label>
-            <ion-label>
-                    {{data?.endDate}}
-            </ion-label>
-          </ion-item >
-          <ion-item class='time' *ngIf='data?.days'>
-            <ion-label>
-              天数(天)
-            </ion-label>
-            <ion-label>
-                 {{data?.days}}天
-            </ion-label>
-          </ion-item>
-          <ion-item class='time' *ngIf='data?.money'>
-            <ion-label>
-              金额
-            </ion-label>
-            <ion-label>
-              ¥{{data?.money}}
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        <div padding style="background-color:#fff;margin-top:10px">
-          <div class="flowline">
-            <div class="item_flow" *ngFor="let item of applyFlowList">
-              <avatar *ngIf='!item.emp?.photo' class='flow_name' name={{item.emp?.name}}></avatar>
-              <img class="img_flow" *ngIf='!!item.emp?.photo' src={{item.emp?.photo}} alt="">
-              <span>{{item.emp?.name}}</span>
-              <span>{{item.status}}</span>
-              <span class="time">{{item.updateTime}}</span>
-             
-            </div>
-           
-          </div>
+    <div *ngSwitchCase='"dynamic"' padding #dymanic style="margin-bottom:50px">
+      <div class="chat_item" *ngFor="let item of chatList">
+        <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
+        <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">
+        <div *ngIf='!item?.attach' class="chat_content">{{item?.contents}}</div>
+        <div *ngIf='item?.attach' class="chat_content_img" (click)='requireModal(item)'>
+          <img src="{{item?.attach}}" alt="">
         </div>
-        <div class="footer_shenpi">
-          <div class="footer_item" (click)='operate(1)'>
-            同意并结束
-          </div>
-          <div class="footer_item" (click)='operate(2)'>
-            同意并转发
-          </div>
-          <div class="footer_item" (click)='operate(3)'>
-            转发
-          </div>
-          <div class="footer_item" (click)='operate(4)'>
-            驳回
-          </div>
-        </div>
-    </form>
+      </div>
     </div>
+  <div class="detail" *ngSwitchCase="'detail'">
+    <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
+      <ion-list>
+        <ion-item *ngIf='applyType'>
+          <ion-label>
+            <p>名称</p>
+          </ion-label>
+          <span class="content-item" item-content>{{applyType}}</span>
+          <span class="status_btn" item-end>{{data.status==1?'进行中':'完成'}}</span>
+        </ion-item>
+        <ion-item *ngIf='data?.remark'>
+          <ion-label>
+            <p>描述</p>
+          </ion-label>
+          <ion-input formControlName='remark' value={{data.remark}}></ion-input>
+        </ion-item>
+        <fujian-formcontrol formControlName='attach'></fujian-formcontrol>
+        <ion-item *ngFor="let pic of attach; let i=index">
+          <ion-label>
+            <img class="attach_img" item-end src={{pic}} alt="">
+          </ion-label>
+          <img class="add" item-end src="assets/imgs/work-desk/download.png" (click)='attachDel(i)' alt="">
+        </ion-item>
+
+
+        <initalmember-formcontrol [person]='data?.initatorEmp' [addIf]='false'></initalmember-formcontrol>
+        <initalmember-formcontrol title='审核人' [addIf]=false [person]='data?.applyEmp' style="margin-top:10px"></initalmember-formcontrol>
+        <ion-item class='time' *ngIf='data?.startDate'>
+          <ion-label>
+            起始时间
+          </ion-label>
+          <ion-label>
+            {{data?.startDate}}
+          </ion-label>
+        </ion-item>
+        <ion-item class='time' *ngIf='data?.endDate'>
+          <ion-label>
+            截止时间
+          </ion-label>
+          <ion-label>
+            {{data?.endDate}}
+          </ion-label>
+        </ion-item>
+        <ion-item class='time' *ngIf='data?.days'>
+          <ion-label>
+            天数(天)
+          </ion-label>
+          <ion-label>
+            {{data?.days}}天
+          </ion-label>
+        </ion-item>
+        <ion-item class='time' *ngIf='data?.money'>
+          <ion-label>
+            金额
+          </ion-label>
+          <ion-label>
+            ¥{{data?.money}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <div padding style="background-color:#fff;margin-top:10px">
+        <div class="flowline">
+          <div class="item_flow" *ngFor="let item of applyFlowList">
+            <avatar *ngIf='!item.emp?.photo' class='flow_name' name={{item.emp?.name}}></avatar>
+            <img class="img_flow" *ngIf='!!item.emp?.photo' src={{item.emp?.photo}} alt="">
+            <span>{{item.emp?.name}}</span>
+            <span>{{item.status}}</span>
+            <span class="time">{{item.updateTime}}</span>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="footer_shenpi">
+        <div class="footer_item" (click)='operate(1)'>
+          同意并结束
+        </div>
+        <div class="footer_item" (click)='operate(2)'>
+          同意并转发
+        </div>
+        <div class="footer_item" (click)='operate(3)'>
+          转发
+        </div>
+        <div class="footer_item" (click)='operate(4)'>
+          驳回
+        </div>
+      </div>
+    </form>
+  </div>
   </div>
 </ion-content>
+<ion-footer *ngIf='segment=="dynamic"'>
+  <form [formGroup]='form2' (submit)='ngSubmit(form2)'>
+    <footer-input formControlName='submitContent'></footer-input>
+  </form>
+</ion-footer>

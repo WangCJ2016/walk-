@@ -29,9 +29,22 @@
   
   
   <ion-content>
+      <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]='enabled'>
+          <ion-refresher-content
+            refreshingSpinner="circles"
+          >
+          </ion-refresher-content>
+        </ion-refresher>
     <div [ngSwitch]='segment'>
-      <div *ngSwitchCase='"dymanic"'>
-        <footer-input></footer-input>
+      <div *ngSwitchCase='"dymanic"' padding>
+          <div class="chat_item"  *ngFor="let item of chatList">
+              <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
+              <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">
+              <div *ngIf='!item?.attach' class="chat_content">{{item?.contents}}</div>
+              <div *ngIf='item?.attach' class="chat_content_img" (click)='requireModal(item)'>
+                <img src="{{item?.attach}}" alt="">  
+              </div>
+            </div>
       </div>
       <div *ngSwitchCase='"detail"'>
         <form [formGroup]='form' (submit)='onSubmit(form, $event)'>
@@ -138,7 +151,12 @@
       </div>
     </div>
   </ion-content>
-  <ion-footer>
+  <ion-footer *ngIf='segment=="detail"'>
       <button ion-button type="button" class="submitBtn" (click)='endPlanz()' full style="margin:0">关闭</button>
   </ion-footer>
+  <ion-footer *ngIf='segment=="dymanic"'>
+      <form [formGroup]='form2' (submit)='ngSubmit(form2)'>
+          <footer-input formControlName='submitContent'></footer-input>
+      </form>
+    </ion-footer>
   

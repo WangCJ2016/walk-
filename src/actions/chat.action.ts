@@ -7,6 +7,7 @@ import {type} from '../utils/type.util';
 export const ActionTypes = {
   CHATLIST:type('[Chat] chatlist'),
   CHATLIST_SUCCESS:type('[Chat] chatlist_success'),
+  CHATLISTINITIAL:type('[Chat] chatlistInitail'),
   SENDCHAT:type('[Chat] sendchat'),
   SENDCHAT_SUCCESS:type('[Chat] sendchat_success'),
 };
@@ -24,6 +25,11 @@ export class ChatListAction implements Action {
 
 export class ChatListSuccessAction implements Action {
   readonly type = ActionTypes.CHATLIST_SUCCESS;
+
+  constructor(public payload: any) { }
+}
+export class ChatListInitalAction implements Action {
+  readonly type = ActionTypes.CHATLISTINITIAL;
 
   constructor(public payload: any) { }
 }

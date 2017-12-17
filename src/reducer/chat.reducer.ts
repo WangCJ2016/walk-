@@ -10,6 +10,9 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: any ): State {
   switch (action.type) {
+    case actions.ActionTypes.CHATLISTINITIAL: {
+      return {...state,chatList:[]}
+    }
     case actions.ActionTypes.CHATLIST_SUCCESS: {
       const data = [...action.payload,...state.chatList]
       return {...state,chatList:data}
