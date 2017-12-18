@@ -59,6 +59,7 @@ export class CreateWorkPage {
   
   
   onSubmit(f, ev: Event) {
+    
     //this.navCtrl.push('ShiwuDetailPage')
     if(!f.value.fullName) {
       this.toastProvider.message('请填写项目名称')
@@ -133,6 +134,7 @@ export class CreateWorkPage {
       })) 
       this.form.reset()
     }
+    //this.app.getActiveNav().remove(0,1)
   }
   
 }

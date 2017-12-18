@@ -329,10 +329,12 @@ export class CreatWorkEffects {
     console.log(res)
     if(res.res.success) {
       if(res.type===1) {
+      
         this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.res.dataObject})
+        // this.app.getActiveNav().remove(0,1)
       }else {
-        console.log(this.app.getRootNav())
-        this.app.getRootNav().pop()
+       
+        this.app.getActiveNav().pop()
       }
       return new actions.addShiwuSuccessAction({})
     }
@@ -449,7 +451,11 @@ export class CreatWorkEffects {
   .map(res => {
     console.log(res)
     if(res.success) {
-      return new actions.addRequireSuccessAction({})
+      const data = {
+        name: res.dataObject.name,
+        id: res.dataObject.id
+      }
+      return new actions.addRequireSuccessAction([data])
    }
   })
   // 删除成果产出物

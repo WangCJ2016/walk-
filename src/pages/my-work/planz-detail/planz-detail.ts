@@ -78,11 +78,13 @@ export class PlanzDetailPage {
 
   
   ionViewDidEnter() {
-
-    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}))
-    this.store$.dispatch(new actions.zishiwuAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',type:'4'}))
-    this.store$.dispatch(new actions.requireListAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040'}))
-    this.store$.dispatch(new chatActions.ChatListAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',pageNo:1}))
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreatePlanZPage") {
+      this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    }
+    this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
+    this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'4'}))
+    this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
+    this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
       console.log(v)
       this.data = v.workdetail
@@ -118,7 +120,7 @@ export class PlanzDetailPage {
       }
     })
   }
-  back() {
+  ionViewCanLeave() {
     
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
@@ -130,21 +132,21 @@ export class PlanzDetailPage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-             this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+              return true
             }
           },
           {
             text: '保存',
             handler: () => {
               this.onSubmit(this.form, event)
-              return
+              return true
             }
           }
         ]
       })
       alert.present()
     }else{
-      this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+      return true
     }
   }
   
@@ -173,9 +175,8 @@ export class PlanzDetailPage {
         {
           text: '确定',
           handler: data => {
-           console.log(data)
-           this.requireList.push({name: data.name})
-           this.store$.dispatch(new actions.addRequireAction({parentId: '5aba63cc3caf4d1bb1cdc60e676fa040', type:2,name: data.name}))
+          
+           this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
           }
         }
       ]
@@ -185,16 +186,16 @@ export class PlanzDetailPage {
   // 删除需求
   delRequire(id, index) {
     this.requireList.splice(index, 1)
-    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}))
+    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'planWeekId':this.params.id}))
   }
   // 创建子事务
   createzishiwu() {
-    this.navCtrl.push('CreateWorkPage',{parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',type:4})
+    this.navCtrl.push('CreateWorkPage',{parentId:this.params.id,type:4})
   }
   // 关闭周计划
   endPlanz() {
     console.log(this.data)
-    this.store$.dispatch(new actions.updateAction({'status': '2','planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}))
+    this.store$.dispatch(new actions.updateAction({'status': '2','planWeekId':this.params.id}))
   }
   // 删除子事务
   del(id,i) {
@@ -234,20 +235,20 @@ export class PlanzDetailPage {
         .then(res => {
              data = {...data,attach:attach.join(','),attachName:attachName.join(',')}
             console.log(JSON.stringify(data))
-            this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}}))
+            this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
             this.form.reset()
         })
     }else {
-      this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':'5aba63cc3caf4d1bb1cdc60e676fa040'}}))
+      this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
     }
     this.submitIf = true
   }
   sendChat(obj) {
-    this.store$.dispatch(new chatActions.sendChatAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',chatGroupId:this.chatGroupId,...obj}))
+    this.store$.dispatch(new chatActions.sendChatAction({parentId:this.params.id,chatGroupId:this.chatGroupId,...obj}))
   }
   doRefresh(refresher) {
     this.refresher = refresher
     this.dymanicPageTotal++
-    this.store$.dispatch(new chatActions.ChatListAction({parentId:'5aba63cc3caf4d1bb1cdc60e676fa040',pageNo:this.dymanicPageNo+1}))
+    this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:this.dymanicPageNo+1}))
   }
 }

@@ -27,7 +27,6 @@ export function reducer(state = initialState, action: any ): State {
       return {...state,workdetail:action.payload}
     }
     case actions.ActionTypes.APPLYLIST_SUCCESS: {
-      console.log(action.payload)
       return {...state,applyList:action.payload}
     }
     case actions.ActionTypes.APPLYFLOW_SUCCESS: {
@@ -44,6 +43,11 @@ export function reducer(state = initialState, action: any ): State {
     } 
     case actions.ActionTypes.REQUIRELIST_SUCCESS: {
       return {...state,requireList:action.payload}
+    } 
+    case actions.ActionTypes.ADDREQUIRE_SUCCESS: {
+      console.log(action.payload)
+      const requireList = [...action.payload,...state.requireList]
+      return {...state,requireList:requireList}
     } 
     case actions.ActionTypes.THIINGCOUND_SUCCESS: {
       return {...state,thingCount:action.payload}

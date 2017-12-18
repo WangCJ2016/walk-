@@ -566,3 +566,10 @@ ion-textarea {
         border-radius: 50%;
     }
 }
+// infinite
+.infinite-loading-spinner{
+    position: relative
+}
+ion-spinner{
+    position: absolute
+}

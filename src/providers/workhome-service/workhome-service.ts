@@ -22,7 +22,7 @@ export class WorkhomeServiceProvider {
       token:token,
       teamId:teamId,
       empId:empId,
-      pageSize: 10,
+      pageSize: 15,
       ...info,
     }
     const uri=`${this.config.url}/app/chat_noticeIndex`

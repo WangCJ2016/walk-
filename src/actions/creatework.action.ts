@@ -110,7 +110,7 @@ export class addRequireAction implements Action {
 export class addRequireSuccessAction implements Action {
   readonly type = ActionTypes.ADDREQUIRE_SUCCESS;
 
-  constructor(public payload: {}) { }
+  constructor(public payload: any) { }
 }
 export class delRequireAction implements Action {
   readonly type = ActionTypes.DELREQUIRE;

@@ -18,11 +18,14 @@ export class WokrHomeEffects {
     console.log(res)
     if(res.success) {
       const data = {
-        chatGroupPage:res.dataObject.chatGroupPage.chatGroupPage?res.dataObject.chatGroupPage.chatGroupPage.result.map(res => ({
-          name: res.name,
-          contents: res.contents,
-          updateTime: res.updateTime,
-          id: res.id
+        chatGroupPage:res.dataObject.chatGroupPage.chatGroupPage?res.dataObject.chatGroupPage.chatGroupPage.result.map(rel => ({
+          pageNo: res.dataObject.chatGroupPage.chatGroupPage.pageNo,
+          totalPages: res.dataObject.chatGroupPage.chatGroupPage.totalPages,
+          name: rel.name,
+          contents: rel.contents,
+          updateTime: rel.updateTime.split(' ')[0],
+          id: rel.parentId,
+          type: rel.type
         })):[],
         // notice:res.dataObject.notice.notice?res.dataObject.notice.notice.map(res => ({
         //   name: res.name,

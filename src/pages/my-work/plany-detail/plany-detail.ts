@@ -75,6 +75,9 @@ export class PlanyDetailPage {
   }
 
   ionViewDidEnter() {
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreatePlanYPage") {
+      this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    }
     this.store$.dispatch( new chatActions.ChatListInitalAction({}))
     this.store$.dispatch(new actions.getPlanYDetailAction({'planMonthId':this.params.id}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'5'}))
@@ -115,7 +118,7 @@ export class PlanyDetailPage {
     })
    
   }
-  back() {
+  ionViewCanLeave() {
     
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
@@ -127,21 +130,21 @@ export class PlanyDetailPage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-              this.navCtrl.setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+              return true
             }
           },
           {
             text: '保存',
             handler: () => {
               this.onSubmit(this.form, event)
-              return
+              return true
             }
           }
         ]
       })
       alert.present()
     }else{
-      this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+      return true
     }
   }
   attachDel(i) {
@@ -169,8 +172,7 @@ export class PlanyDetailPage {
         {
           text: '确定',
           handler: data => {
-           console.log(data)
-           this.requireList.push({name: data.name})
+          
            this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:3,name: data.name}))
           }
         }

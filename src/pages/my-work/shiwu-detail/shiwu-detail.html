@@ -6,10 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar hideBackButton="true">
-      <button ion-button icon-only  color="light" clear (click)='back()'>
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
+  <ion-navbar>
+     
     <ion-title>详情</ion-title>
     <ion-buttons end>
         <button ion-button (click)='onSubmit(form, $event)' >保存</button>
@@ -36,7 +34,7 @@
         </ion-refresher-content>
       </ion-refresher>
   <div [ngSwitch]='segment'>
-    <div *ngSwitchCase='"dymanic"' padding #dymanic style="margin-bottom:50px">
+    <div *ngSwitchCase='"dymanic"' padding #dymanic >
       <div class="chat_item" *ngFor="let item of chatList">
         <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
         <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">

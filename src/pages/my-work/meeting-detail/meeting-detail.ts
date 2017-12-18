@@ -56,6 +56,7 @@ export class MeetingDetailPage {
     private store$: Store<fromRoot.State>
   ) {
     this.params = this.navParams.data
+    console.log(this.params)
     this.form = this.fb.group({
       remark: [''],
       attach:[''],
@@ -77,6 +78,9 @@ export class MeetingDetailPage {
   }
 
   ionViewDidEnter(){ 
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreateMeetingPage") {
+      this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    }
     this.store$.dispatch( new chatActions.ChatListInitalAction({}))
     this.store$.dispatch(new actions.meetingDetailAction({'mettingId':this.params.id}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'6'}))
@@ -119,8 +123,8 @@ export class MeetingDetailPage {
       }
     })
   }
-  back() {
-    console.log(this.form.pristine)
+  ionViewCanLeave() {
+   
     if(this.form.get('canhuiren').value !== '' ||
       this.form.get('zhujiangren').value !== '' ||
     this.form.get('attach').value !== '' || 
@@ -132,21 +136,21 @@ export class MeetingDetailPage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+              return true
             }
           },
           {
             text: '保存',
             handler: () => {
               this.onSubmit(this.form, event)
-              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+              return true
             }
           }
         ]
       })
       alert.present()
     }else{
-      this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+      return true
     }
   }
   attachDel(i) {
@@ -174,8 +178,7 @@ export class MeetingDetailPage {
         {
           text: '确定',
           handler: data => {
-           console.log(data)
-           this.requireList.push({name: data.name})
+           
            this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
           }
         }
@@ -263,7 +266,7 @@ sendChat(obj) {
 doRefresh(refresher) {
   this.refresher = refresher
   this.dymanicPageTotal++
-  this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id',pageNo:this.dymanicPageNo+1}))
+  this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:this.dymanicPageNo+1}))
 }
 // 打开成果关联modal
 requireModal(item) {

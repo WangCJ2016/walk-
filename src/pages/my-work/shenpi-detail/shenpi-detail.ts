@@ -70,7 +70,9 @@ export class ShenpiDetailPage {
   }
 
   ionViewDidEnter() {
-    console.log(this.navParams.data)
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreateShenpiPage") {
+      this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    }
     this.store$.dispatch(new chatActions.ChatListInitalAction({}))
     this.store$.dispatch(new actions.applyDetailAction({'applyId':this.params.id}))
     this.store$.dispatch(new actions.applyFlowAction({'applyId':this.params.id}))

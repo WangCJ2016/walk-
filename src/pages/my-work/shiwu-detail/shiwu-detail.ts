@@ -76,7 +76,11 @@ export class ShiwuDetailPage {
    })
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter(){  
+    //this.navbar.backButtonClick = this.back
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreateWorkPage") {
+      this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    }
     this.store$.dispatch( new chatActions.ChatListInitalAction({}))
     this.store$.dispatch(new actions.shiwuDetailAction({'thingId':'128fd57d36784e18862087138d188bf0'}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:'128fd57d36784e18862087138d188bf0',type:'2'}))
@@ -120,7 +124,7 @@ export class ShiwuDetailPage {
     })
   }
   
-  back() {
+  ionViewCanLeave() {
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
     this.form.get('remark').value !== this.data.remark ) {
@@ -131,21 +135,21 @@ export class ShiwuDetailPage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+              return true
             }
           },
           {
             text: '保存',
             handler: () => {
               this.onSubmit(this.form, event)
-              this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+              return true
             }
           }
         ]
       })
       alert.present()
     }else{
-      this.navCtrl.setPages([{page:'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+      return true
     }
   }
   attachDel(i) {
@@ -174,7 +178,7 @@ export class ShiwuDetailPage {
           text: '确定',
           handler: data => {
            console.log(data)
-           this.requireList.push({name: data.name})
+          
            this.store$.dispatch(new actions.addRequireAction({parentId: '128fd57d36784e18862087138d188bf0', type:2,name: data.name}))
           }
         }
