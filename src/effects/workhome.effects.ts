@@ -25,6 +25,7 @@ export class WokrHomeEffects {
           contents: rel.contents,
           updateTime: rel.updateTime.split(' ')[0],
           id: rel.parentId,
+          id1: rel.id,
           type: rel.type
         })):[],
         // notice:res.dataObject.notice.notice?res.dataObject.notice.notice.map(res => ({

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { GroupContactsModalComponent} from '../../../components/group-contacts-modal/group-contacts-modal'
 import { Store } from '@ngrx/store'
-import * as actions from '../../../actions/work-home.action'
+import * as actions from '../../../actions/chat.action'
 import * as fromRoot from '../../../reducer'
 import { ToastSitutionProvider} from '../../../providers'
 /**

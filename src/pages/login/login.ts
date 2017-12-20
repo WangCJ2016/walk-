@@ -20,6 +20,7 @@ import {ToastSitutionProvider} from '../../providers/toast-sitution/toast-situti
 export class LoginPage {
   phoneNum: number
   loading: Loading
+  
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private toastSitutionProvider: ToastSitutionProvider,
@@ -29,10 +30,7 @@ export class LoginPage {
                   dismissOnPageChange: true,
                   duration: 5000
                 })
-              this.store$.select(store=>store.auth).subscribe(v=>{
-                console.log(v)
-                this.loading.dismiss()
-              })
+             
   }
 
   

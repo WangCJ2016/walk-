@@ -17,6 +17,20 @@ export class ChatServiceProvider {
   ) {
     console.log('Hello ChatServiceProvider Provider');
   }
+  // addgroup
+  addGroup(userId,token,teamId,deptId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      deptId:deptId,
+      empId:empId,
+      ...info,
+    }
+    const uri=`${this.config.url}/app/chat_addChatGroup`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
   sendChat(userId,token,teamId,deptId,empId,info) {
     const params = {
       userId:userId,

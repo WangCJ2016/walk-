@@ -19,6 +19,7 @@ export function reducer(state = initialState, action: any ): State {
             return {...state, contacts: action.payload}
         }
         case actions.ActionTypes.EMPDETAIL_SUCCESS: {
+            console.log(action.payload)
             return {...state, empDetail: action.payload}
         }
         case actions.ActionTypes.EMPCHOOSELIST_SUCCESS: {

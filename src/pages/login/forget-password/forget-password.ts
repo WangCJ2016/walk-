@@ -30,6 +30,7 @@ export class ForgetPasswordPage {
   _sub: Subscription
   loading: Loading
   countIf: boolean = false
+  loadremoveIf = false
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private fb: FormBuilder,
@@ -54,7 +55,10 @@ export class ForgetPasswordPage {
     this.store$.select(store => store.auth).subscribe(res => {
       console.log(res)
       this.countIf = res.auth.countIf
-     this.loading.dismiss()
+      if(this.loadremoveIf) {
+        this.loading.dismiss()
+        this.loadremoveIf = false
+      }
     })
     this._sub = this.service.getStep().subscribe(v => this.step = v)
   }
@@ -79,7 +83,7 @@ export class ForgetPasswordPage {
     }))
   }
   form2submit(f, ev: Event) {
-    console.log(f)
+    
     if (!f.valid) {
       this.store$.dispatch(new actions.AuthFailAction({
         msg: '请输入一致的密码'
@@ -92,6 +96,7 @@ export class ForgetPasswordPage {
         })
       )
       this.loading.present()
+      this.loadremoveIf = true
       this.form.reset()
     }
   }

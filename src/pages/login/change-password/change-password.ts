@@ -30,11 +30,7 @@ export class ChangePasswordPage {
       oldpassword: ['', Validators.required],
       confirmpassword: ['', Validators.required]
     },{validator: this.validate})
-    this.store$.select(store => store.auth).subscribe(res => {
-      if(res.msg) {
-        this.toast.message(res.msg)
-      }
-    })
+   
   }
   validate(c: AbstractControl):{[key: string]:any} {
     if(c.value.oldpassword !== c.value.confirmpassword) {

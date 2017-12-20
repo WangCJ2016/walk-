@@ -11,6 +11,7 @@ export interface empDetail {
     name?: string
     dept?: string
     phone?: string
+    empId?:string
 }
 export interface empChooseList {
     juniorList: Array<empChoosePerson>

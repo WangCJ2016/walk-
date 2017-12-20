@@ -19,7 +19,7 @@
         <avatar name={{contact?.name}} [width]='width'></avatar>
         <h3 class="name">{{contact?.name}}</h3>
         <div class="actions">
-            <div>
+            <div (click)='goChat()'>
                 <div class="img_bg dymanic"></div>
                 <a>发动态
                 </a>

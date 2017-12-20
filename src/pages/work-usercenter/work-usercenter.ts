@@ -23,6 +23,7 @@ export class WorkUsercenterPage {
   name: string = '登录/注册'
   authImage: Observable<string>
   loading:  Loading
+  loadremoveIf: boolean = false
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private load: LoadingController,
@@ -35,7 +36,10 @@ export class WorkUsercenterPage {
       
       this.authImage = this.store$.select(state => state.auth.auth.photo)
       this.store$.select(state => state.auth.auth).subscribe(auth => {
-        this.loading.dismiss()
+        if(this.loadremoveIf) {
+          this.loading.dismiss()
+          this.loadremoveIf = false
+        }
         this.token = auth.token
         if(this.token) {
           if(auth.name) {
@@ -46,14 +50,13 @@ export class WorkUsercenterPage {
          this.name = ''
         }
         })
-      this.store$.select(state => state.auth.auth).subscribe(res => console.log(res))
+      
   }
   
   goPage(page: string) {
     this.navCtrl.push(page)
   }
   headClick() {
-    console.log(this.token)
     this.token?this.goPage('MymessPage'):this.goPage('LoginPage')
   }
   logout() {
@@ -73,12 +76,14 @@ export class WorkUsercenterPage {
           text: '确定',
           handler: () => {
             this.loading.present()
+            this.loadremoveIf = true
             this.store$.dispatch(new actions.LogoutAction({}))
-            alert.dismiss()
+            //alert.dismiss()
           }
         }
       ]
     })
+
     alert.present()
     
   }

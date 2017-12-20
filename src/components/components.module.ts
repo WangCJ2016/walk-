@@ -24,6 +24,7 @@ import { ShenpiPopverComponent } from './shenpi-popver/shenpi-popver';
 import { GroupContactsModalComponent } from './group-contacts-modal/group-contacts-modal';
 import { TimeCountFormcontrolComponent } from './time-count-formcontrol/time-count-formcontrol';
 import { RequireLinkModalComponent } from './require-link-modal/require-link-modal';
+import { EmojiComponent } from './emoji/emoji';
 
 
 
@@ -52,6 +53,7 @@ import { RequireLinkModalComponent } from './require-link-modal/require-link-mod
     GroupContactsModalComponent,
     TimeCountFormcontrolComponent,
     RequireLinkModalComponent,
+    EmojiComponent,
     ],
     imports: [IonicModule],
     entryComponents:[RequireLinkModalComponent,FileModalComponent,StarComponent,GroupContactsModalComponent,ShenpiPopverComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
@@ -78,6 +80,7 @@ import { RequireLinkModalComponent } from './require-link-modal/require-link-mod
     GroupContactsModalComponent,
     TimeCountFormcontrolComponent,
     RequireLinkModalComponent,
+    EmojiComponent,
     ]
 })
 export class ComponentsModule {}

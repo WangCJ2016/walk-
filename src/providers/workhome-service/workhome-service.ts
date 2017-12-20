@@ -39,7 +39,7 @@ export class WorkhomeServiceProvider {
       empId:empId,
       ...info,
     }
-    const uri=`${this.config.url}/app/chat_addGroup`
+    const uri=`${this.config.url}/app/chat_addChatGroup`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }

@@ -34,7 +34,7 @@
           </ion-refresher-content>
         </ion-refresher>
     <div [ngSwitch]='segment'>
-      <div *ngSwitchCase='"dymanic"' padding>
+      <div *ngSwitchCase='"dymanic"' #dymanic padding>
           <div class="chat_item"  *ngFor="let item of chatList">
               <avatar *ngIf='!item?.initatorEmp?.photo' name={{item?.initatorEmp?.name}}></avatar>
               <img class="head" *ngIf='item?.initatorEmp?.photo' src={{item?.initatorEmp?.photo}} alt="">

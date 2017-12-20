@@ -68,8 +68,11 @@ export class WorkHomePage {
     this.navCtrl.push(page)
   }
   goPages(item) {
-    alert(0)
+   
     console.log(item)
+    if(item.type===2||item.type===1) {
+      this.navCtrl.push('ChatPage',{name: item.name, id: item.id1})
+    }
     if(item.type===3) {
       this.navCtrl.push('ShiwuDetailPage',{id:item.id})
     }

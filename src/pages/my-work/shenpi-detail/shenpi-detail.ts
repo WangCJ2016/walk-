@@ -50,6 +50,7 @@ export class ShenpiDetailPage {
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {
+    this.params = this.navParams.data
     this.form = this.fb.group({
       remark: [''],
       attach:[''],

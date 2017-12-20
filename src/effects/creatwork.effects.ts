@@ -248,17 +248,21 @@ export class CreatWorkEffects {
   .map(res => {
     console.log(res)
     if(res.success) {
-      const data = res.dataObject.result.map(apply => ({
-        startDate:apply.apply.startDate,
-        endDate:apply.apply.endDate,
-        id:apply.applyId,
-        pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
-        totalPages:res.dataObject.totalPages,
-        type: apply.type,
-        status:applyStatus(apply.apply.status),
-        initatorEmp:apply.apply.initatorEmp,
-        classify:applyType(apply.apply.type,apply.apply.classify)
-      }))
+      const data = res.dataObject.result.map(item => {
+        if(item.apply){
+          return ({
+            startDate:item.apply.startDate,
+            endDate:item.apply.endDate,
+            id:item.applyId,
+            pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
+            totalPages:res.dataObject.totalPages,
+            type: item.type,
+            status:applyStatus(item.apply.status),
+            initatorEmp:item.apply.initatorEmp,
+            classify:applyType(item.apply.type,item.apply.classify)
+          })
+        }
+      }).filter(item=>item!=undefined)
       console.log(data)
       return new actions.applyListSuccessAction(data)
     }

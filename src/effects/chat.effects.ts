@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
+import { App } from 'ionic-angular'
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import * as actions from '../actions/chat.action'
 import { Store } from '@ngrx/store'
@@ -49,9 +50,23 @@ export class ChatEffects {
      return new actions.sendChatSuccessAction(data)
    }
  })
+ @Effect() addGroup$: Observable<Action> = this.actions$
+ .ofType(actions.ActionTypes.ADDGROUP)
+ .map(toPayload)
+ .withLatestFrom(this.store$.select(store=>store.auth.auth))
+ .switchMap(([info, auth])=>this.service.addGroup(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id, info))
+ .map(res => {
+   console.log(res)
+   if(res.success) {
+     this.appCtrl.getRootNav().push('ChatPage',{name: res.dataObject.name, id: res.dataObject.id})
+     return new actions.addGroupSuccessAction({})
+   }
+   
+ })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
-    private service: ChatServiceProvider
+    private service: ChatServiceProvider,
+    private appCtrl: App
   ) {}
 }

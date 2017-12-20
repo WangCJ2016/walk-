@@ -10,6 +10,9 @@ export const ActionTypes = {
   CHATLISTINITIAL:type('[Chat] chatlistInitail'),
   SENDCHAT:type('[Chat] sendchat'),
   SENDCHAT_SUCCESS:type('[Chat] sendchat_success'),
+   // 添加群组
+   ADDGROUP:'[Chat] addgroup',
+   ADDGROUP_SUCCESS:'[Chat] addgroup_success',
 };
 
 /**
@@ -17,6 +20,18 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+// 添加群组
+export class addGroupAction implements Action {
+  readonly type = ActionTypes.ADDGROUP;
+
+  constructor(public payload: any) { }
+}
+
+export class addGroupSuccessAction implements Action {
+  readonly type = ActionTypes.ADDGROUP_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 export class ChatListAction implements Action {
   readonly type = ActionTypes.CHATLIST;
 

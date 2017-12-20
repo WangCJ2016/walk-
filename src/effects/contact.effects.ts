@@ -35,13 +35,15 @@ export class ContactEffects {
     .withLatestFrom(this.store$.select(store=>store.auth.auth))
     .switchMap(([empId,auth])=>this.contactService.empDetail(auth.id, auth.token, auth.emp.teamId, empId.empId))
     .map(res => {
-      console.log(res)
+      
       if(res.success) {
         const contactArr = {
           name: res.dataObject.name,
           dept: res.dataObject.dept.name,
-          phone: res.dataObject.userName
+          phone: res.dataObject.userName,
+          empId: res.dataObject.id
         }
+        console.log(contactArr,res.dataObject.id)
         return new actions.EmpDetailSuccessAction(contactArr)
     }
     })

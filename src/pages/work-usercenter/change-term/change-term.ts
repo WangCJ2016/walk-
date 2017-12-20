@@ -22,6 +22,7 @@ export class ChangeTermPage {
   teams: Array<team>
   selectTeamId
   loading: Loading
+  loadremoveIf = false
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private toast: ToastSitutionProvider,
@@ -32,6 +33,7 @@ export class ChangeTermPage {
         duration:5000
       })
       this.loading.present()
+      this.loadremoveIf = true
       this.store$.dispatch(new actions.LoadAction({}))
      
   }
@@ -40,11 +42,15 @@ export class ChangeTermPage {
      this.store$.select(store=>store).subscribe(store=>{
         this.teams = store.team.teams
         this.selectTeamId = store.auth.auth.emp.teamId
-        this.loading.dismiss()
+        if(this.loadremoveIf){
+          this.loading.dismiss()
+          this.loadremoveIf = false
+        }
      })
   }
   setDefault(id) {
-    this.loading.present()
+    //this.loading.present()
+    
     this.store$.dispatch(new actions.SetdefaultAction({empId: id}))
   }
 }

@@ -29,7 +29,7 @@
         <ion-item class="item_top" (click)='goPages(item)' *ngFor="let item of lists; let i=index">
             <ion-avatar item-start >
                 <img *ngIf='item.type==1' src="assets/imgs/work-home/group.png" alt="">
-                <avatar *ngIf='item.type==2' name='item.name'></avatar>
+                <avatar *ngIf='item.type==2' name={{item.name}}></avatar>
                 <img *ngIf='item.type==3' src="assets/imgs/work-home/shiwu.png" alt="">
                 <img *ngIf='item.type==4' src="assets/imgs/work-home/zhou.png" alt="">
                 <img *ngIf='item.type==5' src="assets/imgs/work-home/yue.png" alt="">

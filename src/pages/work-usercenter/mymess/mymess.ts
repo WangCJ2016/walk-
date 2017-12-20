@@ -36,7 +36,7 @@ export class MymessPage {
   _cityName: string
   head: string = "assets/imgs/work-usercenter/head.png"
   loading: Loading
-
+  loadremoveIf = false
 
   constructor(public navCtrl: NavController, 
     @Inject('BASE_URL') private config,
@@ -60,7 +60,9 @@ export class MymessPage {
     this.auth$ = this.store$.select(store => store.auth.auth)
     this.auth$
     .switchMap(auth => {
-      this.loading.dismiss()
+      if(this.loadremoveIf){
+        this.loading.dismiss()
+      }
       this.head = auth.photo
      this.provinceId = auth.provinceId
      this.cityId = auth.cityId
@@ -84,6 +86,7 @@ export class MymessPage {
           text: '拍摄',
           handler: () => {
             this.loading.present()
+            this.loadremoveIf = true
             const options = {
               destinationType: this.camera.DestinationType.FILE_URI,
               sourceType: this.camera.PictureSourceType.CAMERA,
@@ -99,7 +102,7 @@ export class MymessPage {
               .then((res) => {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
-                console.log('success'+photo.url)
+
                 this.head = photo.url
                 this.store$.dispatch(new actions.ChangeAction({photo: photo.url}))
               }, (err) => {
@@ -115,6 +118,8 @@ export class MymessPage {
         {
           text: '照片',
           handler: () => {
+            this.loading.present()
+            this.loadremoveIf = true
             const options = {
               maximumImagesCount: 1,
               width: 100,
