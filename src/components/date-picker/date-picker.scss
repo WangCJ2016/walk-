@@ -52,4 +52,7 @@ date-picker {
         background-color: #29b4ff;
         color: #fff;
     }
+    .day li.today>div {
+       border: 0.55px solid #29b4ff;
+    }
 }

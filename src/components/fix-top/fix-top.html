@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="type"  (click)='fixClick(1)' *ngIf='timeArray' [class.checked]='typeIndex==1'>
-        <span>类型:{{timeArray[timeActiveIndex]?.name}}</span>
+        <span>时间:{{timeArray[timeActiveIndex]?.name}}</span>
         <ion-icon name="arrow-down"></ion-icon>
         <div class="type_item">
             <ion-list>
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="type"  (click)='fixClick(2)' *ngIf='orderArray' [class.checked]='typeIndex==2'>
-        <span>类型:{{orderArray[orderActiveIndex]?.name}}</span>
+        <span>排序:{{orderArray[orderActiveIndex]?.name}}</span>
         <ion-icon name="arrow-down"></ion-icon>
         <div class="type_item">
             <ion-list>

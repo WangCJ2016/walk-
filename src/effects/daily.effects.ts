@@ -112,7 +112,7 @@ export class DailyEffects {
 ))
 .map(res => {
   console.log(res)
-  this.toast.message('已评阅')
+  this.toast.message('已修改')
   if(res.success) {
     return new actions.ModifySuccessAction('')
   }else{

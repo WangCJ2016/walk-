@@ -36,6 +36,7 @@ export class WorkUsercenterPage {
       
       this.authImage = this.store$.select(state => state.auth.auth.photo)
       this.store$.select(state => state.auth.auth).subscribe(auth => {
+        
         if(this.loadremoveIf) {
           this.loading.dismiss()
           this.loadremoveIf = false
@@ -47,7 +48,9 @@ export class WorkUsercenterPage {
           }else {
             this.name = auth.userName
          }
-         this.name = ''
+         
+        }else{
+          this.name = ''
         }
         })
       

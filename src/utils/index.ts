@@ -183,7 +183,7 @@ export function applyStatus(status: number) {
 export function todayFormat() {
     const min = getYear(new Date())+'-'+doublenum(getMonth(new Date())+1)+'-'+doublenum(getDate(new Date()))
     const max = (getYear(new Date())+1)+'-'+doublenum(getMonth(new Date())+1)+'-'+doublenum(getDate(new Date()))
-    console.log(min,max)
+   
     return {
         min: min,
         max: max

@@ -42,7 +42,6 @@ export class WorkDeskPage {
       this.store$.dispatch(new authActions.UserInfoAction({userId: userId}))
     }
     this.store$.select(store=>store.auth.auth).subscribe(v=>{
-      console.log(v)
       if(v.emp){
         this.teamName = v.emp.team.name
         this.empId = v.emp.id
@@ -54,7 +53,6 @@ export class WorkDeskPage {
       }
     })
     this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
       if(v.workPlate) {
         this.workPlate=v.workPlate
         this.thingCount = v.thingCount
@@ -62,13 +60,11 @@ export class WorkDeskPage {
       }
     })
     this.store$.select(store=>store.attence).subscribe(v=>{
-      console.log(v)
       if(v.attence) {
         this.attencePeople = v.attence.attencePeople
       }
     })
     this.store$.select(store=>store.daily).subscribe(v=>{
-      console.log(v)
       if(v.dailyPeople) {
         this.dailyPeople = v.dailyPeople
       }
@@ -95,8 +91,11 @@ export class WorkDeskPage {
     this.navCtrl.push(pageName);
   }
   goWorkTimePage(i) {
-    
-    this.navCtrl.push('MyWorkPage',{workTime: i});
+    if(i) {
+      this.navCtrl.push('MyWorkPage',{workTime: i});
+    }else {
+      this.navCtrl.push('MyWorkPage');
+    }
   }
   goWorkPage(i) {
     this.navCtrl.push('MyWorkPage',{workType:i});

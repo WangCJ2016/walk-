@@ -33,24 +33,7 @@
             
         </div>
         <div class="border"></div>
-        <!-- <div class="content_item">
-            <div class="item_title">
-                <span class="type">工作记录</span>
-                <span class="prag">应该完成量(1)</span>
-                <span class="prag">试驾完成量(2)</span>
-                <span class="prag">新超期(3)</span>
-                <img src="assets/imgs/work-desk/icon_record.png" alt="">
-            </div>
-            <div class="item_item first">
-                <span>08:30:07</span>
-                <span>签到</span>
-                <span>杭州拱墅区祥园路33号</span>
-            </div>
-            <div class="item_item">
-                <span>08:30:07</span>
-                <span>李四将张三改为“外勤”0.5天</span>
-            </div>
-        </div> -->
+      
         
         <div class="content_item">
             <div class="item_title">
@@ -58,21 +41,11 @@
                 <img src="assets/imgs/work-desk/icon_ribao.png" alt="">
             </div>
         </div>
-        <!-- <div class="content_item" style="border-left:none" *ngIf='showIf'>
-            <ion-textarea placeholder="请记录您的工作心得，下一步工作安排或者计划" [(ngModel)]="desc" >
-            
-            </ion-textarea>
-            <div *ngIf='showIf' class="cleafix">
-                <button ion-button clear float-right (click)='addDaily()'>提交</button>
-                <button ion-button clear float-right style="color:#ccc">取消</button>
-            </div>
-           
-        </div> -->
         <div  class="content_item" style="border-left:none" >
                 <textarea #content  placeholder="请记录您的工作心得，下一步工作安排或者计划" [(ngModel)]="desc" [disabled]='contentDisabled' value={{dailyContent}} >
                     
                 </textarea>
-                <img  *ngIf='!showIf&&isSelf' (click)='edit()' class="edit" src="assets/imgs/work-desk/edit.png" alt="">
+                <img  *ngIf='!showIf&&isSelf&&isToday' (click)='edit()' class="edit" src="assets/imgs/work-desk/edit.png" alt="">
                 <div *ngIf='showIf||!contentDisabled' class="clearfix">
                     <button ion-button clear float-right (click)='addDaily()'>提交</button>
                     <button ion-button clear float-right style="color:#ccc">取消</button>

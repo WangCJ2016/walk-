@@ -7,6 +7,7 @@ import lastDayOfMonth from 'date-fns/last_day_of_month'
 import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'
 import getDate from 'date-fns/get_date'
+import { isToday } from 'date-fns';
 
 @Component({
   selector: 'date-picker',
@@ -19,9 +20,11 @@ export class DatePickerComponent {
   selectDay:number
   selectMonth: number
   selectYear: number
+  isToday: boolean = false
   fenzuArray = [];
   selectSlideIndex:number
-
+  todayIndex: number
+  todayActiveIndex: number
   constructor() {
     this.selectYear = getYear(new Date())
     this.selectMonth = getMonth(new Date()) + 1
@@ -33,7 +36,11 @@ export class DatePickerComponent {
     this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
    this.slides.initialSlide=this.selectSlideIndex
   }
-  initalMonth(year_month){   
+  initalMonth(year_month){  
+      this.isToday =false 
+      if(year_month === getYear(new Date())+'-'+(getMonth(new Date()) + 1)) {
+        this.isToday = true
+      }
       const num = getDaysInMonth(year_month) // 当前月的天数
       const firstDay = startOfMonth(year_month)
       const firstDayofWeek = getDay(firstDay)
@@ -50,7 +57,7 @@ export class DatePickerComponent {
         next0.push(0)
       }
       for(let i = 0;i<num;i++){
-        month.push(i+1)
+          month.push(i+1)
       }
       const monthArray = [...preO,...month,...next0]
       
@@ -63,6 +70,22 @@ export class DatePickerComponent {
           this.activeIndex = this.fenzuArray[i].indexOf(this.selectDay)
         }
       }
+      if(this.isToday) {
+        for(let i=0;i<this.fenzuArray.length;i++){
+        if(this.fenzuArray[i].indexOf(getDate(new Date()))>-1){
+          this.todayIndex = i
+          this.todayActiveIndex = this.fenzuArray[i].indexOf(getDate(new Date()))
+          this.fenzuArray.length = i+1
+          for(let j=i;j<this.fenzuArray[i].length;j++){
+            if(this.fenzuArray[i][j]>getDate(new Date())) {
+              this.fenzuArray[i][j] = 0
+            }
+          }
+        }
+        
+      }
+      }
+      console.log(this.todayIndex, this.todayActiveIndex)
   }
   dayChoose(index: number,day:number) {
     this.activeIndex = index
@@ -77,6 +100,9 @@ export class DatePickerComponent {
       this.selectMonth--
     }
     const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    this.selectSlideIndex = -1
+    this.activeIndex = -1
+    this.selectDay = 0
     this.initalMonth(this.selectYear+'-'+gaozaoMonth)
     this.slides.slideTo(0,0)
   }
@@ -93,6 +119,9 @@ export class DatePickerComponent {
       this.selectMonth++
     }
     const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    this.selectSlideIndex = -1
+    this.activeIndex = -1
+    this.selectDay = 0
     this.initalMonth(this.selectYear+'-'+gaozaoMonth)
     this.slides.slideTo(0,0)
   }

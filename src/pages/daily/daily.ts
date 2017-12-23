@@ -1,12 +1,13 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { numtoarray } from '../../utils'
+import { numtoarray,dayFormat } from '../../utils'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/daily.action'
 import * as attenceActions from '../../actions/attence.action'
 import { Subject } from 'rxjs/Subject';
 import { StarComponent} from '../../components/star/star'
+import { select } from '@ngrx/core';
 /**
  * Generated class for the DailyPage page.
  *
@@ -28,6 +29,7 @@ export class DailyPage {
   isSelf: boolean = false
   backdrop: boolean = false
   contentDisabled: boolean = true
+  isToday: boolean = true
   desc: string 
   time$ = new Subject<string>()
   dailyContent: string
@@ -43,6 +45,7 @@ export class DailyPage {
   ) {
     console.log(this.navParams.data)
     this.time$.asObservable().subscribe(v=>{
+      this.isToday =  dayFormat(new Date())===v?true:false
       this.store$.dispatch(new actions.DailyDetailAction({empId1:this.navParams.data.empId,submitDate:v}))
       this.store$.dispatch(new attenceActions.AttenceRecordAction({time:v,empId:this.navParams.data.empId}))
     })
@@ -63,7 +66,7 @@ export class DailyPage {
         }
       })
       this.store$.select(store=>store.daily.dailyDetail).subscribe(v=>{
-        console.log(v)
+       
         if(v){
           this.empId = v.empId
           this.depId = v.deptId
@@ -115,8 +118,10 @@ export class DailyPage {
    
   }
   edit() {
-    this.contentDisabled = false
-    this.content.nativeElement.focus()   
+    
+      this.contentDisabled = false
+      this.content.nativeElement.focus()   
+    
   }
   
   selectDay(day) {
