@@ -99,7 +99,7 @@ export class AttencePage {
   }
   // 获取地址
   getAdress(v) {
-    console.log(v)
+    console.log('addressInfo'+v)
     this.addressInfo = JSON.parse(v)
   }
   // 签到或签退
@@ -112,10 +112,9 @@ export class AttencePage {
         .then((res) => {
           // success
           const photo = JSON.parse(res.response).fileUrl[0]
-          console.log('success'+photo.url)
+         
           pictures.push(photo.url)
           if(pictures.length===this.pics.length) {
-            console.log('success'+photo)
             this.loading.present()
             this.loadNum = 1
             this.store$.dispatch(new actions.SignAction({

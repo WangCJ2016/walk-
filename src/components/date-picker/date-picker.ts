@@ -38,6 +38,7 @@ export class DatePickerComponent {
   }
   initalMonth(year_month){  
       this.isToday =false 
+      console.log(year_month)
       if(year_month === getYear(new Date())+'-'+(getMonth(new Date()) + 1)) {
         this.isToday = true
       }
@@ -51,13 +52,14 @@ export class DatePickerComponent {
       let month = []
       this.fenzuArray = [];
       for(let i = 0;i<firstDayofWeek;i++){
-        preO.push(0)
+       
+        preO.push({day:0})
       }
       for(let i = 0;i<6-lastDayofWeek;i++){
-        next0.push(0)
+        next0.push({day:0})
       }
       for(let i = 0;i<num;i++){
-          month.push(i+1)
+          month.push({day:i+1})
       }
       const monthArray = [...preO,...month,...next0]
       
@@ -65,32 +67,33 @@ export class DatePickerComponent {
         this.fenzuArray.push(monthArray.slice(i,i+7))
       }
       for(let i=0;i<this.fenzuArray.length;i++){
-        if(this.fenzuArray[i].indexOf(this.selectDay)>-1){
-          this.selectSlideIndex = i
-          this.activeIndex = this.fenzuArray[i].indexOf(this.selectDay)
+        for(let j=0;j<this.fenzuArray[i].length;j++) {
+          if(this.fenzuArray[i][j].day===this.selectDay){
+            this.activeIndex = i
+
+          }
         }
       }
       if(this.isToday) {
         for(let i=0;i<this.fenzuArray.length;i++){
-        if(this.fenzuArray[i].indexOf(getDate(new Date()))>-1){
-          this.todayIndex = i
-          this.todayActiveIndex = this.fenzuArray[i].indexOf(getDate(new Date()))
-          this.fenzuArray.length = i+1
-          for(let j=i;j<this.fenzuArray[i].length;j++){
-            if(this.fenzuArray[i][j]>getDate(new Date())) {
-              this.fenzuArray[i][j] = 0
-            }
-          }
-        }
-        
+          for(let j=0;j<this.fenzuArray[i].length;j++) {
+            if(this.fenzuArray[i][j].day===getDate(new Date())){
+              this.fenzuArray[i][j].today = true
+            } 
+            if(this.fenzuArray[i][j].day>getDate(new Date())){
+              this.fenzuArray[i][j].disabled = true
+            } 
+          }  
       }
       }
-      console.log(this.todayIndex, this.todayActiveIndex)
+      console.log(this.fenzuArray)
   }
-  dayChoose(index: number,day:number) {
-    this.activeIndex = index
-    this.selectDay = day
-    this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
+  dayChoose(index: number,day) {
+    if(!day.disabled) {
+      this.activeIndex = index
+      this.selectDay = day.day
+      this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
+    }
   }
   pre() {
     if(this.selectMonth-1<=0){
@@ -121,8 +124,8 @@ export class DatePickerComponent {
     const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
     this.selectSlideIndex = -1
     this.activeIndex = -1
-    this.selectDay = 0
-    this.initalMonth(this.selectYear+'-'+gaozaoMonth)
+    this.selectDay = 1
+    this.initalMonth(this.selectYear+'-'+this.selectMonth)
     this.slides.slideTo(0,0)
   }
 }

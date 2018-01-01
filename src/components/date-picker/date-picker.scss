@@ -55,4 +55,7 @@ date-picker {
     .day li.today>div {
        border: 0.55px solid #29b4ff;
     }
+    .day li.disabled>div {
+        color: #ccc;
+     }
 }

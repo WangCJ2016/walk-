@@ -82,18 +82,18 @@ export class ShiwuDetailPage {
       this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
     }
     this.store$.dispatch( new chatActions.ChatListInitalAction({}))
-    this.store$.dispatch(new actions.shiwuDetailAction({'thingId':'128fd57d36784e18862087138d188bf0'}))
-    this.store$.dispatch(new actions.zishiwuAction({parentId:'128fd57d36784e18862087138d188bf0',type:'2'}))
-    this.store$.dispatch(new actions.requireListAction({parentId:'128fd57d36784e18862087138d188bf0'}))
-    this.store$.dispatch(new chatActions.ChatListAction({parentId:'128fd57d36784e18862087138d188bf0',pageNo:1}))
+    this.store$.dispatch(new actions.shiwuDetailAction({'thingId':this.params.id}))
+    this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'2'}))
+    this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
+    this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
       if(this.data){
         this.form.get('remark').patchValue(this.data.remark)
-        this.progress = this.data.progress?this.data.progress:'0' 
+        this.data.progress?this.data.progress:'0' 
+        this.progress = this.data.progress
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.store$.select(store=>store.auth).subscribe(auth => {
             this.mainPersonIf = auth.auth.emp.id == this.data.mainPersonId
@@ -102,7 +102,6 @@ export class ShiwuDetailPage {
       }
     })
     this.store$.select(store=>store.chat).subscribe(v=>{
-      console.log(v)
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
         const preLength = this.chatList.length
         this.enabled = true
@@ -113,7 +112,6 @@ export class ShiwuDetailPage {
         
         if(this.dymanicPageTotal == v.chatList[0].totalPages) {
           this.enabled=false
-          console.log(this.enabled)
         }
         
         if(v.chatList.length-preLength==1) {
@@ -125,6 +123,7 @@ export class ShiwuDetailPage {
   }
   
   ionViewCanLeave() {
+    console.log(this.data)
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
     this.form.get('remark').value !== this.data.remark ) {
@@ -179,7 +178,7 @@ export class ShiwuDetailPage {
           handler: data => {
            console.log(data)
           
-           this.store$.dispatch(new actions.addRequireAction({parentId: '128fd57d36784e18862087138d188bf0', type:2,name: data.name}))
+           this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
           }
         }
       ]
@@ -189,15 +188,15 @@ export class ShiwuDetailPage {
   // 删除需求
   delRequire(id, index) {
     this.requireList.splice(index, 1)
-    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'thingId':'128fd57d36784e18862087138d188bf0'}))
+    this.store$.dispatch(new actions.delRequireAction({resultsId: id,'thingId':this.params.id}))
   }
   // 创建子事务
   createzishiwu() {
-    this.navCtrl.push('CreateWorkPage',{parentId:'128fd57d36784e18862087138d188bf0',type:2})
+    this.navCtrl.push('CreateWorkPage',{parentId:this.params.id,type:2})
   }
   // 关闭周计划
   endPlanz(status) {
-    this.store$.dispatch(new actions.shiwuUpdateAction({'status': status,'thingId':'128fd57d36784e18862087138d188bf0'}))
+    this.store$.dispatch(new actions.shiwuUpdateAction({'status': status,'thingId':this.params.id}))
   }
   // 删除子事务
   del(id,i) {
@@ -236,25 +235,25 @@ export class ShiwuDetailPage {
      Promise.all(submitarr)
         .then(res => {
              data = {...data,attach:attach.join(',')}
-            this.store$.dispatch(new actions.shiwuUpdateAction({...data,...{thingId:'128fd57d36784e18862087138d188bf0'}}))
+            this.store$.dispatch(new actions.shiwuUpdateAction({...data,...{thingId:this.params.id}}))
             this.form.reset()
         })
     }else{
-      this.store$.dispatch(new actions.shiwuUpdateAction({...data,...{thingId:'128fd57d36784e18862087138d188bf0'}}))
+      this.store$.dispatch(new actions.shiwuUpdateAction({...data,...{thingId:this.params.id}}))
     }
    
   }
 // 动态发送聊天信息
 sendChat(obj) {
   if((obj.contents&&obj.contents!='')||(obj.attach&&obj.attach!='')){
-    this.store$.dispatch(new chatActions.sendChatAction({parentId:'128fd57d36784e18862087138d188bf0',chatGroupId:this.chatGroupId,...obj}))
+    this.store$.dispatch(new chatActions.sendChatAction({parentId:this.params.id,chatGroupId:this.chatGroupId,...obj}))
   }
   
 }
 doRefresh(refresher) {
   this.refresher = refresher
   this.dymanicPageTotal++
-  this.store$.dispatch(new chatActions.ChatListAction({parentId:'128fd57d36784e18862087138d188bf0',pageNo:this.dymanicPageNo+1}))
+  this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:this.dymanicPageNo+1}))
 }
 // 打开成果关联modal
 requireModal(item) {

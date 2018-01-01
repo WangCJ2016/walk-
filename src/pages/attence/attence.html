@@ -16,13 +16,13 @@
 <ion-content>
     <div class="attence_time">
         <img class="today" src="assets/imgs/attence/iocn_today.png" alt="">
-        <span>{{date|date:"y-M-d"}}</span>
+        <span>{{date|date:"y-MM-dd"}}</span>
         <span>{{weekDay}}</span>
     </div>
     <div class="attence_address">
         <img class="loc" src="assets/imgs/attence/icon_loc.png" alt="">
         <span>当前位置</span>
-        <span class="address">{{addressInfo?.address}}</span>
+        <span class="address">{{addressInfo?.trueAddress}}</span>
     </div>
     <div class="map" #map_container style="height:200px">
         <map (address)='getAdress($event)'></map>

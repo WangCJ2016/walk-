@@ -56,10 +56,14 @@ export class ChatEffects {
  .withLatestFrom(this.store$.select(store=>store.auth.auth))
  .switchMap(([info, auth])=>this.service.addGroup(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id, info))
  .map(res => {
-   console.log(res)
    if(res.success) {
      this.appCtrl.getRootNav().push('ChatPage',{name: res.dataObject.name, id: res.dataObject.id})
-     return new actions.addGroupSuccessAction({})
+     return new actions.addGroupSuccessAction({
+       id: res.dataObject.id,
+       contents: res.dataObject.contents,
+       name: res.dataObject.name,
+       type: res.dataObject.type
+     })
    }
    
  })

@@ -36,10 +36,11 @@ export class ShenpitypeFormcontrolComponent implements  ControlValueAccessor{
     let modal = this.modalCtrl.create(SelectModalComponent)
     modal.present()
     modal.onDidDismiss(res => {
-      console.log(res)
-      this.type = res
-      this.valuename = res.name
-      this.propagateChange(res)
+      if(res) {
+        this.type = res
+        this.valuename = res.name
+        this.propagateChange(res)
+      }
     })
   }
   writeValue(obj: any): void { }

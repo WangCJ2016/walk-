@@ -59,22 +59,24 @@ export class MymessPage {
   ionViewDidEnter(){
     this.auth$ = this.store$.select(store => store.auth.auth)
     this.auth$
-    .switchMap(auth => {
-      if(this.loadremoveIf){
-        this.loading.dismiss()
-      }
-      this.head = auth.photo
-     this.provinceId = auth.provinceId
-     this.cityId = auth.cityId
-     return this.service.sysRegionList(this.provinceId)
+    .switchMap(auth => {  
+        if(this.loadremoveIf){
+          this.loading.dismiss()
+        }
+       this.head = auth.photo
+       this.provinceId = auth.provinceId
+       this.cityId = auth.cityId
+       return this.service.sysRegionList(this.provinceId)
     })
     .map(city => {
       this._provinceName = city.dataObject[0].name
       return city.dataObject.filter(city => city.id == this.cityId)
     })
     .subscribe(res => {
-      this._cityName = res[0].name
-      this.cityName = this._provinceName +'-'+ this._cityName
+     if(res[0]){
+        this._cityName = res[0].name
+        this.cityName = this._provinceName +'-'+ this._cityName
+     }
     })
   }
   // 修改头像

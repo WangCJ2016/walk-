@@ -17,10 +17,11 @@
     <ion-slides>
         <ion-slide *ngFor="let week of fenzuArray;let j=index">
             <ul class="week day">
-                <li *ngFor="let day of week;let i=index" (click)="dayChoose(i,day)" 
-                [class.today]='isToday&&j==todayIndex&&i==todayActiveIndex'
-                [class.active]='i==activeIndex&&day==selectDay'>
-                    <div *ngIf="day">{{day}}</div>
+                <li *ngFor="let day of week;let i=index" (click)="dayChoose(j,day)" 
+                [class.today]='day.today'
+                [class.active]='j===activeIndex&&day.day===selectDay'
+                [class.disabled]='day.disabled'>
+                    <div *ngIf="day.day">{{day.day}}</div>
                 </li>
             </ul>
         </ion-slide>

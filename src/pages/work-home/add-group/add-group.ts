@@ -29,10 +29,6 @@ export class AddGroupPage {
     private store$: Store<fromRoot.State>
   ) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddGroupPage');
-  }
   addMember() {
      const modal = this.modal.create(GroupContactsModalComponent)
       modal.present()
@@ -45,6 +41,7 @@ export class AddGroupPage {
   submit(){
     if(this.members.length>0) {
       this.store$.dispatch(new actions.addGroupAction({type: 1,name:this.name, empIds: this.ids.join(',')}))
+      
     }
     else {
       this.toast.message('请先选择成员')

@@ -18,7 +18,11 @@ export function reducer(state = initialState, action: any ): State {
      {
       return {...state,...action.payload}
     }
-
+    // case actions.ActionTypes.ADDGROUP_SUCCESS: {
+    //   console.log(action.payload)
+    //   const workhomeList = [...state.workhomeList.chatGroupPage,action.payload]
+    //   return {...state,workhomeList}
+    // }
     default: {
       return state;
     }

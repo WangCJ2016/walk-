@@ -30,6 +30,11 @@ export class WorkHomePage {
               private modal: ModalController,
               private store$: Store<fromRoot.State>
               ) {
+               
+  }
+
+  ionViewDidEnter(){
+    
                 this.store$.dispatch(new actions.ListAction({pageNo: 1}))
                 this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
                   console.log(res)
@@ -38,19 +43,13 @@ export class WorkHomePage {
                     this.lists = [...this.lists,...res.chatGroupPage]
                     this.infinite?this.infinite.complete():null
                     if(this.lists.length>=15) {
-                      console.log(1)
                       this.enabled = true
                     }
                     if(this.pageNo == res.chatGroupPage[0].totalPages) {
                       this.enabled = false
                     }
                   }
-                  console.log(this.lists)
                 })
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WorkHomePage');
   }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(WorkHomePopverComponent,{modal:this.openModal},{

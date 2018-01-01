@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
-import * as actions from '../../actions/chat.action'
+import * as actions from '../../actions/work-home.action'
 import * as chatActions from '../../actions/chat.action'
 /**
  * Generated class for the ChatPage page.
@@ -63,15 +63,19 @@ export class ChatPage {
         }
         
         if(v.chatList.length-preLength==1) {
-          this.content.resize();
-          this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight)
+          this.content?this.content.resize():null
         }
       }
     })
   }
-
+  ionViewDidLeave(){
+    this.store$.dispatch(new actions.ListAction({pageNo: 1}))
+  }
   ionViewDidEnter(){
-    this.store$.dispatch(new actions.ChatListAction({parentId: this.params.id}))
+    // if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "AddGroupPage") {
+    //   this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    // }
+    this.store$.dispatch(new chatActions.ChatListAction({parentId: this.params.id}))
   }
   // 动态发送聊天信息
 sendChat(obj) {
