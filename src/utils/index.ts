@@ -3,8 +3,6 @@ import differenceInDays from 'date-fns/difference_in_days'
 import getMonth from 'date-fns/get_month'
 import getYear from 'date-fns/get_year'
 import getDate from 'date-fns/get_date'
-import addHours from 'date-fns/add_hours'
-import addDays from 'date-fns/add_days'
 import { getHours } from 'date-fns';
 interface data {
     letter: string,
@@ -116,8 +114,6 @@ export function dayFormat(day) {
 export function toEndDate(starTime, day) {
     if(!starTime){
         const startDate = new Date().toISOString()
-        const endTime = addDays(startDate,day)
-        const time = getYear(endTime)+'-'+(getMonth(endTime)+1)+'-'+getDate(endTime)+' '+(getHours(endTime)>=12?'PM':'AM')
         return {
             startDate:  getYear(startDate)+'-'+(getMonth(startDate)+1)+'-'+getDate(startDate),
             startSx: (getHours(startDate)>=12?'PM':'AM'),
@@ -125,8 +121,6 @@ export function toEndDate(starTime, day) {
         }
     }else{
         const startDate = new Date(starTime.slice(0,-4))
-        const endTime = addDays(startDate,day)
-        const time = getYear(endTime)+'-'+(getMonth(endTime)+1)+'-'+getDate(endTime)+' '+(getHours(endTime)>=12?'PM':'AM')
         return {
             startDate:  getYear(startDate)+'-'+(getMonth(startDate)+1)+'-'+getDate(startDate),
             startSx: (getHours(startDate)>=12?'PM':'AM'),

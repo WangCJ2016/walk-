@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { contact } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/contacts.action'

@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController, App } from 'ionic-angular';
-import { SelectPersonComponent } from '../../../components/select-person/select-person'
+import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
 import { ToastSitutionProvider } from '../../../providers/toast-sitution/toast-sitution'
@@ -32,7 +31,6 @@ export class CreateWorkPage {
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private toastProvider: ToastSitutionProvider,
-    private app: App,
     private fileTranfer: FileTransfer,
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>,

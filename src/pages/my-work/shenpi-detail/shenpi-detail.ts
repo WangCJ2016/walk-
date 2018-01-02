@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild, ElementRef, Renderer2  } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2  } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content, Refresher } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
@@ -6,7 +6,7 @@ import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
-import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
+
 import { applyType} from '../../../utils'
 import {applyFlow} from '../../../domain'
 /**
@@ -46,8 +46,6 @@ export class ShenpiDetailPage {
     public navParams: NavParams,
     private fb: FormBuilder,
     private rd: Renderer2,
-    private fileTranfer: FileTransfer,
-    @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {
     this.params = this.navParams.data
@@ -79,7 +77,6 @@ export class ShenpiDetailPage {
     this.store$.dispatch(new actions.applyFlowAction({'applyId':this.params.id}))
     this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
       this.data = v.workdetail
       this.applyFlowList = v.applyFlow
       if(this.data){

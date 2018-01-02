@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Renderer2, forwardRef, Inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker'
 import { Keyboard } from '@ionic-native/keyboard'
 //import { ImagePicker } from '@ionic-native/image-picker';

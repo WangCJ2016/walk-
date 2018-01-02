@@ -1,10 +1,10 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
-import { ModalController, ActionSheetController } from 'ionic-angular'
+import {  ActionSheetController } from 'ionic-angular'
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker'
 
-import { FileModalComponent } from '../file-modal/file-modal'
+// import { FileModalComponent } from '../file-modal/file-modal'
 /**
  * Generated class for the FujianFormcontrolComponent component.
  *
@@ -35,7 +35,7 @@ export class FujianFormcontrolComponent implements ControlValueAccessor {
   // }
   images: Array<any> = []
   private propagateChange = (_: any) => { }
-  constructor(private modalCtrl: ModalController,
+  constructor(
   private actionSheetCtrl: ActionSheetController,
   private camera: Camera,
   private imagePicker: ImagePicker) {

@@ -15,10 +15,10 @@ export class EmojiComponent {
   emojiArray: Array<any> = []
 
   constructor() {
-    const emojiString = `😁,😂,🤣,😀,😬,😃,😄,😅,😆,😇,😉,😊,🙂,🙃,😋,😌,😍,😘,😗,😙,😚,😜,😝,😛,🤑,🤓,😎,🤡,🤠,🤗,😏,😶,😐,
-      😑,😒,🙄,🤔,🤥,😳,😞,😟,😠,😡,😔,😕,🙁,😣,😖,😫,😩,😤,😮,😱,😨,😰,😯,😦,😧,😢,😥,🤤,😪,😓,😭,😵,😲,🤐,🤢,🤧,😷,🤒,🤕,😴`
+    // const emojiString = `😁,😂,🤣,😀,😬,😃,😄,😅,😆,😇,😉,😊,🙂,🙃,😋,😌,😍,😘,😗,😙,😚,😜,😝,😛,🤑,🤓,😎,🤡,🤠,🤗,😏,😶,😐,
+    //   😑,😒,🙄,🤔,🤥,😳,😞,😟,😠,😡,😔,😕,🙁,😣,😖,😫,😩,😤,😮,😱,😨,😰,😯,😦,😧,😢,😥,🤤,😪,😓,😭,😵,😲,🤐,🤢,🤧,😷,🤒,🤕,😴`
      
-    const emojiArray = emojiString.split(',')
+    //const emojiArray = emojiString.split(',')
       // for(let i=0;i<emojiArray.length-1;i+18) {
       //   this.emojiArray.push(emojiArray.slice(i,i+18))
       // }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ModalController, InfiniteScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, InfiniteScroll, Refresher } from 'ionic-angular';
 import { WorkHomePopverComponent} from '../../components/work-home-popver/work-home-popver'
 import { Store } from '@ngrx/store'
 import * as actions from '../../actions/work-home.action'
 import * as fromRoot from '../../reducer'
-import { concat } from 'rxjs/operator/concat';
+
 
 /**
  * Generated class for the WorkHomePage page.
@@ -22,34 +22,30 @@ export class WorkHomePage {
   lists = []
   openModal
   infinite: InfiniteScroll
+  refresher: Refresher
   enabled: boolean = false
   pageNo: number = 0
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
-              private modal: ModalController,
               private store$: Store<fromRoot.State>
               ) {
+                this.store$.dispatch(new actions.ListAction({pageNo: 1}))
+                this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
+                  if(res.length>0) {
+                    this.lists = res
+                    this.infinite?this.infinite.complete():null
+                    this.refresher?this.refresher.complete():null
+                    if(this.lists.length>=15) {
+                      this.enabled = true
+                    }
+                  }
+                })
                
   }
 
   ionViewDidEnter(){
-    
-                this.store$.dispatch(new actions.ListAction({pageNo: 1}))
-                this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
-                  console.log(res)
-                  if(res&&res.chatGroupPage[0].pageNo!=this.pageNo) {
-                    this.pageNo = res.chatGroupPage[0].pageNo
-                    this.lists = [...this.lists,...res.chatGroupPage]
-                    this.infinite?this.infinite.complete():null
-                    if(this.lists.length>=15) {
-                      this.enabled = true
-                    }
-                    if(this.pageNo == res.chatGroupPage[0].totalPages) {
-                      this.enabled = false
-                    }
-                  }
-                })
+  
   }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(WorkHomePopverComponent,{modal:this.openModal},{
@@ -61,14 +57,16 @@ export class WorkHomePage {
   }
   doInfinite(infinite) {
     this.infinite = infinite
-    this.store$.dispatch(new actions.ListAction({pageNo: this.pageNo+1}))
+    if(this.lists[this.lists.length-1].pageNo+1<=this.lists[0].totalPages) {
+      this.store$.dispatch(new actions.ListAction({pageNo: this.lists[this.lists.length-1].pageNo+1}))
+    }else{
+      this.enabled = false
+    }
   }
   goPage(page: string) {
     this.navCtrl.push(page)
   }
   goPages(item) {
-   
-    console.log(item)
     if(item.type===2||item.type===1) {
       this.navCtrl.push('ChatPage',{name: item.name, id: item.id1})
     }
@@ -90,5 +88,10 @@ export class WorkHomePage {
     if(item.type===8) {
       //this.navCtrl.push('ShiwuDetailPage',{id:item.id})
     }
+  }
+  // 上啦刷新
+  doRefresh(refresher) {
+    this.refresher = refresher
+    this.store$.dispatch(new actions.refreshAction({pageNo: 1}))
   }
 }

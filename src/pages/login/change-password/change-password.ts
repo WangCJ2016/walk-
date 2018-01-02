@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {  FormGroup, FormBuilder,Validators,AbstractControl } from '@angular/forms'
 
 import { Store } from '@ngrx/store'
@@ -24,7 +24,6 @@ export class ChangePasswordPage {
      public navParams: NavParams, 
      private fb: FormBuilder,
      private toast: ToastSitutionProvider,
-     private toastCtrl:ToastController,
      private store$: Store<fromRoot.State>) {
     this.form = this.fb.group({
       oldpassword: ['', Validators.required],

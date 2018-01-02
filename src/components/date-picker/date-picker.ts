@@ -7,7 +7,7 @@ import lastDayOfMonth from 'date-fns/last_day_of_month'
 import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'
 import getDate from 'date-fns/get_date'
-import { isToday } from 'date-fns';
+
 
 @Component({
   selector: 'date-picker',
@@ -21,6 +21,7 @@ export class DatePickerComponent {
   selectMonth: number
   selectYear: number
   isToday: boolean = false
+  isFuture: boolean = false
   fenzuArray = [];
   selectSlideIndex:number
   todayIndex: number
@@ -38,8 +39,18 @@ export class DatePickerComponent {
   }
   initalMonth(year_month){  
       this.isToday =false 
+      this.isFuture = false
       console.log(year_month)
-      if(year_month === getYear(new Date())+'-'+(getMonth(new Date()) + 1)) {
+      // 判断是否是将来事
+      if(year_month.split('-')[0]>getYear(new Date())) {
+        this.isFuture = true
+      }
+      if(year_month.split('-')[0]==getYear(new Date())&&year_month.split('-')[1]>getMonth(new Date()) + 1) {
+        this.isFuture = true
+      }
+      // 判断是否是今天
+      console.log(getMonth(new Date()))
+      if(year_month == getYear(new Date())+'-'+(getMonth(new Date()) + 1)) {
         this.isToday = true
       }
       const num = getDaysInMonth(year_month) // 当前月的天数
@@ -86,6 +97,13 @@ export class DatePickerComponent {
           }  
       }
       }
+      if(this.isFuture) {
+        for(let i=0;i<this.fenzuArray.length;i++){
+          for(let j=0;j<this.fenzuArray[i].length;j++) {
+            this.fenzuArray[i][j].disabled = true
+          }  
+        }
+      }
       console.log(this.fenzuArray)
   }
   dayChoose(index: number,day) {
@@ -102,26 +120,22 @@ export class DatePickerComponent {
     }else{
       this.selectMonth--
     }
-    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    //const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
     this.selectSlideIndex = -1
     this.activeIndex = -1
     this.selectDay = 0
-    this.initalMonth(this.selectYear+'-'+gaozaoMonth)
+    this.initalMonth(this.selectYear+'-'+this.selectMonth)
     this.slides.slideTo(0,0)
   }
   next() {
-    const nowYear = getYear(new Date())
-    const nowMonth = getMonth(new Date())+1
-    if(this.selectYear===nowYear&&this.selectMonth+1>nowMonth){
-      return
-    }
+    
     if(this.selectMonth+1>12){
       this.selectMonth=1
       this.selectYear++
     }else{
       this.selectMonth++
     }
-    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    //const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
     this.selectSlideIndex = -1
     this.activeIndex = -1
     this.selectDay = 1

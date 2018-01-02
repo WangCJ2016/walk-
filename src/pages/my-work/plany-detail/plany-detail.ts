@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, AlertController, Content, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Content, Refresher } from 'ionic-angular';
 import { createObj } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
@@ -49,7 +49,6 @@ export class PlanyDetailPage {
     private fileTranfer: FileTransfer,
     private alertCtrl: AlertController,
     private rd: Renderer2,
-    private app: App,
     @Inject('BASE_URL') private config,
     private store$: Store<fromRoot.State>
   ) {

@@ -4,7 +4,7 @@ import { RequireLinkModalComponent} from '../../../components/require-link-modal
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
-import * as chatActions from '../../../actions/chat.action'
+
 /**
  * Generated class for the RequireLinkPage page.
  *

@@ -21,6 +21,7 @@ export class WorkhomeServiceProvider {
       userId:userId,
       token:token,
       teamId:teamId,
+      type:0,
       empId:empId,
       pageSize: 15,
       ...info,

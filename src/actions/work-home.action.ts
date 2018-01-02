@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import type from '../utils/type.util'
+
 /**
  * For each action type in an action group, make a simple
  * enum object for all of this group's action types.
@@ -19,6 +19,9 @@ export const ActionTypes = {
    NOTICELIST_SUCCESS: '[work-home] notice_success',
    NOTICEDETAIL: '[work-home] noticedetail',
    NOTICEDETAIL_SUCCESS: '[work-home] noticedetail_success',
+   // 上啦刷新
+   REFRESH:'[work-home] refresh',
+   REFRESH_SUCCESS:'[work-home] refresh_success',
 };
 
 /**
@@ -83,6 +86,16 @@ export class noticeDetailAction implements Action {
 export class noticeDetailSuccessAction implements Action {
   readonly type = ActionTypes.NOTICEDETAIL_SUCCESS;
 
+  constructor(public payload: any) { }
+}
+ // 上啦刷新
+ export class refreshAction implements Action {
+  readonly type = ActionTypes.REFRESH;
+
+  constructor(public payload: {pageNo: number}) { }
+}
+export class refreshSuccessAction implements Action {
+  readonly type = ActionTypes.REFRESH_SUCCESS;
   constructor(public payload: any) { }
 }
 /**

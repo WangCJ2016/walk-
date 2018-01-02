@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController,Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController,Loading } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'
 import { AuthProvider } from '../../../providers/auth/auth'
-import { ToastSitutionProvider} from '../../../providers'
+
 /**
  * Generated class for the ForgetPasswordPage page.
  *
@@ -36,7 +36,6 @@ export class ForgetPasswordPage {
     private fb: FormBuilder,
     private load: LoadingController,
     private service: AuthProvider,
-    private toastCtrl: ToastController,
     private store$: Store<fromRoot.State>) {
 
       this.loading = this.load.create({

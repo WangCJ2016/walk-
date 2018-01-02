@@ -15,7 +15,6 @@ export class WokrHomeEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info, auth])=>this.service.getList(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = {
         chatGroupPage:res.dataObject.chatGroupPage.chatGroupPage?res.dataObject.chatGroupPage.chatGroupPage.result.map(rel => ({
@@ -28,16 +27,31 @@ export class WokrHomeEffects {
           id1: rel.id,
           type: rel.type
         })):[],
-        // notice:res.dataObject.notice.notice?res.dataObject.notice.notice.map(res => ({
-        //   name: res.name,
-        //   contents: res.contents,
-        //   updateTime: res.updateTime,
-        //   id: res.id
-        // })):[],
       }
-      return new actions.ListSuccessAction({workhomeList:data})
-    }
-    
+      return new actions.ListSuccessAction(data)
+    }  
+  })
+  @Effect() refreshLists$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.REFRESH)
+  .map(toPayload)
+  .withLatestFrom(this.store$.select(store=>store.auth.auth))
+  .switchMap(([info, auth])=>this.service.getList(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
+  .map(res => {
+    if(res.success) {
+      const data = {
+        chatGroupPage:res.dataObject.chatGroupPage.chatGroupPage?res.dataObject.chatGroupPage.chatGroupPage.result.map(rel => ({
+          pageNo: res.dataObject.chatGroupPage.chatGroupPage.pageNo,
+          totalPages: res.dataObject.chatGroupPage.chatGroupPage.totalPages,
+          name: rel.name,
+          contents: rel.contents,
+          updateTime: rel.updateTime.split(' ')[0],
+          id: rel.parentId,
+          id1: rel.id,
+          type: rel.type
+        })):[]
+      }
+      return new actions.refreshSuccessAction(data)
+    }  
   })
   @Effect() addGroup$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.ADDGROUP)

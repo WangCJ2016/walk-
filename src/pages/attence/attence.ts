@@ -3,16 +3,14 @@ import { IonicPage, NavController, NavParams, LoadingController, Loading } from 
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import getDay from 'date-fns/get_day'
 import { getWeekDay } from '../../utils'
-import getDate from 'date-fns/get_date'
-import getYear from 'date-fns/get_year'
-import getMonth from 'date-fns/get_month'
+
 import {Observable} from 'rxjs/Rx';
 import { Subscription } from 'rxjs/subscription'
 import { Camera } from '@ionic-native/camera'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/attence.action'
-import { ToastSitutionProvider} from '../../providers'
+
 /**
  * Generated class for the AttencePage page.
  *
@@ -45,7 +43,6 @@ export class AttencePage {
     public navParams: NavParams,
     private camera: Camera,
     private fileTranfer: FileTransfer,
-    private toast: ToastSitutionProvider,
     private load: LoadingController,
     private store$: Store<fromRoot.State>) {
       this.loading = this.load.create({

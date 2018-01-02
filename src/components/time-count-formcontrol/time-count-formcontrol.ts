@@ -1,7 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms'
 import { todayFormat, toEndDate} from '../../utils'
-import { enableDebugTools } from '@angular/platform-browser/src/browser/tools/tools';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as attenceActions from '../../actions/attence.action'

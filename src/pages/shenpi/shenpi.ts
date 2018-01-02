@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, InfiniteScroll } from 'ionic-angular';
-import CreateWorkPopoverComponent from '../../components/shenpi-popver/shenpi-popver'
+import { IonicPage, NavController, NavParams, InfiniteScroll } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/creatework.action'
-import { applyList } from '../../domain'
+
 /**
  * Generated class for the ShenpiPage page.
  *
@@ -35,7 +34,6 @@ export class ShenpiPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private popoverCtrl:PopoverController,
     private store$: Store<fromRoot.State>
   ) {
     this.shenpiType = '3'

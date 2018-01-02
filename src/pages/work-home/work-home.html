@@ -19,12 +19,21 @@
 
 
 <ion-content>
-    <ion-list>
+        <ion-refresher (ionRefresh)="doRefresh($event)">
+                <ion-refresher-content></ion-refresher-content>
+              </ion-refresher>
+        <ion-list>
         <ion-item (click)='goPage("NoticePage")'>
                 <ion-avatar item-start >
                         <img src="assets/imgs/work-home/gonggao.png" alt="">
                     </ion-avatar>
                     <h4>公告</h4>
+        </ion-item>
+        <ion-item (click)='goPage("ShenpiPage")'>
+                <ion-avatar item-start >
+                        <img src="assets/imgs/work-home/shenpi.png" alt="">
+                    </ion-avatar>
+                    <h4>审批</h4>
         </ion-item>
         <ion-item class="item_top" (click)='goPages(item)' *ngFor="let item of lists; let i=index">
             <ion-avatar item-start >

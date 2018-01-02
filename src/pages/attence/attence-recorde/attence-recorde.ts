@@ -6,6 +6,7 @@ import * as actions from '../../../actions/attence.action'
 import { ToastSitutionProvider} from '../../../providers'
 
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the AttenceRecordePage page.
  *
@@ -22,6 +23,7 @@ export class AttenceRecordePage {
   time$ = new Subject<string>()
   attenceRecordList
   loading: Loading
+  _time$: Subscription
   loadNum = 0
   constructor(
     public navCtrl: NavController,
@@ -30,7 +32,7 @@ export class AttenceRecordePage {
     private store$: Store<fromRoot.State>) {
       this.loading = this.toast.loadfn()
       
-      const _time$ = this.time$.asObservable().subscribe(v=>{
+       this._time$ = this.time$.asObservable().subscribe(v=>{
         this.loading.present()
         this.loadNum = 1
         this.store$.dispatch(new actions.AttenceRecordAction({time: v}))
@@ -43,6 +45,9 @@ export class AttenceRecordePage {
        
         this.attenceRecordList = v.attence.attenceRecordList
       })
+  }
+  ionViewDidLeave(){
+    this._time$.unsubscribe()
   }
   selectDay(day: string) {
     this.time$.next(day)

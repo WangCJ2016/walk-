@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/team.action'
 import { team } from '../../../domain'
-import { ToastSitutionProvider } from '../../../providers'
+
 
 /**
  * Generated class for the ChangeTermPage page.
@@ -25,7 +25,6 @@ export class ChangeTermPage {
   loadremoveIf = false
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private toast: ToastSitutionProvider,
     private load: LoadingController,
     private store$: Store<fromRoot.State>) {
       this.loading = this.load.create({

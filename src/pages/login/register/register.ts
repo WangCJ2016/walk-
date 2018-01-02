@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Loading,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading,LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'
 import { AuthProvider } from '../../../providers/auth/auth'
-import { LoadingCmp } from 'ionic-angular/components/loading/loading-component';
+
 
 /**
  * Generated class for the RegisterPage page.
@@ -33,7 +33,6 @@ export class RegisterPage {
     public navParams: NavParams, 
     private fb: FormBuilder,
     private service: AuthProvider,
-    private toastCtrl: ToastController,
     private load: LoadingController,
     private store$: Store<fromRoot.State>) {
       this.loading = this.load.create({

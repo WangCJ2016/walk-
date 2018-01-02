@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
-import * as actions from '../../actions/work-home.action'
 import * as chatActions from '../../actions/chat.action'
 /**
  * Generated class for the ChatPage page.
@@ -35,8 +34,8 @@ export class ChatPage {
     private rd: Renderer2,
     private store$: Store<fromRoot.State>
   ) {
+    this.store$.dispatch( new chatActions.ChatListInitalAction({}))
     this.params = this.navParams.data
-    console.log(this.params)
     this.form2 = this.fb.group({
       submitContent: ['']
     })
@@ -68,13 +67,11 @@ export class ChatPage {
       }
     })
   }
-  ionViewDidLeave(){
-    this.store$.dispatch(new actions.ListAction({pageNo: 1}))
-  }
+  
   ionViewDidEnter(){
-    // if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "AddGroupPage") {
-    //   this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
-    // }
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "AddGroupPage") {
+      this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
+    }
     this.store$.dispatch(new chatActions.ChatListAction({parentId: this.params.id}))
   }
   // 动态发送聊天信息

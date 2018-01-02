@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import type from '../utils/type.util'
+
 /**
  * For each action type in an action group, make a simple
  * enum object for all of this group's action types.

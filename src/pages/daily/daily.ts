@@ -7,7 +7,7 @@ import * as actions from '../../actions/daily.action'
 import * as attenceActions from '../../actions/attence.action'
 import { Subject } from 'rxjs/Subject';
 import { StarComponent} from '../../components/star/star'
-import { select } from '@ngrx/core';
+
 /**
  * Generated class for the DailyPage page.
  *
