@@ -30,7 +30,8 @@ export class DatePickerComponent {
     this.selectYear = getYear(new Date())
     this.selectMonth = getMonth(new Date()) + 1
     this.selectDay = getDate(new Date())
-    this.initalMonth(this.selectYear +'-'+ (this.selectMonth))
+    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    this.initalMonth(this.selectYear +'-'+ gaozaoMonth)
   }
   
   ngAfterViewInit() {
@@ -49,8 +50,8 @@ export class DatePickerComponent {
         this.isFuture = true
       }
       // 判断是否是今天
-      console.log(getMonth(new Date()))
-      if(year_month == getYear(new Date())+'-'+(getMonth(new Date()) + 1)) {
+      
+      if(year_month.split('-')[0] == getYear(new Date())&&year_month.split('-')[1] == (getMonth(new Date()) + 1)) {
         this.isToday = true
       }
       const num = getDaysInMonth(year_month) // 当前月的天数
@@ -58,12 +59,12 @@ export class DatePickerComponent {
       const firstDayofWeek = getDay(firstDay)
       const lastDay = lastDayOfMonth(year_month)
       const lastDayofWeek = getDay(lastDay)
+      console.log(num,firstDay,firstDayofWeek,lastDay,lastDayofWeek)
       let preO = []
       let next0 = []
       let month = []
       this.fenzuArray = [];
       for(let i = 0;i<firstDayofWeek;i++){
-       
         preO.push({day:0})
       }
       for(let i = 0;i<6-lastDayofWeek;i++){
@@ -73,7 +74,7 @@ export class DatePickerComponent {
           month.push({day:i+1})
       }
       const monthArray = [...preO,...month,...next0]
-      
+      console.log(monthArray)
       for(let i=0;i<monthArray.length;i+=7){
         this.fenzuArray.push(monthArray.slice(i,i+7))
       }
@@ -120,11 +121,11 @@ export class DatePickerComponent {
     }else{
       this.selectMonth--
     }
-    //const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
     this.selectSlideIndex = -1
     this.activeIndex = -1
     this.selectDay = 0
-    this.initalMonth(this.selectYear+'-'+this.selectMonth)
+    this.initalMonth(this.selectYear+'-'+gaozaoMonth)
     this.slides.slideTo(0,0)
   }
   next() {
@@ -135,11 +136,11 @@ export class DatePickerComponent {
     }else{
       this.selectMonth++
     }
-    //const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    const gaozaoMonth = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
     this.selectSlideIndex = -1
     this.activeIndex = -1
     this.selectDay = 1
-    this.initalMonth(this.selectYear+'-'+this.selectMonth)
+    this.initalMonth(this.selectYear+'-'+gaozaoMonth)
     this.slides.slideTo(0,0)
   }
 }
