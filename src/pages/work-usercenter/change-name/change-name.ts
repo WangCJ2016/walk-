@@ -32,7 +32,8 @@ export class ChangeNamePage {
   }
 
   ionViewDidLoad() {
-    this.name$ = this.store$.select(store => store.auth.auth.name)
+    this.name$ = this.store$.select(store => {
+     return store.auth.auth.name})
   }
   clear() {
     this.name = ''

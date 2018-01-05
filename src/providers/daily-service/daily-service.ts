@@ -65,4 +65,18 @@ export class DailyServiceProvider {
       return this.http.get(uri, {params: params})
       .map(res=>res.json())
   }
+  // 日报上交状况
+  dailyStateByMonth(userId,token,teamId,empId,info) {
+    const params = {
+      userId: userId,
+      token: token, 
+      teamId: teamId,
+      empId:empId,
+      ...info
+      }
+      console.log(info)
+      const uri = `${this.config.url}/app/daily_dailyStateByMonth`
+      return this.http.get(uri, {params: params})
+      .map(res=>res.json())
+  }
 }

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/contacts.action'
 import { contact } from '../../domain'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the WorkContactPage page.
  *
@@ -24,20 +25,23 @@ interface contactItem{
 export class WorkContactPage {
   nameArray: Array<contact> 
   contactArray: Array<contactItem>
+  _sub$:Subscription
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private store$: Store<fromRoot.State>
   ) {
     this.store$.dispatch(new actions.LoadAction({}))
-    this.store$.select(store => store.contacts.contacts).subscribe(v => console.log(v))
   }
 
-  ionViewDidLoad() {
-    this.store$.select(store => store.contacts.contacts).subscribe(v => {
+  ionViewDidEnter() {
+    this._sub$ =this.store$.select(store => store.contacts.contacts).subscribe(v => {
       this.nameArray=v
       this.contactArray = pySegSort(this.nameArray)
     }
     )
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   goPage(page: string, id) {
     this.navCtrl.push(page,{empId: id})

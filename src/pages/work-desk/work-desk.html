@@ -89,22 +89,22 @@
     <div class="blank"></div>
     <!-- <emoji></emoji> -->
     <div class="work work_desk_myStart">
-        <div class="title">我发起的</div>
+        <div class="title" (click)='goApplyAll()'>我发起的</div>
         <ion-grid no-padding text-center>
             <ion-row>
-                <ion-col>
+                <ion-col (click)='goApplyme()'>
                     <img src="assets/imgs/work-desk/shenhe.png" alt="">
                 </ion-col>
-                <ion-col>
-                    <div class="num orange">{{applyCollect?.myApplyCount
+                <ion-col (click)='goApplyme()'>
+                    <div class="num orange">{{applyCollect?.applyCount
                         }}</div>
                     <p class="intr">要我审核</p>
                 </ion-col>
-                <ion-col>
+                <ion-col (click)='goApplygoon()'>
                     <img src="assets/imgs/work-desk/going.png" alt="">
                 </ion-col>
-                <ion-col>
-                    <div class="num green">{{applyCollect?.progressCount
+                <ion-col (click)='goApplygoon()'>
+                    <div class="num green">{{applyCollect?.goCount
                         }}</div>
                     <p class="intr">进行中的</p>
                 </ion-col>

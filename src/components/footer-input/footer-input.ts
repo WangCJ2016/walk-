@@ -46,16 +46,13 @@ export class FooterInputComponent implements ControlValueAccessor {
     
   }
   moreClick() {
-    
     this.moreShow = true
     this.show = !this.show
     this.show === true ? this.rd.setStyle(this.more.nativeElement, 'height', '10.916667rem'):
     this.rd.setStyle(this.more.nativeElement, 'height', '0')
   }
   inputFocus() {
-    //this.moreShow = false
-  
-    
+    this.moreShow = false
     this.keyboard.disableScroll(true)
     const that = this
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
@@ -67,7 +64,7 @@ export class FooterInputComponent implements ControlValueAccessor {
     window.addEventListener('native.keyboardhide', function() {
       that.propagateChange({keyboardHeight:'0px'})
       that.rd.setStyle(that.inputcase.nativeElement,'bottom',0+'px')
-      that.rd.setStyle(that.more.nativeElement, 'height', '10.916667rem')
+      // that.rd.setStyle(that.more.nativeElement, 'height', '10.916667rem')
     });
   }
   ngOnDestroy() {

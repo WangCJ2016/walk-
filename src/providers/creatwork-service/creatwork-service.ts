@@ -214,7 +214,7 @@ export class CreatworkServiceProvider {
       teamId:teamId,
       empId:empId
     }
-    const uri=`${this.config.url}/app/apply_applyCollect`
+    const uri=`${this.config.url}/app/thing_myInitCount`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
@@ -372,4 +372,32 @@ export class CreatworkServiceProvider {
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }
+  // 我发起的审批列表
+  applyTimeCount(userId,token,teamId,empId) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId
+    }
+    const uri=`${this.config.url}/app/thing_myInitTimeCount`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  // 审批列表
+  applySelectList(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      pageSize:12,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_myInitList`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
 }
+
+

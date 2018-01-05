@@ -22,6 +22,7 @@
                 [class.active]='j===activeIndex&&day.day===selectDay'
                 [class.disabled]='day.disabled'>
                     <div *ngIf="day.day">{{day.day}}</div>
+                    <i class="pot" *ngIf="day.status"></i>
                 </li>
             </ul>
         </ion-slide>

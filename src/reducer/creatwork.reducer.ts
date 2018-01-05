@@ -5,10 +5,12 @@ export interface State {
      applyList?: Array<applyList>
      applyFlow?: Array<applyFlow>
      applyCollect?: applyCollect
+     applyTimeCount?: any
+     worksfromme?: any
      zishiwu?:Array<zishiwu>
      shiwuList?: {
        pageNo: number,
-       totalPages: number,
+       records: number,
        list: Array<shiwuitem>
      }
      workPlate?:any,
@@ -18,7 +20,14 @@ export interface State {
 
 export const initialState: State = {
   applyList:[],
-  applyFlow:[]
+  applyFlow:[],
+  applyTimeCount:null,
+  worksfromme:{pageNo:0,records:0,list:[]},
+  shiwuList:{
+    pageNo: 0,
+    records: 0,
+    list: []
+  }
 };
 
 export function reducer(state = initialState, action: any ): State {
@@ -36,7 +45,17 @@ export function reducer(state = initialState, action: any ): State {
       return {...state,zishiwu:action.payload}
     } 
     case actions.ActionTypes.SHIWULIST_SUCCESS: {
-      return {...state,shiwuList:action.payload}
+      let shiwuList = {pageNo:0,records:0,list:[]}
+      if(action.payload.pageNo===1) {
+        shiwuList.pageNo = action.payload.pageNo
+        shiwuList.records = action.payload.records
+        shiwuList.list = action.payload.list
+      }else {
+        shiwuList.pageNo = action.payload.pageNo
+        shiwuList.records = action.payload.records
+        shiwuList.list = [...state.shiwuList.list,...action.payload.list]
+      }
+      return {...state,shiwuList:shiwuList}
     } 
     case actions.ActionTypes.WORKPLATE_SUCCESS: {
       return {...state,workPlate:action.payload}
@@ -45,7 +64,7 @@ export function reducer(state = initialState, action: any ): State {
       return {...state,requireList:action.payload}
     } 
     case actions.ActionTypes.ADDREQUIRE_SUCCESS: {
-      console.log(action.payload)
+      
       const requireList = [...action.payload,...state.requireList]
       return {...state,requireList:requireList}
     } 
@@ -55,6 +74,21 @@ export function reducer(state = initialState, action: any ): State {
     case actions.ActionTypes.APPLYCOLLECT_SUCCESS: {
       return {...state,applyCollect:action.payload}
     } 
+    case actions.ActionTypes.APPLYTIMECOUNT_SUCCESS:{
+      return {...state,applyTimeCount:action.payload}
+    }
+    // workfromme
+    case actions.ActionTypes.APPLYSELECTLIST_SUCCESS:{
+      let worksfromme={pageNo:0,records:0,list:[]}
+      worksfromme.pageNo = action.payload.pageNo
+      worksfromme.records = action.payload.records
+      if(action.payload.pageNo === 1) {      
+        worksfromme.list = action.payload.result
+      }else {
+        worksfromme.list = [...state.worksfromme.list,...action.payload.result]
+      }
+      return {...state,worksfromme:worksfromme}
+    }
     default: {
       return state;
     }

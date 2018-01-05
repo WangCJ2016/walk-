@@ -46,7 +46,7 @@ export class LoginPage {
       this.toastSitutionProvider.message(f.controls.password.errors.msg)
       return
     }
-    this.loading.present()
+    //this.loading.present()
     this.store$.dispatch(new authActions.LoginAction({
       phoneNum: f.value.phoneNum,
       password: f.value.password

@@ -120,6 +120,29 @@ export class DailyEffects {
   }
 })
 
+// 月日报状态
+// 修改日报
+@Effect() dailyState$: Observable<Action> = this.actions$
+.ofType(actions.ActionTypes.DAILYSTATEBYMONTH)
+.map(toPayload)
+.withLatestFrom(this.store$.select(store=>store.auth.auth))
+.switchMap(([info, auth])=>this.dailyService.dailyStateByMonth(
+  auth.id,
+  auth.token,
+  auth.emp.teamId,
+  auth.emp.id,
+  info
+))
+.map(res => {
+  console.log(res)
+  
+  if(res.success) {
+   
+    return new actions.dailyStateByMonthSuccessAction(res.dataObject)
+  }else{
+      //return new actions.FailAction(res.res.msg)
+  }
+})
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,

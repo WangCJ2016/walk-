@@ -14,17 +14,17 @@
 
 
 <ion-content style="background-color:#fff">
-    <date-picker (dateEmit)='selectDay($event)'></date-picker>
+    <date-picker (dateEmit)='selectDay($event)' (monthEmit)='selectMonth($event)' [dailyStatusByMonth]='dailyStatusByMonth'></date-picker>
     <blank></blank>
-    <div class="attence_detail" padding>
+    <div class="attence_detail" padding *ngIf='attenceRecordList'>
         <div class="attence_time" *ngFor="let item of attenceRecordList">
             <div class="time">{{item.clockTime}} {{item.type==1?'签到':'签退'}}</div>
             <div class="address">{{item.trueAddress}}</div>
-            
                 <img class="face" *ngFor="let pic of item.pictures" src={{pic}} alt="">
-    
             <img class="icon_time" src="assets/imgs/attence/icon_time.png" alt="">
-        </div>
-       
+        </div>     
+    </div>
+    <div *ngIf='!attenceRecordList' style="text-align:center;margin-top:50px;">
+        <img style='width:40%;' src="assets/imgs/attence/noreocrod.png" alt="">
     </div>
 </ion-content>

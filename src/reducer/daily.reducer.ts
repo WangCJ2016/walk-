@@ -3,6 +3,7 @@ import { dailyPeople,dailyDetail} from '../domain'
 export interface State {
   dailyPeople?: dailyPeople
   dailyDetail?: dailyDetail
+  dailyStatusByMonth?: Array<any>
 };
 
 export const initialState: State = {
@@ -16,6 +17,9 @@ export function reducer(state = initialState, action: any ): State {
     }
     case actions.ActionTypes.DETAILDAILY_SCUCCESS: {
       return {...state,dailyDetail:action.payload}
+    }
+    case actions.ActionTypes.DAILYSTATEBYMONTH_SCUCCESS:{
+      return {...state,dailyStatusByMonth:action.payload}
     }
     default: {
       return state;

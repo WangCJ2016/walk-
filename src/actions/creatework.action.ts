@@ -39,6 +39,10 @@ export const ActionTypes = {
   APPLYFLOW_SUCCESS:'[creatwork] applyflowlist_success',
   APPLYCOLLECT:'[creatwork] applycollect',
   APPLYCOLLECT_SUCCESS:'[creatwork] applycollect_success',
+  APPLYTIMECOUNT:'[creatwork] applytimecount',
+  APPLYTIMECOUNT_SUCCESS:'[creatwork] applytimecount_success',
+  APPLYSELECTLIST:'[creatwork] applyselectlist',
+  APPLYSELECTLIST_SUCCESS:'[creatwork] applyselectlist_success',
   // shiwu
   ADDSHIWU:'[creatwork] addshiwu',
   ADDSHIWU_SUCCESS:'[creatwork] addshiwu_success',
@@ -279,6 +283,17 @@ export class applygDetailSuccessAction implements Action {
 
   constructor(public payload: {}) { }
 }
+// 时间统计审批
+export class applyTimeCountAction implements Action {
+  readonly type = ActionTypes.APPLYTIMECOUNT;
+
+  constructor(public payload: any) { }
+}
+export class applyTimeCountSuccessAction implements Action {
+  readonly type = ActionTypes.APPLYTIMECOUNT_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 // 修改apply
 export class applyUpdateAction implements Action {
   readonly type = ActionTypes.UPDATEAPPLY;
@@ -326,6 +341,18 @@ export class applyCollectSuccessAction implements Action {
   readonly type = ActionTypes.APPLYCOLLECT_SUCCESS;
 
   constructor(public payload: {}) { }
+}
+// 审批选择列表
+export class applySelectListAction implements Action {
+  readonly type = ActionTypes.APPLYSELECTLIST;
+
+  constructor(public payload: any) { }
+}
+
+export class applySelectListSuccessAction implements Action {
+  readonly type = ActionTypes.APPLYSELECTLIST_SUCCESS;
+
+  constructor(public payload: any) { }
 }
 // 事务list
 export class shiwuListAction implements Action {

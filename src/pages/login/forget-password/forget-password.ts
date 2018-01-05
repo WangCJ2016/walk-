@@ -52,11 +52,12 @@ export class ForgetPasswordPage {
     // 获取sign
     this.store$.dispatch(new actions.SignAction({type:2}))
     this.store$.select(store => store.auth).subscribe(res => {
-      console.log(res)
-      this.countIf = res.auth.countIf
+      if(res.auth.emp) {
+        this.countIf = res.auth.countIf
       if(this.loadremoveIf) {
         this.loading.dismiss()
         this.loadremoveIf = false
+      }
       }
     })
     this._sub = this.service.getStep().subscribe(v => this.step = v)

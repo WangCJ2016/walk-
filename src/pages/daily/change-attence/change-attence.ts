@@ -47,11 +47,8 @@ export class ChangeAttencePage {
     
   }
 
-  ionViewDidEnter(){
-   console.log(this.navParams.data)
-  }
+ 
   choseType(index: number) {
-    console.log(index)
     this.check_index = index
   }
   ngSubmit(f) {

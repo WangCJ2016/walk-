@@ -24,16 +24,13 @@ export class MemberDailyPage {
     public navParams: NavParams,
     private store$: Store<fromRoot.State>
   ) {
-    console.log(this.navParams)
-
+    
     this.time$.asObservable().subscribe(v=>{
       this.store$.dispatch(new actions.DailyDetailAction({empId1:this.navParams.data.empId,submitDate:v}))
     })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MemberDailyPage');
-  }
+
   selectDay(day) {
     this.time$.next(day)
   }

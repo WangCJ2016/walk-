@@ -8,6 +8,7 @@ import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the PlanzDetailPage page.
@@ -43,6 +44,9 @@ export class PlanzDetailPage {
   dymanicPageTotal = 1
   refresher: Refresher
   enabled: boolean = false
+
+  _sub$:Subscription
+  _sub1$:Subscription
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -65,7 +69,7 @@ export class PlanzDetailPage {
     })
    this.form.get('progress').valueChanges.subscribe(v=>this.progress=v)
    this.form2.get('submitContent').valueChanges.subscribe(res => {
-    console.log(res)
+   
    
     if(res.keyboardHeight) {
      // this.rd.setStyle(this.dymanic.nativeElement,'marginBottom',res.keyboardHeight)
@@ -81,12 +85,12 @@ export class PlanzDetailPage {
     if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreatePlanZPage") {
       this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
     }
+    this.store$.dispatch( new chatActions.ChatListInitalAction({}))
     this.store$.dispatch(new actions.getWorkDetailAction({'planWeekId':this.params.id}))
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'4'}))
     this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
     this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
-    this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
+    this._sub$ = this.store$.select(store=>store.creatwork).subscribe(v=>{
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
@@ -98,7 +102,7 @@ export class PlanzDetailPage {
       }
     })
 
-    this.store$.select(store=>store.chat).subscribe(v=>{
+   this._sub1$ =  this.store$.select(store=>store.chat).subscribe(v=>{
       
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
         const preLength = this.chatList.length
@@ -110,7 +114,6 @@ export class PlanzDetailPage {
         
         if(this.dymanicPageTotal == v.chatList[0].totalPages) {
           this.enabled=false
-          console.log(this.enabled)
         }
         
         if(v.chatList.length-preLength==1) {
@@ -121,7 +124,11 @@ export class PlanzDetailPage {
     })
   }
   ionViewCanLeave() {
-    
+    // if(this.submitIf) {
+    //   return true
+    // }
+    this._sub$.unsubscribe()
+    this._sub1$.unsubscribe()
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
     this.form.get('remark').value !== this.data.remark ) {
@@ -234,7 +241,6 @@ export class PlanzDetailPage {
      Promise.all(submitarr)
         .then(res => {
              data = {...data,attach:attach.join(','),attachName:attachName.join(',')}
-            console.log(JSON.stringify(data))
             this.store$.dispatch(new actions.updateAction({...data,...{'planWeekId':this.params.id}}))
             this.form.reset()
         })

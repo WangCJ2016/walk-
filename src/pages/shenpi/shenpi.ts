@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, InfiniteScroll } from 'ionic-angul
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/creatework.action'
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the ShenpiPage page.
@@ -31,14 +32,14 @@ export class ShenpiPage {
   enabled1 = false
   enabled2 = false
   enabled3 = false
+  _sub$:Subscription
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private store$: Store<fromRoot.State>
   ) {
     this.shenpiType = '3'
-    this.store$.select(store=>store.creatwork.applyList).subscribe(v=>{
-      console.log(v)
+    this._sub$ = this.store$.select(store=>store.creatwork.applyList).subscribe(v=>{
       this.infinit1?this.infinit1.complete():null
       this.infinit2?this.infinit2.complete():null
       this.infinit3?this.infinit3.complete():null
@@ -68,9 +69,12 @@ export class ShenpiPage {
           }
         }
       }
-      console.log(this.applyList1,this.applyList2,this.applyList3)
+     
       
     })
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   doInfinite1(InfiniteScroll) { 
     this.infinit1= InfiniteScroll
@@ -99,7 +103,6 @@ export class ShenpiPage {
     this.navCtrl.push('CreateShenpiPage')
   }
   goDetail(id) {
-    console.log(id)
     this.navCtrl.push('ShenpiDetailPage',{id:id})
   }
 }

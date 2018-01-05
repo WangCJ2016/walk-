@@ -7,6 +7,7 @@ import * as attenceActions from '../../actions/attence.action'
 import * as authActions from '../../actions/auth.action'
 import * as dailyActions from '../../actions/daily.action'
 import { dayFormat } from '../../utils'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the WorkDeskPage page.
  *
@@ -30,6 +31,11 @@ export class WorkDeskPage {
   attencePeople
   dailyPeople
   applyCollect
+  _sub$:Subscription
+  _sub1$:Subscription
+  _sub2$:Subscription
+  _sub3$:Subscription
+  _sub4$:Subscription
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,7 +46,7 @@ export class WorkDeskPage {
     if(userId) {
       this.store$.dispatch(new authActions.UserInfoAction({userId: userId}))
     }
-    this.store$.select(store=>store.auth.auth).subscribe(v=>{
+   this._sub$ = this.store$.select(store=>store.auth.auth).subscribe(v=>{
       if(v.emp){
         this.teamName = v.emp.team.name
         this.empId = v.emp.id
@@ -51,24 +57,24 @@ export class WorkDeskPage {
         this.store$.dispatch(new dailyActions.DailyStatAction({submitDate: dayFormat(new Date())}))
       }
     })
-    this.store$.select(store=>store.creatwork).subscribe(v=>{
+   this._sub1$ =  this.store$.select(store=>store.creatwork).subscribe(v=>{
       if(v.workPlate) {
         this.workPlate=v.workPlate
         this.thingCount = v.thingCount
         this.applyCollect = v.applyCollect
       }
     })
-    this.store$.select(store=>store.attence).subscribe(v=>{
+   this._sub2$ =  this.store$.select(store=>store.attence).subscribe(v=>{
       if(v.attence) {
         this.attencePeople = v.attence.attencePeople
       }
     })
-    this.store$.select(store=>store.daily).subscribe(v=>{
+   this._sub3$ =  this.store$.select(store=>store.daily).subscribe(v=>{
       if(v.dailyPeople) {
         this.dailyPeople = v.dailyPeople
       }
     })
-    this.store$.select(store=>store.team.defaultTeam).subscribe(v=>{
+   this._sub4$ = this.store$.select(store=>store.team.defaultTeam).subscribe(v=>{
       if(v){
         this.team = v
       }
@@ -80,6 +86,13 @@ export class WorkDeskPage {
     this.slide.paginationBulletRender = (index, className) => {
       return `<span class="custom-pagination ${className}"></span>`
     }
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
+    this._sub1$.unsubscribe()
+    this._sub2$.unsubscribe()
+    this._sub3$.unsubscribe()
+    this._sub4$.unsubscribe()
   }
   goPage(pageName, i) {
     if(pageName==='DailyPage'){
@@ -98,5 +111,15 @@ export class WorkDeskPage {
   }
   goWorkPage(i) {
     this.navCtrl.push('MyWorkPage',{workType:i});
+  }
+
+  goApplyAll() {
+    this.navCtrl.push('ApplylistPage',{typeFlag:0,timeFlag:0,sortFlag:0});
+  }
+  goApplyme() {
+    this.navCtrl.push('ApplylistPage',{typeFlag:1,timeFlag:0,sortFlag:0});
+  }
+  goApplygoon() {
+    this.navCtrl.push('ApplylistPage',{typeFlag:2,timeFlag:0,sortFlag:0});
   }
 }

@@ -8,6 +8,7 @@ import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the ShiwuDetailPage page.
@@ -45,6 +46,9 @@ export class ShiwuDetailPage {
   dymanicPageTotal = 1
   refresher: Refresher
   enabled: boolean = false
+
+  _sub$:Subscription
+  _sub1$:Subscription
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -86,7 +90,7 @@ export class ShiwuDetailPage {
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'2'}))
     this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
     this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
-    this.store$.select(store=>store.creatwork).subscribe(v=>{
+    this._sub$ = this.store$.select(store=>store.creatwork).subscribe(v=>{
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
@@ -96,14 +100,15 @@ export class ShiwuDetailPage {
         this.progress = this.data.progress
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.store$.select(store=>store.auth).subscribe(auth => {
+          if(auth.auth.emp) {
             this.mainPersonIf = auth.auth.emp.id == this.data.mainPersonId
             this.initatorIf = auth.auth.emp.id == this.data.initatorId
+          }
         })
       }
     })
-    this.store$.select(store=>store.chat).subscribe(v=>{
+    this._sub1$ = this.store$.select(store=>store.chat).subscribe(v=>{
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
-        const preLength = this.chatList.length
         this.enabled = true
         this.chatGroupId = v.chatList[0].chatGroupId
         this.chatList = v.chatList
@@ -114,16 +119,17 @@ export class ShiwuDetailPage {
           this.enabled=false
         }
         
-        if(v.chatList.length-preLength==1) {
-          this.content.resize();
-          this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight+100)
-        }
+        // if(v.chatList.length-preLength==1) {
+        //   this.content.resize();
+        //   this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight+100)
+        // }
       }
     })
   }
   
   ionViewCanLeave() {
-    console.log(this.data)
+    this._sub$.unsubscribe()
+    this._sub1$.unsubscribe()
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
     this.form.get('remark').value !== this.data.remark ) {

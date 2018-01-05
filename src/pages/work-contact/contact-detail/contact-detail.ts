@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/contacts.action'
 import * as chatActions from '../../../actions/chat.action'
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the ContactDetailPage page.
@@ -23,6 +24,7 @@ export class ContactDetailPage {
   contact
   width: string = '80px'
   sms
+  _sub$: Subscription
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -32,17 +34,18 @@ export class ContactDetailPage {
     this.store$.dispatch(new actions.EmpDetailAction({empId: this.navParams.data.empId}))
   }
 
-  ionViewDidLoad() {
-    this.store$.select(store=>store.contacts.empDetail).subscribe(v=>{
+  ionViewDidEnter() {
+    this._sub$ = this.store$.select(store=>store.contacts.empDetail).subscribe(v=>{
       this.contact=v
       if(v) {
         this.sms = this.sanitizer.bypassSecurityTrustUrl('sms:'+v.phone);
       }
-      console.log(this.sms)
     })
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   goChat() {
     this.store$.dispatch(new chatActions.addGroupAction({type:2,empIds:this.contact.empId,name:this.contact.name}))
-   
   }
 }

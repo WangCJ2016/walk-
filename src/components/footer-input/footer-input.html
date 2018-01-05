@@ -9,7 +9,7 @@
       <img class="face icon" src="assets/imgs/attence/icon_face.png" alt="">
       <img class="more icon" src="assets/imgs/attence/more.png" (click)='moreClick()' alt="">
     </div>
-    <div class="more_input" #more >
+    <div class="more_input" #more *ngIf="moreShow" >
       <figure>
         <img src="assets/imgs/work-desk/camera.png" alt="" (click)='camera()'>
         <figcaption>相机</figcaption>

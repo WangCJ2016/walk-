@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms'
 
 import { applyType} from '../../../utils'
 import {applyFlow} from '../../../domain'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the ShenpiDetailPage page.
  *
@@ -41,6 +42,8 @@ export class ShenpiDetailPage {
   dymanicPageTotal = 1
   refresher: Refresher
   enabled: boolean = false
+  _sub$:Subscription
+  _sub1$:Subscription
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -76,19 +79,24 @@ export class ShenpiDetailPage {
     this.store$.dispatch(new actions.applyDetailAction({'applyId':this.params.id}))
     this.store$.dispatch(new actions.applyFlowAction({'applyId':this.params.id}))
     this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
-    this.store$.select(store=>store.creatwork).subscribe(v=>{
+    this._sub$ = this.store$.select(store=>store.creatwork).subscribe(v=>{
       this.data = v.workdetail
       this.applyFlowList = v.applyFlow
       if(this.data){
-        this.store$.select(store=>store.auth.auth).subscribe(auth=>this.applyEmpIf = this.data.applyEmp.id === auth.emp.id)
-        this.form.get('remark').patchValue(this.data.remark)
-        this.attach = this.data.attach?this.data.attach.split(','):[]
-        this.attachName = this.data.attachName?this.data.attachName.split(','):[]
-        this.applyType = applyType(this.data.type, this.data.classify)
+        this.store$.select(store=>store.auth.auth).subscribe(auth=>{
+          console.log(this.data.applyEmp,auth.emp)
+          if(auth.emp) {
+            this.applyEmpIf = this.data.applyEmp.id === auth.emp.id
+            this.form.get('remark').patchValue(this.data.remark)
+            this.attach = this.data.attach?this.data.attach.split(','):[]
+            this.attachName = this.data.attachName?this.data.attachName.split(','):[]
+            this.applyType = applyType(this.data.type, this.data.classify)
+          }
         
-      }
     })
-    this.store$.select(store=>store.chat).subscribe(v=>{
+  }
+})
+    this._sub1$ = this.store$.select(store=>store.chat).subscribe(v=>{
       
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
         const preLength = this.chatList.length
@@ -100,7 +108,6 @@ export class ShenpiDetailPage {
         
         if(this.dymanicPageTotal == v.chatList[0].totalPages) {
           this.enabled=false
-          console.log(this.enabled)
         }
         
         if(v.chatList.length-preLength==1) {
@@ -108,9 +115,13 @@ export class ShenpiDetailPage {
           this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight+100)
         }
       }
-      console.log(this.chatList)
+    
     })
    
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
+    this._sub1$.unsubscribe()
   }
   attachDel(i) {
     this.attach.splice(i,1)

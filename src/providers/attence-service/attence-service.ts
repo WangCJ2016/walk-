@@ -27,6 +27,7 @@ export class AttenceServiceProvider {
   sign(userId:string,token:string,teamId:string,deptId:string,empId:string,info:any) {
     const uri = `${this.config.url}/app/attendanceEmp_clockIn`
     const params = {userId:userId,token:token,teamId:teamId,deptId:deptId,empId:empId,...info,clockType:2}
+    console.log(info)
     return this.http.get(uri, {params: params})
     .map(res => {
       return {type:info.type,res: res.json()}
@@ -61,6 +62,18 @@ export class AttenceServiceProvider {
       token:token,
       teamId:teamId,
       deptId:deptId,
+      empId:empId,
+      ...info
+    }
+    return this.http.get(uri, {params: params})
+    .map(res => res.json())
+  }
+  statusByMonth(userId,token,teamId,empId,info) {
+    const uri = `${this.config.url}/app/attendanceEmp_attendanceEmpStateByMonth`
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
       empId:empId,
       ...info
     }

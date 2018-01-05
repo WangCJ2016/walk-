@@ -65,8 +65,8 @@ export interface applyFlow {
 }
 // 审批汇总
 export interface applyCollect {
-  myApplyCount: number,
- progressCount: number
+  applyCount: number,
+  goCount: number
 }
 // 子事务
 export interface zishiwu {

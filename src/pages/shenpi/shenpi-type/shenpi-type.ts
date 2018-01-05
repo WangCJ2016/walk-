@@ -18,8 +18,6 @@ export class ShenpiTypePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ShenpiTypePage');
-  }
+  
 
 }

@@ -14,7 +14,7 @@
 
 
 <ion-content>
-    <date-picker (dateEmit)='selectDay($event)'></date-picker>
+    <date-picker (dateEmit)='selectDay($event)' (monthEmit)='selectMonth($event)' [dailyStatusByMonth]='dailyStatusByMonth'></date-picker>
     <blank></blank>
     <section class="_content">
         <div class="content_item">

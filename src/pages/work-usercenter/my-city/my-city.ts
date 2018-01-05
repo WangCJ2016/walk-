@@ -32,9 +32,6 @@ export class MyCityPage {
                 this.setCityPickerData()
   }
 
-  ionViewDidLoad() {
-    
-  }
   setCityPickerData(){
     this.cityPickerSev.getCitiesData()
       .then( data => {

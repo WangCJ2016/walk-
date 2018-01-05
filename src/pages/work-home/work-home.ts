@@ -4,6 +4,7 @@ import { WorkHomePopverComponent} from '../../components/work-home-popver/work-h
 import { Store } from '@ngrx/store'
 import * as actions from '../../actions/work-home.action'
 import * as fromRoot from '../../reducer'
+import { Subscription } from 'rxjs/Subscription';
 
 
 /**
@@ -25,13 +26,14 @@ export class WorkHomePage {
   refresher: Refresher
   enabled: boolean = false
   pageNo: number = 0
+  _sub$:Subscription
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
               private store$: Store<fromRoot.State>
               ) {
                 this.store$.dispatch(new actions.ListAction({pageNo: 1}))
-                this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
+               this._sub$ =  this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
                   if(res.length>0) {
                     this.lists = res
                     this.infinite?this.infinite.complete():null
@@ -44,8 +46,8 @@ export class WorkHomePage {
                
   }
 
-  ionViewDidEnter(){
-  
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(WorkHomePopverComponent,{modal:this.openModal},{

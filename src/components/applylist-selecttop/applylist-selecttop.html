@@ -1,0 +1,40 @@
+<!-- Generated template for the ApplylistSelecttopComponent component -->
+<!-- Generated template for the FixTopComponent component -->
+<section class="work_fix_top">
+  <div class="type"   (click)='fixClick(0)' *ngIf='workArray' [class.checked]='typeIndex==0'>
+      <span>类型:{{workArray[workType]?.name}}</span>
+      <ion-icon name="arrow-down"></ion-icon>
+      <div class="type_item">
+          <ion-list>
+              <ion-item *ngFor="let item of workArray; let i=index" [class.checkedItem]='i === workType' (click)='workClick(i)'>
+                  <ion-label>{{item.name}}</ion-label>
+                  <p class="num" item-content>{{item.num?'('+item.num+')':0}}</p>
+              </ion-item>
+          </ion-list>
+      </div>
+  </div>
+  <div class="type"  (click)='fixClick(1)' *ngIf='timeArray' [class.checked]='typeIndex==1'>
+      <span>时间:{{timeArray[timeType]?.name}}</span>
+      <ion-icon name="arrow-down"></ion-icon>
+      <div class="type_item">
+          <ion-list>
+              <ion-item *ngFor="let item of timeArray; let i=index" [class.checkedItem]='i === timeType' (click)='timeClick(i)'>
+                  <ion-label>{{item.name}}</ion-label>
+                  <p class="num" item-content>{{item.num?'('+item.num+')':0}}</p>
+              </ion-item>
+          </ion-list>
+      </div>
+  </div>
+  <div class="type"  (click)='fixClick(2)' *ngIf='orderArray' [class.checked]='typeIndex==2'>
+      <span>排序:{{orderArray[orderType]?.name}}</span>
+      <ion-icon name="arrow-down"></ion-icon>
+      <div class="type_item">
+          <ion-list>
+              <ion-item *ngFor="let item of orderArray; let i=index" [class.checkedItem]='i === orderType' (click)='orderClick(i)'>
+                  <ion-label>{{item.name}}</ion-label>
+                  <!-- <p class="num" item-content>{{item.num?'('+item.num+')':0}}</p> -->
+              </ion-item>
+          </ion-list>
+      </div>
+  </div>
+</section>

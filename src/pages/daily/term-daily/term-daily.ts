@@ -23,15 +23,19 @@ export class TermDailyPage {
   people: dailyPeople
   process
   _sub: Subscription
+  _sub$: Subscription
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private store$: Store<fromRoot.State>
   ) {
+    
+  }
+  ionViewDidEnter(){
     this._sub = this.time$.asObservable().subscribe(v=>{
       this.store$.dispatch(new actions.DailyStatAction({submitDate: v}))
     })
-    this.store$.select(store=>store.daily.dailyPeople).subscribe(v=> {
+    this._sub$ = this.store$.select(store=>store.daily.dailyPeople).subscribe(v=> {
       if(v){
         this.people=v
         this.process =parseInt(v.handIn.handInCount)/(parseInt(v.notHandIn.notHandInCount)+parseInt(v.handIn.handInCount))*100
@@ -39,11 +43,11 @@ export class TermDailyPage {
     }
     )
   }
- ngOnDestroy() {
-   //Called once, before the instance is destroyed.
-   //Add 'implements OnDestroy' to the class.
-   this._sub.unsubscribe()
- }
+  ionViewDidLeave(){
+    this._sub.unsubscribe()
+    this._sub$.unsubscribe()
+  }
+
   
   goPage(empId:string) {
     this.navCtrl.push('DailyPage', {empId: empId})

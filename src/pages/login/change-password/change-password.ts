@@ -40,7 +40,6 @@ export class ChangePasswordPage {
     }
   }
   formsubmit(f, ev: Event) {
-    console.log(f.get('confirmpassword').errors);
     if(f.hasError('required','oldpassword')){
       this.toast.message('原密码不能为空')
       return

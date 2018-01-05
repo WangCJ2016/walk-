@@ -50,9 +50,10 @@ export class RegisterPage {
     this._sub = this.service.getStep().subscribe(v => this.step = v)
    this.form.get('verCodeGroup').get('phoneNum').statusChanges.subscribe(v => this.phoneNumValid = v === 'INVALID'?true:false )
    this.store$.select(store => store.auth).subscribe(res => {
-     console.log(res)
-    this.countIf = res.auth.countIf
+     if(res.auth.emp) {
+      this.countIf = res.auth.countIf
     this.loading.dismiss()
+     }
    })
   }
   

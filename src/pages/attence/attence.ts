@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import getDay from 'date-fns/get_day'
 import { getWeekDay } from '../../utils'
@@ -35,24 +35,22 @@ export class AttencePage {
   attenceTitle: string
   picsView: Array<string> = []
   pics: Array<string> = []
-  loading: Loading
-  loadNum: number = 1
   constructor(
     @Inject('BASE_URL') private config,    
     public navCtrl: NavController, 
     public navParams: NavParams,
     private camera: Camera,
     private fileTranfer: FileTransfer,
-    private load: LoadingController,
+  
     private store$: Store<fromRoot.State>) {
-      this.loading = this.load.create({
-        dismissOnPageChange:true,
-        duration:5000
-      })
+      // this.loading = this.load.create({
+      //   dismissOnPageChange:true,
+      //   duration:5000
+      // })
    this._sub = Observable.interval(1000).subscribe(_ => this.date = new Date())
    this.store$.dispatch(new actions.GetAttendacnceAction({}))
-   this.loading.present()
-   
+  //  this.loading.present()
+  //  this.loadIf = true
   }
  ngOnDestroy() {
    this._sub.unsubscribe()
@@ -62,10 +60,12 @@ export class AttencePage {
     this.weekDay = getWeekDay(getDay(this.date))
     this.store$.select(store=>store.attence.attence).subscribe(res=>this.attenceTitle=res.attenceInview)
     this.store$.select(store => store.attence).subscribe(res => {
-      console.log(this.loading)
-      if(this.loading._state>1&&this.loadNum) {
-        this.loading.dismiss()
-        this.loadNum = 0
+      if(res) {
+        this.attenceTitle=res.attence.attenceInview
+        // if(this.loadIf) {
+        //   this.loading.dismiss()
+        //   this.loadIf = false
+        // }
       }
     })
   }
@@ -101,6 +101,7 @@ export class AttencePage {
   }
   // 签到或签退
   signinorup() {
+    console.log(this.attenceTitle)
     let pictures = []
     if(this.pics.length>0){
       this.pics.forEach(pic => {
@@ -112,8 +113,7 @@ export class AttencePage {
          
           pictures.push(photo.url)
           if(pictures.length===this.pics.length) {
-            this.loading.present()
-            this.loadNum = 1
+           
             this.store$.dispatch(new actions.SignAction({
               type:this.attenceTitle,
               lng:this.addressInfo.lng,
@@ -126,8 +126,7 @@ export class AttencePage {
         }) 
       })
     } else {
-      this.loading.present()
-      this.loadNum = 1
+    
       this.store$.dispatch(new actions.SignAction({
         type:this.attenceTitle,
         lng:this.addressInfo.lng,

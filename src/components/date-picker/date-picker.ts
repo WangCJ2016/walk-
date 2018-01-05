@@ -1,4 +1,4 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import getDaysInMonth from 'date-fns/get_days_in_month'
 import startOfMonth from 'date-fns/start_of_month'
@@ -16,8 +16,10 @@ import getDate from 'date-fns/get_date'
 export class DatePickerComponent {
   @ViewChild(Slides) slides: Slides;
   @Output() dateEmit = new EventEmitter<string>()
+  @Output() monthEmit = new EventEmitter<string>()
+  @Input() dailyStatusByMonth
   activeIndex:number = -1
-  selectDay:number
+  selectDay:any
   selectMonth: number
   selectYear: number
   isToday: boolean = false
@@ -35,13 +37,29 @@ export class DatePickerComponent {
   }
   
   ngAfterViewInit() {
-    this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
-   this.slides.initialSlide=this.selectSlideIndex
+    const month = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+    const day1 = this.selectDay < 10 ?  '0'+this.selectDay: this.selectDay
+    this.dateEmit.emit(this.selectYear+'-'+month+'-'+day1)
+    this.slides.initialSlide=this.selectSlideIndex
+  }
+  ngOnChanges() {
+    let count = 0
+    if(this.dailyStatusByMonth) {
+      for(let i=0;i<this.fenzuArray.length;i++){
+        for(let j=0;j<this.fenzuArray[i].length;j++) {
+          if(this.fenzuArray[i][j].day!==0) {
+            this.fenzuArray[i][j].status = this.dailyStatusByMonth[count].status
+            count++
+          }
+        }  
+      }
+    }
   }
   initalMonth(year_month){  
       this.isToday =false 
       this.isFuture = false
       console.log(year_month)
+      this.monthEmit.emit(year_month)
       // 判断是否是将来事
       if(year_month.split('-')[0]>getYear(new Date())) {
         this.isFuture = true
@@ -59,7 +77,6 @@ export class DatePickerComponent {
       const firstDayofWeek = getDay(firstDay)
       const lastDay = lastDayOfMonth(year_month)
       const lastDayofWeek = getDay(lastDay)
-      console.log(num,firstDay,firstDayofWeek,lastDay,lastDayofWeek)
       let preO = []
       let next0 = []
       let month = []
@@ -74,7 +91,6 @@ export class DatePickerComponent {
           month.push({day:i+1})
       }
       const monthArray = [...preO,...month,...next0]
-      console.log(monthArray)
       for(let i=0;i<monthArray.length;i+=7){
         this.fenzuArray.push(monthArray.slice(i,i+7))
       }
@@ -105,13 +121,14 @@ export class DatePickerComponent {
           }  
         }
       }
-      console.log(this.fenzuArray)
   }
   dayChoose(index: number,day) {
     if(!day.disabled) {
       this.activeIndex = index
       this.selectDay = day.day
-      this.dateEmit.emit(this.selectYear+'-'+this.selectMonth+'-'+this.selectDay)
+      const month = this.selectMonth < 10 ?  '0'+this.selectMonth: this.selectMonth
+      const day1 = this.selectDay < 10 ?  '0'+this.selectDay: this.selectDay
+      this.dateEmit.emit(this.selectYear+'-'+month+'-'+day1)
     }
   }
   pre() {

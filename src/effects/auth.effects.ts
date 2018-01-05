@@ -64,7 +64,6 @@ export class AuthEffects {
     .ofType(actions.ActionTypes.LOGIN)
     .map(toPayload)
     .switchMap((val: {phoneNum: string, password: string}) => {
-        console.log(val.phoneNum, val.password)
        return this.service.login(val.phoneNum, val.password)})
     .map(res => {
         console.log(res)

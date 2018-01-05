@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/auth.action'
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the WorkUsercenterPage page.
@@ -24,6 +25,7 @@ export class WorkUsercenterPage {
   authImage: Observable<string>
   loading:  Loading
   loadremoveIf: boolean = false
+  _sub$:Subscription
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private load: LoadingController,
@@ -35,7 +37,7 @@ export class WorkUsercenterPage {
       })
       
       this.authImage = this.store$.select(state => state.auth.auth.photo)
-      this.store$.select(state => state.auth.auth).subscribe(auth => {
+      this._sub$ = this.store$.select(state => state.auth.auth).subscribe(auth => {
         
         if(this.loadremoveIf) {
           this.loading.dismiss()
@@ -55,7 +57,9 @@ export class WorkUsercenterPage {
         })
       
   }
-  
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
+  }
   goPage(page: string) {
     this.navCtrl.push(page)
   }

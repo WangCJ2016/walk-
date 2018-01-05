@@ -13,6 +13,8 @@ export const ActionTypes = {
   DETAILDAILY_SCUCCESS: type('[daily] detaildaily_success'),
   MODIFY:type('[daily] modifydaily'),
   MODIFY_SCUCCESS: type('[daily] modifydaily_success'),
+  DAILYSTATEBYMONTH: type('[daily] dailystatebymonth'),
+  DAILYSTATEBYMONTH_SCUCCESS: type('[daily] dailystatebymonth_success'),
 };
 
 /**
@@ -66,6 +68,18 @@ export class ModifyAction implements Action {
 
 export class ModifySuccessAction implements Action {
   readonly type = ActionTypes.MODIFY_SCUCCESS;
+
+  constructor(public payload: any) { }
+}
+// 日报上交状况
+export class dailyStateByMonthAction implements Action {
+  readonly type = ActionTypes.DAILYSTATEBYMONTH;
+
+  constructor(public payload: any) { }
+}
+
+export class dailyStateByMonthSuccessAction implements Action {
+  readonly type = ActionTypes.DAILYSTATEBYMONTH_SCUCCESS;
 
   constructor(public payload: any) { }
 }

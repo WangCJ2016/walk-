@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/team.action'
 import { team } from '../../../domain'
+import { Subscription } from 'rxjs/Subscription';
 
 
 /**
@@ -23,6 +24,7 @@ export class ChangeTermPage {
   selectTeamId
   loading: Loading
   loadremoveIf = false
+  _sub$: Subscription
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private load: LoadingController,
@@ -38,14 +40,19 @@ export class ChangeTermPage {
   }
 
   ionViewDidLoad() {
-     this.store$.select(store=>store).subscribe(store=>{
-        this.teams = store.team.teams
-        this.selectTeamId = store.auth.auth.emp.teamId
-        if(this.loadremoveIf){
-          this.loading.dismiss()
-          this.loadremoveIf = false
+     this._sub$ =this.store$.select(store=>store).subscribe(store=>{
+       if(store.auth.auth) {
+          this.teams = store.team.teams
+          this.selectTeamId = store.auth.auth.emp.teamId
+          if(this.loadremoveIf){
+            this.loading.dismiss()
+            this.loadremoveIf = false
+          }
         }
-     })
+      })
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   setDefault(id) {
     //this.loading.present()

@@ -7,6 +7,7 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { todayFormat } from '../../../utils'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the CreateMeetingPage page.
  *
@@ -23,6 +24,7 @@ export class CreateMeetingPage {
   form: FormGroup
   auth
   todayFormat
+  _sub$:Subscription
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private fb: FormBuilder,
@@ -38,14 +40,16 @@ export class CreateMeetingPage {
         canhuiren: [''],
         meetingTime: ['']
        })
-       this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
+       this._sub$ = this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
         name: res.name,
         id:res.emp.id,
         photo:res.photo
       })
       this.todayFormat = todayFormat()
   }  
- 
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
+  }
   onSubmit(f, ev: Event) {
     //this.navCtrl.push('MeetingDetailPage')
   

@@ -8,6 +8,7 @@ import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the PlanyDetailPage page.
  *
@@ -42,6 +43,8 @@ export class PlanyDetailPage {
   dymanicPageTotal = 1
   refresher: Refresher
   enabled: boolean = false
+  _sub$:Subscription
+  _sub1$:Subscription
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -82,8 +85,7 @@ export class PlanyDetailPage {
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'5'}))
     this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
     this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
-    this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
+    this._sub$ = this.store$.select(store=>store.creatwork).subscribe(v=>{
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
@@ -94,8 +96,7 @@ export class PlanyDetailPage {
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
       }
     })
-    this.store$.select(store=>store.chat).subscribe(v=>{
-      console.log(v)
+    this._sub1$ = this.store$.select(store=>store.chat).subscribe(v=>{
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
         const preLength = this.chatList.length
         this.enabled = true
@@ -106,7 +107,6 @@ export class PlanyDetailPage {
         
         if(this.dymanicPageTotal == v.chatList[0].totalPages) {
           this.enabled=false
-          console.log(this.enabled)
         }
         
         if(v.chatList.length-preLength==1) {
@@ -118,7 +118,8 @@ export class PlanyDetailPage {
    
   }
   ionViewCanLeave() {
-    
+    this._sub$.unsubscribe()
+    this._sub1$.unsubscribe()
     if(this.form.get('progress').value !== this.data.progress ||
     this.form.get('attach').value !== '' || 
     this.form.get('remark').value !== this.data.remark ) {

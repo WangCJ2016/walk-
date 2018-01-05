@@ -7,7 +7,9 @@ import * as actions from '../../actions/daily.action'
 import * as attenceActions from '../../actions/attence.action'
 import { Subject } from 'rxjs/Subject';
 import { StarComponent} from '../../components/star/star'
-
+import { Subscription } from 'rxjs/Subscription';
+import getYear from 'date-fns/get_year'
+import getMonth from 'date-fns/get_month'
 /**
  * Generated class for the DailyPage page.
  *
@@ -37,23 +39,36 @@ export class DailyPage {
   attenceList: Array<any>
   empId: string
   depId: string
+  _sub$: Subscription
+  dailyStatusByMonth
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private modal: ModalController,
     private store$: Store<fromRoot.State>
   ) {
-    console.log(this.navParams.data)
+    const year = getYear(new Date())
+    const month = getMonth(new Date())+1
+    const gaozaoMonth = month < 10 ?  '0'+month: month
+    this.store$.dispatch(new actions.dailyStateByMonthAction({date:year+'-'+gaozaoMonth}))
     this.time$.asObservable().subscribe(v=>{
       this.isToday =  dayFormat(new Date())===v?true:false
       this.store$.dispatch(new actions.DailyDetailAction({empId1:this.navParams.data.empId,submitDate:v}))
       this.store$.dispatch(new attenceActions.AttenceRecordAction({time:v,empId:this.navParams.data.empId}))
     })
-    
+    this.store$.select(store=>store.daily).subscribe(v=>{
+      console.log(v)
+      if(v.dailyStatusByMonth) {
+        this.dailyStatusByMonth = v.dailyStatusByMonth
+      }
+    })
   
   }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
+  }
   ionViewDidEnter(){
-    this.store$.select(store=>store.auth.auth.emp.id).subscribe(id=>{
+    this._sub$ = this.store$.select(store=>store.auth.auth.emp.id).subscribe(id=>{
       if(id===this.navParams.data.empId){
         this.title = '我'
         this.isSelf = true 
@@ -125,7 +140,9 @@ export class DailyPage {
   }
   
   selectDay(day) {
-    console.log(day)
     this.time$.next(day)
+  }
+  selectMonth(month) {
+    this.store$.dispatch(new actions.dailyStateByMonthAction({date:month}))
   }
  }

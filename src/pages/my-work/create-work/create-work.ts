@@ -8,6 +8,7 @@ import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { todayFormat } from '../../../utils'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the CreateWorkPage page.
  *
@@ -27,6 +28,7 @@ export class CreateWorkPage {
   endDate: string
   faqiren
   todayFormat
+  _sub$:Subscription
   constructor(public modalCtrl: ModalController,
     public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -45,15 +47,20 @@ export class CreateWorkPage {
         startTime: [''],
         endTime: ['']
       })
-      this.store$.select(store=>store.auth.auth).subscribe(auth=>this.faqiren={
-        name: auth.name,
-        id:auth.emp.id,
-        photo: auth.photo?auth.photo:''
+      this._sub$ = this.store$.select(store=>store.auth.auth).subscribe(auth=>{
+        if(auth.emp) {
+          this.faqiren={
+            name: auth.name,
+            id:auth.emp.id,
+            photo: auth.photo?auth.photo:''
+          }
+        }
       })
       this.todayFormat = todayFormat()
-      
   }
-
+ionViewDidLeave(){
+  this._sub$.unsubscribe()
+}
   
   
   onSubmit(f, ev: Event) {

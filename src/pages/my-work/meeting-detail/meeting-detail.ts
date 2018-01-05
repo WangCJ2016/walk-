@@ -8,6 +8,7 @@ import * as chatActions from '../../../actions/chat.action'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer';
 import { zishiwu } from '../../../domain'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the MeetingDetailPage page.
  *
@@ -45,6 +46,8 @@ export class MeetingDetailPage {
   dymanicPageTotal = 1
   refresher: Refresher
   enabled: boolean = false
+  _sub$:Subscription
+  _sub1$:Subscription
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -56,7 +59,6 @@ export class MeetingDetailPage {
     private store$: Store<fromRoot.State>
   ) {
     this.params = this.navParams.data
-    console.log(this.params)
     this.form = this.fb.group({
       remark: [''],
       attach:[''],
@@ -86,8 +88,7 @@ export class MeetingDetailPage {
     this.store$.dispatch(new actions.zishiwuAction({parentId:this.params.id,type:'6'}))
     this.store$.dispatch(new actions.requireListAction({parentId:this.params.id}))
     this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:1}))
-    this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
+    this._sub$ = this.store$.select(store=>store.creatwork).subscribe(v=>{
       this.data = v.workdetail
       this.zishiwuList = v.zishiwu
       this.requireList = v.requireList
@@ -97,12 +98,13 @@ export class MeetingDetailPage {
         this.attach = this.data.attach?this.data.attach.split(','):[]
         this.attachName = this.data.attachName?this.data.attachName.split(','):[]
         this.store$.select(store=>store.auth.auth).subscribe(auth=>{
-          this.initatorIf =  auth.emp.id === this.data.initatorId
+          if(auth.emp){
+            this.initatorIf =  auth.emp.id === this.data.initatorId
+          }
         })
       }
     })
-    this.store$.select(store=>store.chat).subscribe(v=>{
-      console.log(v)
+    this._sub1$ = this.store$.select(store=>store.chat).subscribe(v=>{
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
         const preLength = this.chatList.length
         this.enabled = true
@@ -113,7 +115,6 @@ export class MeetingDetailPage {
         
         if(this.dymanicPageTotal == v.chatList[0].totalPages) {
           this.enabled=false
-          console.log(this.enabled)
         }
         
         if(v.chatList.length-preLength==1) {
@@ -124,7 +125,8 @@ export class MeetingDetailPage {
     })
   }
   ionViewCanLeave() {
-   
+   this._sub$.unsubscribe()
+   this._sub1$.unsubscribe()
     if(this.form.get('canhuiren').value !== '' ||
       this.form.get('zhujiangren').value !== '' ||
     this.form.get('attach').value !== '' || 

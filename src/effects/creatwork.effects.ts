@@ -66,7 +66,7 @@ export class CreatWorkEffects {
     console.log(res)
     if(res.success) {
       this.toast.message('已保存')
-      this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+      //this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
       return new actions.updateSuccessAction({})
    }
   })
@@ -89,7 +89,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.getMonthDetail(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       const data = {
         name: res.dataObject.name?res.dataObject.name:'',
@@ -104,7 +103,7 @@ export class CreatWorkEffects {
         finishDate:res.dataObject.finishDate?res.dataObject.finishDate:'',
         mainPersonEmp:{
           name:res.dataObject.mainPersonEmp?res.dataObject.mainPersonEmp.name:'',
-          head:res.dataObject.mainPersonEmp.photo?res.dataObject.mainPersonEmp.photo:'',
+          head:res.dataObject.mainPersonEmp&&res.dataObject.mainPersonEmp.photo?res.dataObject.mainPersonEmp.photo:'',
         },
         surplusDays:res.dataObject.name?res.dataObject.name:'',
       }
@@ -122,7 +121,7 @@ export class CreatWorkEffects {
     console.log(res)
     if(res.success) {
       this.toast.message('已保存')
-      this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
+     // this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
       return new actions.updateYSuccessAction({})
    }
   })
@@ -307,7 +306,7 @@ export class CreatWorkEffects {
      if(res.success&&res.dataObject) {
        const data = {
          pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
-         totalPages: res.dataObject.totalPages,
+         records: res.dataObject.records,
          list: res.dataObject.result.map(res => ({
            id:res.id,
            initatorEmp:res.initatorEmp?res.initatorEmp:'',
@@ -504,6 +503,30 @@ export class CreatWorkEffects {
     if(res.success) {
       return new actions.requireLinkSuccessAction({})
    }
+  })
+   // 我发起的审批列表
+   @Effect() applytimeCount$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.APPLYTIMECOUNT)
+    .map(toPayload)
+    .withLatestFrom(this.store$.select(store=>store.auth.auth))
+    .switchMap(([info,auth])=>this.creatworkSerice.applyTimeCount(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
+    .map(res => {
+      console.log(res)
+      if(res.success) {
+        return new actions.applyTimeCountSuccessAction(res.dataObject)
+    }
+  })
+  // 审批列表
+  @Effect() applySelectList$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.APPLYSELECTLIST)
+    .map(toPayload)
+    .withLatestFrom(this.store$.select(store=>store.auth.auth))
+    .switchMap(([info,auth])=>this.creatworkSerice.applySelectList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
+    .map(res => {
+      console.log(res)
+      if(res.success) {
+        return new actions.applySelectListSuccessAction(res.dataObject)
+    }
   })
   constructor(
     private actions$: Actions,

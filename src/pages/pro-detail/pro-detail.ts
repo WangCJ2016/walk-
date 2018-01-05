@@ -44,8 +44,6 @@ export class ProDetailPage {
     }]
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProDetailPage');
-  }
+  
 
 }

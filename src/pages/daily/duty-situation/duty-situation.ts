@@ -22,6 +22,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class DutySituationPage {
   time$ = new Subject<string>()
   _sub: Subscription
+  _sub$: Subscription
   attencePeople: attencePeople
   process: number
   constructor(
@@ -32,19 +33,17 @@ export class DutySituationPage {
    this._sub = this.time$.asObservable().subscribe(v=>{
       this.store$.dispatch(new actions.AttenceStatAction({time: v}))
     })
-    this.store$.select(store=>store.attence.attence).subscribe(v=>{
+    this._sub$ = this.store$.select(store=>store.attence.attence).subscribe(v=>{
       this.attencePeople=v.attencePeople
       if(v.attencePeople){
         this.process =parseInt(v.attencePeople.isIn.isInCount)/(parseInt(v.attencePeople.isIn.isInCount)+parseInt(v.attencePeople.notIn.notInCount))*100
       }
     })
   }
-  ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
     this._sub.unsubscribe()
-  }
-  
+  }  
   selectDay(day) {
     console.log(day)
     this.time$.next(day)

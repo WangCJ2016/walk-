@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/creatework.action'
 import { todayFormat } from '../../../utils'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the CreatePlanYPage page.
  *
@@ -23,6 +24,7 @@ export class CreatePlanYPage {
   form: FormGroup
   todayFormat
   auth
+  _sub$:Subscription
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private fb: FormBuilder,
@@ -36,7 +38,7 @@ export class CreatePlanYPage {
         fujian: [''],
         plan_month: ['']
       })
-      this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
+      this._sub$ = this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
         name: res.name,
         id:res.emp.id,
         photo:res.photo
@@ -44,8 +46,8 @@ export class CreatePlanYPage {
       this.todayFormat = todayFormat()
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreatePlanYPage');
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   onSubmit(f, ev: Event) {
     // this.navCtrl.push('PlanyDetailPage')

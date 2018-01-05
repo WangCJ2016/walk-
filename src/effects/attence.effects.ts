@@ -159,7 +159,6 @@ export class AttenceEffects {
         )
      })
      .map(res => {
-         console.log(res)
          if(res.success) {
              this.toast.message('设置成功')
              this.appCtrl.getActiveNav().pop()
@@ -168,6 +167,27 @@ export class AttenceEffects {
              return new actions.FailAction(res.msg)
          }
      })
+     @Effect() dailyState$: Observable<Action> = this.actions$
+        .ofType(actions.ActionTypes.ATTENCESTATUSBYMONTH)
+        .map(toPayload)
+        .withLatestFrom(this.store$.select(store=>store.auth.auth))
+        .switchMap(([info, auth])=>this.attenceService.statusByMonth(
+        auth.id,
+        auth.token,
+        auth.emp.teamId,
+        auth.emp.id,
+        info
+        ))
+        .map(res => {
+        console.log(res)
+        
+        if(res.success) {
+        
+            return new actions.statusByMontSuccessAction(res.dataObject)
+        }else{
+            //return new actions.FailAction(res.res.msg)
+        }
+        })
     constructor(
         private actions$: Actions,
         private store$: Store<fromRoot.State>,

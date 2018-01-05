@@ -23,6 +23,8 @@ export const ActionTypes = {
     SETATTENCE_SUCCESS:type('[attence] setattence_success'),
     GETENDDATE:type('[attence] getendate'),
     GETENDDATE_SUCCESS:type('[attence] getendate_success'),
+    ATTENCESTATUSBYMONTH: type('[attence] attenstatusbymonth'),
+    ATTENCESTATUSBYMONTH_SUCCESS: type('[attence] attenstatusbymonth_success'),
 };
 
 /**
@@ -99,6 +101,17 @@ export class getEndDateAction implements Action {
 }
 export class getEndDateSuccessAction implements Action {
     type = ActionTypes.GETENDDATE_SUCCESS;
+
+    constructor(public payload: any) { }
+}
+// 月统计考勤状态
+export class statusByMonthAction implements Action {
+    type = ActionTypes.ATTENCESTATUSBYMONTH;
+
+    constructor(public payload: any) { }
+}
+export class statusByMontSuccessAction implements Action {
+    type = ActionTypes.ATTENCESTATUSBYMONTH_SUCCESS;
 
     constructor(public payload: any) { }
 }

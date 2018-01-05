@@ -47,7 +47,6 @@ export class ChatPage {
       }
      })
     this.store$.select(store=>store.chat).subscribe(v=>{
-      console.log(v)
       if(v&&v.chatList.length>0&&v.chatList.length!=this.chatList.length) {
         const preLength = this.chatList.length
         this.enabled = true
@@ -76,11 +75,11 @@ export class ChatPage {
   }
   // 动态发送聊天信息
 sendChat(obj) {
-  this.store$.dispatch(new chatActions.sendChatAction({parentId:'128fd57d36784e18862087138d188bf0',chatGroupId:this.chatGroupId,...obj}))
+  this.store$.dispatch(new chatActions.sendChatAction({parentId:this.params.id,chatGroupId:this.chatGroupId,...obj}))
 }
 doRefresh(refresher) {
   this.refresher = refresher
   this.dymanicPageTotal++
-  this.store$.dispatch(new chatActions.ChatListAction({parentId:'128fd57d36784e18862087138d188bf0',pageNo:this.dymanicPageNo+1}))
+  this.store$.dispatch(new chatActions.ChatListAction({parentId:this.params.id,pageNo:this.dymanicPageNo+1}))
 }
 }

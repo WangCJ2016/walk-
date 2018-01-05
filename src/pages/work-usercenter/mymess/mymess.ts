@@ -11,6 +11,7 @@ import { Auth } from '../../../domain'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../../reducer'
 import * as actions from '../../../actions/auth.action'
+import { Subscription } from 'rxjs/Subscription';
 
 
 /**
@@ -37,7 +38,7 @@ export class MymessPage {
   head: string = "assets/imgs/work-usercenter/head.png"
   loading: Loading
   loadremoveIf = false
-
+  _sub$: Subscription
   constructor(public navCtrl: NavController, 
     @Inject('BASE_URL') private config,
     public navParams: NavParams,
@@ -58,7 +59,7 @@ export class MymessPage {
 
   ionViewDidEnter(){
     this.auth$ = this.store$.select(store => store.auth.auth)
-    this.auth$
+    this._sub$ = this.auth$
     .switchMap(auth => {  
         if(this.loadremoveIf){
           this.loading.dismiss()
@@ -78,6 +79,9 @@ export class MymessPage {
         this.cityName = this._provinceName +'-'+ this._cityName
      }
     })
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   // 修改头像
   presentActionSheet() {
