@@ -1,5 +1,5 @@
 export interface attence {
-  attenceInview?: string,
+  attenceInview?: number,
   attenceRecordList?: Array<attenceRecordList>
   attencePeople?: attencePeople
 }

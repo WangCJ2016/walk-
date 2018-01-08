@@ -33,6 +33,7 @@ export class AttencePage {
   weekDay: string
   _sub: Subscription
   attenceTitle: string
+  attenceNum: number
   picsView: Array<string> = []
   pics: Array<string> = []
   constructor(
@@ -58,10 +59,26 @@ export class AttencePage {
   ionViewDidLoad() {
     this.date = new Date()
     this.weekDay = getWeekDay(getDay(this.date))
-    this.store$.select(store=>store.attence.attence).subscribe(res=>this.attenceTitle=res.attenceInview)
     this.store$.select(store => store.attence).subscribe(res => {
-      if(res) {
-        this.attenceTitle=res.attence.attenceInview
+      console.log(res.attence.attenceInview)   
+      if(res) {  
+        this.attenceNum = res.attence.attenceInview
+        switch(res.attence.attenceInview) {
+          case 1 : {
+           return this.attenceTitle = '签到'
+          }
+          case 2 : {
+            return this.attenceTitle = '签退'
+          }
+          case 3 : {
+            return this.attenceTitle = '外勤签到'
+          }
+          case 4 : {
+            return this.attenceTitle = '外勤签退'
+          }
+          default:
+          return null
+        }
         // if(this.loadIf) {
         //   this.loading.dismiss()
         //   this.loadIf = false
@@ -115,7 +132,7 @@ export class AttencePage {
           if(pictures.length===this.pics.length) {
            
             this.store$.dispatch(new actions.SignAction({
-              type:this.attenceTitle,
+              type:this.attenceNum,
               lng:this.addressInfo.lng,
               lat:this.addressInfo.lat,
               trueAddress:this.addressInfo.trueAddress,
@@ -128,7 +145,7 @@ export class AttencePage {
     } else {
     
       this.store$.dispatch(new actions.SignAction({
-        type:this.attenceTitle,
+        type:this.attenceNum,
         lng:this.addressInfo.lng,
         lat:this.addressInfo.lat,
         trueAddress:this.addressInfo.trueAddress}))

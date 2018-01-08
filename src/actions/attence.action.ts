@@ -53,7 +53,7 @@ export class GetAttendacnceSuccessAction implements Action {
 export class SignAction implements Action {
     type = ActionTypes.SIGNIN;
 
-    constructor(public payload: {type: string, lng:string, lat:string, trueAddress:string,pictures?:string}) { }
+    constructor(public payload: {type: number, lng:string, lat:string, trueAddress:string,pictures?:string}) { }
 }
 export class SignSuccessAction implements Action {
     type = ActionTypes.SIGNIN_SUCCESS;

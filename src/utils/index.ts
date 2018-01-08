@@ -191,4 +191,24 @@ function doublenum(num) {
         return num
     }
 }
+
+// 考勤type转换
+export function attenceType(type) {
+    switch(type) {
+        case 1 : {
+         return  '签到'
+        }
+        case 2 : {
+          return  '签退'
+        }
+        case 3 : {
+          return '外勤签到'
+        }
+        case 4 : {
+          return '外勤签退'
+        }
+        default:
+        return null
+      }
+}
   export * from './type.util'

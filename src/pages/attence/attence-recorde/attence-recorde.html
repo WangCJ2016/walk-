@@ -18,7 +18,7 @@
     <blank></blank>
     <div class="attence_detail" padding *ngIf='attenceRecordList'>
         <div class="attence_time" *ngFor="let item of attenceRecordList">
-            <div class="time">{{item.clockTime}} {{item.type==1?'签到':'签退'}}</div>
+            <div class="time">{{item.clockTime}} {{attenceType(item.type)}}</div>
             <div class="address">{{item.trueAddress}}</div>
                 <img class="face" *ngFor="let pic of item.pictures" src={{pic}} alt="">
             <img class="icon_time" src="assets/imgs/attence/icon_time.png" alt="">

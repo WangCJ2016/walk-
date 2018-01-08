@@ -41,7 +41,7 @@ export class AttenceEffects {
         console.log(res)
         if(res.res.success) {
             this.toast.message('打卡成功')
-          return new actions.SignSuccessAction(res.type=='1'?'2':'1')
+          return new actions.GetAttendacnceAction({})
         }else{
             return new actions.FailAction(res.res.msg)
         }

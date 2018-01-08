@@ -58,7 +58,6 @@ export class DatePickerComponent {
   initalMonth(year_month){  
       this.isToday =false 
       this.isFuture = false
-      console.log(year_month)
       this.monthEmit.emit(year_month)
       // 判断是否是将来事
       if(year_month.split('-')[0]>getYear(new Date())) {
@@ -107,6 +106,7 @@ export class DatePickerComponent {
           for(let j=0;j<this.fenzuArray[i].length;j++) {
             if(this.fenzuArray[i][j].day===getDate(new Date())){
               this.fenzuArray[i][j].today = true
+              this.selectSlideIndex = i
             } 
             if(this.fenzuArray[i][j].day>getDate(new Date())){
               this.fenzuArray[i][j].disabled = true

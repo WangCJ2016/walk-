@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as fromRoot from '../../../reducer'
 import { Store } from '@ngrx/store'
 import * as actions from '../../../actions/attence.action'
+import { attenceType} from '../../../utils'
 //import { ToastSitutionProvider} from '../../../providers'
 
 import { Subject } from 'rxjs/Subject';
@@ -45,6 +46,9 @@ export class AttenceRecordePage {
           this.dailyStatusByMonth = v.dailyStatusByMonth
         }
       })
+  }
+  attenceType(type) {
+    return attenceType(type)
   }
   ionViewDidLeave(){
     this._time$.unsubscribe()
