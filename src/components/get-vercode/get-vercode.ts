@@ -20,7 +20,6 @@ export class GetVercodeComponent {
     this.text = Observable.of('获取验证码')
   }
   ngOnChanges() {
-    console.log(this.countIf)
     if(this.countIf) {
       this.disabled = true
       this.text = Observable.timer(0,1000).map(v=>60-v).take(60)

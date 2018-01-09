@@ -43,7 +43,7 @@ export class AuthEffects {
                 sex: res.dataObject.sex,
                 token: res.dataObject.token,
                 userName: res.dataObject.userName,
-                emp:{
+                emp:res.dataObject.emp?{
                     deptId: res.dataObject.emp.deptId,
                     id:res.dataObject.emp.id,
                     name: res.dataObject.emp.name,
@@ -53,9 +53,14 @@ export class AuthEffects {
                         id: res.dataObject.emp.team.id,
                         name: res.dataObject.emp.team.name,
                     }
-                }
+                }:null
             }
             return new actions.UserInfoSuccessAction(data)
+         }else{
+             this.appCtrl.getActiveNav().push('LoginPage')
+             return new actions.AuthFailAction({
+                msg: res.msg
+              })
          }
     })
     // login
@@ -66,8 +71,7 @@ export class AuthEffects {
     .switchMap((val: {phoneNum: string, password: string}) => {
        return this.service.login(val.phoneNum, val.password)})
     .map(res => {
-        console.log(res)
-        if(res.success) {
+        if(res.success) { 
             this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})
             localStorage.setItem('userId', res.dataObject.id)
             const data = {
@@ -79,7 +83,7 @@ export class AuthEffects {
                 sex: res.dataObject.sex,
                 token: res.dataObject.token,
                 userName: res.dataObject.token,
-                emp:{
+                emp: res.dataObject.emp?{
                     deptId: res.dataObject.emp.deptId,
                     id:res.dataObject.emp.id,
                     name: res.dataObject.emp.name,
@@ -89,7 +93,7 @@ export class AuthEffects {
                         id: res.dataObject.emp.team.id,
                         name: res.dataObject.emp.team.name,
                     }
-                }
+                }:null
             }
            return new actions.LoginSuccessAction(data)
         }else {
@@ -155,7 +159,7 @@ export class AuthEffects {
        })
     .map(res => {
       if(res.success) {
-          this.service.setStep();
+          this.service.setStep('two');
           return new actions.CheckRegCodeSuccessAction({})
       }else{
           return new actions.AuthFailAction({
@@ -219,7 +223,7 @@ export class AuthEffects {
        })
     .map(res => {
       if(res.success) {
-          this.service.setStep();
+          this.service.setStep('two');
           return new actions.checkForgetPasswordCodeSuccessAction({})
       }else{
           return new actions.AuthFailAction({
@@ -237,7 +241,8 @@ export class AuthEffects {
     .map(res => {
         console.log(res)
       if(res.success) {
-        this.appCtrl.getRootNav().push('LoginPage')
+        this.service.setStep('one');
+        this.appCtrl.getActiveNav().push('LoginPage')
           return new actions.ForgetPasswordSuccessAction({ })
       }else{
           return new actions.AuthFailAction({
@@ -258,8 +263,9 @@ export class AuthEffects {
       .map(res => {
          console.log(res)
          if(res.success) {
-             this.appCtrl.getRootNav().push('LoginPage')
+             this.appCtrl.getActiveNav().push('LoginPage')
              localStorage.removeItem('userId')
+             this.toast.message('密码修改成功，请重新登录')
             return new actions.ChangePasswordSuccessAction(true)
          }else {
             return new actions.AuthFailAction({

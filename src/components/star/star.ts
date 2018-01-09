@@ -12,7 +12,6 @@ import { numtoarray } from '../../utils'
   templateUrl: 'star.html'
 })
 export class StarComponent {
-  
   starNum: number = 4
   stars
   constructor(private view: ViewController) {
@@ -23,8 +22,7 @@ export class StarComponent {
     this.stars = numtoarray(num)
   }
   
-  hander() {
-    
+  hander() { 
     this.view.dismiss(this.starNum)
   }
 }

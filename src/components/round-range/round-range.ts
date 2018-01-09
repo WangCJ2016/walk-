@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer2, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, Input,ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Generated class for the RoundRangeComponent component.
@@ -8,7 +8,8 @@ import { Component, ViewChild, ElementRef, Renderer2, Input } from '@angular/cor
  */
 @Component({
   selector: 'round-range',
-  templateUrl: 'round-range.html'
+  templateUrl: 'round-range.html',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class RoundRangeComponent {
   @ViewChild('cav') cav: ElementRef
@@ -34,8 +35,6 @@ export class RoundRangeComponent {
     this.render.setProperty(this.cav.nativeElement, 'height', width)
     const context = this.cav.nativeElement.getContext('2d')
     context.clearRect(0, 0, width, width);
-    
-    console.log(process)
     if(process==0){
 
       context.beginPath();    

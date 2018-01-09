@@ -104,7 +104,8 @@ export class AuthProvider {
     return this.step1.asObservable().startWith('')
   }
  
-  setStep() {
-    return this.step1.next('two')
+  setStep(param) {
+    return this.step1.next(param)
   }
+ 
 }

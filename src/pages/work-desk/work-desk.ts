@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides,AlertController } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../../reducer'
 import * as actions from '../../actions/creatework.action'
@@ -38,6 +38,7 @@ export class WorkDeskPage {
   _sub4$:Subscription
   constructor(
     public navCtrl: NavController,
+    private alert: AlertController,
     public navParams: NavParams,
     private store$: Store<fromRoot.State>
   ) {
@@ -47,6 +48,7 @@ export class WorkDeskPage {
       this.store$.dispatch(new authActions.UserInfoAction({userId: userId}))
     }
    this._sub$ = this.store$.select(store=>store.auth.auth).subscribe(v=>{
+     console.log(v)
       if(v.emp){
         this.teamName = v.emp.team.name
         this.empId = v.emp.id
@@ -55,6 +57,12 @@ export class WorkDeskPage {
         this.store$.dispatch(new actions.applyCollectAction({}))
         this.store$.dispatch(new attenceActions.AttenceStatAction({time: dayFormat(new Date())}))
         this.store$.dispatch(new dailyActions.DailyStatAction({submitDate: dayFormat(new Date())}))
+      }else if(v.id){
+        this.alert.create({
+          title: '温馨提示',
+          message: '没有团队信息，请先去PC端设置',
+          buttons: ['OK']
+        }).present()
       }
     })
    this._sub1$ =  this.store$.select(store=>store.creatwork).subscribe(v=>{

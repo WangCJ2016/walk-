@@ -18,7 +18,6 @@ export class RequireLinkModalComponent {
     private navparms: NavParams,
     private view: ViewController
   ) {
-    console.log(this.navparms.data);
     this.requireList = this.navparms.data.requireList
   }
   close() {
@@ -26,7 +25,6 @@ export class RequireLinkModalComponent {
   }
   
   submit() {
-     console.log(this.select)
      this.requireList.forEach(ele => {
        if(ele.name == this.select) {
          this.view.dismiss(ele.id)

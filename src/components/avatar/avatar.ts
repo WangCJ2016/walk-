@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import {getColor} from '../../utils'
 /**
  * Generated class for the AvatarComponent component.
@@ -8,7 +8,8 @@ import {getColor} from '../../utils'
  */
 @Component({
   selector: 'avatar',
-  templateUrl: 'avatar.html'
+  templateUrl: 'avatar.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AvatarComponent {
   @Input() width: string = '40px'

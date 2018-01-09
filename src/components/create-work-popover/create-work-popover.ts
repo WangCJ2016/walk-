@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectionStrategy } from '@angular/core';
 import { App, ViewController } from 'ionic-angular';
 /**
  * Generated class for the CreateWorkPopoverComponent component.
@@ -8,7 +8,8 @@ import { App, ViewController } from 'ionic-angular';
  */
 @Component({
   selector: 'create-work-popover',
-  templateUrl: 'create-work-popover.html'
+  templateUrl: 'create-work-popover.html',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class CreateWorkPopoverComponent {
   

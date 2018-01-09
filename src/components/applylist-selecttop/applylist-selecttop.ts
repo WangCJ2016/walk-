@@ -20,18 +20,14 @@ export class ApplylistSelecttopComponent {
   timeArray
   orderArray
   orderType=0
-  text: string;
   workType = 0
   timeType=0
   typeIndex: number 
-
-
   constructor() {
    
   }
   ngOnChanges() {
     this.workType = this.applyTypeInfo.typeFlag
-    console.log(this.applyTimeCount)
     if(this.applyTimeCount) {
       this.workArray = [{
           name: '全部',
@@ -73,21 +69,13 @@ export class ApplylistSelecttopComponent {
           name: '按剩余时间',
           id: 13
       }]
-  }
-  //  if(this.workInfo&&this.workInfo.workType) {
-  //    this.workClick(this.workInfo.workType)
-  //  }
-  //  if(this.workInfo&&this.workInfo.workTime) {
-  //   this.timeClick(this.workInfo.workTime)
-  // }
-  //}
+    }
   }
   fixClick(i) {
     i === this.typeIndex ? this.typeIndex = -1 : this.typeIndex = i
   }
   workClick(i) {
     this.workType = i
-    console.log(i)
     this.data.emit({typeFlag: this.workType, timeFlag:this.timeType,sortFlag:this.orderType})
   }
   timeClick(i) {

@@ -4,6 +4,7 @@ import { ViewController } from 'ionic-angular'
 import * as contactActions from '../../actions/contacts.action'
 import * as fromRoot from '../../reducer'
 import { contact } from '../../domain'
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the GroupContactsModalComponent component.
  *
@@ -18,11 +19,11 @@ export class GroupContactsModalComponent {
   membersName = []
   membersId = []
   contacts: Array<contact> = []
-  
+  _sub$: Subscription
   constructor(
     private store$: Store<fromRoot.State>,
     public viewCtrl: ViewController) {
-    this.store$.select(store => store).subscribe(store => {
+    this._sub$ = this.store$.select(store => store).subscribe(store => {
       const contact = store.contacts.contacts
       
       if(contact.length>0) {
@@ -37,6 +38,9 @@ export class GroupContactsModalComponent {
         this.store$.dispatch(new contactActions.LoadAction({}))
       }
     })
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
   }
   updateCucumber(item, e) {
    

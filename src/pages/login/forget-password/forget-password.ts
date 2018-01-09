@@ -28,6 +28,7 @@ export class ForgetPasswordPage {
   form: FormGroup
   form2: FormGroup
   _sub: Subscription
+  _sub1: Subscription
   loading: Loading
   countIf: boolean = false
   loadremoveIf = false
@@ -51,21 +52,22 @@ export class ForgetPasswordPage {
     })
     // 获取sign
     this.store$.dispatch(new actions.SignAction({type:2}))
-    this.store$.select(store => store.auth).subscribe(res => {
-      if(res.auth.emp) {
+    this._sub1 = this.store$.select(store => store.auth).subscribe(res => {
+      console.log(res)
         this.countIf = res.auth.countIf
       if(this.loadremoveIf) {
         this.loading.dismiss()
         this.loadremoveIf = false
       }
-      }
+      
     })
     this._sub = this.service.getStep().subscribe(v => this.step = v)
   }
-  
-  ngOnDestroy() {
+  ionViewDidLeave(){
     this._sub.unsubscribe()
+    this._sub1.unsubscribe()
   }
+  
 
   getVercode() {
     this.store$.dispatch(new actions.ForgetPasswordCodeAction({

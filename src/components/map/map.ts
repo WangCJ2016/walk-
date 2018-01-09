@@ -20,7 +20,7 @@ export class MapComponent {
     private http: Http) {
 
   }
-  ngOnInit() {
+  ionViewDidEnter() {
     // gps 获取经纬度
     this.geolocation.getCurrentPosition()
     .then(res => {
