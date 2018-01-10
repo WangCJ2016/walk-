@@ -21,10 +21,11 @@ export function pySegSort(arr1) {
                 curr.data.push(item2);
             }
         });
+        console.log(curr)
         if(curr.data.length) {
             segs.push(curr)
             curr.data.sort(function(a,b){
-                return a.localeCompare(b,'zh');
+                return a.name.localeCompare(b.name,'zh');
             });
         }
     });
@@ -206,6 +207,32 @@ export function attenceType(type) {
         }
         case 4 : {
           return '外勤签退'
+        }
+        default:
+        return null
+      }
+}
+
+// 事务状态转化
+export function thingType(type) {
+    switch(type) {
+        case 1 : {
+         return  '进行中'
+        }
+        case 2 : {
+          return  '已暂停'
+        }
+        case 3 : {
+          return '审核中'
+        }
+        case 4 : {
+          return '已打回'
+        }
+        case 5 : {
+            return '已关闭'
+        }
+        case 6 : {
+        return '超期完成'
         }
         default:
         return null

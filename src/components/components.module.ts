@@ -26,6 +26,7 @@ import { TimeCountFormcontrolComponent } from './time-count-formcontrol/time-cou
 import { RequireLinkModalComponent } from './require-link-modal/require-link-modal';
 import { EmojiComponent } from './emoji/emoji';
 import { ApplylistSelecttopComponent } from './applylist-selecttop/applylist-selecttop';
+import { ProFilterComponent } from './pro-filter/pro-filter';
 
 
 
@@ -56,6 +57,7 @@ import { ApplylistSelecttopComponent } from './applylist-selecttop/applylist-sel
     RequireLinkModalComponent,
     EmojiComponent,
     ApplylistSelecttopComponent,
+    ProFilterComponent,
     ],
     imports: [IonicModule],
     entryComponents:[RequireLinkModalComponent,FileModalComponent,StarComponent,GroupContactsModalComponent,ShenpiPopverComponent,WorkHomePopverComponent,CreateWorkPopoverComponent,SelectPersonComponent,AvatarComponent,SelectModalComponent],
@@ -84,6 +86,7 @@ import { ApplylistSelecttopComponent } from './applylist-selecttop/applylist-sel
     RequireLinkModalComponent,
     EmojiComponent,
     ApplylistSelecttopComponent,
+    ProFilterComponent,
     ]
 })
 export class ComponentsModule {}

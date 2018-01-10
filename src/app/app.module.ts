@@ -34,6 +34,7 @@ import { DailyServiceProvider } from '../providers/daily-service/daily-service';
 import { CreatworkServiceProvider } from '../providers/creatwork-service/creatwork-service';
 import { WorkhomeServiceProvider } from '../providers/workhome-service/workhome-service';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import { ProjectServiceProvider } from '../providers/project-service/project-service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { ChatServiceProvider } from '../providers/chat-service/chat-service';
     CreatworkServiceProvider,
     CreatworkServiceProvider,
     WorkhomeServiceProvider,
-    ChatServiceProvider
+    ChatServiceProvider,
+    ProjectServiceProvider
   ]
 })
 export class AppModule {}

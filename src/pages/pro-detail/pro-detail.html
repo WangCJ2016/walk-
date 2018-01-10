@@ -22,34 +22,30 @@
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
+    <ion-toolbar class="topfix_toolbar">
+            <!-- <pro-filter [members]='members'></pro-filter> -->
+        </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
     <div [ngSwitch]='segment'>
         <div *ngSwitchCase='"dymanic"'>
-            <div class="period_title" padding (click)='proid_show = !proid_show'>
-                <span>第一阶段(5人)</span>
-                <ion-icon class="arrow" [style.transform]="proid_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+            <div *ngFor="let item of propeo?.phase">
+                    <div class="period_title"  (click)='proid_show = !proid_show'>
+                            <span>{{item.phaseName}}({{item.phasePersonCount}}人)</span>
+                            <ion-icon class="arrow" [style.transform]="proid_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+                        </div>
+                        <!-- <ion-list *ngIf="proid_show">
+                            <ion-item>
+                                <ion-label>全部成员({{propeo?.allPersonCount}}人)</ion-label>
+                            </ion-item>
+                            <ion-item *ngFor="let item of propeo?.phase">
+                                <ion-label>{{item.phaseName}}({{item.phasePersonCount}}人)</ion-label>
+                                <ion-badge color='danger' item-end>65</ion-badge>
+                            </ion-item>
+                        </ion-list> -->
             </div>
-            <ion-list *ngIf="proid_show">
-                <ion-item>
-                    <ion-label>全部成员(15人)</ion-label>
-                    <ion-badge color='danger' item-end>65</ion-badge>
-                </ion-item>
-                <ion-item>
-                    <ion-label>第一阶段(15人)</ion-label>
-                    <ion-badge color='danger' item-end>65</ion-badge>
-                </ion-item>
-                <ion-item>
-                    <ion-label>第二阶段(15人)</ion-label>
-                    <ion-badge color='danger' item-end>65</ion-badge>
-                </ion-item>
-                <ion-item>
-                    <ion-label>第三阶段(15人)</ion-label>
-                    <ion-badge color='danger' item-end>65</ion-badge>
-                </ion-item>
-            </ion-list>
         </div>
         <div class="shiwu" *ngSwitchCase='"shiwu"'>
             <fix-top ></fix-top>
@@ -59,20 +55,13 @@
 
                 </div>
             </section> -->
-            <ion-list>
-                <ion-item>
-                    <h4>1.如果项目中的任务，只想让任务参与者能够看到</h4>
-                    <p><span>主办人：张三</span>&nbsp;<span>第一阶段</span>&nbsp;<span>进度80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
-                </ion-item>
-                <ion-item>
-                    <h4>1.需求分析</h4>
-                    <p><span>主办人：张三</span>&nbsp;<span>第一阶段</span>&nbsp;<span>进度80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
-                </ion-item>
-                <ion-item>
-                    <h4>1.界面设计</h4>
-                    <p><span>主办人：张三</span>&nbsp;<span>第一阶段</span>&nbsp;<span>进度80%(偏慢)</span>&nbsp;<span class="danger">剩余3天</span></p>
-                </ion-item>
-            </ion-list>
+            <div class="list">
+                <div class="pro-item" *ngFor="let item of proThingLists?.result" >
+                    <span class="title">{{item.name}}</span>
+                    <div class="item-content"><span>主办人：{{item.mainPersonEmp.name}}</span><span>进度{{item.progress}}%({{thingType(item.status)}})</span>&nbsp;<span class="danger">剩余{{item.surplusDays}}天</span></div>
+                </div>
+                
+            </div>
         </div>
     </div>
 </ion-content>

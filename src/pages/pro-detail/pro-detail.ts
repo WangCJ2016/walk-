@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { Store } from '@ngrx/store'
+import * as actions from '../../actions/project.action'
+import * as fromRoots from '../../reducer'
+import {thingType} from '../../utils'
 /**
  * Generated class for the ProDetailPage page.
  *
@@ -16,34 +19,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ProDetailPage {
   segment: string
   fixArray: Array<any>
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  propeo
+  proThingLists
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private store$: Store<fromRoots.State>
+  ) {
     this.segment = 'shiwu'
-    this.fixArray = [{
-      type: '按阶段',
-      items: [{
-        name: '全部',
-        id: 1
-      },{
-        name: '第一阶段',
-        id: 2
-      },{
-        name: '第二阶段',
-        id: 3
-      }]
-    },{
-      type: '按人员',
-      items: [{
-        name: '全部',
-        id: 4
-      },
-        {
-          name: '张三',
-          id: 5
-        }
-      ]
-    }]
+  
+    this.store$.dispatch(new actions.propeoAction({projectId:'f9b45ec46c96439396a02e7373bf3279'}))
+    this.store$.dispatch(new actions.proThingListAction({projectId:'f9b45ec46c96439396a02e7373bf3279'}))
+    this.store$.dispatch(new actions.proMembersAction({projectId:'f9b45ec46c96439396a02e7373bf3279'}))
+    this.store$.dispatch(new actions.currProjectTreeMenuAction({parentId:'48a15216f0e04d90b3c605e7c75e7966',projectId:'f9b45ec46c96439396a02e7373bf3279'}))
+    this.store$.select(store => store.project).subscribe(v=>{
+      console.log(v)
+      if(v){
+        this.propeo = v.propeo
+      this.proThingLists = v.proThingLists
+      }
+    })
   }
-
+  thingType(type) {
+    return thingType(type)
+  }
   
 
 }

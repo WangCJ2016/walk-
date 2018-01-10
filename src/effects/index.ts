@@ -8,6 +8,7 @@ import { DailyEffects } from './daily.effects'
 import { CreatWorkEffects } from './creatwork.effects'
 import { WokrHomeEffects } from './workhome.effects'
 import { ChatEffects } from './chat.effects'
+import { ProjectEffects } from './project.effects'
 export const effects = {
     auth: AuthEffects,
     attence: AttenceEffects,
@@ -16,7 +17,8 @@ export const effects = {
     daily: DailyEffects,
     creatwork: CreatWorkEffects,
     workhome: WokrHomeEffects,
-    chat: ChatEffects
+    chat: ChatEffects,
+    project: ProjectEffects
 }
 
 @NgModule({
@@ -28,7 +30,8 @@ export const effects = {
         EffectsModule.run(effects.daily),
         EffectsModule.run(effects.creatwork),
         EffectsModule.run(effects.workhome),
-        EffectsModule.run(effects.chat)         
+        EffectsModule.run(effects.chat),
+        EffectsModule.run(effects.project)         
     ]
 })
 export class AppEffectsModule {}

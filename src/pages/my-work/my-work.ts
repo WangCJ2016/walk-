@@ -49,6 +49,7 @@ export class MyWorkPage {
     this.store$.dispatch(new actions.shiwuListAction({...this.data,pageNo:1}))
     this.store$.dispatch(new actions.workPlateAction({}))
     this._sub$ = this.store$.select(store => store.creatwork).subscribe(res => {
+      console.log(res)
       const shiwuList = res.shiwuList
       const workPlate = res.workPlate
       if(shiwuList) {

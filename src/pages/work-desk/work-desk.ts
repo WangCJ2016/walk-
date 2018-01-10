@@ -118,7 +118,7 @@ export class WorkDeskPage {
     }
   }
   goWorkPage(i) {
-    this.navCtrl.push('MyWorkPage',{workType:i});
+    this.navCtrl.push('MyWorkPage',{type:i+1});
   }
 
   goApplyAll() {

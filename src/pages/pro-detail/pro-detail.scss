@@ -12,13 +12,21 @@ page-pro-detail {
             text-align: center
         }
     }
-    ion-list {
-        margin: 0!important;
-        .item-block {
-            min-height: 5rem!important;
-            p {
-                margin-left: 1.25rem
-            }
+    .pro-item {
+        height: 60px;
+        padding: 0 30px;
+        background-color: #fff;
+        .title{
+            font-size: 1.25rem;
+            display: inline-block;
+            line-height: 2.5rem;
+        }
+        .item-content{
+            font-size: 11px;
+            line-height: 2.5rem;
+            display: flex;
+            width: 100%;
+            justify-content: space-between
         }
     }
 }
