@@ -16,10 +16,12 @@
   </ion-navbar>
   <ion-toolbar class="topfix_toolbar">
     <applylist-selecttop 
+    flag='1'
     [applyTimeCount]='applyTimeCount' 
     [applyCollect]='applyCollect' 
     [applyTypeInfo]='params'
-    (data)='sortType($event)'></applylist-selecttop>
+    (data)='sortType($event)'
+  ></applylist-selecttop>
 </ion-toolbar>
 </ion-header>
 

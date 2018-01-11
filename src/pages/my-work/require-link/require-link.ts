@@ -45,7 +45,7 @@ export class RequireLinkPage {
     const modal = this.modal.create(RequireLinkModalComponent,{requireList:this.requireList})
     modal.present()
     modal.onDidDismiss(id=>{
-      console.log(id)
+ 
       this.store$.dispatch(new actions.requireLinkAction({
         resultsId: id,
         attach: this.data.attach,

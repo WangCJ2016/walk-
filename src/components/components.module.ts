@@ -10,7 +10,6 @@ import { CreateWorkPopoverComponent } from './create-work-popover/create-work-po
 import { SelectPersonComponent } from './select-person/select-person';
 import { AvatarComponent } from './avatar/avatar';
 import { SelectModalComponent } from './select-modal/select-modal';
-import { FixTopComponent } from './fix-top/fix-top';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password';
 import { MapComponent } from './map/map';
 import { FooterInputComponent } from './footer-input/footer-input';
@@ -41,7 +40,6 @@ import { ProFilterComponent } from './pro-filter/pro-filter';
     SelectPersonComponent,
     AvatarComponent,
     SelectModalComponent,
-    FixTopComponent,
     ConfirmPasswordComponent,
     MapComponent,
     FooterInputComponent,
@@ -70,7 +68,6 @@ import { ProFilterComponent } from './pro-filter/pro-filter';
     SelectPersonComponent,
     AvatarComponent,
     SelectModalComponent,
-    FixTopComponent,
     ConfirmPasswordComponent,
     MapComponent,
     FooterInputComponent,

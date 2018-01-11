@@ -6,6 +6,7 @@ page-pro-detail {
         font-size: 1.166667em;
         background-color: #fff;
         border-bottom: 1px solid $border_color;
+        padding:0 15px;
         color: #000;
         span {
             flex: 1;
@@ -16,6 +17,7 @@ page-pro-detail {
         height: 60px;
         padding: 0 30px;
         background-color: #fff;
+        border-bottom: 0.55px solid #e8e8e8;
         .title{
             font-size: 1.25rem;
             display: inline-block;

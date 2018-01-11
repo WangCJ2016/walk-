@@ -17,7 +17,6 @@ export class AttenceEffects {
     .withLatestFrom(this.store$.select(store=> store.auth.auth))
     .switchMap(([_, auth]) => this.attenceService.getAttence(auth.id,auth.token,auth.emp.teamId,auth.emp.deptId,auth.emp.id))
     .map(res => {
-        console.log(res)
         if(res.success) {
           return new actions.GetAttendacnceSuccessAction(res.dataObject)
         }
@@ -38,11 +37,11 @@ export class AttenceEffects {
         info
     ))
     .map(res => {
-        console.log(res)
         if(res.res.success) {
             this.toast.message('打卡成功')
           return new actions.GetAttendacnceAction({})
         }else{
+            this.toast.message(res.res.msg)
             return new actions.FailAction(res.res.msg)
         }
     })
@@ -60,7 +59,6 @@ export class AttenceEffects {
         time.time
     ))
     .map(res => {
-        console.log(res)
         if(res.success) {
            const data =  res.dataObject.map(v=>{
                 if(v.pictures) {
@@ -96,7 +94,6 @@ export class AttenceEffects {
         time.time
     ))
     .map(res => {
-        console.log(res)
         if(res.success) {
             const data = {
                 notIn: {
@@ -137,10 +134,10 @@ export class AttenceEffects {
        )
     })
     .map(res => {
-        console.log(res)
         if(res.success) {
           return new actions.getEndDateSuccessAction({endDate:res.dataObject})
         }else{
+            this.toast.message(res.msg)
             return new actions.FailAction(res.msg)
         }
     })
@@ -179,7 +176,6 @@ export class AttenceEffects {
         info
         ))
         .map(res => {
-        console.log(res)
         
         if(res.success) {
         

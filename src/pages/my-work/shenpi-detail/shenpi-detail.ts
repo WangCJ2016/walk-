@@ -84,7 +84,6 @@ export class ShenpiDetailPage {
       this.applyFlowList = v.applyFlow
       if(this.data){
         this.store$.select(store=>store.auth.auth).subscribe(auth=>{
-          console.log(this.data.applyEmp,auth.emp)
           if(auth.emp) {
             this.applyEmpIf = this.data.applyEmp.id === auth.emp.id
             this.form.get('remark').patchValue(this.data.remark)

@@ -18,13 +18,13 @@ export class MapComponent {
   location: string
   constructor(private geolocation: Geolocation,
     private http: Http) {
-
+      
   }
-  ionViewDidEnter() {
+  ngOnInit() {
     // gps 获取经纬度
     this.geolocation.getCurrentPosition()
     .then(res => {
-      console.log('geolocation'+res.coords.latitude+'-'+res.coords.longitude)
+  
       const lat = res.coords.latitude;
       const long = res.coords.longitude;
       // 转化高德坐标

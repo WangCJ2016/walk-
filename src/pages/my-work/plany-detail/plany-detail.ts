@@ -166,7 +166,7 @@ export class PlanyDetailPage {
           text: '取消',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
+            
           }
         },
         {
@@ -228,7 +228,7 @@ export class PlanyDetailPage {
      Promise.all(submitarr)
         .then(res => {
              data = {...data,attach:attach.join(',')}
-            console.log(JSON.stringify(data))
+            
             this.store$.dispatch(new actions.updateYAction({...data,...{planMonthId:this.params.id}}))
             this.form.reset()
         })

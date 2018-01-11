@@ -13,10 +13,9 @@ export class ProjectEffects {
   .map(toPayload)
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>{
-    console.log(info)
     return this.service.proDetail(auth.id, auth.token, auth.emp.teamId,info)})
   .map(res => {
-    console.log(res)
+   
     if(res.success) {
       return new actions.proDetailSuccessAction({})
   }
@@ -26,10 +25,10 @@ export class ProjectEffects {
   .map(toPayload)
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>{
-    console.log(info)
+    
     return this.service.propeo(auth.id, auth.token, auth.emp.teamId,info)})
   .map(res => {
-    console.log(res)
+   
     if(res.success) {
       return new actions.propeoActionSuccessAction(res.dataObject)
   }
@@ -39,10 +38,10 @@ export class ProjectEffects {
   .map(toPayload)
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>{
-    console.log(info)
+    
     return this.service.proThingList(auth.id, auth.token, auth.emp.teamId,info)})
   .map(res => {
-    console.log(res)
+    
     if(res.success) {
       return new actions.proThingListSuccessAction(res.dataObject)
   }
@@ -54,7 +53,7 @@ export class ProjectEffects {
   .switchMap(([info,auth])=>{
     return this.service.proMembers(auth.id, auth.token, auth.emp.teamId,info)})
   .map(res => {
-    console.log(res)
+   
     if(res.success) {
       return new actions.proMembersListSuccessAction(res.dataObject)
   }
@@ -66,7 +65,7 @@ export class ProjectEffects {
   .switchMap(([info,auth])=>{
     return this.service.currProjectTreeMenu(auth.id, auth.token, auth.emp.teamId,info)})
   .map(res => {
-    console.log(res)
+  
     if(res.success) {
       return new actions.currProjectTreeMenuSuccessAction(res.dataObject)
   }

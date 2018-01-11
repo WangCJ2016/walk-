@@ -30,7 +30,6 @@ export class MyApp {
       // // set status bar to white
        this.statusBar.styleLightContent()
        splashScreen.hide();
-      // console.log(this.nav)
       const userId = localStorage.getItem('userId')
       if(userId) {
         this.store$.dispatch(new actions.UserInfoAction({userId: userId}))

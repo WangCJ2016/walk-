@@ -30,7 +30,6 @@ export function reducer(state = initialState, action: any ): State {
         }
         case authAction.ActionTypes.FORGET_PASSWORD_SUCCESS:
         case authAction.ActionTypes.AUTH_FAIL_SUCCESS: {
-            console.log(action.payload)
             return {...state, ...action.payload}
         }
         case authAction.ActionTypes.LOGOUT_SUCCESS: {

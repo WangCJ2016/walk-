@@ -22,7 +22,7 @@ export class EmojiComponent {
       // for(let i=0;i<emojiArray.length-1;i+18) {
       //   this.emojiArray.push(emojiArray.slice(i,i+18))
       // }
-      // console.log(this.emojiArray)
+     
   }
 
 }

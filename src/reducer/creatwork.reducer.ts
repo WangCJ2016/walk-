@@ -6,6 +6,7 @@ export interface State {
      applyFlow?: Array<applyFlow>
      applyCollect?: applyCollect
      applyTimeCount?: any
+     applyTypeCount?: any
      worksfromme?: any
      zishiwu?:Array<zishiwu>
      shiwuList?: {
@@ -22,6 +23,7 @@ export const initialState: State = {
   applyList:[],
   applyFlow:[],
   applyTimeCount:null,
+  applyTypeCount:null,
   worksfromme:{pageNo:0,records:0,list:[]},
   shiwuList:{
     pageNo: 0,
@@ -76,6 +78,9 @@ export function reducer(state = initialState, action: any ): State {
     } 
     case actions.ActionTypes.APPLYTIMECOUNT_SUCCESS:{
       return {...state,applyTimeCount:action.payload}
+    }
+    case actions.ActionTypes.THINGTYPECOUNT_SUCCESS: {
+      return {...state,applyTypeCount:action.payload}
     }
     // workfromme
     case actions.ActionTypes.APPLYSELECTLIST_SUCCESS:{

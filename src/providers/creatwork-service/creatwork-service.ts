@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class CreatworkServiceProvider {
 
   constructor(public http: Http, @Inject('BASE_URL') private config) {
-    console.log('Hello CreatworkServiceProvider Provider');
+    
   }
   // 添加周计划
   addPlanWeek(userId,token,teamId,deptId,empId,info) {
@@ -51,7 +51,7 @@ export class CreatworkServiceProvider {
       empId:empId,
       ...info
     }
-    console.log(JSON.stringify(params))
+
     const uri=`${this.config.url}/app/plan_updatePlanWeek`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
@@ -109,7 +109,7 @@ export class CreatworkServiceProvider {
       empId:empId,
       ...info
     }
-    console.log(JSON.stringify(params))
+   
     const uri = `${this.config.url}/app/metting_addMetting`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
@@ -373,14 +373,27 @@ export class CreatworkServiceProvider {
     .map(res=>res.json())
   }
   // 我发起的审批列表
-  applyTimeCount(userId,token,teamId,empId) {
+  applyTimeCount(userId,token,teamId,empId,info) {
     const params = {
       userId:userId,
       token:token,
       teamId:teamId,
-      empId:empId
+      empId:empId,
+      ...info
     }
     const uri=`${this.config.url}/app/thing_myInitTimeCount`
+    return this.http.get(uri, {params: params})
+    .map(res=>res.json())
+  }
+  myInitTypeCount(userId,token,teamId,empId,info) {
+    const params = {
+      userId:userId,
+      token:token,
+      teamId:teamId,
+      empId:empId,
+      ...info
+    }
+    const uri=`${this.config.url}/app/thing_myInitTypeCount`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())
   }

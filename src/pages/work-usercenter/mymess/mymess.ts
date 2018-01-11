@@ -139,7 +139,7 @@ export class MymessPage {
                 // success
                 const photo = JSON.parse(res.response).fileUrl[0]
                 this.head = photo.url
-                console.log('success'+photo.url)
+             
                 this.store$.dispatch(new actions.ChangeAction({photo: photo.url}))
               }, (err) => {
                 // error

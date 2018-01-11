@@ -13,7 +13,6 @@ export function pySegSort(arr1) {
     var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
     let segs: Array<data> = []
     var curr;
-    console.log(arr1)
     letters.forEach(function(item,i){
         curr = {letter: item, data:[]};
         arr1.forEach(function(item2){
@@ -21,7 +20,6 @@ export function pySegSort(arr1) {
                 curr.data.push(item2);
             }
         });
-        console.log(curr)
         if(curr.data.length) {
             segs.push(curr)
             curr.data.sort(function(a,b){
@@ -185,7 +183,6 @@ export function todayFormat() {
     }
 }
 function doublenum(num) {
-    console.log(num)
     if(num<10) {
         return '0'+num
     }else{

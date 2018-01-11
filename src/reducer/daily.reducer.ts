@@ -16,7 +16,8 @@ export function reducer(state = initialState, action: any ): State {
       return {...state,dailyPeople:action.payload}
     }
     case actions.ActionTypes.DETAILDAILY_SCUCCESS: {
-      return {...state,dailyDetail:action.payload}
+      const data = {...state.dailyDetail,...action.payload}
+      return {...state,dailyDetail:data}
     }
     case actions.ActionTypes.DAILYSTATEBYMONTH_SCUCCESS:{
       return {...state,dailyStatusByMonth:action.payload}

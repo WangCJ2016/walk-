@@ -17,7 +17,6 @@ export class ChatEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.service.chatList(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = res.dataObject.result.reverse().map(chat=>({
         chatGroupId: chat.chatGroupId,
@@ -38,7 +37,6 @@ export class ChatEffects {
  .withLatestFrom(this.store$.select(store=>store.auth.auth))
  .switchMap(([info,auth])=>this.service.sendChat(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id,info))
  .map(res => {
-   console.log(res)
    if(res.success) {
      const data = {
       chatGroupId: res.dataObject.chatGroupId,

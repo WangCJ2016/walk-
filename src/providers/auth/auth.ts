@@ -45,14 +45,13 @@ export class AuthProvider {
   }
   // 注册时短信验证码校验
   checkRegisterCode(phoneNum: string, code: string, sign: string) {
-    console.log(phoneNum, code)
+    
     const url = `${this.config.url}/app/user_checkRegCode`
     return this.http.get(url, {params: {userName: phoneNum, code: code, sign: sign}})
     .map(res => res.json())
   }
   // 注册
   register(phoneNum: string, verCode: string, sign: string, passowrd: string) {
-    console.log({userName: phoneNum, code: verCode, sign: sign, password: passowrd})
     const uri = `${this.config.url}/app/user_reg`
     return this.http.get(uri, {params: {userName: phoneNum, code: verCode, sign: sign, password: passowrd}})
     .map(res => res.json())
@@ -65,7 +64,7 @@ export class AuthProvider {
   }
   // 找回密码获取验证码
   checkForgetCode(phoneNum: string, code: string, sign: string) {
-    console.log(phoneNum, code)
+  
     const url = `${this.config.url}/app/user_checkResetPasswordCode`
     return this.http.get(url, {params: {userName: phoneNum, code: code,sign:sign}})
     .map(res => res.json())
@@ -78,7 +77,7 @@ export class AuthProvider {
   }
   // 修改用户信息
   changeUserInfo(userId,token,info) {
-    console.log({userId:userId,token:token,...info})
+   
     const uri = `${this.config.url}/app/user_updateUserInfo`
     return this.http.get(uri, {params: {userId:userId,token:token,...info}})
       .map(res => ({

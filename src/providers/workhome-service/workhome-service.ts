@@ -13,7 +13,7 @@ export class WorkhomeServiceProvider {
 
   constructor(public http: Http,
     @Inject('BASE_URL') private config) {
-    console.log('Hello WorkhomeServiceProvider Provider');
+
   }
   // getList
   getList(userId,token,teamId,empId,info) {

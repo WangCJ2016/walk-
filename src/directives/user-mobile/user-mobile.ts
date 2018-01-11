@@ -18,7 +18,6 @@ import { NG_VALIDATORS, Validator, AbstractControl } from '@angular/forms'
 export class UserMobileDirective implements Validator{
 
   constructor() {
-    console.log('Hello UserMobileDirective Directive');
   }
   validate(c: AbstractControl): { [key: string]: any; } {
     let value: string = c.value || '';

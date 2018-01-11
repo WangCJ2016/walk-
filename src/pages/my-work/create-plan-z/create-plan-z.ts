@@ -40,7 +40,6 @@ export class CreatePlanZPage {
         endTime: [''],
         startTime: ['']
       })
-      this.form.get('fujian').valueChanges.subscribe(res => console.log(res))
       this._sub$ =this.store$.select(store=>store.auth.auth).subscribe(res=>this.auth={
         name: res.name,
         id:res.emp.id,

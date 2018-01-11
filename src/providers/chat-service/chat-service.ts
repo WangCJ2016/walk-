@@ -15,7 +15,7 @@ export class ChatServiceProvider {
     public http: Http,
     @Inject('BASE_URL') private config
   ) {
-    console.log('Hello ChatServiceProvider Provider');
+    
   }
   // addgroup
   addGroup(userId,token,teamId,deptId,empId,info) {
@@ -40,7 +40,7 @@ export class ChatServiceProvider {
       empId:empId,
       ...info
     }
-    console.log(params)
+  
     const uri = `${this.config.url}/app/chat_addChatThing`
     return this.http.get(uri, {params: params})
     .map(res=>res.json())

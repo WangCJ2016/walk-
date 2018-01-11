@@ -53,7 +53,6 @@ export class ForgetPasswordPage {
     // 获取sign
     this.store$.dispatch(new actions.SignAction({type:2}))
     this._sub1 = this.store$.select(store => store.auth).subscribe(res => {
-      console.log(res)
         this.countIf = res.auth.countIf
       if(this.loadremoveIf) {
         this.loading.dismiss()

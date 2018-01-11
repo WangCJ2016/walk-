@@ -14,7 +14,7 @@ export class ContactServiceProvider {
   constructor(
     public http: Http,
     @Inject('BASE_URL') private config) {
-    console.log(this.config)
+   
   }
 
   // 获取员工列表

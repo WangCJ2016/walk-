@@ -57,7 +57,6 @@ export class AttenceRecordePage {
     this.time$.next(day)
   }
   selectMonth(time) {
-    console.log(time)
     this.store$.dispatch(new actions.statusByMonthAction({date:time}))
   }
 }

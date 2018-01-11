@@ -15,7 +15,6 @@ export class ContactEffects {
     .withLatestFrom(this.store$.select(store=>store.auth.auth))
     .switchMap(([_,auth])=>this.contactService.loadContacts(auth.id, auth.token, auth.emp.teamId))
     .map(res => {
-      console.log(res)
       if(res.success) {
         const contactArr = res.dataObject.map(contact=>({
           userId:contact.userId,
@@ -43,7 +42,6 @@ export class ContactEffects {
           phone: res.dataObject.userName,
           empId: res.dataObject.id
         }
-        console.log(contactArr,res.dataObject.id)
         return new actions.EmpDetailSuccessAction(contactArr)
     }
     })
@@ -54,7 +52,6 @@ export class ContactEffects {
      .withLatestFrom(this.store$.select(store=>store.auth.auth))
      .switchMap(([_,auth])=>this.contactService.emp_empChooseList(auth.id, auth.token, auth.emp.teamId, auth.emp.id,auth.emp.deptId))
      .map(res => {
-       console.log(res)
        if(res.success) {
          const data = {
           juniorList: res.dataObject.juniorList.map(v=>({

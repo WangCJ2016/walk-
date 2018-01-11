@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class ProjectServiceProvider {
 
   constructor(public http: Http,@Inject('BASE_URL') private config) {
-    console.log('Hello ProjectServiceProvider Provider');
+    
   }
   proDetail(userId,token,teamId,info) {
     const params = {

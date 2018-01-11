@@ -15,7 +15,7 @@ export class TeamServiceProvider {
     public http: Http,
     @Inject('BASE_URL') private config
   ) {
-    console.log('Hello TeamServiceProvider Provider');
+
   }
   // 获取团队模块
   getTeamlist(userId:string, token:string) {

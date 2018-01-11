@@ -72,8 +72,8 @@ export const ActionTypes = {
   // 事务个数统计
   THIINGCOUND:'[creatwork] thingcount',
   THIINGCOUND_SUCCESS:'[creatwork] thingcount_success',
-  // 动态首页列表
-  
+  THINGTYPECOUNT:'[creatwork] thingtypecount',
+  THINGTYPECOUNT_SUCCESS:'[creatwork] thingtypecount_success',
 };
 
 /**
@@ -90,6 +90,17 @@ export class thingCountAction implements Action {
 
 export class thingCountSuccessAction implements Action {
   readonly type = ActionTypes.THIINGCOUND_SUCCESS;
+
+  constructor(public payload: {}) { }
+}
+export class thingTypeCountAction implements Action {
+  readonly type = ActionTypes.THINGTYPECOUNT;
+
+  constructor(public payload: any) { }
+}
+
+export class thingTypeCountSuccessAction implements Action {
+  readonly type = ActionTypes.THINGTYPECOUNT_SUCCESS;
 
   constructor(public payload: {}) { }
 }

@@ -31,6 +31,8 @@ export class WorkDeskPage {
   attencePeople
   dailyPeople
   applyCollect
+  applyTimeCount
+  thingTypeCount
   _sub$:Subscription
   _sub1$:Subscription
   _sub2$:Subscription
@@ -48,13 +50,14 @@ export class WorkDeskPage {
       this.store$.dispatch(new authActions.UserInfoAction({userId: userId}))
     }
    this._sub$ = this.store$.select(store=>store.auth.auth).subscribe(v=>{
-     console.log(v)
+
       if(v.emp){
         this.teamName = v.emp.team.name
         this.empId = v.emp.id
-        this.store$.dispatch(new actions.workPlateAction({}))
         this.store$.dispatch(new actions.thingCountAction({}))
         this.store$.dispatch(new actions.applyCollectAction({}))
+        this.store$.dispatch(new actions.applyTimeCountAction({flag:2,timeFlag:0}))
+         this.store$.dispatch(new actions.thingTypeCountAction({flag:2,typeFlag:0}))
         this.store$.dispatch(new attenceActions.AttenceStatAction({time: dayFormat(new Date())}))
         this.store$.dispatch(new dailyActions.DailyStatAction({submitDate: dayFormat(new Date())}))
       }else if(v.id){
@@ -66,10 +69,11 @@ export class WorkDeskPage {
       }
     })
    this._sub1$ =  this.store$.select(store=>store.creatwork).subscribe(v=>{
-      if(v.workPlate) {
-        this.workPlate=v.workPlate
+      if(v) {
         this.thingCount = v.thingCount
         this.applyCollect = v.applyCollect
+        this.applyTimeCount = v.applyTimeCount
+        this.thingTypeCount = v.applyTypeCount
       }
     })
    this._sub2$ =  this.store$.select(store=>store.attence).subscribe(v=>{
@@ -111,23 +115,24 @@ export class WorkDeskPage {
     this.navCtrl.push(pageName);
   }
   goWorkTimePage(i) {
-    if(i) {
-      this.navCtrl.push('MyWorkPage',{workTime: i});
-    }else {
-      this.navCtrl.push('MyWorkPage');
-    }
+      if(i) {
+        this.navCtrl.push('MyWorkPage',{typeFlag:0,timeFlag:i,sortFlag:0,flag:0});
+      }else{
+        this.navCtrl.push('MyWorkPage',{typeFlag:0,timeFlag:0,sortFlag:0,flag:0});
+      }
   }
   goWorkPage(i) {
-    this.navCtrl.push('MyWorkPage',{type:i+1});
+    console.log(i)
+    this.navCtrl.push('MyWorkPage',{typeFlag:i,timeFlag:0,sortFlag:0,flag:0});
   }
 
   goApplyAll() {
-    this.navCtrl.push('ApplylistPage',{typeFlag:0,timeFlag:0,sortFlag:0});
+    this.navCtrl.push('ApplylistPage',{typeFlag:0,timeFlag:0,sortFlag:0,flag:1});
   }
   goApplyme() {
-    this.navCtrl.push('ApplylistPage',{typeFlag:1,timeFlag:0,sortFlag:0});
+    this.navCtrl.push('ApplylistPage',{typeFlag:1,timeFlag:0,sortFlag:0,flag:1});
   }
   goApplygoon() {
-    this.navCtrl.push('ApplylistPage',{typeFlag:2,timeFlag:0,sortFlag:0});
+    this.navCtrl.push('ApplylistPage',{typeFlag:2,timeFlag:0,sortFlag:0,flag:1});
   }
 }

@@ -57,7 +57,6 @@ export class DailyPage {
       this.store$.dispatch(new attenceActions.AttenceRecordAction({time:v,empId:this.navParams.data.empId}))
     })
     this.store$.select(store=>store.daily).subscribe(v=>{
-      console.log(v)
       if(v.dailyStatusByMonth) {
         this.dailyStatusByMonth = v.dailyStatusByMonth
       }
@@ -112,7 +111,6 @@ export class DailyPage {
     const modal = this.modal.create(StarComponent,{},{showBackdrop:true,enableBackdropDismiss:true})
     modal.present()
     modal.onDidDismiss(v=>{
-      console.log(v)
       this.stars = v
       this.starsArray = numtoarray(this.stars)
       this.store$.dispatch(new actions.ModifyAction({dailyId:this.dailyId,star: v}))
@@ -124,7 +122,6 @@ export class DailyPage {
  
   // 添加日报
   addDaily() {
-    console.log(this.desc)
     if(this.dailyContent){
       this.store$.dispatch(new actions.ModifyAction({dailyId:this.dailyId,contents: this.desc}))
     }else{

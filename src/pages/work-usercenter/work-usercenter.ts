@@ -75,7 +75,7 @@ export class WorkUsercenterPage {
           text: '取消',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+       
             
           }
         },

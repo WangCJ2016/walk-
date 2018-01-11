@@ -45,7 +45,6 @@ export class DutySituationPage {
     this._sub.unsubscribe()
   }  
   selectDay(day) {
-    console.log(day)
     this.time$.next(day)
   }
   changeAttenceStatus(type) {

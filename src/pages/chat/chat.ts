@@ -57,7 +57,6 @@ export class ChatPage {
         
         if(this.dymanicPageTotal == v.chatList[0].totalPages) {
           this.enabled=false
-          console.log(this.enabled)
         }
         
         if(v.chatList.length-preLength==1) {

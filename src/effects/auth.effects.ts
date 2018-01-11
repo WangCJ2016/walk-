@@ -32,7 +32,6 @@ export class AuthEffects {
     .map(toPayload)
     .switchMap(val => this.service.getUserInfo(val.userId))
     .map(res => {
-        console.log(res)
         if(res.success) {
             const data = {
                 cityId: res.dataObject.cityId,
@@ -110,7 +109,7 @@ export class AuthEffects {
      .map(toPayload)
      .map(res => {
              localStorage.removeItem('userId')
-             this.appCtrl.getRootNav().push('LoginPage')
+             this.appCtrl.getActiveNav().push('LoginPage')
             return new actions.LogoutSucccessAction(res.dataObject)
      })
 
@@ -122,7 +121,6 @@ export class AuthEffects {
     .map(toPayload)
     .switchMap(val => this.service.getSign( val.type))
     .map((res) =>{
-        console.log(res)
        if(res.success) {
            return new actions.SignSuccessAction({sign:res.dataObject})
        }
@@ -174,10 +172,10 @@ export class AuthEffects {
       .map(toPayload)
       .withLatestFrom(this.store$.select(store => store.auth.auth))
       .switchMap(([info, auth]) => {
-          console.log(info)
+         
           return this.service.register(info.phoneNum, auth.code, auth.sign, info.password)})
       .map(res => {
-          console.log(res)
+         
         if(res.success) {
             this.toast.message('注册成功')
             this.appCtrl.getActiveNav().push('LoginPage')
@@ -202,7 +200,7 @@ export class AuthEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([info,auth]) => this.service.getForgetCode(info.phoneNum,auth.sign))
    .map((res) =>{
-       console.log(res)
+      
       if(res.success) {
         this.toast.message('发送成功')
           return new actions.ForgetPasswordCodeSuccessAction({code:res.dataObject,countIf: true})
@@ -239,7 +237,7 @@ export class AuthEffects {
     .withLatestFrom(this.store$.select(store => store.auth.auth))
     .switchMap(([info, auth]) => this.service.resetPassword(info.phoneNum, auth.code, auth.sign, info.password))
     .map(res => {
-        console.log(res)
+       
       if(res.success) {
         this.service.setStep('one');
         this.appCtrl.getActiveNav().push('LoginPage')
@@ -261,7 +259,7 @@ export class AuthEffects {
       .withLatestFrom(this.store$.select(store => store.auth.auth))
       .switchMap(([o,auth]) => this.service.changePassword(auth.id, auth.token, o.oldpassword, o.newpassword))
       .map(res => {
-         console.log(res)
+    
          if(res.success) {
              this.appCtrl.getActiveNav().push('LoginPage')
              localStorage.removeItem('userId')
@@ -284,7 +282,7 @@ export class AuthEffects {
     .switchMap(([info, auth]) => {
         return this.service.changeUserInfo(auth.id, auth.token, info)})
     .map(res => {
-        console.log(res)    
+      
         if(res.res.success) {
             if(res.name||res.sex){
                 this.appCtrl.getActiveNav().pop()

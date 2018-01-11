@@ -2,11 +2,11 @@
 <!-- Generated template for the FixTopComponent component -->
 <section class="work_fix_top">
   <div class="type"   (click)='fixClick(0)' *ngIf='workArray' [class.checked]='typeIndex==0'>
-      <span>类型:{{workArray[workType]?.name}}</span>
+      <span>类型:{{workArray[typeSelectIndex]?.name}}</span>
       <ion-icon name="arrow-down"></ion-icon>
       <div class="type_item">
           <ion-list>
-              <ion-item *ngFor="let item of workArray; let i=index" [class.checkedItem]='i === workType' (click)='workClick(i)'>
+              <ion-item *ngFor="let item of workArray" [class.checkedItem]='item.id === workType' (click)='workClick(item.id)'>
                   <ion-label>{{item.name}}</ion-label>
                   <p class="num" item-content>{{item.num?'('+item.num+')':0}}</p>
               </ion-item>

@@ -42,9 +42,7 @@ export class ChangeAttencePage {
     this.form = this.fb.group({
       reason:[''],
       timeObj: ['']
-    })
-    this.form.get('timeObj').valueChanges.subscribe(v=>console.log(v))
-    
+    })  
   }
 
  

@@ -18,10 +18,8 @@ export class TeamEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([_,auth])=>this.teamService.getTeamlist(auth.id,auth.token))
    .map(res => {
-       console.log(res)
        if(res.success) {
            const teamArr = res.dataObject.map(team=>({...team.team, empId: team.id}))
-           console.log(teamArr)
            return new actions.LoadSuccessAction(teamArr)
        }else {
            this.toast.message(res.msg)
@@ -38,7 +36,6 @@ export class TeamEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([empId, auth])=>this.teamService.setDefaultTeam(auth.id,auth.token,empId.empId))
    .map(res => {
-    console.log(res)
     if(res.success) {
         this.toast.message('设置成功')
         this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})

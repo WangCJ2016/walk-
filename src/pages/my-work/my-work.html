@@ -1,5 +1,5 @@
 <!--
-  Generated template for the MyWorkPage page.
+  Generated template for the ApplylistPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -9,82 +9,50 @@
   <ion-navbar>
     <ion-title>我的工作</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
+            <button ion-button icon-only (click)="presentPopover($event)">
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-buttons>
   </ion-navbar>
   <ion-toolbar class="topfix_toolbar">
-      <fix-top [workPlate]='workPlate' [workInfo]='data' (data)='getDate($event)'></fix-top>
-  </ion-toolbar>
+    <applylist-selecttop 
+    flag='0'
+    [applyTimeCount]='applyTimeCount' 
+    [thingTypeCount]='thingTypeCount'
+    [applyCollect]='applyCollect' 
+    [applyTypeInfo]='params'
+    (data)='sortType($event)'
+    (typeCountData)='updataCount($event)'></applylist-selecttop>
+</ion-toolbar>
 </ion-header>
 
 
-<ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-   </ion-refresher>
-  <section class="sec_content">
-    <ion-list *ngIf='workType==1'>
-      <ion-item (click)='godetail()'>
-        <ion-avatar item-start>
-          <img src="assets/imgs/work-desk/shiwu.png" alt="">
-        </ion-avatar>
-        <h4>如果下面目中的任务如果下面目中的任务</h4>
-        <p>
-          <span>发起人:张三</span>&nbsp;
-          <span>进度:80%(偏慢)</span>&nbsp;
-          <span class="danger">剩余3天</span>
-        </p>
-
-        <img class="beback" item-end src="assets/imgs/work-desk/beback.png" alt="">
-      </ion-item>
-    </ion-list>
-    <ion-list *ngIf='workType==2'>
-      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
-          <ion-avatar item-start>
-              <img *ngIf='item.type==1' src="assets/imgs/work-desk/week.png" alt="">
-              <img *ngIf='item.type==2' src="assets/imgs/work-desk/month.png" alt="">
-            </ion-avatar>
-            <h3>{{item?.name}}</h3>
-            <span>执行人：{{item?.mainPersonEmp?.name}}</span>
-      </ion-item>
-    </ion-list>
-    <ion-list *ngIf='workType==3'>
-      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
-          <ion-avatar item-start>
-              <img  src="assets/imgs/work-desk/meeting.png" alt="">
-            </ion-avatar>
-            <h3>{{item?.name}}</h3>
-            <p><span>发起人：{{item?.initatorEmp?.name}}</span><span style="margin-left:15px">主讲人：{{item?.mainPersonEmp?.name}}</span></p>
-      </ion-item>
-    </ion-list>
-    <ion-list *ngIf='workType==4'>
-      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
-          <ion-avatar item-start>
-              <img  src="assets/imgs/work-desk/shen.png" alt="">
-            </ion-avatar>
-            <h3>{{item?.shenpiType}}</h3>
-            <p><span>发起人：{{item?.initatorEmp?.name}}</span></p>
-      </ion-item>
-    </ion-list>
-    <ion-list *ngIf='workType==5'>
-      <ion-item *ngFor="let item of lists; let i=index" (click)='goPlanDetail(item.id,item.type)'>
-          <ion-avatar item-start>
-              <img  src="assets/imgs/work-desk/shiwu.png" alt="">
-            </ion-avatar>
-            <h3>{{item?.name}}</h3>
-            <p><span>发起人：{{item?.initatorEmp?.name}}</span><span>进度{{item?.progress}}%</span><span>剩余：{{item?.surplusDays}}天</span></p>
-      </ion-item>
-    </ion-list>
-  </section>
-  <div *ngIf="backdrop" class="backdrop-div" (click)="backdropclick($event)" ontouchmove="event.preventDefault();event.stopPropagation();">
-    <ion-backdrop disable-activated role="presentation" tappable style="opacity: 0.3; transition-delay: initial; transition-property: none;"></ion-backdrop>
-  </div>
-  <ion-infinite-scroll #ininfinite position='bottom' [enabled]='enable' threshold='10%' (ionInfinite)="doInfinite($event)">
-      <ion-infinite-scroll-content
-        loadingSpinner="bubbles"
-        loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+<ion-content >
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+       </ion-refresher>
+  <ion-item class="item_top" (click)='goPages(item)' *ngFor="let item of lists; let i=index">
+    <ion-avatar item-start >
+        <img *ngIf='item.type==1' src="assets/imgs/work-home/group.png" alt="">
+        <avatar *ngIf='item.type==2' name={{item.name}}></avatar>
+        <img *ngIf='item.type==3' src="assets/imgs/work-home/shiwu.png" alt="">
+        <img *ngIf='item.type==4' src="assets/imgs/work-home/zhou.png" alt="">
+        <img *ngIf='item.type==5' src="assets/imgs/work-home/yue.png" alt="">
+        <img *ngIf='item.type==6' src="assets/imgs/work-home/meeting.png" alt="">
+        <img *ngIf='item.type==7' src="assets/imgs/work-home/shenpi.png" alt="">
+        <img *ngIf='item.type==8' src="assets/imgs/work-home/project.png" alt="">
+        <img *ngIf='item.type==9' src="assets/imgs/work-home/project.png" alt="">
+    </ion-avatar>
+    <div style="width:100%" item-content>
+        <h4 >{{item.name}}</h4>
+        <p >{{item.contents}}</p>
+    </div>
+    <div item-end>
+        <span class="time" item-end>{{item.updateTime}}</span>
+    </div>
+</ion-item>
+<ion-infinite-scroll position='bottom' [enabled]='enabled' threshold='2%' (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content loadingSpinner="bubbles" >
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
 </ion-content>

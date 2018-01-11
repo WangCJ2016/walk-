@@ -27,15 +27,16 @@ export class ProDetailPage {
     private store$: Store<fromRoots.State>
   ) {
     this.segment = 'shiwu'
-  
-    this.store$.dispatch(new actions.propeoAction({projectId:'f9b45ec46c96439396a02e7373bf3279'}))
-    this.store$.dispatch(new actions.proThingListAction({projectId:'f9b45ec46c96439396a02e7373bf3279'}))
-    this.store$.dispatch(new actions.proMembersAction({projectId:'f9b45ec46c96439396a02e7373bf3279'}))
-    this.store$.dispatch(new actions.currProjectTreeMenuAction({parentId:'48a15216f0e04d90b3c605e7c75e7966',projectId:'f9b45ec46c96439396a02e7373bf3279'}))
+    const params = this.navParams.data
+    this.store$.dispatch(new actions.propeoAction({projectId:params.projectId}))
+    this.store$.dispatch(new actions.proThingListAction({projectId:params.projectId}))
+    this.store$.dispatch(new actions.proMembersAction({projectId:params.projectId}))
+    this.store$.dispatch(new actions.currProjectTreeMenuAction({parentId:params.parentId,projectId:params.projectId}))
     this.store$.select(store => store.project).subscribe(v=>{
-      console.log(v)
+   
       if(v){
-        this.propeo = v.propeo
+        this.propeo = v.propeo?v.propeo.phase.map(peo=>({...peo,isShow: false})):null
+       
       this.proThingLists = v.proThingLists
       }
     })
@@ -43,6 +44,4 @@ export class ProDetailPage {
   thingType(type) {
     return thingType(type)
   }
-  
-
 }

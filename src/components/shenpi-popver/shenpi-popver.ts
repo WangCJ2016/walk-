@@ -15,7 +15,6 @@ export class ShenpiPopverComponent {
   text: string;
 
   constructor() {
-    console.log('Hello ShenpiPopverComponent Component');
     this.text = 'Hello World';
   }
 

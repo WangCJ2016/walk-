@@ -15,7 +15,6 @@ export class AttenceServiceProvider {
     public http: Http,
     @Inject('BASE_URL') private config
     ) {
-    console.log('Hello AttenceServiceProvider Provider');
   }
   // 显示签到或签退
   getAttence(userId:string,token:string,teamId:string,deptId:string,empId:string) {
@@ -27,7 +26,6 @@ export class AttenceServiceProvider {
   sign(userId:string,token:string,teamId:string,deptId:string,empId:string,info:any) {
     const uri = `${this.config.url}/app/attendanceEmp_clockIn`
     const params = {userId:userId,token:token,teamId:teamId,deptId:deptId,empId:empId,...info,clockType:2}
-    console.log(info)
     return this.http.get(uri, {params: params})
     .map(res => {
       return {type:info.type,res: res.json()}

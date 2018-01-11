@@ -38,7 +38,6 @@ export class CreateWorkPage {
     private store$: Store<fromRoot.State>,
     private fb: FormBuilder) {
       this.params = this.navParams.data
-      console.log(this.params)
       this.form = this.fb.group({
         fullName: [''],
         desc: [''],
@@ -140,6 +139,11 @@ ionViewDidLeave(){
       this.form.reset()
     }
     //this.app.getActiveNav().remove(0,1)
+    if(this.params.type===1) {
+     
+    }else{
+      this.navCtrl.pop()
+    }
   }
   
 }

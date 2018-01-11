@@ -13,7 +13,6 @@ export const initialState: State = {
 export function reducer(state = initialState, action: any ): State {
   switch (action.type) {
     case actions.ActionTypes.LISTS_SUCCESS:{
-      console.log(action.payload)
       const workhomeList = [...state.workhomeList,...action.payload.chatGroupPage]
       return {...state,workhomeList:workhomeList}
     }

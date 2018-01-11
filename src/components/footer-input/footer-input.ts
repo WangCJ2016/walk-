@@ -73,7 +73,6 @@ export class FooterInputComponent implements ControlValueAccessor {
   }
   // submit
   submit() {
-    console.log(this.content)
     this.propagateChange({contents:this.content,type:4})
     this.content = ''
   }
@@ -88,7 +87,6 @@ export class FooterInputComponent implements ControlValueAccessor {
       targetHeight: 400
     }
     this.camera2.getPicture(options).then((imageData) => {
-      console.log('camera:'+imageData)
       const fileTransfer: FileTransferObject = this.fileTranfer.create();
       fileTransfer.upload(imageData, `${this.config.url}/appPhotoUploadServlet`,{})
       .then((res) => {
@@ -111,13 +109,11 @@ export class FooterInputComponent implements ControlValueAccessor {
       quality: 50
     }
     this.imagePicker.getPictures(options).then((result) => {
-      console.log('imgPicker:'+result)
       const fileTransfer: FileTransferObject = this.fileTranfer.create();
       fileTransfer.upload(result[0], `${this.config.url}/appPhotoUploadServlet`,{})
       .then((res) => {
         // success
         const photo = JSON.parse(res.response).fileUrl[0]
-        console.log('success'+photo)
         this.propagateChange({attach:photo.url,attachName:photo.name,type:2})
       }, (err) => {
         // error

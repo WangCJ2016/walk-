@@ -46,12 +46,9 @@ export class CreateShenpiPage {
       shenheren: [''],
       chaosongren: ['']
     })
-    this.form.get('timeObj').valueChanges.subscribe(v=>console.log(v))
-    
   }
   
-  onSubmit(f, ev: Event) {
-   
+  onSubmit(f, ev: Event) { 
     if(!f.value.fullName) {
       this.toastProvider.message('请选择审批类型')
       return
@@ -59,9 +56,7 @@ export class CreateShenpiPage {
     if(!f.value.desc) {
       this.toastProvider.message('请填写审批描述')
       return
-    }
-
-    
+    }    
     if(f.value.fullName.type==2){
       this.toastProvider.message('请填写起借款金额')
       return
@@ -70,7 +65,6 @@ export class CreateShenpiPage {
       this.toastProvider.message('请填写审批人')
       return
     }
-   
     if(!f.value.chaosongren) {
       this.toastProvider.message('请填写抄送人')
       return
@@ -129,5 +123,7 @@ export class CreateShenpiPage {
         ccEmpIds:f.value.chaosongren.map(res=>res.id).join(','),
       }))
     }
+    this.form.reset()
   }
+
 }

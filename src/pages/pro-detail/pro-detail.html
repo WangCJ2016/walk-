@@ -31,10 +31,10 @@
 <ion-content>
     <div [ngSwitch]='segment'>
         <div *ngSwitchCase='"dymanic"'>
-            <div *ngFor="let item of propeo?.phase">
-                    <div class="period_title"  (click)='proid_show = !proid_show'>
+            <div *ngFor="let item of propeo">
+                    <div class="period_title"  (click)='item.isShow = !item.isShow'>
                             <span>{{item.phaseName}}({{item.phasePersonCount}}人)</span>
-                            <ion-icon class="arrow" [style.transform]="proid_show?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
+                            <ion-icon class="arrow" [style.transform]="item.isShow?'rotate(90deg)':''" name="arrow-forward"></ion-icon>
                         </div>
                         <!-- <ion-list *ngIf="proid_show">
                             <ion-item>
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="shiwu" *ngSwitchCase='"shiwu"'>
-            <fix-top ></fix-top>
+           
             <!-- <section class="content">
                 <div class="pro_item" padding>
                     <h4>1.如果项目中的任务，只想让任务参与者能够看到</h4>

@@ -176,7 +176,7 @@ export class PlanzDetailPage {
           text: '取消',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
+          
           }
         },
         {
@@ -201,7 +201,7 @@ export class PlanzDetailPage {
   }
   // 关闭周计划
   endPlanz() {
-    console.log(this.data)
+   
     this.store$.dispatch(new actions.updateAction({'status': '2','planWeekId':this.params.id}))
   }
   // 删除子事务

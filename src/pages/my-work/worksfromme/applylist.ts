@@ -35,10 +35,10 @@ export class ApplylistPage {
   ) {
     this.params = this.navParams.data
     this.selectType = this.params 
-    this.store$.dispatch(new actions.applyTimeCountAction({}))
+    this.store$.dispatch(new actions.applyTimeCountAction({flag:1,timeFlag:this.params.timeFlag}))
     this.store$.dispatch(new actions.applySelectListAction({...this.params,pageNo:1}))
     this.store$.select(store=>store.creatwork).subscribe(v=>{
-      console.log(v)
+  
       if(v) {
         this.lists = v.worksfromme.list
         this.pageNo = v.worksfromme.pageNo
@@ -54,6 +54,7 @@ export class ApplylistPage {
     this.selectType = data
     this.store$.dispatch(new actions.applySelectListAction({...data,pageNo:1}))
   }
+  
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(CreateWorkPopoverComponent,{},{cssClass: 'create_work_po'});
     popover.present({
@@ -61,7 +62,6 @@ export class ApplylistPage {
     });
   }
   goPages(item) {
-    console.log(item)
     if(item.type===2||item.type===1) {
       this.navCtrl.push('ChatPage',{name: item.name, id: item.id})
     }

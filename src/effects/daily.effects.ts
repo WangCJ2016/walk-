@@ -23,7 +23,7 @@ export class DailyEffects {
     cn.content
   ))
   .map(res => {
-    console.log(res)
+
     if(res.success) {
       this.toast.message('添加成功')
       return new actions.AddDailySuccessAction({})
@@ -43,7 +43,6 @@ export class DailyEffects {
   submitDate.submitDate
 ))
 .map(res => {
-  console.log(res)
   if(res.success) {
    const data = {
               notHandIn: {
@@ -85,16 +84,21 @@ export class DailyEffects {
   info.submitDate
 ))
 .map(res => {
-  console.log(res)
-  if(res.success&&res.dataObject) {
-    return new actions.DailyDetailSuccessAction({
-      name:res.dataObject.emp.empName,
-      contents:res.dataObject.contents,
-      dailyId:res.dataObject.id,
-      stars: res.dataObject.star?res.dataObject.star:null,
-      empId: res.dataObject.empId,
-      deptId: res.dataObject.deptId
-    })
+  if(res.success) {
+    if(res.dataObject) {
+      return new actions.DailyDetailSuccessAction({
+        name:res.dataObject.emp.empName,
+        contents:res.dataObject.contents,
+        dailyId:res.dataObject.id,
+        stars: res.dataObject.star?res.dataObject.star:null,
+        empId: res.dataObject.empId,
+        deptId: res.dataObject.deptId
+      })
+    }else{
+      return new actions.DailyDetailSuccessAction({
+        contents:'没有日报内容'
+      })
+    }
   }else{
       return new actions.DailyDetailSuccessAction('')
   }
@@ -111,7 +115,6 @@ export class DailyEffects {
   info
 ))
 .map(res => {
-  console.log(res)
   this.toast.message('已修改')
   if(res.success) {
     return new actions.ModifySuccessAction('')
@@ -134,7 +137,6 @@ export class DailyEffects {
   info
 ))
 .map(res => {
-  console.log(res)
   
   if(res.success) {
    

@@ -59,7 +59,6 @@ export class WokrHomeEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info, auth])=>this.service.addGroup(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id, info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       return new actions.addGroupSuccessAction({})
     }
@@ -71,7 +70,6 @@ export class WokrHomeEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info, auth])=>this.service.noticeList(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = res.dataObject.result.map(notice=>({
         noticeId: notice.noticeId,
@@ -89,7 +87,6 @@ export class WokrHomeEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info, auth])=>this.service.noticeDetail(auth.id, auth.token, auth.emp.teamId,auth.emp.id, info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = {
         attach: res.dataObject.attach?res.dataObject.attach:'',

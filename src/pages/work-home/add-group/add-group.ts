@@ -33,7 +33,6 @@ export class AddGroupPage {
      const modal = this.modal.create(GroupContactsModalComponent)
       modal.present()
       modal.onDidDismiss(res=>{
-        console.log(res)
         this.members = res.nameArray
         this.ids = res.idArray
       })

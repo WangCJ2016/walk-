@@ -60,7 +60,7 @@ export class AttencePage {
     this.date = new Date()
     this.weekDay = getWeekDay(getDay(this.date))
     this.store$.select(store => store.attence).subscribe(res => {
-      console.log(res.attence.attenceInview)   
+       
       if(res) {  
         this.attenceNum = res.attence.attenceInview
         switch(res.attence.attenceInview) {
@@ -113,12 +113,11 @@ export class AttencePage {
   }
   // 获取地址
   getAdress(v) {
-    console.log('addressInfo'+v)
     this.addressInfo = JSON.parse(v)
+    console.log(this.addressInfo)
   }
   // 签到或签退
   signinorup() {
-    console.log(this.attenceTitle)
     let pictures = []
     if(this.pics.length>0){
       this.pics.forEach(pic => {

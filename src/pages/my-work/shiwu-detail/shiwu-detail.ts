@@ -82,7 +82,7 @@ export class ShiwuDetailPage {
 
   ionViewDidEnter(){  
     //this.navbar.backButtonClick = this.back
-    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreateWorkPage") {
+    if(this.navCtrl.getViews()[this.navCtrl.getViews().length-2].id === "CreateWorkPage"&&this.navCtrl.getViews()[this.navCtrl.getViews().length-3].id !== "ShiwuDetailPage") {
       this.navCtrl.removeView(this.navCtrl.getViews()[this.navCtrl.getViews().length-2])
     }
     this.store$.dispatch( new chatActions.ChatListInitalAction({}))
@@ -119,10 +119,7 @@ export class ShiwuDetailPage {
           this.enabled=false
         }
         
-        // if(v.chatList.length-preLength==1) {
-        //   this.content.resize();
-        //   this.content.scrollTo(0, this.content.scrollHeight+this.content.contentHeight+100)
-        // }
+       
       }
     })
   }
@@ -176,13 +173,13 @@ export class ShiwuDetailPage {
           text: '取消',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
+           
           }
         },
         {
           text: '确定',
           handler: data => {
-           console.log(data)
+         
           
            this.store$.dispatch(new actions.addRequireAction({parentId: this.params.id, type:2,name: data.name}))
           }

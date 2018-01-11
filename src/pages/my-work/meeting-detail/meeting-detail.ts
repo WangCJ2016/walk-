@@ -174,7 +174,7 @@ export class MeetingDetailPage {
           text: '取消',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
+           
           }
         },
         {
@@ -199,7 +199,7 @@ export class MeetingDetailPage {
   }
   // 关闭周计划
   endPlanz() {
-    console.log(this.data)
+  
     this.store$.dispatch(new actions.meetingUpdateAction({'status': '2','mettingId':this.params.id}))
   }
   // 删除子事务
@@ -208,7 +208,7 @@ export class MeetingDetailPage {
     this.store$.dispatch(new actions.zishiwuDelAction({thingId:id}))
   }
   onSubmit(f, ev:Event) {
-    console.log(f.value)
+   
     let data = {}
     let attach = this.attach.slice()
     let attachName = this.attachName.slice()
@@ -247,7 +247,7 @@ export class MeetingDetailPage {
      Promise.all(submitarr)
         .then(res => {
              data = {...data,attach:attach.join(','),attachName:attachName.join(',')}
-            console.log(JSON.stringify(data))
+           
             this.store$.dispatch(new actions.meetingUpdateAction({...data,...{'mettingId':this.params.id}}))
             this.form.reset()
         })

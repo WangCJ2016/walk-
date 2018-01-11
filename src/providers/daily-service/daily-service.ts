@@ -12,7 +12,6 @@ import 'rxjs/add/operator/map';
 export class DailyServiceProvider {
 
   constructor(public http: Http, @Inject('BASE_URL') private config) {
-    console.log('Hello DailyServiceProvider Provider');
   }
   addDaily(userId,token,teamId,deptId,empId,contents) {
     const params = {userId: userId,token: token, teamId: teamId, empId: empId,deptId: deptId,contents: contents}
@@ -46,7 +45,7 @@ export class DailyServiceProvider {
       teamId: teamId,
       ...info
       }
-      console.log(info)
+ 
       const uri = `${this.config.url}/app/daily_updateDaily`
       return this.http.get(uri, {params: params})
       .map(res=>res.json())
@@ -60,7 +59,6 @@ export class DailyServiceProvider {
       empId:empId,
       ...info
       }
-      console.log(info)
       const uri = `${this.config.url}/app/attendanceEmp_setAttendanceEmpStatus`
       return this.http.get(uri, {params: params})
       .map(res=>res.json())
@@ -74,7 +72,6 @@ export class DailyServiceProvider {
       empId:empId,
       ...info
       }
-      console.log(info)
       const uri = `${this.config.url}/app/daily_dailyStateByMonth`
       return this.http.get(uri, {params: params})
       .map(res=>res.json())

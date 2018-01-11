@@ -17,9 +17,7 @@ export class CreatWorkEffects {
   .map(toPayload)
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.addPlanWeek(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
-  .map(res => {
-    console.log(res)
-  
+  .map(res => {  
     if(res.success) {
       this.app.getRootNav().push('PlanzDetailPage',{id:res.dataObject})
       return new actions.planzsubmitSuccessAction({})
@@ -32,7 +30,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.getWorkDetail(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       const data = {
         name: res.dataObject.name?res.dataObject.name:'',
@@ -63,7 +60,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.update(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       this.toast.message('已保存')
       //this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
@@ -118,7 +114,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.updateY(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       this.toast.message('已保存')
      // this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
@@ -132,7 +127,7 @@ export class CreatWorkEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([info,auth])=>this.creatworkSerice.addMeeting(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
    .map(res => {
-     console.log(res)
+
      
      if(res.success) {
        this.app.getRootNav().push('MeetingDetailPage',{id:res.dataObject})
@@ -146,7 +141,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.getMeetingDetail(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       const data = {
         name: res.dataObject.name?res.dataObject.name:'',
@@ -175,7 +169,7 @@ export class CreatWorkEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([info,auth])=>this.creatworkSerice.updateMeeting(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
    .map(res => {
-     console.log(res)
+
      if(res.success) {
        this.toast.message('已保存')
        return new actions.meetingUpdateSuccessAction({})
@@ -188,10 +182,8 @@ export class CreatWorkEffects {
     .withLatestFrom(this.store$.select(store=>store.auth.auth))
     .switchMap(([info,auth])=>this.creatworkSerice.addapply(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
     .map(res => {
-      console.log(res)
-      
       if(res.success) {
-        this.app.getRootNav().push('ShenpiDetailPage',{id:res.dataObject})
+        this.app.getActiveNav().push('ShenpiDetailPage',{id:res.dataObject})
         return new actions.addapplySuccessAction({})
       }
     })
@@ -202,7 +194,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.applyDetail(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       const data = {
         type: res.dataObject.type?res.dataObject.type:'',
@@ -232,7 +223,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.updateApply(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       this.toast.message('已提交审核')
       return new actions.applyUpdateSuccessAction({})
@@ -245,7 +235,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.applyList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = res.dataObject.result.map(item => {
         if(item.apply){
@@ -262,7 +251,6 @@ export class CreatWorkEffects {
           })
         }
       }).filter(item=>item!=undefined)
-      console.log(data)
       return new actions.applyListSuccessAction(data)
     }
   })
@@ -273,7 +261,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.applyFlow(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = res.dataObject.map(apply => ({
          status:applyStatus(apply.status),
@@ -290,7 +277,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.applyCollect(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
   .map(res => {
-    console.log(res)
     if(res.success) {
       return new actions.applyCollectSuccessAction(res.dataObject)
     }
@@ -302,7 +288,7 @@ export class CreatWorkEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([info,auth])=>this.creatworkSerice.shiwuList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
    .map(res => {
-     console.log(res)
+
      if(res.success&&res.dataObject) {
        const data = {
          pageNo:res.dataObject.pageNo?res.dataObject.pageNo:0,
@@ -329,15 +315,11 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.addShiwu(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.res.success) {
       if(res.type===1) {
       
         this.app.getRootNav().push('ShiwuDetailPage',{type:'thingId',id:res.res.dataObject})
         // this.app.getActiveNav().remove(0,1)
-      }else {
-       
-        this.app.getActiveNav().pop()
       }
       return new actions.addShiwuSuccessAction({})
     }
@@ -349,7 +331,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.getShiwuDetail(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       const data = {
         name: res.dataObject.name?res.dataObject.name:'',
@@ -378,7 +359,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.shiwuUpdate(auth.id, auth.token, auth.emp.teamId,auth.emp.deptId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       this.toast.message('已保存')
       return new actions.shiwuUpdateSuccessAction({})
@@ -391,7 +371,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.zishiwu(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
     
       const data = res.dataObject.map(apply=>({
@@ -413,7 +392,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.shiwuDel(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       return new actions.zishiwuDelSuccessAction({})
   }
@@ -426,7 +404,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.workPlate(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       return new actions.workPlateSuccessAction(res.dataObject)
   }
@@ -439,7 +416,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.thingCount(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
   .map(res => {
-    console.log(res)
     if(res.success&&res.dataObject) {
       return new actions.thingCountSuccessAction(res.dataObject)
   }
@@ -452,7 +428,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.addRequire(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = {
         name: res.dataObject.name,
@@ -468,7 +443,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.delRequire(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       return new actions.delRequireSuccessAction({})
    }
@@ -480,7 +454,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.requireList(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       const data = res.dataObject.map(list=>({
         name: list.name,
@@ -499,7 +472,6 @@ export class CreatWorkEffects {
   .withLatestFrom(this.store$.select(store=>store.auth.auth))
   .switchMap(([info,auth])=>this.creatworkSerice.requireLink(auth.id, auth.token, auth.emp.teamId,info))
   .map(res => {
-    console.log(res)
     if(res.success) {
       return new actions.requireLinkSuccessAction({})
    }
@@ -509,11 +481,22 @@ export class CreatWorkEffects {
     .ofType(actions.ActionTypes.APPLYTIMECOUNT)
     .map(toPayload)
     .withLatestFrom(this.store$.select(store=>store.auth.auth))
-    .switchMap(([info,auth])=>this.creatworkSerice.applyTimeCount(auth.id, auth.token, auth.emp.teamId,auth.emp.id))
+    .switchMap(([info,auth])=>this.creatworkSerice.applyTimeCount(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
     .map(res => {
-      console.log(res)
+
       if(res.success) {
         return new actions.applyTimeCountSuccessAction(res.dataObject)
+    }
+  })
+  @Effect() applytypeCount$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.THINGTYPECOUNT)
+    .map(toPayload)
+    .withLatestFrom(this.store$.select(store=>store.auth.auth))
+    .switchMap(([info,auth])=>this.creatworkSerice.myInitTypeCount(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
+    .map(res => {
+
+      if(res.success) {
+        return new actions.thingTypeCountSuccessAction(res.dataObject)
     }
   })
   // 审批列表
@@ -523,7 +506,7 @@ export class CreatWorkEffects {
     .withLatestFrom(this.store$.select(store=>store.auth.auth))
     .switchMap(([info,auth])=>this.creatworkSerice.applySelectList(auth.id, auth.token, auth.emp.teamId,auth.emp.id,info))
     .map(res => {
-      console.log(res)
+
       if(res.success) {
         return new actions.applySelectListSuccessAction(res.dataObject)
     }

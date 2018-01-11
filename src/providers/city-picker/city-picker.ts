@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class CityPickerProvider {
 
   constructor(public http: Http) {
-    console.log('Hello CityPickerProvider Provider');
+   
   }
   getCitiesData(){
     return this.http.get('./assets/data/city-data.json')

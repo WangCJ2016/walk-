@@ -42,45 +42,33 @@
         <ion-grid no-padding text-center>
             <ion-row>
                 <ion-col align-self-center (click)='goWorkTimePage(1)'>
-                    <div class="num red">{{workPlate?.delay?.delayMettingCount+workPlate?.delay.delayPlanMonthCount+
-                        workPlate?.delay.delayPlanWeekCount+workPlate?.delay.delayThingCount}}</div>
+                    <div class="num red">{{applyTimeCount?.delayCount}}</div>
                     <p class="intr">超期的事</p>
                 </ion-col>
-                <ion-col (click)='goWorkTimePage(0)'>
-                    <div class="num blue">{{workPlate?.curr.currApplyCount+workPlate?.curr.currMettingCount+
-                            workPlate?.curr.currPlanMonthCount+
-                            workPlate?.curr.currPlanWeekCount+
-                            workPlate?.curr.currThingCount}}</div>
+                <ion-col (click)='goWorkTimePage(2)'>
+                    <div class="num blue">{{applyTimeCount?.currCount}}</div>
                     <p class="intr">今天的事</p>
                 </ion-col >
-                <ion-col (click)='goWorkTimePage(2)'>
-                    <div class="num normal">{{workPlate?.week.weekApplyCount+
-                            workPlate?.week.weekMettingCount+
-                            workPlate?.week.weekPlanMonthCount+
-                            workPlate?.week.weekPlanWeekCount+
-                            workPlate?.week.weekThingCount}}</div>
+                <ion-col (click)='goWorkTimePage(3)'>
+                    <div class="num normal">{{applyTimeCount?.weekCount}}</div>
                     <p class="intr">最近一周</p>
                 </ion-col>
-                <ion-col (click)='goWorkTimePage(3)'>
-                    <div class="num normal">{{workPlate?.forward.forwardApplyCount+
-                            workPlate?.forward.forwardMettingCount+
-                            workPlate?.forward.forwardPlanMonthCount+
-                            workPlate?.forward.forwardPlanWeekCount+
-                            workPlate?.forward.forwardThingCount}}</div>
+                <ion-col (click)='goWorkTimePage(4)'>
+                    <div class="num normal">{{applyTimeCount?.forwardCount}}</div>
                     <p class="intr">远期安排</p>
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col col-3 (click)='goWorkPage(0)'>
-                    <div class="num">{{thingCount?.projectThingCount}}</div>
+                <ion-col col-3 (click)='goWorkPage(4)'>
+                    <div class="num">{{thingTypeCount?.projecCount}}</div>
                     <p class="intr">项目</p>
                 </ion-col>
-                <ion-col col-3 (click)='goWorkPage(1)'>
-                    <div class="num">{{thingCount?.planCount}}</div>
+                <ion-col col-3 (click)='goWorkPage(5)'>
+                    <div class="num">{{thingTypeCount?.planCount}}</div>
                     <p class="intr">计划</p>
                 </ion-col>
-                <ion-col col-3 (click)='goWorkPage(2)'>
-                    <div class="num">{{thingCount?.mettingCount}}</div>
+                <ion-col col-3 (click)='goWorkPage(6)'>
+                    <div class="num">{{thingTypeCount?.mettingCount}}</div>
                     <p class="intr">会议</p>
                 </ion-col>
             </ion-row>

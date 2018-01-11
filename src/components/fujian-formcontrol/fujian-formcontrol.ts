@@ -111,7 +111,7 @@ export class FujianFormcontrolComponent implements ControlValueAccessor {
           text: '取消',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+           
           }
         }
       ]
