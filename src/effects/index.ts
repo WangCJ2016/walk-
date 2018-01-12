@@ -9,6 +9,7 @@ import { CreatWorkEffects } from './creatwork.effects'
 import { WokrHomeEffects } from './workhome.effects'
 import { ChatEffects } from './chat.effects'
 import { ProjectEffects } from './project.effects'
+import { ApplyEffects } from './apply.effects'
 export const effects = {
     auth: AuthEffects,
     attence: AttenceEffects,
@@ -18,7 +19,8 @@ export const effects = {
     creatwork: CreatWorkEffects,
     workhome: WokrHomeEffects,
     chat: ChatEffects,
-    project: ProjectEffects
+    project: ProjectEffects,
+    apply: ApplyEffects
 }
 
 @NgModule({
@@ -31,7 +33,8 @@ export const effects = {
         EffectsModule.run(effects.creatwork),
         EffectsModule.run(effects.workhome),
         EffectsModule.run(effects.chat),
-        EffectsModule.run(effects.project)         
+        EffectsModule.run(effects.project),
+        EffectsModule.run(effects.apply)          
     ]
 })
 export class AppEffectsModule {}

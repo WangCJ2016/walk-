@@ -11,101 +11,43 @@ import { Component,Input,EventEmitter,Output } from '@angular/core';
   templateUrl: 'pro-filter.html'
 })
 export class ProFilterComponent {
-
-  @Input() applyTimeCount
-  @Input() applyCollect
-  @Input() applyTypeInfo
-  workInfo
+  @Input() promembers
+  @Input() proidlist
   @Output() data = new EventEmitter<any>()
-  workArray
-  timeArray
-  orderArray
-  orderType=0
-  workType = 0
-  timeType=0
+  peroidArray
+  peroidIndex=0
+  peoArray
+  peoIndex=0
   typeIndex: number 
   constructor() {
-    this.workArray = [{
+    this.peoArray = [{
       name: '全部',
-     
-      id: 1
-  },{
-      name: '我要审核的',
-     
-      id: 4
-    },{
-      name: '进行中',
-     
-      id: 5
-  }]
-  this.timeArray = [{
-    name: '全部',
-   
-    id: 2
-  },{
-      name: '超期',
-     
-    },{
-      name: '今天',
-      
-    },{
-      name: '本周',
-      
-    },{
-      name: '远期安排',
-     
-  }]
+    }]
+    this.peroidArray = [{
+      name: '全部',
+    }]
 }
   ngOnChanges() {
-    this.workType = this.applyTypeInfo.typeFlag
-    if(this.applyTimeCount) {
-      this.workArray = [{
-          name: '全部',
-        
-          id: 1
-      },{
-          name: '我要审核的',
-          num: this.applyCollect.applyCount,
-          id: 4
-        },{
-          name: '进行中',
-          num: this.applyCollect.goCount,
-          id: 5
-      }]
-      this.timeArray = [{
-        name: '全部',
-      
-        id: 2
-      },{
-          name: '超期',
-         
-        },{
-          name: '今天',
-          
-        },{
-          name: '本周',
-          num: this.applyTimeCount.weekCount,
-        },{
-          name: '远期安排',
-          num: this.applyTimeCount.forwardCount,
-      }]
-     
-    }
+   if(this.promembers) {
+    this.peoArray = [{
+      name: '全部',
+      },...this.promembers]
+   }
+   if(this.proidlist) {
+     this.peroidArray = [{
+      name: '全部',
+    },...this.proidlist]
+   }
   }
   fixClick(i) {
     i === this.typeIndex ? this.typeIndex = -1 : this.typeIndex = i
   }
-  workClick(i) {
-    this.workType = i
-    this.data.emit({typeFlag: this.workType, timeFlag:this.timeType,sortFlag:this.orderType})
+  proidClick(i,id) {
+    this.peroidIndex = i
+    this.data.emit({parentId:id})
   }
-  timeClick(i) {
-    this.timeType = i
-    this.data.emit({typeFlag: this.workType, timeFlag:this.timeType,sortFlag:this.orderType})
+  peoClick(i,id) {
+    this.peoIndex = i
+    this.data.emit({projectEmpId:id})
   }
-  orderClick(i) {
-    this.orderType = i
-    this.data.emit({typeFlag: this.workType, timeFlag:this.timeType,sortFlag:this.orderType})
-  }
- 
 }

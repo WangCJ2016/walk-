@@ -22,14 +22,17 @@
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
-    <ion-toolbar class="topfix_toolbar">
-            <!-- <pro-filter [members]='members'></pro-filter> -->
-        </ion-toolbar>
+    <!-- <ion-toolbar class="topfix_toolbar" *ngIf='segment==="shiwu"'>
+            <pro-filter  [promembers]='promembers' [proidlist]='proidlist' (data)='dataEmit($event)'></pro-filter>
+        </ion-toolbar> -->
 </ion-header>
 
 
 <ion-content>
-    <div [ngSwitch]='segment'>
+        <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]='segment==="shiwu"'>
+                <ion-refresher-content></ion-refresher-content>
+               </ion-refresher>
+    <div [ngSwitch]='segment' >
         <div *ngSwitchCase='"dymanic"'>
             <div *ngFor="let item of propeo">
                     <div class="period_title"  (click)='item.isShow = !item.isShow'>
@@ -48,13 +51,7 @@
             </div>
         </div>
         <div class="shiwu" *ngSwitchCase='"shiwu"'>
-           
-            <!-- <section class="content">
-                <div class="pro_item" padding>
-                    <h4>1.如果项目中的任务，只想让任务参与者能够看到</h4>
-
-                </div>
-            </section> -->
+                <pro-filter  [promembers]='promembers' [proidlist]='proidlist' (data)='dataEmit($event)'></pro-filter>
             <div class="list">
                 <div class="pro-item" *ngFor="let item of proThingLists?.result" >
                     <span class="title">{{item.name}}</span>
@@ -64,4 +61,8 @@
             </div>
         </div>
     </div>
+    <ion-infinite-scroll position='bottom' [enabled]='enabled' threshold='2%' (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" >
+            </ion-infinite-scroll-content>
+          </ion-infinite-scroll>
 </ion-content>

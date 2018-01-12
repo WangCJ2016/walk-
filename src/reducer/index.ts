@@ -11,6 +11,8 @@ import * as fromCreatwork from './creatwork.reducer'
 import * as fromWorkhome from './workhome.reducer'
 import * as fromChat from './chat.reducer'
 import * as fromProject from './project.reducer'
+import * as fromApply from './apply.reducer'
+
 export interface State {
          auth: fromAuth.State,
          contacts: fromContacts.State,
@@ -20,7 +22,8 @@ export interface State {
          creatwork: fromCreatwork.State,
          workhome: fromWorkhome.State,
          chat: fromChat.State,
-         project: fromProject.State
+         project: fromProject.State,
+         apply: fromApply.State
 };
 
 const initialState: State = {
@@ -32,7 +35,8 @@ const initialState: State = {
         creatwork: fromCreatwork.initialState,
         workhome: fromWorkhome.initialState,
         chat: fromChat.initialState,
-        project: fromProject.initialState
+        project: fromProject.initialState,
+        apply: fromApply.initialState
 };
 
 const reducers = {
@@ -44,7 +48,8 @@ const reducers = {
     creatwork: fromCreatwork.reducer,
     workhome: fromWorkhome.reducer,
     chat: fromChat.reducer,
-    project: fromProject.reducer
+    project: fromProject.reducer,
+    apply: fromApply.reducer
 }
 const productionReducers: ActionReducer<State> = combineReducers(reducers)
 // const developmentReducers: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers)

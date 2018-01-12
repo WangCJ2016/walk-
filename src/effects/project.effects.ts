@@ -41,7 +41,6 @@ export class ProjectEffects {
     
     return this.service.proThingList(auth.id, auth.token, auth.emp.teamId,info)})
   .map(res => {
-    
     if(res.success) {
       return new actions.proThingListSuccessAction(res.dataObject)
   }
@@ -55,7 +54,12 @@ export class ProjectEffects {
   .map(res => {
    
     if(res.success) {
-      return new actions.proMembersListSuccessAction(res.dataObject)
+      const data = res.dataObject.map(peo => ({
+        name: peo.emp.name,
+        id: peo.id,
+        empId: peo.empId
+      }))
+      return new actions.proMembersListSuccessAction(data)
   }
   })
   @Effect() project_currProjectTreeMenu$: Observable<Action> = this.actions$
@@ -67,7 +71,12 @@ export class ProjectEffects {
   .map(res => {
   
     if(res.success) {
-      return new actions.currProjectTreeMenuSuccessAction(res.dataObject)
+      const data = res.dataObject.map(proid => ({
+        name: proid.name,
+        id:proid.id,
+        parentId: proid.parentId
+      }))
+      return new actions.currProjectTreeMenuSuccessAction(data)
   }
   })
   constructor(

@@ -10,6 +10,7 @@ import { CreatworkServiceProvider} from './creatwork-service/creatwork-service'
 import { WorkhomeServiceProvider } from './workhome-service/workhome-service'
 import { ChatServiceProvider } from './chat-service/chat-service'
 import {ProjectServiceProvider} from './project-service/project-service'
+import {ApplyProvider} from './apply/apply'
 export {
 	CityPickerProvider,
 	AuthProvider,
@@ -21,7 +22,8 @@ export {
 	CreatworkServiceProvider,
 	WorkhomeServiceProvider,
 	ChatServiceProvider,
-	ProjectServiceProvider
+	ProjectServiceProvider,
+	ApplyProvider
 }
 @NgModule()
 export class ProvidersModule {
@@ -39,7 +41,8 @@ export class ProvidersModule {
 				CreatworkServiceProvider,
 				WorkhomeServiceProvider,
 				ChatServiceProvider,
-				ProjectServiceProvider
+				ProjectServiceProvider,
+				ApplyProvider
 			]
 		}
 	}
