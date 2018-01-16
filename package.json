@@ -37,7 +37,8 @@
     "@ngrx/router-store": "^1.2.6",
     "@ngrx/store": "^2.2.3",
     "@ngrx/store-devtools": "^3.2.4",
-    "cordova-ios": "4.5.3",
+    "cordova-android": "6.3.0",
+    "cordova-ios": "^4.5.4",
     "cordova-plugin-camera": "^3.0.0",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-file": "^5.0.0",
@@ -82,7 +83,8 @@
       }
     },
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

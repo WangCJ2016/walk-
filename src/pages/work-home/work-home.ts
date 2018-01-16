@@ -32,20 +32,22 @@ export class WorkHomePage {
               public popoverCtrl: PopoverController,
               private store$: Store<fromRoot.State>
               ) {
-                this.store$.dispatch(new actions.ListAction({pageNo: 1}))
-               this._sub$ =  this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
-                  if(res.length>0) {
-                    this.lists = res
-                    this.infinite?this.infinite.complete():null
-                    this.refresher?this.refresher.complete():null
-                    if(this.lists.length>=15) {
-                      this.enabled = true
-                    }
-                  }
-                })
+               
                
   }
-
+ ionViewDidEnter(){
+  this.store$.dispatch(new actions.ListAction({pageNo: 1}))
+  this._sub$ =  this.store$.select(store=>store.workhome.workhomeList).subscribe(res=>{
+     if(res.length>0) {
+       this.lists = res
+       this.infinite?this.infinite.complete():null
+       this.refresher?this.refresher.complete():null
+       if(this.lists.length>=15) {
+         this.enabled = true
+       }
+     }
+   })
+ }
   ionViewDidLeave(){
     this._sub$.unsubscribe()
   }
