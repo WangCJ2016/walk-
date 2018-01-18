@@ -1,14 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {App} from 'ionic-angular'
 import { Action } from '@ngrx/store';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Store } from '@ngrx/store'
 import * as actions from '../actions/work-home.action'
 import * as fromRoot from '../reducer'
 import {WorkhomeServiceProvider } from '../providers'
+import { ToastSitutionProvider } from '../providers'
 
 @Injectable()
 export class WokrHomeEffects {
+
+  @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.appCtrl.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
+ 
+
   @Effect() getList$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.LISTS)
   .map(toPayload)
@@ -30,6 +42,9 @@ export class WokrHomeEffects {
       }
       return new actions.ListSuccessAction(data)
     }  
+    else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
+    }
   })
   @Effect() refreshLists$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.REFRESH)
@@ -51,7 +66,9 @@ export class WokrHomeEffects {
         })):[]
       }
       return new actions.refreshSuccessAction(data)
-    }  
+    }  else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
+    }
   })
   @Effect() addGroup$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.ADDGROUP)
@@ -61,6 +78,8 @@ export class WokrHomeEffects {
   .map(res => {
     if(res.success) {
       return new actions.addGroupSuccessAction({})
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
     
   })
@@ -78,6 +97,8 @@ export class WokrHomeEffects {
         updateTime: notice.updateTime
       }))
       return new actions.noticeListSuccessAction({noticeList:data})
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
     
   })
@@ -98,12 +119,17 @@ export class WokrHomeEffects {
         notReadCount:res.dataObject.notReadCount
       }
       return new actions.noticeDetailSuccessAction({noticeDetail: data})
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
     
   })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
-    private service: WorkhomeServiceProvider
+    private service: WorkhomeServiceProvider,
+    private toast: ToastSitutionProvider,
+    private appCtrl: App,
+    @Inject('MSG') private msg
   ) {}
 }

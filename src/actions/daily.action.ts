@@ -5,6 +5,8 @@ import { type } from '../utils/type.util';
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
+  ERROR:'[daily] error',
+  ERROR_SUCCESS: '[daily] error_success',
   ADDDAILY: type('[daily] adddaily'),
   ADDDAILY_SCUCCESS : type('[daily] adddaily_success'),
   DAILYSTAT:type('[daily] dailystat'),
@@ -22,6 +24,16 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
+
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 
  // 添加日报
 export class AddDailyAction implements Action {

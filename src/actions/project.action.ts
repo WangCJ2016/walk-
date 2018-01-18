@@ -5,6 +5,8 @@ import { type } from '../utils/type.util';
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
+  ERROR:'[daily] error',
+  ERROR_SUCCESS: '[daily] error_success',
   PRODETAIL: type('[daily] prodetail'),
   PRODETAIL_SCUCCESS : type('[daily] prodetail_success'),
   PROPEO: type('[daily] propeo'),// 项目动态、阶段人员统计
@@ -16,7 +18,16 @@ export const ActionTypes = {
   CURRPROTREEMENU:type('[daily] currProjectTreeMenu'),
   CURRPROTREEMENU_SCUCCESS:type('[daily] currProjectTreeMenu_success'),
 };
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
 
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 export class proDetailAction implements Action {
   readonly type = ActionTypes.PRODETAIL;
   constructor(public payload: any) { }

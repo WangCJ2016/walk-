@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable ,Inject} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {App} from 'ionic-angular'
 import { Action } from '@ngrx/store';
 import { Actions, Effect,toPayload } from '@ngrx/effects';
 import { ProjectServiceProvider } from '../providers'
 import * as fromRoot from '../reducer'
 import { Store } from '@ngrx/store'
 import * as actions from '../actions/project.action'
+import { ToastSitutionProvider } from '../providers'
 @Injectable()
 export class ProjectEffects {
+  @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.appCtrl.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
+
   @Effect() prodetail$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.PRODETAIL)
   .map(toPayload)
@@ -18,7 +28,10 @@ export class ProjectEffects {
    
     if(res.success) {
       return new actions.proDetailSuccessAction({})
-  }
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
+    }
+    
   })
   @Effect() propeo$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.PROPEO)
@@ -31,7 +44,10 @@ export class ProjectEffects {
    
     if(res.success) {
       return new actions.propeoActionSuccessAction(res.dataObject)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
+  
   })
   @Effect() prothinglist$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.PROTHINGLIST)
@@ -43,7 +59,10 @@ export class ProjectEffects {
   .map(res => {
     if(res.success) {
       return new actions.proThingListSuccessAction(res.dataObject)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
+  
   })
   @Effect() promembers$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.PROMEMBERS)
@@ -60,7 +79,10 @@ export class ProjectEffects {
         empId: peo.empId
       }))
       return new actions.proMembersListSuccessAction(data)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
+  
   })
   @Effect() project_currProjectTreeMenu$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.CURRPROTREEMENU)
@@ -77,11 +99,17 @@ export class ProjectEffects {
         parentId: proid.parentId
       }))
       return new actions.currProjectTreeMenuSuccessAction(data)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
+  
   })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
-    private service: ProjectServiceProvider
+    private service: ProjectServiceProvider,
+    private toast: ToastSitutionProvider,
+    private appCtrl: App,
+    @Inject('MSG') private msg
   ) {}
 }

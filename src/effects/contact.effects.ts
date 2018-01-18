@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {App} from 'ionic-angular'
 import { Action } from '@ngrx/store';
 import { Store } from '@ngrx/store'
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import * as actions from '../actions/contacts.action'
 import * as fromRoot from '../reducer'
 import { ContactServiceProvider } from '../providers'
+import { ToastSitutionProvider } from '../providers'
+
 @Injectable()
 export class ContactEffects {
+  @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.appCtrl.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
 
   @Effect() load$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOAD)
@@ -25,6 +35,8 @@ export class ContactEffects {
           photo:contact.photo?contact.photo:''
         }))
         return new actions.LoadSuccessAction(contactArr)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
     })
     // 员工详情
@@ -43,6 +55,8 @@ export class ContactEffects {
           empId: res.dataObject.id
         }
         return new actions.EmpDetailSuccessAction(contactArr)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
     })
      // 员工选择详情
@@ -71,11 +85,16 @@ export class ContactEffects {
           }))
          }
          return new actions.EmpChooseListSuccessAction(data)
-     }
+     }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
+    }
      })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
-    private contactService: ContactServiceProvider
+    private contactService: ContactServiceProvider,
+    private toast: ToastSitutionProvider,
+    private appCtrl: App,
+    @Inject('MSG') private msg
   ) {}
 }

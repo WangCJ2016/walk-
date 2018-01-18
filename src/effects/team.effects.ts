@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { App } from 'ionic-angular'
@@ -10,6 +10,13 @@ import { TeamServiceProvider, ToastSitutionProvider } from '../providers'
 
 @Injectable()
 export class TeamEffects {
+    @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.appCtrl.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
    // 获取termlist
    @Effect()
    teamlist$: Observable<Action> = this.actions$
@@ -22,6 +29,9 @@ export class TeamEffects {
            const teamArr = res.dataObject.map(team=>({...team.team, empId: team.id}))
            return new actions.LoadSuccessAction(teamArr)
        }else {
+         if(res.msgCode=='-1'){
+            return new actions.ErrorAction({})
+          }
            this.toast.message(res.msg)
            return new actions.AuthFailAction({
                msg: res.msg
@@ -41,6 +51,9 @@ export class TeamEffects {
         this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})
         return new actions.SetdefaultSuccessAction(res.dataObject)
     }else {
+         if(res.msgCode=='-1'){
+            return new actions.ErrorAction({})
+          }
         return new actions.AuthFailAction({
             msg: res.msg
         })
@@ -53,6 +66,7 @@ export class TeamEffects {
     private store$: Store<fromRoot.State>,
     private teamService: TeamServiceProvider,
     private toast: ToastSitutionProvider,
-    private appCtrl: App
+    private appCtrl: App,
+    @Inject('MSG') private msg
   ) {}
 }

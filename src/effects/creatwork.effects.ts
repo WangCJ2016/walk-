@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { Store } from '@ngrx/store'
@@ -11,6 +11,14 @@ import { ToastSitutionProvider } from '../providers'
 import { applyType, applyStatus} from '../utils'
 @Injectable()
 export class CreatWorkEffects {
+  @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.app.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
+ 
   // 创建周计划
   @Effect() creatplanez$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.PLANZSUBMIT)
@@ -21,6 +29,8 @@ export class CreatWorkEffects {
     if(res.success) {
       this.app.getRootNav().push('PlanzDetailPage',{id:res.dataObject})
       return new actions.planzsubmitSuccessAction({})
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
   })
   // 获取zhou工作详情
@@ -50,7 +60,9 @@ export class CreatWorkEffects {
       }
       return new actions.getWorkDetailSuccessAction(data)
   }
-  return new actions.getWorkDetailSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
 
   // 修改zhou计划
@@ -64,7 +76,9 @@ export class CreatWorkEffects {
       this.toast.message('已保存')
       //this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
       return new actions.updateSuccessAction({})
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 创建月计划
   @Effect() creatplaney$: Observable<Action> = this.actions$
@@ -76,6 +90,8 @@ export class CreatWorkEffects {
     if(res.success) {
       this.app.getRootNav().push('PlanyDetailPage',{id:res.dataObject})
       return new actions.planysubmitSuccessAction({})
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   // 获取zhou工作详情
@@ -105,7 +121,9 @@ export class CreatWorkEffects {
       }
       return new actions.getWorkDetailSuccessAction(data)
   }
-  return new actions.getWorkDetailSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 修改yue计划
   @Effect() updateplaney$: Observable<Action> = this.actions$
@@ -118,7 +136,9 @@ export class CreatWorkEffects {
       this.toast.message('已保存')
      // this.app.getActiveNav().setPages([{page: 'WorkDeskPage'},{page:'MyWorkPage'}],{animate:true,direction:'back'})
       return new actions.updateYSuccessAction({})
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
    // 创建会议
    @Effect() addmeeting$: Observable<Action> = this.actions$
@@ -127,12 +147,12 @@ export class CreatWorkEffects {
    .withLatestFrom(this.store$.select(store=>store.auth.auth))
    .switchMap(([info,auth])=>this.creatworkSerice.addMeeting(auth.id, auth.token, auth.emp.teamId, auth.emp.deptId,auth.emp.id,info))
    .map(res => {
-
-     
      if(res.success) {
        this.app.getRootNav().push('MeetingDetailPage',{id:res.dataObject})
        return new actions.addMeetingSuccessAction({})
-     }
+     }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
+    }
    })
    // 获取会议详情
   @Effect() getmeetingdetail$: Observable<Action> = this.actions$
@@ -160,7 +180,9 @@ export class CreatWorkEffects {
       }
       return new actions.getWorkDetailSuccessAction(data)
   }
-  return new actions.getWorkDetailSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
    // 修改meeting
    @Effect() updatemeeting$: Observable<Action> = this.actions$
@@ -173,6 +195,8 @@ export class CreatWorkEffects {
      if(res.success) {
        this.toast.message('已保存')
        return new actions.meetingUpdateSuccessAction({})
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
    })
     // 创建shenpi
@@ -185,6 +209,8 @@ export class CreatWorkEffects {
       if(res.success) {
         this.app.getActiveNav().push('ShenpiDetailPage',{id:res.dataObject})
         return new actions.addapplySuccessAction({})
+      }else if(res.msgCode=='-1'){
+        return new actions.ErrorAction({})
       }
     })
     // 获取shenpi详情
@@ -214,7 +240,9 @@ export class CreatWorkEffects {
       }
       return new actions.getWorkDetailSuccessAction(data)
   }
-  return new actions.getWorkDetailSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 修改shnepi
   @Effect() updateapply$: Observable<Action> = this.actions$
@@ -226,7 +254,9 @@ export class CreatWorkEffects {
     if(res.success) {
       this.toast.message('已提交审核')
       return new actions.applyUpdateSuccessAction({})
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // shenpi列表
   @Effect() applylist$: Observable<Action> = this.actions$
@@ -252,6 +282,8 @@ export class CreatWorkEffects {
         }
       }).filter(item=>item!=undefined)
       return new actions.applyListSuccessAction(data)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   // shenpi流程图
@@ -268,6 +300,8 @@ export class CreatWorkEffects {
          updateTime:apply.updateTime
       }))
       return new actions.applyFlowSuccessAction(data)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   // shenpi汇总
@@ -279,6 +313,8 @@ export class CreatWorkEffects {
   .map(res => {
     if(res.success) {
       return new actions.applyCollectSuccessAction(res.dataObject)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
    // 事务list
@@ -306,7 +342,9 @@ export class CreatWorkEffects {
        }
        return new actions.shiwuListSuccessAction(data)
      }
-     return new actions.shiwuListSuccessAction([])
+     else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
+    }
    })
    // 添加事务
   @Effect() addshiwu$: Observable<Action> = this.actions$
@@ -322,6 +360,8 @@ export class CreatWorkEffects {
         // this.app.getActiveNav().remove(0,1)
       }
       return new actions.addShiwuSuccessAction({})
+    }else if(res.res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   // 获取事务详情
@@ -350,7 +390,9 @@ export class CreatWorkEffects {
       }
       return new actions.getWorkDetailSuccessAction(data)
   }
-  return new actions.getWorkDetailSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 修改shiwu
   @Effect() updateshiwu$: Observable<Action> = this.actions$
@@ -362,7 +404,9 @@ export class CreatWorkEffects {
     if(res.success) {
       this.toast.message('已保存')
       return new actions.shiwuUpdateSuccessAction({})
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 获取子事务详情
   @Effect() getzishiwudetail$: Observable<Action> = this.actions$
@@ -383,7 +427,9 @@ export class CreatWorkEffects {
       }))
       return new actions.zishiwuSuccessAction(data)
   }
-  return new actions.zishiwuSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 删除事务
   @Effect() delshiwudetail$: Observable<Action> = this.actions$
@@ -395,7 +441,9 @@ export class CreatWorkEffects {
     if(res.success&&res.dataObject) {
       return new actions.zishiwuDelSuccessAction({})
   }
-  return new actions.zishiwuDelSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 获取日期
   @Effect() workplate$: Observable<Action> = this.actions$
@@ -407,7 +455,9 @@ export class CreatWorkEffects {
     if(res.success&&res.dataObject) {
       return new actions.workPlateSuccessAction(res.dataObject)
   }
-  return new actions.workPlateSuccessAction({})
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 获取事务个数是统计
   @Effect() thingCount$: Observable<Action> = this.actions$
@@ -418,6 +468,8 @@ export class CreatWorkEffects {
   .map(res => {
     if(res.success&&res.dataObject) {
       return new actions.thingCountSuccessAction(res.dataObject)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
   
   })
@@ -434,7 +486,9 @@ export class CreatWorkEffects {
         id: res.dataObject.id
       }
       return new actions.addRequireSuccessAction([data])
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 删除成果产出物
   @Effect() delrequire$: Observable<Action> = this.actions$
@@ -445,7 +499,9 @@ export class CreatWorkEffects {
   .map(res => {
     if(res.success) {
       return new actions.delRequireSuccessAction({})
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 成果产出物list
   @Effect() requireList$: Observable<Action> = this.actions$
@@ -463,7 +519,9 @@ export class CreatWorkEffects {
         updateTime: list.updateTime
       }))
       return new actions.requireListSuccessAction(data)
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
   // 文档关联事务成果产
   @Effect() requireLink$: Observable<Action> = this.actions$
@@ -474,7 +532,9 @@ export class CreatWorkEffects {
   .map(res => {
     if(res.success) {
       return new actions.requireLinkSuccessAction({})
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
   })
    // 我发起的审批列表
    @Effect() applytimeCount$: Observable<Action> = this.actions$
@@ -486,6 +546,8 @@ export class CreatWorkEffects {
 
       if(res.success) {
         return new actions.applyTimeCountSuccessAction(res.dataObject)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   @Effect() applytypeCount$: Observable<Action> = this.actions$
@@ -497,6 +559,8 @@ export class CreatWorkEffects {
 
       if(res.success) {
         return new actions.thingTypeCountSuccessAction(res.dataObject)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   // 审批列表
@@ -509,6 +573,8 @@ export class CreatWorkEffects {
 
       if(res.success) {
         return new actions.applySelectListSuccessAction(res.dataObject)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
   constructor(
@@ -516,6 +582,7 @@ export class CreatWorkEffects {
     private store$: Store<fromRoot.State>,
     private app: App,
     private creatworkSerice: CreatworkServiceProvider,
-    private toast: ToastSitutionProvider
+    private toast: ToastSitutionProvider,
+    @Inject('MSG') private msg
   ) {}
 }

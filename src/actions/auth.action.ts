@@ -3,6 +3,8 @@ import {type} from '../utils/type.util';
 import {Auth, Err} from '../domain';
 
 export const ActionTypes = {
+  ERROR:'[Auth] error',
+  ERROR_SUCCESS: '[Auth] error_success',
   USERINFO:type('[Auth] userinfo'),
   USERINFO_SUCCESS:type('[Auth] userinfo_success'),
   LOGIN: type('[Auth] Login'),
@@ -32,6 +34,18 @@ export const ActionTypes = {
   AUTH_FAIL: type('[Auth] auth_fail'),
   AUTH_FAIL_SUCCESS: type('[Auth] auth_fail_success')
 }
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
+
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
+
+
 export class AuthFailAction implements Action {
   type = ActionTypes.AUTH_FAIL;
 

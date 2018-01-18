@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { App } from 'ionic-angular'
@@ -7,9 +7,18 @@ import * as actions from '../actions/chat.action'
 import { Store } from '@ngrx/store'
 import * as fromRoot from '../reducer'
 import { ChatServiceProvider } from '../providers'
+import { ToastSitutionProvider } from '../providers'
 
 @Injectable()
 export class ChatEffects {
+  @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.appCtrl.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
+ 
   // chatlist
   @Effect() chatlist$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.CHATLIST)
@@ -28,6 +37,8 @@ export class ChatEffects {
         updateTime: chat.updateTime
       }))
       return new actions.ChatListSuccessAction(data)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
   })
  // sendchat
@@ -46,7 +57,9 @@ export class ChatEffects {
       
      }
      return new actions.sendChatSuccessAction(data)
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
  })
  @Effect() addGroup$: Observable<Action> = this.actions$
  .ofType(actions.ActionTypes.ADDGROUP)
@@ -62,13 +75,17 @@ export class ChatEffects {
        name: res.dataObject.name,
        type: res.dataObject.type
      })
-   }
+   }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
+  }
    
  })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
     private service: ChatServiceProvider,
-    private appCtrl: App
+    private appCtrl: App,
+    private toast: ToastSitutionProvider,
+    @Inject('MSG') private msg
   ) {}
 }

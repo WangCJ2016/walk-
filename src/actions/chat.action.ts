@@ -5,6 +5,8 @@ import {type} from '../utils/type.util';
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
+  ERROR:'[Chat] error',
+  ERROR_SUCCESS: '[Chat] error_success',
   CHATLIST:type('[Chat] chatlist'),
   CHATLIST_SUCCESS:type('[Chat] chatlist_success'),
   CHATLISTINITIAL:type('[Chat] chatlistInitail'),
@@ -20,6 +22,17 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
+
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 // 添加群组
 export class addGroupAction implements Action {
   readonly type = ActionTypes.ADDGROUP;

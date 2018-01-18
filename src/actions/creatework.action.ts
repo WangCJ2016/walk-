@@ -5,6 +5,8 @@ import { Action } from '@ngrx/store';
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
+  ERROR:'[creatwork] error',
+  ERROR_SUCCESS: '[creatwork] error_success',
   // plan_y
   PLANZSUBMIT : '[creatwork] planzsubmit',
   PLANZSUBMIT_SUCCESS : '[creatwork] planzsubmit_success',
@@ -81,6 +83,17 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
+
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 // 事务个数统计
 export class thingCountAction implements Action {
   readonly type = ActionTypes.THIINGCOUND;

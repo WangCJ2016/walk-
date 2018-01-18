@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {App} from 'ionic-angular'
 import { Action } from '@ngrx/store';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Store } from '@ngrx/store'
@@ -9,6 +10,14 @@ import { ToastSitutionProvider } from '../providers'
 import * as actions from '../actions/daily.action'
 @Injectable()
 export class DailyEffects {
+
+  @Effect() error$: Observable<Action> = this.actions$
+  .ofType(actions.ActionTypes.ERROR)
+  .map(res => {
+    this.appCtrl.getActiveNav().push('LoginPage')
+    this.toast.message(this.msg.token)
+    return new actions.ErrorSuccessAction({})
+  })
   // 添加日报
   @Effect() addDaily$: Observable<Action> = this.actions$
   .ofType(actions.ActionTypes.ADDDAILY)
@@ -27,8 +36,8 @@ export class DailyEffects {
     if(res.success) {
       this.toast.message('添加成功')
       return new actions.AddDailySuccessAction({})
-    }else{
-        //return new actions.FailAction(res.res.msg)
+    }else if(res.msgCode=='-1'){
+      return new actions.ErrorAction({})
     }
 })
 // 日报统计上交情况
@@ -65,8 +74,8 @@ export class DailyEffects {
                 },
             }
     return new actions.DailyStatSuccessAction(data)
-  }else{
-      //return new actions.FailAction(res.res.msg)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
 })
 // 查看成员日报
@@ -99,8 +108,6 @@ export class DailyEffects {
         contents:'没有日报内容'
       })
     }
-  }else{
-      return new actions.DailyDetailSuccessAction('')
   }
 })
 // 修改日报
@@ -118,8 +125,8 @@ export class DailyEffects {
   this.toast.message('已修改')
   if(res.success) {
     return new actions.ModifySuccessAction('')
-  }else{
-      //return new actions.FailAction(res.res.msg)
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
 })
 
@@ -141,14 +148,14 @@ export class DailyEffects {
   if(res.success) {
    
     return new actions.dailyStateByMonthSuccessAction(res.dataObject)
-  }else{
-      //return new actions.FailAction(res.res.msg)
   }
 })
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
     private dailyService: DailyServiceProvider,
-    private toast: ToastSitutionProvider
+    private toast: ToastSitutionProvider,
+    private appCtrl: App,
+    @Inject('MSG') private msg
   ) {}
 }

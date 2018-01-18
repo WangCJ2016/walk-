@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { App } from 'ionic-angular'
 import { Action } from '@ngrx/store';
 import { Store } from '@ngrx/store'
 import { Actions, Effect, toPayload } from '@ngrx/effects';
@@ -19,12 +20,15 @@ export class ApplyEffects {
   .map(res => {
     if(res.success) {
       return new actions.appplylistSuccessAction(res.dataObject)
+    }else if(res.msgCode=='-1'){
+      this.appCtrl.getActiveNav().push('LoginPage')
     }
   })
 
   constructor(
     private actions$: Actions,
     private store$: Store<fromRoot.State>,
-    private service: ApplyProvider
+    private service: ApplyProvider,
+    private appCtrl: App
   ) {}
 }

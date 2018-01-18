@@ -6,6 +6,8 @@ import { team, Err } from '../domain'
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
+  ERROR:'[Team] error',
+  ERROR_SUCCESS: '[Team] error_success',
   TEAMFAIL:type('[Team] fail'),
   LOAD: type('[Team] load'),
   LOAD_SUCCESS: type('[Team] load Success'),
@@ -18,7 +20,16 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
 
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 export class AuthFailAction implements Action {
   type = ActionTypes.TEAMFAIL;
 

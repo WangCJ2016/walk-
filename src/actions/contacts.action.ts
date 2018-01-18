@@ -10,6 +10,8 @@ import { empDetail } from '../domain'
  * action types in the application are unique. 
  */
 export const ActionTypes = {
+  ERROR:'[contact] error',
+  ERROR_SUCCESS: '[contact] error_success',
   LOAD: type('[contact] load'),
   LOAD_SUCCESS: type('[contact] load_success'),
   EMPDETAIL: type('[contact] empdetail'),
@@ -23,6 +25,16 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
+export class ErrorAction implements Action {
+  readonly type = ActionTypes.ERROR;
+
+  constructor(public payload: any) { }
+}
+export class ErrorSuccessAction implements Action {
+  readonly type = ActionTypes.ERROR_SUCCESS;
+
+  constructor(public payload: any) { }
+}
 // 获取员工列表
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;

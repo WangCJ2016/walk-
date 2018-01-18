@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 
@@ -14,6 +14,14 @@ import * as fromRoot from '../reducer'
 
 @Injectable()
 export class AuthEffects {
+
+    @Effect() error$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.ERROR)
+    .map(res => {
+      this.appCtrl.getActiveNav().push('LoginPage')
+      this.toast.message(this.msg.token)
+      return new actions.ErrorSuccessAction({})
+    })
      // authfail
      @Effect() 
      fail$: Observable<Action> = this.actions$
@@ -71,7 +79,7 @@ export class AuthEffects {
        return this.service.login(val.phoneNum, val.password)})
     .map(res => {
         if(res.success) { 
-            this.appCtrl.getRootNav().goToRoot({animate:true,direction:'forward'})
+            this.appCtrl.getActiveNav().goToRoot({animate:true,direction:'forward'})
             localStorage.setItem('userId', res.dataObject.id)
             const data = {
                 cityId: res.dataObject.cityId,
@@ -266,6 +274,9 @@ export class AuthEffects {
              this.toast.message('密码修改成功，请重新登录')
             return new actions.ChangePasswordSuccessAction(true)
          }else {
+          if(res.msgCode=='-1'){
+                return new actions.ErrorAction({})
+              }
             return new actions.AuthFailAction({
                 msg: res.msg
               })
@@ -290,6 +301,9 @@ export class AuthEffects {
             this.toast.message('保存成功')
             return new actions.ChangeSuccessAction(res.res.dataObject)
         }else {
+            if(res.res.msgCode=='-1'){
+                return new actions.ErrorAction({})
+              }
             this.toast.message(res.msg)
             return new actions.AuthFailAction({
                 msg: res.msg
@@ -302,6 +316,7 @@ export class AuthEffects {
         public appCtrl: App,
         private service: AuthProvider,
         private toast: ToastSitutionProvider,
-        private store$: Store<fromRoot.State>
+        private store$: Store<fromRoot.State>,
+        @Inject('MSG') private msg
     ) {}
 }

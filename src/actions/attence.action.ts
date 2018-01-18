@@ -10,6 +10,8 @@ import { type } from '../utils/type.util';
  * action types in the application are unique. 
  */
 export const ActionTypes = {
+    ERROR:'[attence] error',
+    ERROR_SUCCESS: '[attence] error_success',
     ATTENCE_FAIL: type('[attence] attence_fail'),
     GETATTENDACE: type('[attence] getattendance'),
     GETATTENDACE_SUCCESS: type('[attence] getattendance_success'),
@@ -32,7 +34,16 @@ export const ActionTypes = {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
-
+export class ErrorAction implements Action {
+    readonly type = ActionTypes.ERROR;
+  
+    constructor(public payload: any) { }
+  }
+  export class ErrorSuccessAction implements Action {
+    readonly type = ActionTypes.ERROR_SUCCESS;
+  
+    constructor(public payload: any) { }
+  }
 export class FailAction implements Action {
     type = ActionTypes.ATTENCE_FAIL;
 

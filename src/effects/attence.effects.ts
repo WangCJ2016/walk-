@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { App } from 'ionic-angular'
@@ -10,6 +10,14 @@ import { AttenceServiceProvider } from '../providers'
 import { ToastSitutionProvider} from '../providers'
 @Injectable()
 export class AttenceEffects {
+
+    @Effect() error$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.ERROR)
+    .map(res => {
+        this.appCtrl.getActiveNav().push('LoginPage')
+        this.toast.message(this.msg.token)
+        return new actions.ErrorSuccessAction({})
+    })
     // 设置日期
     @Effect() setday$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.GETATTENDACE)
@@ -20,6 +28,9 @@ export class AttenceEffects {
         if(res.success) {
           return new actions.GetAttendacnceSuccessAction(res.dataObject)
         }
+        else if(res.msgCode=='-1'){
+            return new actions.ErrorAction({})
+          }
     })
        
 
@@ -41,6 +52,9 @@ export class AttenceEffects {
             this.toast.message('打卡成功')
           return new actions.GetAttendacnceAction({})
         }else{
+             if(res.res.msgCode=='-1'){
+                return new actions.ErrorAction({})
+              }
             this.toast.message(res.res.msg)
             return new actions.FailAction(res.res.msg)
         }
@@ -78,9 +92,9 @@ export class AttenceEffects {
                 }
             })
           return new actions.AttenceRecordSuccessAction(data)
-        }else{
-            return new actions.FailAction(res.msg)
-        }
+        }else if(res.msgCode=='-1'){
+            return new actions.ErrorAction({})
+          }
     })
     //考勤统计在岗情况
     @Effect() attencestat$: Observable<Action> = this.actions$
@@ -114,9 +128,9 @@ export class AttenceEffects {
                 },
             }
           return new actions.AttenceStatSuccessAction(data)
-        }else{
-            return new actions.FailAction(res.msg)
-        }
+        }else if(res.msgCode=='-1'){
+            return new actions.ErrorAction({})
+          }
     })
     // 考勤设置时获取截止日期
     @Effect() getendate$: Observable<Action> = this.actions$
@@ -138,6 +152,9 @@ export class AttenceEffects {
           return new actions.getEndDateSuccessAction({endDate:res.dataObject})
         }else{
             this.toast.message(res.msg)
+             if(res.msgCode=='-1'){
+                return new actions.ErrorAction({})
+              }
             return new actions.FailAction(res.msg)
         }
     })
@@ -161,6 +178,9 @@ export class AttenceEffects {
              this.appCtrl.getActiveNav().pop()
            return new actions.setAttenceSuccessAction({})
          }else{
+             if(res.msgCode=='-1'){
+                return new actions.ErrorAction({})
+              }
              return new actions.FailAction(res.msg)
          }
      })
@@ -180,15 +200,16 @@ export class AttenceEffects {
         if(res.success) {
         
             return new actions.statusByMontSuccessAction(res.dataObject)
-        }else{
-            //return new actions.FailAction(res.res.msg)
-        }
+        }else if(res.msgCode=='-1'){
+            return new actions.ErrorAction({})
+          }
         })
     constructor(
         private actions$: Actions,
         private store$: Store<fromRoot.State>,
         private attenceService: AttenceServiceProvider,
         private toast: ToastSitutionProvider,
-        private appCtrl: App
+        private appCtrl: App,
+        @Inject('MSG') private msg
     ) {}
 }

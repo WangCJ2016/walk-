@@ -80,6 +80,7 @@ import { ApplyProvider } from '../providers/apply/apply';
     AuthProvider,
     ToastSitutionProvider,
     {provide: 'BASE_URL', useValue: {url: 'http://106.15.103.123:8080/platform'}},
+    {provide: 'MSG', useValue: {token: '登录失效,请重新登录'}},
     TeamServiceProvider,
     ContactServiceProvider,
     AttenceServiceProvider,
