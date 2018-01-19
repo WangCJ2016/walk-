@@ -3,7 +3,8 @@ import { dailyPeople,dailyDetail} from '../domain'
 export interface State {
   dailyPeople?: dailyPeople
   dailyDetail?: dailyDetail
-  dailyStatusByMonth?: Array<any>
+  dailyStatusByMonth?: Array<any>,
+  msgCode?: number
 };
 
 export const initialState: State = {

@@ -20,19 +20,22 @@ import {ToastSitutionProvider} from '../../providers/toast-sitution/toast-situti
 export class LoginPage {
   phoneNum: number
   loading: Loading
-  
+  password: string
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private toastSitutionProvider: ToastSitutionProvider,
               private load: LoadingController,
               private store$: Store<fromRoot.State>) {
+                console.log(1)
                 this.loading = this.load.create({
                   dismissOnPageChange: true,
                   duration: 5000
                 })
              
   }
-
+  ionViewDidEnter(){
+    localStorage.removeItem('userId')
+  }
   
   goPage(page: string) {
     this.navCtrl.push(page)
@@ -51,6 +54,6 @@ export class LoginPage {
       phoneNum: f.value.phoneNum,
       password: f.value.password
     }))
-    f.reset()
+    this.password = ''
   }
 }

@@ -108,6 +108,8 @@ export class DailyEffects {
         contents:'没有日报内容'
       })
     }
+  }else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
 })
 // 修改日报
@@ -148,6 +150,9 @@ export class DailyEffects {
   if(res.success) {
    
     return new actions.dailyStateByMonthSuccessAction(res.dataObject)
+  }
+  else if(res.msgCode=='-1'){
+    return new actions.ErrorAction({})
   }
 })
   constructor(

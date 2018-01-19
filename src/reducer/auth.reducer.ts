@@ -33,7 +33,7 @@ export function reducer(state = initialState, action: any ): State {
             return {...state, ...action.payload}
         }
         case authAction.ActionTypes.LOGOUT_SUCCESS: {
-            return {...state, ...initialState}
+            return state
         }
         default: {
             return state;

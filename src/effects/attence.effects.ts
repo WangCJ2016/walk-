@@ -92,9 +92,8 @@ export class AttenceEffects {
                 }
             })
           return new actions.AttenceRecordSuccessAction(data)
-        }else if(res.msgCode=='-1'){
-            return new actions.ErrorAction({})
-          }
+        }
+        return new actions.AttenceRecordSuccessAction({})
     })
     //考勤统计在岗情况
     @Effect() attencestat$: Observable<Action> = this.actions$

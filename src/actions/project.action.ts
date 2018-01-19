@@ -5,18 +5,18 @@ import { type } from '../utils/type.util';
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
-  ERROR:'[daily] error',
-  ERROR_SUCCESS: '[daily] error_success',
-  PRODETAIL: type('[daily] prodetail'),
-  PRODETAIL_SCUCCESS : type('[daily] prodetail_success'),
-  PROPEO: type('[daily] propeo'),// 项目动态、阶段人员统计
-  PROPEO_SCUCCESS: type('[daily] propeo_success'),
-  PROTHINGLIST:  type('[daily] prothinglist'),
-  PROTHINGLIST_SCUCCESS: type('[daily] prothinglist_success'),
-  PROMEMBERS: type('[daily] promembers'),
-  PROMEMBERS_SCUCCESS: type('[daily] promembers_success'),
-  CURRPROTREEMENU:type('[daily] currProjectTreeMenu'),
-  CURRPROTREEMENU_SCUCCESS:type('[daily] currProjectTreeMenu_success'),
+  ERROR:type('[pro] error'),
+  ERROR_SUCCESS: type('[pro] error_success'),
+  PRODETAIL: type('[pro] prodetail'),
+  PRODETAIL_SCUCCESS : type('[pro] prodetail_success'),
+  PROPEO: type('[pro] propeo'),// 项目动态、阶段人员统计
+  PROPEO_SCUCCESS: type('[pro] propeo_success'),
+  PROTHINGLIST:  type('[pro] prothinglist'),
+  PROTHINGLIST_SCUCCESS: type('[pro] prothinglist_success'),
+  PROMEMBERS: type('[pro] promembers'),
+  PROMEMBERS_SCUCCESS: type('[pro] promembers_success'),
+  CURRPROTREEMENU:type('[pro] currProjectTreeMenu'),
+  CURRPROTREEMENU_SCUCCESS:type('[pro] currProjectTreeMenu_success'),
 };
 export class ErrorAction implements Action {
   readonly type = ActionTypes.ERROR;

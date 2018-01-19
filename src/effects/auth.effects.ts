@@ -116,7 +116,6 @@ export class AuthEffects {
      .ofType(actions.ActionTypes.LOGOUT)
      .map(toPayload)
      .map(res => {
-             localStorage.removeItem('userId')
              this.appCtrl.getActiveNav().push('LoginPage')
             return new actions.LogoutSucccessAction(res.dataObject)
      })

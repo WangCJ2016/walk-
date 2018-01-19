@@ -40,6 +40,7 @@ export class DailyPage {
   empId: string
   depId: string
   _sub$: Subscription
+  _sub$1: Subscription
   dailyStatusByMonth
   constructor(
     public navCtrl: NavController,
@@ -47,6 +48,14 @@ export class DailyPage {
     private modal: ModalController,
     private store$: Store<fromRoot.State>
   ) {
+    
+  
+  }
+  ionViewDidLeave(){
+    this._sub$.unsubscribe()
+    this._sub$1.unsubscribe()
+  }
+  ionViewDidEnter(){
     const year = getYear(new Date())
     const month = getMonth(new Date())+1
     const gaozaoMonth = month < 10 ?  '0'+month: month
@@ -56,17 +65,11 @@ export class DailyPage {
       this.store$.dispatch(new actions.DailyDetailAction({empId1:this.navParams.data.empId,submitDate:v}))
       this.store$.dispatch(new attenceActions.AttenceRecordAction({time:v,empId:this.navParams.data.empId}))
     })
-    this.store$.select(store=>store.daily).subscribe(v=>{
+    this._sub$1 =  this.store$.select(store=>store.daily).subscribe(v=>{
       if(v.dailyStatusByMonth) {
         this.dailyStatusByMonth = v.dailyStatusByMonth
       }
     })
-  
-  }
-  ionViewDidLeave(){
-    this._sub$.unsubscribe()
-  }
-  ionViewDidEnter(){
     this._sub$ = this.store$.select(store=>store.auth.auth.emp.id).subscribe(id=>{
       if(id===this.navParams.data.empId){
         this.title = '我'

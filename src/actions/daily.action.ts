@@ -5,8 +5,8 @@ import { type } from '../utils/type.util';
  * enum object for all of this group's action types.
  */
 export const ActionTypes = {
-  ERROR:'[daily] error',
-  ERROR_SUCCESS: '[daily] error_success',
+  ERROR:type('[daily] error'),
+  ERROR_SUCCESS: type('[daily] error_success'),
   ADDDAILY: type('[daily] adddaily'),
   ADDDAILY_SCUCCESS : type('[daily] adddaily_success'),
   DAILYSTAT:type('[daily] dailystat'),
